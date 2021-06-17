@@ -4,7 +4,7 @@
 
 <section>
     <div class="container-lg" style="padding: 0px 300px;margin-top:150px">
-        <h2>Campaign - {{team}}</h2><br>
+        <h2>Campaign - {{campaign.name}}</h2><br>
         <form action="/employees/add-coaching" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="agent">Select Employee</label>
@@ -13,10 +13,10 @@
                 <option value="{{agent.emp_id}}" class="form-control">{{agent.emp_name}}-{{agent.emp_id}}</option>
                 {% endfor %}
             </select><br>
-            <label for="">Audit Form</label>
-            <input class="form-control" type="text" name="audit_form" value="{{team}}" readonly>
+           <!-- <label for="">Audit Form</label>
+            <input class="form-control" type="text" name="audit_form" value="{{team}}" readonly>-->
             <br>
-            <input type="hidden" value="{{team}}" name="team">
+            <input type="hidden" value="{{campaign.id}}" name="campaign_id">
 
             <button class="btn btn-info">Add Coaching</button>
         </form>

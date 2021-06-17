@@ -21,14 +21,14 @@ admin.site.register(FameHouseNewMonForm)
 
 admin.site.register(FLAMonitoringForm)     # view done
 admin.site.register(MasterMonitoringFormGetaRatesPSECU)
-admin.site.register(MasterMonitoringFormMovementInsurance)
+
 admin.site.register(MTCosmeticsMonForm)      # view done
 admin.site.register(MasterMonitoringFormTonnChatsEmail)     # view done
 admin.site.register(MasterMonitoringFormTonnCoaInboundCalls)
 admin.site.register(MonitoringFormLeadsAadhyaSolution)
 admin.site.register(PrinterPixMasterMonitoringFormInboundCalls)
 admin.site.register(PrinterPixMasterMonitoringFormChatsEmail)
-admin.site.register(WitDigitalMasteringMonitoringForm)
+
 admin.site.register(MonitoringFormLeadsInsalvage)
 admin.site.register(MonitoringFormLeadsMedicare)
 admin.site.register(MonitoringFormLeadsCTS)
@@ -45,7 +45,7 @@ admin.site.register(MonitoringFormLeadsAdvanceConsultants)
 
 
 admin.site.register(FurBabyMonForm)
-admin.site.register(MaxwellProperties)
+
 
 admin.site.register(UpfrontOnlineLLCMonform)
 admin.site.register(MicroDistributingMonForm)
@@ -65,16 +65,14 @@ admin.site.register(AKDYInboundMonForm)
 admin.site.register(AKDYEmailMonForm)
 
 admin.site.register(IbizMonForm)
-admin.site.register(AdityaBirlaMonForm)
-admin.site.register(BagyalakshmiMonForm)
-admin.site.register(DigitalSwissMonForm)
+
 admin.site.register(NafaInnovationsMonForm)
 admin.site.register(DanielWellinChatEmailMonForm)
-admin.site.register(DanialWellingtonInboundMonForm)
+
 admin.site.register(ProtostarMonForm)
 admin.site.register(KappiMachineMonForm)
 admin.site.register(SomethingsBrewMonForm)
-admin.site.register(ABHMonForm)
+
 admin.site.register(EmbassyLuxuryMonForm)
 admin.site.register(IIBMonForm)
 admin.site.register(TerraceoLeadMonForm)
@@ -87,18 +85,19 @@ admin.site.register(ScalaMonForm)
 admin.site.register(GoldenEastMonForm)
 admin.site.register(CitizenCapitalMonForm)
 
-admin.site.register(ClearViewMonform)
+
 admin.site.register(PrinterPixMonForm)
 admin.site.register(PlutoManagementMonForm)
-admin.site.register(SterlingMonForm)
+
 
 admin.site.register(RitBrainMonForm)
-admin.site.register(HealthyPlusMonForm)
+
 admin.site.register(RestaurentSolMonForm)
 admin.site.register(QBIQMonForm)
 admin.site.register(AccutimeMonForm)
-admin.site.register(AmerisaveCallsMonForm)
-admin.site.register(AmerisaveEmailsMonForms)
+
+
+admin.site.register(latest)
 
 
 

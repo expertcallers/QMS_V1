@@ -117,4 +117,5 @@ urlpatterns = [
     path('desi-changer',desiChanger),
 
     path('change-password',changePassword),
+    path('create-campaign',createCampaign),
 ]

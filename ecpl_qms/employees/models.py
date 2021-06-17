@@ -118,12 +118,3755 @@ class Process(models.Model):
 
 
 class Campaigns(models.Model):
-    name=models.CharField(max_length=200)
-    campaign_id=models.IntegerField()
-    qa_id=models.IntegerField(null=True)
+    name = models.CharField(max_length=200,null=True)
+    type = models.CharField(max_length=10,null=True)
 
 
 # Final Forms ----------------------- #
+
+######## OUTBOUND #####################
+
+class MonitoringFormLeadsAadhyaSolution(models.Model):
+    process = models.CharField(default='AAdya', max_length=50)
+    type = models.CharField(default='Outbound',max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.IntegerField()
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+
+
+
+class AccutimeMonForm(models.Model):
+    process = models.CharField(default='Accutime', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.IntegerField()
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+
+class MonitoringFormLeadsAdvanceConsultants(models.Model):
+    process = models.CharField(default='Advance Consultants', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MonitoringFormLeadsAllenConsulting(models.Model):
+    process = models.CharField(default='Allen Consulting', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+
+class CamIndustrialMonForm(models.Model):
+    process = models.CharField(default='Cam Industrial', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class CitizenCapitalMonForm(models.Model):
+    process = models.CharField(default='Citizen Capital', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MonitoringFormLeadsCitySecurity(models.Model):
+    process = models.CharField(default='City Security', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class MonitoringFormLeadsCTS(models.Model):
+    process = models.CharField(default='CTS', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class EmbassyLuxuryMonForm(models.Model):
+    process = models.CharField(default='Embassy Luxury', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MonitoringFormLeadsGetARates(models.Model):
+    process = models.CharField(default='Get A Rates', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class GlydeAppMonForm(models.Model):
+    process = models.CharField(default='Glyde App', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class GoldenEastMonForm(models.Model):
+    process = models.CharField(default='Golden East', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class IbizMonForm(models.Model):
+    process = models.CharField(default='Ibiz', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class IIBMonForm(models.Model):
+    process = models.CharField(default='IIB', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MonitoringFormLeadsInfothinkLLC(models.Model):
+    process = models.CharField(default='Info Think LLC', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MonitoringFormLeadsInsalvage(models.Model):
+    process = models.CharField(default='Insalvage', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class JJStudioMonForm(models.Model):
+    process = models.CharField(default='JJ Studio', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class KalkiFashions(models.Model):
+    process = models.CharField(default='Kalki Fashions', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MonitoringFormLeadsLouisville(models.Model):
+    process = models.CharField(default='Louisville', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class MonitoringFormLeadsMedicare(models.Model):
+    process = models.CharField(default='Medicare', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MicroDistributingMonForm(models.Model):
+    process = models.CharField(default='Micro Distributing', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MillenniumScientificMonForm(models.Model):
+    process = models.CharField(default='Millennium Scientific', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MTCosmeticsMonForm(models.Model):
+    process = models.CharField(default='MT Cosmetic', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class NavigatorBioMonForm(models.Model):
+    process = models.CharField(default='Navigator Bio', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class OptimalStudentLoanMonForm(models.Model):
+    process = models.CharField(default='Optimal Student Loan', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class ProtostarMonForm(models.Model):
+    process = models.CharField(default='Protostar', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MonitoringFormLeadsPSECU(models.Model):
+    process = models.CharField(default='PSECU', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class QBIQMonForm(models.Model):
+    process = models.CharField(default='QBIQ', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class RestaurentSolMonForm(models.Model):
+    process = models.CharField(default='Restaurant Solution Group', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class RitBrainMonForm(models.Model):
+    process = models.CharField(default='Ri8Brain', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class RoofWellMonForm(models.Model):
+    process = models.CharField(default='Roof Well', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class ScalaMonForm(models.Model):
+    process = models.CharField(default='Scala', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class SolarCampaignMonForm(models.Model):
+    process = models.CharField(default='Solar Campaign', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class StandSpotMonForm(models.Model):
+    process = models.CharField(default='Stand Spot', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MonitoringFormLeadsSystem4(models.Model):
+    process = models.CharField(default='System4', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MonitoringFormLeadsTentamusFood(models.Model):
+    process = models.CharField(default='Tentamus Food', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class MonitoringFormLeadsTentamusPet(models.Model):
+    process = models.CharField(default='Tentamus Pet', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class TerraceoLeadMonForm(models.Model):
+    process = models.CharField(default='Terraceo - Lead', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class UpfrontOnlineLLCMonform(models.Model):
+    process = models.CharField(default='Upfront Online LLC', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class WTUMonForm(models.Model):
+    process = models.CharField(default='WTU', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration = models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    softskill_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class YesHealthMolinaMonForm(models.Model):
+    process = models.CharField(default='Yes Health Molina', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.IntegerField()
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class ZeroStressMarketingMonForm(models.Model):
+
+    process = models.CharField(default='Zero Stress Marketing', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+
+    category = models.CharField(max_length=20)
+
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+
+    # SoftSkills
+
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class ABHindalcoOutboundMonForm(models.Model):
+
+    process = models.CharField(default='AB Hindalco Outbound', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class AdityaBirlaOutboundMonForm(models.Model):
+
+    process = models.CharField(default='Aditya Birla Outbound', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class AmerisaveoutboundMonForm(models.Model):
+
+    process = models.CharField(default='Amerisave Outbound', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class BhagyaLakshmiOutbound(models.Model):
+
+    process = models.CharField(default='BhagyaLakshmi Outbound', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class ClearViewOutboundMonForm(models.Model):
+
+    process = models.CharField(default='Clear View Outbound', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class DanielWellingtonOutboundMonForm(models.Model):
+
+    process = models.CharField(default='Daniel Wellington Outbound', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class DigitalSwissGoldOutboundMonForm(models.Model):
+
+    process = models.CharField(default='Digital Swiss Gold Outbound', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class HealthyplusOutboundMonForm(models.Model):
+
+    process = models.CharField(default='Healthyplus Outbound', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class MaxwellPropertiesOutboundMonForm(models.Model):
+
+    process = models.CharField(default='Maxwell Properties', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class MovementofInsuranceOutboundMonForm(models.Model):
+
+    process = models.CharField(default='Movement of Insurance', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class SterlingStrategiesOutboundMonForm(models.Model):
+
+    process = models.CharField(default='Sterling Strategies', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class TonnCoaOutboundMonForm(models.Model):
+
+    process = models.CharField(default='Tonn Coa Outbound', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class WitDigitalOutboundMonForm(models.Model):
+
+    process = models.CharField(default='Wit Digital', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class ChatMonitoringFormEva(models.Model):
     process=models.CharField(default='Noom-EVA',max_length=50)
@@ -613,74 +4356,7 @@ class MasterMonitoringFormGetaRatesPSECU(models.Model):
         return self.comments[:100] + '...'
 
 
-class MasterMonitoringFormMovementInsurance(models.Model):
-    process = models.CharField(default='Movement of Insurance', max_length=50)
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
 
-    # Mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-    softskill_6 = models.IntegerField()
-    softskill_7 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    oc_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
 
@@ -827,147 +4503,9 @@ class MasterMonitoringFormTonnCoaInboundCalls(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
-class MonitoringFormLeadsAadhyaSolution(models.Model):
-    process = models.CharField(default='AAdya', max_length=50)
 
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration=models.IntegerField()
 
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
 
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    softskill_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class MTCosmeticsMonForm(models.Model):
-    process = models.CharField(default='MT Cosmetic', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    softskill_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 class PrinterPixMasterMonitoringFormInboundCalls(models.Model):
     process = models.CharField(default='Printer Pix Inbound', max_length=50)
@@ -1114,998 +4652,8 @@ class PrinterPixMasterMonitoringFormChatsEmail(models.Model):
         return self.comments[:100] + '...'
 
 
-class WitDigitalMasteringMonitoringForm(models.Model):
-    process = models.CharField(default='Wit Digital', max_length=50)
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_type=models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    service=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration=models.IntegerField()
 
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
 
-    category = models.CharField(max_length=20)
-
-    # Tagging
-    tagging_1=models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class Test(models.Model):
-    test = models.IntegerField()
-
-
-# ##### ######### Lead Sales Forms
-
-class MonitoringFormLeadsInsalvage(models.Model):
-    process = models.CharField(default='Insalvage', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class MonitoringFormLeadsMedicare(models.Model):
-    process = models.CharField(default='Medicare', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class MonitoringFormLeadsCTS(models.Model):
-    process = models.CharField(default='CTS', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class MonitoringFormLeadsTentamusFood(models.Model):
-    process = models.CharField(default='Tentamus Food', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class MonitoringFormLeadsTentamusPet(models.Model):
-    process = models.CharField(default='Tentamus Pet', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class MonitoringFormLeadsCitySecurity(models.Model):
-    process = models.CharField(default='City Security', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class MonitoringFormLeadsAllenConsulting(models.Model):
-    process = models.CharField(default='Allen Consulting', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class MonitoringFormLeadsSystem4(models.Model):
-    process = models.CharField(default='System4', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class MonitoringFormLeadsLouisville(models.Model):
-    process = models.CharField(default='Louisville', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class MonitoringFormLeadsInfothinkLLC(models.Model):
-    process = models.CharField(default='Info Think LLC', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class MonitoringFormLeadsPSECU(models.Model):
-    process = models.CharField(default='PSECU', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class MonitoringFormLeadsGetARates(models.Model):
-    process = models.CharField(default='Get A Rates', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class MonitoringFormLeadsAdvanceConsultants(models.Model):
-    process = models.CharField(default='Advance Consultants', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
 ############################## New Forms ############
@@ -2182,77 +4730,6 @@ class FurBabyMonForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
-class MaxwellProperties(models.Model):
-    process = models.CharField(default='Maxwell Properties', max_length=50)
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    trans_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Customer Experience
-    ce_1 = models.IntegerField()
-    ce_2 = models.IntegerField()
-    ce_3 = models.IntegerField()
-    ce_4 = models.IntegerField()
-    ce_5 = models.IntegerField()
-    ce_6 = models.IntegerField()
-    ce_7 = models.IntegerField()
-    ce_8 = models.IntegerField()
-    ce_9 = models.IntegerField()
-    ce_10 = models.IntegerField()
-    ce_11 = models.IntegerField()
-
-    # Business
-    business_1 = models.IntegerField()
-    business_2 = models.IntegerField()
-
-    # Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
 
@@ -2331,7 +4808,7 @@ class SuperPlayMonForm(models.Model):
         return self.comments[:100] + '...'
 
 class DanielWellinChatEmailMonForm(models.Model):
-    process = models.CharField(default='Daniel Wellington - Chat - Email', max_length=50)
+    process = models.CharField(default=' - Chat - Email', max_length=50)
     emp_id = models.IntegerField()
     associate_name = models.CharField(max_length=50)
     qa = models.CharField(max_length=50)
@@ -2476,579 +4953,26 @@ class TerraceoChatEmailMonForm(models.Model):
 
 ######################################
 
-class UpfrontOnlineLLCMonform(models.Model):
-    process = models.CharField(default='Upfront Online LLC', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
-class MicroDistributingMonForm(models.Model):
-    process = models.CharField(default='Micro Distributing', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
-class JJStudioMonForm(models.Model):
-    process = models.CharField(default='JJ Studio', max_length=50)
 
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.IntegerField()
 
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
 
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 # New Series Mon forms ~~ AAdya copy
 
-class ZeroStressMarketingMonForm(models.Model):
 
-    process = models.CharField(default='Zero Stress Marketing', max_length=50)
 
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration=models.CharField(max_length=20)
 
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
 
-    category = models.CharField(max_length=20)
 
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
 
-    # SoftSkills
 
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
 
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
 
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
 
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    softskill_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class WTUMonForm(models.Model):
-    process = models.CharField(default='WTU', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class RoofWellMonForm(models.Model):
-    process = models.CharField(default='Roof Well', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class GlydeAppMonForm(models.Model):
-    process = models.CharField(default='Glyde App', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class MillenniumScientificMonForm(models.Model):
-    process = models.CharField(default='Millennium Scientific', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
 class FinesseMortgageMonForm(models.Model):
@@ -3122,289 +5046,13 @@ class FinesseMortgageMonForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
-class StandSpotMonForm(models.Model):
-    process = models.CharField(default='Stand Spot', max_length=50)
 
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
 
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
 
-    category = models.CharField(max_length=20)
 
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
 
-    # SoftSkills
 
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
 
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class CamIndustrialMonForm(models.Model):
-    process = models.CharField(default='Cam Industrial', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class OptimalStudentLoanMonForm(models.Model):
-    process = models.CharField(default='Optimal Student Loan', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class NavigatorBioMonForm(models.Model):
-    process = models.CharField(default='Navigator Bio', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
 class AKDYInboundMonForm(models.Model):
@@ -3552,289 +5200,13 @@ class AKDYEmailMonForm(models.Model):
         return self.comments[:100] + '...'
 
 
-class IbizMonForm(models.Model):
-    process = models.CharField(default='Ibiz', max_length=50)
 
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
 
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
 
-    category = models.CharField(max_length=20)
 
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
 
-    # SoftSkills
 
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
 
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class AdityaBirlaMonForm(models.Model):
-    process = models.CharField(default='Aditya Birla Cellulose', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class BagyalakshmiMonForm(models.Model):
-    process = models.CharField(default='Bhagyalaxmi Industries', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class DigitalSwissMonForm(models.Model):
-    process = models.CharField(default='Digital Swiss Gold', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 class NafaInnovationsMonForm(models.Model):
     process = models.CharField(default='Naffa Innovations', max_length=50)
@@ -3907,147 +5279,9 @@ class NafaInnovationsMonForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
-class DanialWellingtonInboundMonForm(models.Model):
-    process = models.CharField(default='Daniel Wellington - Inbound', max_length=50)
 
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
 
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
 
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class ProtostarMonForm(models.Model):
-    process = models.CharField(default='Protostar', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
 class KappiMachineMonForm(models.Model):
@@ -4194,361 +5428,16 @@ class SomethingsBrewMonForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
-class ABHMonForm(models.Model):
-    process = models.CharField(default='AB - Hindalco', max_length=50)
 
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
 
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
 
-    category = models.CharField(max_length=20)
 
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
 
-    # SoftSkills
 
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
 
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
 
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
 
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
 
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class EmbassyLuxuryMonForm(models.Model):
-    process = models.CharField(default='Embassy Luxury', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class IIBMonForm(models.Model):
-    process = models.CharField(default='IIB', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-class TerraceoLeadMonForm(models.Model):
-    process = models.CharField(default='Terraceo - Lead', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class KalkiFashions(models.Model):
-    process = models.CharField(default='Kalki Fashions', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
 class PractoMonForm(models.Model):
@@ -4624,289 +5513,13 @@ class PractoMonForm(models.Model):
         return self.comments[:100] + '...'
 
 
-class ScalaMonForm(models.Model):
-    process = models.CharField(default='Scala', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
-class CitizenCapitalMonForm(models.Model):
-    process = models.CharField(default='Citizen Capital', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class GoldenEastMonForm(models.Model):
-    process = models.CharField(default='Golden East', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration = models.CharField(max_length=20)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    softskill_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
-class ClearViewMonform(models.Model):
-    process = models.CharField(default='Clear View', max_length=50)
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    trans_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-
-    ticket_id = models.CharField(max_length=100)
-    teamm = models.CharField(max_length=50)
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Customer Experience
-    ce_1 = models.IntegerField()
-    ce_2 = models.IntegerField()
-    ce_3 = models.IntegerField()
-    ce_4 = models.IntegerField()
-    ce_5 = models.IntegerField()
 
 
-    # Business
-    business_1 = models.IntegerField()
-    business_2 = models.IntegerField()
-    business_3 = models.IntegerField()
-    business_4 = models.IntegerField()
-    business_5 = models.IntegerField()
-    business_6 = models.IntegerField()
-    business_7 = models.IntegerField()
 
-    # Compliance
-    compliance_1 = models.IntegerField()
-
-
-    summary = models.TextField()
-    action = models.TextField()
-    error = models.TextField()
-    error_type = models.TextField()
-    error_drill_down = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.summary[:100] + '...'
 
 
 
@@ -5056,405 +5669,11 @@ class PlutoManagementMonForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
-class SterlingMonForm(models.Model):
 
-    process = models.CharField(default='Sterling Strategies', max_length=50)
 
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    customer_contact = models.CharField(max_length=100)
 
-    # Mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-    category = models.CharField(max_length=20)
 
-    #Parameters
 
-    call_duration = models.IntegerField()
-    outcome = models.CharField(max_length=100)
-    result = models.IntegerField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    overall_score = models.IntegerField()
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class RitBrainMonForm(models.Model):
-    process = models.CharField(default='Ri8Brain', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    softskill_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class HealthyPlusMonForm(models.Model):
-    process = models.CharField(default='Healthy Plus', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    softskill_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class RestaurentSolMonForm(models.Model):
-    process = models.CharField(default='Restaurant Solution Group', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    softskill_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class QBIQMonForm(models.Model):
-    process = models.CharField(default='QBIQ', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    softskill_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class AccutimeMonForm(models.Model):
-    process = models.CharField(default='Accutime', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    softskill_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 class TonCoaInboundMonForms(models.Model):
     process = models.CharField(default='Tonn Coa - Inbound', max_length=50)
@@ -5528,147 +5747,9 @@ class TonCoaInboundMonForms(models.Model):
         return self.comments[:100] + '...'
 
 
-class SolarCampaignMonForm(models.Model):
-    process = models.CharField(default='Solar Campaign', max_length=50)
 
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration=models.IntegerField()
 
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
 
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    softskill_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class YesHealthMolinaMonForm(models.Model):
-    process = models.CharField(default='Yes Health Molina', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    call_duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Opening and Closing
-    oc_1 = models.IntegerField()
-    oc_2 = models.IntegerField()
-    oc_3 = models.IntegerField()
-
-    # SoftSkills
-
-    softskill_1 = models.IntegerField()
-    softskill_2 = models.IntegerField()
-    softskill_3 = models.IntegerField()
-    softskill_4 = models.IntegerField()
-    softskill_5 = models.IntegerField()
-
-    # Business and Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-    compliance_6 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    softskill_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
 
@@ -5696,135 +5777,10 @@ class ProfileNewtoAddUserandProfile(models.Model):
     def __str__(self):
         return self.emp_name
 
-class AmerisaveCallsMonForm(models.Model):
-
-    process = models.CharField(default='Amerisave - Call', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    borrower_name = models.CharField(max_length=50)
-    loan_number = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-
-    manager = models.CharField(max_length=50,null=True)
-    manager_id = models.IntegerField(null=True)
-
-    category = models.CharField(max_length=20,null=True)
-
-    # Customer Engagement
-    ce_1 = models.IntegerField()
-    ce_2 = models.IntegerField()
-    ce_3 = models.IntegerField()
-    ce_4 = models.IntegerField()
-    ce_5 = models.IntegerField()
-    ce_6 = models.IntegerField()
-
-    # Process and Policy
-
-    pp_1 = models.IntegerField()
-    pp_2 = models.IntegerField()
-    pp_3 = models.IntegerField()
-    pp_4 = models.IntegerField()
-    pp_5 = models.IntegerField()
-    pp_6 = models.IntegerField()
-    pp_7 = models.IntegerField()
-    pp_8 = models.IntegerField()
-    pp_9 = models.IntegerField()
-    pp_10 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    pp_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class AmerisaveEmailsMonForms(models.Model):
-
-    process = models.CharField(default='Amerisave - Email', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    borrower_name = models.CharField(max_length=50)
-    loan_number = models.CharField(max_length=100)
-    call_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-
-    manager = models.CharField(max_length=50,null=True)
-    manager_id = models.IntegerField(null=True)
-
-    category = models.CharField(max_length=20,null=True)
-
-    # Customer Engagement
-    ce_1 = models.IntegerField()
-    ce_2 = models.IntegerField()
-    ce_3 = models.IntegerField()
-    ce_4 = models.IntegerField()
-    ce_5 = models.IntegerField()
-    ce_6 = models.IntegerField()
-
-    # Process and Policy
-
-    pp_1 = models.IntegerField()
-    pp_2 = models.IntegerField()
-    pp_3 = models.IntegerField()
-    pp_4 = models.IntegerField()
-    pp_5 = models.IntegerField()
-    pp_6 = models.IntegerField()
-    pp_7 = models.IntegerField()
-    pp_8 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    pp_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
 
 
+
+
+class latest(models.Model):
+    ser = models.IntegerField()
 

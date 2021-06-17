@@ -5,7 +5,7 @@
         <div class="container-lg">
             <form action="/employees/Monitoring-Form-new-series-common" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <h2 class="text-center">Audit Form - {{team}}</h2>
+                <h2 class="text-center">Audit Form - {{campaign.name}}</h2>
                 <div class="basic">
                     <div class="row">
                         <div class="col-md-4">
@@ -204,7 +204,7 @@
                     <br>
                     <h4>Comments</h4>
                     <textarea name="comments" id="cfeedback" cols="30" rows="5" class="form-control" required></textarea>
-                    <input type="hidden" name="campaign" value="{{team}}">
+                    <input type="hidden" name="campaign" value="{{campaign.name}}">
                 </div>
                 <div style="padding: 30px 30px">
                     <button class="btn btn-info"> Submit </button>

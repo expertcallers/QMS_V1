@@ -12,9 +12,9 @@
                         <form action="/campaign-view" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <span style="color: gold;font-size: 14px">Add Coaching</span>
-                            <select name="campaign" style="padding: 2px;font-size: 12px;border-radius: 3px">
+                            <select name="campaign_id" style="padding: 2px;font-size: 12px;border-radius: 3px">
                             {% for c in campaigns %}
-                            <option value="{{c.name}}">{{c.name}}</option>
+                            <option value="{{c.id}}">{{c.name}}</option>
                              {% endfor %}
                             </select>
                             <br>
