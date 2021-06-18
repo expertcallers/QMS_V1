@@ -43,6 +43,7 @@ urlpatterns = [
     path('Monitoring-Form-Leads-Advance-Consultant',leadsandSalesAdvance),
 
     path('Monitoring-Form-new-series-common',newSeriesMonForms),
+    path('new-series-inbound',newSeriesInboundForms),
 
     path('domestic-email-chat-mon-form',domesticChatEmail),
     path('clear-view',clearView),
@@ -77,7 +78,7 @@ urlpatterns = [
     # Coaching Views
     path('coaching-view-emp/<str:process>/<int:pk>',coachingViewAgents),
     path('coaching-view-qa-all/<str:process>/<int:pk>',coachingViewQaDetailed),
-    path('qa-open-status-coachings-view/<int:pk>',qacoachingViewOpenAll),
+
     path('campaign-wise-coaching-view',campaignwiseCoachings),
     path('campaign-wise-coaching-view-qa',campaignwiseCoachingsQA),
     path('campaign-wise-coaching-view-agent',campaignwiseCoachingsAgent),
@@ -110,6 +111,13 @@ urlpatterns = [
 
     #path('add-single-profile',addSingleProfile),
 
+    ## Admin
+
+    path('add-new-campaign',addNewCampaign),
+
+
+    #############3
+
     path('powerbi-test',powerBITest),
 
     path('process-change',processNameChanger),
@@ -117,5 +125,5 @@ urlpatterns = [
     path('desi-changer',desiChanger),
 
     path('change-password',changePassword),
-    path('create-campaign',createCampaign),
+
 ]

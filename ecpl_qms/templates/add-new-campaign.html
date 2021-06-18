@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block main %}
+{% load static %}
+
+<div class="container-lg" style="margin-top:200px">
+    <div>
+        <form action="/add-new-campaign" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="">Campaign</label>
+            <input type="text" name="campaign" class="form-control">
+            <label for="">Type</label>
+            <input type="text" name="type" class="form-control">
+            <br>
+            <input type="submit" class="btn btn-info" value="Submit">
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}

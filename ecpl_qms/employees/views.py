@@ -1054,32 +1054,7 @@ def coachingViewQaDetailed(request,process,pk):
 
 
 
-# Open status Coaching View
-def qacoachingViewOpenAll(request,pk):
-    if pk>0:
 
-        qa_name=request.user.profile.emp_name
-
-        eva = ChatMonitoringFormEva.objects.filter(added_by=qa_name, status=False)
-        pod = ChatMonitoringFormPodFather.objects.filter(added_by=qa_name, status=False)
-        nucleus = InboundMonitoringFormNucleusMedia.objects.filter(added_by=qa_name, status=False)
-        famehouse = FameHouseMonitoringForm.objects.filter(added_by=qa_name, status=False)
-        fla = FLAMonitoringForm.objects.filter(added_by=qa_name, status=False)
-        mt = MTCosmeticsMonForm.objects.filter(added_by=qa_name, status=False)
-        tonnchat = MasterMonitoringFormTonnChatsEmail.objects.filter(added_by=qa_name, status=False)
-        mov = MasterMonitoringFormMovementInsurance.objects.filter(added_by=qa_name, status=False)
-        wit = WitDigitalMasteringMonitoringForm.objects.filter(added_by=qa_name, status=False)
-        pixchat = PrinterPixMasterMonitoringFormChatsEmail.objects.filter(added_by=qa_name, status=False)
-        pixinbound = PrinterPixMasterMonitoringFormInboundCalls.objects.filter(added_by=qa_name, status=False)
-        aadya = MonitoringFormLeadsAadhyaSolution.objects.filter(added_by=qa_name, status=False)
-
-        data={
-                'eva':eva,'pod':pod,'nucleus':nucleus,'famehouse':famehouse,'fla':fla,'mt':mt,'tonnchat':tonnchat,
-                'mov':mov,'wit':wit,'pixchat':pixchat,'pixinbound':pixinbound,'aadya':aadya
-             }
-        return render(request,'qa-open-status-coachings-view.html',data)
-    else:
-        return redirect('/employees/qahome')
 
 # Campaign wise coaching view - qa - manager
 
@@ -2590,10 +2565,17 @@ def qahome(request):
                         ProtostarMonForm,MonitoringFormLeadsPSECU,QBIQMonForm,RestaurentSolMonForm,RitBrainMonForm,
                         RoofWellMonForm,ScalaMonForm,SolarCampaignMonForm,StandSpotMonForm,MonitoringFormLeadsSystem4,MonitoringFormLeadsTentamusFood,MonitoringFormLeadsTentamusPet,
                         TerraceoLeadMonForm,UpfrontOnlineLLCMonform,WTUMonForm,YesHealthMolinaMonForm,ZeroStressMarketingMonForm,
-
                         ABHindalcoOutboundMonForm,AdityaBirlaOutboundMonForm,AmerisaveoutboundMonForm,BhagyaLakshmiOutbound,
                         ClearViewOutboundMonForm,DanielWellingtonOutboundMonForm,DigitalSwissGoldOutboundMonForm,HealthyplusOutboundMonForm,
                         MaxwellPropertiesOutboundMonForm,MovementofInsuranceOutboundMonForm,SterlingStrategiesOutboundMonForm,TonnCoaOutboundMonForm,WitDigitalOutboundMonForm,
+
+                        # Inbound
+                        MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
+                        NuclusInboundCalls,NaffaInnovationsInboundCalls,KappimachineInboundCalls,HealthyplusInboundMonForm,
+                        FinesseMortgageInboundMonForm,DigitalSwissGoldInboundMonForm,DanielwellingtoInboundMonForm,BhagyaLakshmiInboundMonForm,
+                        AKDYInboundMonFormNew,AdityaBirlainboundMonForm,ABHindalcoInboundMonForm
+
+
                         ]
 
     empw_list = []
@@ -6332,9 +6314,13 @@ def selectCoachingForm(request):
         agent = Profile.objects.get(emp_id=agent_id)
 
         if campaign_type == 'Outbound':
-
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/new-series-common.html', data)
+
+        elif campaign_type == 'Inbound':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
+            return render(request, 'mon-forms/new-series-Inbound.html', data)
+
 
 
 
@@ -10939,6 +10925,170 @@ def newSeriesMonForms(request):
         return render(request, 'mon-forms/new-series-comon.html', data)
 
 
+def newSeriesInboundForms(request):
+    if request.method == 'POST':
+        campaign_name = request.POST['campaign']
+
+        def inboundAddCoaching(monform):
+            category = 'Inbound'
+            associate_name = request.POST['empname']
+            emp_id = request.POST['empid']
+            qa = request.POST['qa']
+            team_lead = request.POST['tl']
+            customer_name = request.POST['customer']
+            customer_contact = request.POST['customercontact']
+            call_date = request.POST['calldate']
+            audit_date = request.POST['auditdate']
+            campaign = request.POST['campaign']
+            concept = request.POST['concept']
+            zone = request.POST['zone']
+            call_duration = (int(request.POST['durationh']) * 3600) + (int(request.POST['durationm']) * 60) + int(request.POST['durations'])
+
+            prof_obj = Profile.objects.get(emp_id=emp_id)
+            manager = prof_obj.manager
+            manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+            manager_emp_id = manager_emp_id_obj.emp_id
+            manager_name = manager
+            # Customer Experience
+            ce_1 = int(request.POST['ce_1'])
+            ce_2 = int(request.POST['ce_2'])
+            ce_3 = int(request.POST['ce_3'])
+            ce_4 = int(request.POST['ce_4'])
+            ce_5 = int(request.POST['ce_5'])
+            ce_6 = int(request.POST['ce_6'])
+            ce_7 = int(request.POST['ce_7'])
+            ce_8 = int(request.POST['ce_8'])
+            ce_9 = int(request.POST['ce_9'])
+            ce_10 = int(request.POST['ce_10'])
+            ce_11 = int(request.POST['ce_11'])
+
+            ce_total = ce_1 + ce_2 + ce_3 + ce_4 + ce_5 + ce_6 + ce_7 + ce_8 + ce_9 + ce_10 + ce_11
+
+            # Business
+            business_1 = int(request.POST['business_1'])
+            business_2 = int(request.POST['business_2'])
+            business_total = business_1 + business_2
+
+            # Compliance
+            compliance_1 = int(request.POST['compliance_1'])
+            compliance_2 = int(request.POST['compliance_2'])
+            compliance_3 = int(request.POST['compliance_3'])
+            compliance_4 = int(request.POST['compliance_4'])
+            compliance_5 = int(request.POST['compliance_5'])
+
+            compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4 + compliance_5
+
+            fatal_list = [compliance_1, compliance_2, compliance_3, compliance_4, compliance_5]
+            fatal_list_count = []
+            for i in fatal_list:
+                if i == 0:
+                    fatal_list_count.append(i)
+
+            no_of_fatals = len(fatal_list_count)
+
+            if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0 or compliance_4 == 0 or compliance_5 == 0:
+                overall_score = 0
+                fatal = True
+            else:
+                overall_score = ce_total + business_total + compliance_total
+                fatal = False
+
+            areas_improvement = request.POST['areaimprovement']
+            positives = request.POST['positives']
+            comments = request.POST['comments']
+            added_by = request.user.profile.emp_name
+
+            week = request.POST['week']
+            am = request.POST['am']
+
+            inbound = monform(associate_name=associate_name, emp_id=emp_id, qa=qa,team_lead=team_lead,manager=manager_name, manager_id=manager_emp_id,
+
+                                                                 call_date=call_date, audit_date=audit_date,
+                                                                 customer_name=customer_name,
+                                                                 customer_contact=customer_contact,
+                                                                 campaign=campaign, concept=concept, zone=zone,
+                                                                 call_duration=call_duration,
+
+                                                                 ce_1=ce_1, ce_2=ce_2, ce_3=ce_3, ce_4=ce_4, ce_5=ce_5,
+                                                                 ce_6=ce_6, ce_7=ce_7, ce_8=ce_8, ce_9=ce_9,
+                                                                 ce_10=ce_10, ce_11=ce_11,
+                                                                 ce_total=ce_total,
+
+                                                                 business_1=business_1, business_2=business_2,
+                                                                 business_total=business_total,
+
+                                                                 compliance_1=compliance_1, compliance_2=compliance_2,
+                                                                 compliance_3=compliance_3, compliance_4=compliance_4,
+                                                                 compliance_5=compliance_5,
+                                                                 compliance_total=compliance_total,
+
+                                                                 areas_improvement=areas_improvement,
+                                                                 positives=positives, comments=comments,
+                                                                 added_by=added_by,
+
+                                                                 overall_score=overall_score, category=category,
+                                                                 week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+                                                                 )
+            inbound.save()
+
+        if campaign_name == 'Tonn Coa Inbound':
+            inboundAddCoaching(MasterMonitoringFormTonnCoaInboundCalls)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Somethings Brewing':
+            inboundAddCoaching(SomethingsBrewingInbound)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Printer Pix Inbound':
+            inboundAddCoaching(PrinterPixMasterMonitoringFormInboundCalls)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Nucleus Media':
+            inboundAddCoaching(NuclusInboundCalls)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Naffa Innovations':
+            inboundAddCoaching(NaffaInnovationsInboundCalls)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Kappi machine':
+            inboundAddCoaching(KappimachineInboundCalls)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Healthyplus Inbound':
+            inboundAddCoaching(HealthyplusInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Finesse Mortgage Inbound':
+            inboundAddCoaching(FinesseMortgageInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Digital Swiss Gold Inbound':
+            inboundAddCoaching(DigitalSwissGoldInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Daniel Wellington Inbound':
+            inboundAddCoaching(DanielwellingtoInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'BhagyaLakshmi Inbound':
+            inboundAddCoaching(BhagyaLakshmiInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'AKDY Inbound':
+            inboundAddCoaching(AKDYInboundMonFormNew)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Aditya Birla Inbound':
+            inboundAddCoaching(AdityaBirlainboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'AB Hindalco Inbound':
+            inboundAddCoaching(ABHindalcoInboundMonForm)
+            return redirect('/employees/qahome')
+
+
+
 ############### Doestic Chat Email #################
 
 def domesticChatEmail(request):
@@ -11071,9 +11221,7 @@ def domesticChatEmail(request):
             domesticEmailChatAddCoaching(FurBabyMonForm)
             return redirect('/employees/qahome')
 
-        elif campaign_name == 'Maxwell Properties':
-            domesticEmailChatAddCoaching(MaxwellProperties)
-            return redirect('/employees/qahome')
+
 
         elif campaign_name == 'AKDY - Email':
             domesticEmailChatAddCoaching(AKDYEmailMonForm)
@@ -11424,25 +11572,17 @@ def changePassword(request):
     return redirect('/')
 
 
-def createCampaign(request):
+def addNewCampaign(request):
 
-    aadya = {'name': 'Maxwell Properties', 'type': 'Outbound'}
-    accutime = {'name': 'Movement of Insurance', 'type': 'Outbound'}
-    advance = {'name': 'Sterling Strategies', 'type': 'Outbound'}
-    allen = {'name': 'Tonn Coa Outbound', 'type': 'Outbound'}
-    allenb = {'name': 'Wit Digital', 'type': 'Outbound'}
-
-
-    campaigns = [
-        ## Outbound
-        aadya, accutime, advance, allen,allenb
-    ]
-
-    for i in campaigns:
-
-        c =Campaigns.objects.create(name=i['name'],type=i['type'])
-
+    if request.method == 'POST':
+        campaign = request.POST['campaign']
+        type = request.POST['type']
+        c = Campaigns.objects.create(name=campaign,type=type)
         c.save()
+        return redirect('/add-new-campaign')
+
+    else:
+        return render(request,'add-new-campaign.html')
 
 
 

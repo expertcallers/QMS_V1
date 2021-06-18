@@ -14,13 +14,11 @@ admin.site.register(ProfileNewtoAddUserandProfile)
 
 admin.site.register(ChatMonitoringFormEva)     # view done
 admin.site.register(ChatMonitoringFormPodFather)     # view done
-admin.site.register(InboundMonitoringFormNucleusMedia)     # view done
 
-admin.site.register(FameHouseMonitoringForm)    # view done
 admin.site.register(FameHouseNewMonForm)
 
 admin.site.register(FLAMonitoringForm)     # view done
-admin.site.register(MasterMonitoringFormGetaRatesPSECU)
+
 
 admin.site.register(MTCosmeticsMonForm)      # view done
 admin.site.register(MasterMonitoringFormTonnChatsEmail)     # view done
@@ -28,7 +26,6 @@ admin.site.register(MasterMonitoringFormTonnCoaInboundCalls)
 admin.site.register(MonitoringFormLeadsAadhyaSolution)
 admin.site.register(PrinterPixMasterMonitoringFormInboundCalls)
 admin.site.register(PrinterPixMasterMonitoringFormChatsEmail)
-
 admin.site.register(MonitoringFormLeadsInsalvage)
 admin.site.register(MonitoringFormLeadsMedicare)
 admin.site.register(MonitoringFormLeadsCTS)
@@ -42,11 +39,7 @@ admin.site.register(MonitoringFormLeadsInfothinkLLC)
 admin.site.register(MonitoringFormLeadsPSECU)
 admin.site.register(MonitoringFormLeadsGetARates)
 admin.site.register(MonitoringFormLeadsAdvanceConsultants)
-
-
 admin.site.register(FurBabyMonForm)
-
-
 admin.site.register(UpfrontOnlineLLCMonform)
 admin.site.register(MicroDistributingMonForm)
 admin.site.register(JJStudioMonForm)
@@ -56,22 +49,20 @@ admin.site.register(WTUMonForm)
 admin.site.register(RoofWellMonForm)
 admin.site.register(GlydeAppMonForm)
 admin.site.register(MillenniumScientificMonForm)
-admin.site.register(FinesseMortgageMonForm)
+
 admin.site.register(StandSpotMonForm)
 admin.site.register(CamIndustrialMonForm)
 admin.site.register(OptimalStudentLoanMonForm)
 admin.site.register(NavigatorBioMonForm)
-admin.site.register(AKDYInboundMonForm)
+
 admin.site.register(AKDYEmailMonForm)
 
 admin.site.register(IbizMonForm)
 
-admin.site.register(NafaInnovationsMonForm)
 admin.site.register(DanielWellinChatEmailMonForm)
 
 admin.site.register(ProtostarMonForm)
-admin.site.register(KappiMachineMonForm)
-admin.site.register(SomethingsBrewMonForm)
+
 
 admin.site.register(EmbassyLuxuryMonForm)
 admin.site.register(IIBMonForm)
@@ -84,19 +75,12 @@ admin.site.register(PractoMonForm)
 admin.site.register(ScalaMonForm)
 admin.site.register(GoldenEastMonForm)
 admin.site.register(CitizenCapitalMonForm)
-
-
-admin.site.register(PrinterPixMonForm)
 admin.site.register(PlutoManagementMonForm)
-
-
 admin.site.register(RitBrainMonForm)
 
 admin.site.register(RestaurentSolMonForm)
 admin.site.register(QBIQMonForm)
 admin.site.register(AccutimeMonForm)
-
-
 admin.site.register(latest)
 
 
