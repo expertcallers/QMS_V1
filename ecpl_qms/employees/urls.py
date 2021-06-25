@@ -13,50 +13,18 @@ urlpatterns = [
     # Monitoring Forms
     path('ECPL-EVA&NOVO-Monitoring-Form-chat',chatCoachingformEva),
     path('ECPL-Pod-Father-Monitoring-Form-chat',chatCoachingformPodFather),
-    path('ECPL-INBOUND-CALL-MONITORING-FORM',inboundCoachingForm),
 
-    path('ECPL-Fame-House-MONITORING-FORM',fameHouse),
     path('fame-house-new',fameHouseNew),
 
     path('ECPL-FLA-MONITORING_FORM',flaMonForm),
-    path('ECPL-Lead-sales-MONITORING_FORM',leadsandSalesMonForm),
 
-    path('ECPL-Email-chat-MONITORING_FORM',emailAndChatmonForm),
-    path('Master-Monitoring-Form-Movement-Insurance',movementInsurance),
-    path('wit-digital',witDigitel),
-    path('Printer-Pix-Master-Monitoring-Form-Chats-Email',printerPixChatsEmails),
-    path('Printer-Pix-Master-Monitoring-Form-Inbound-Calls',printerPixInboundCalls),
-    path('Monitoring-Form-Leads-Aadhya-Solution',leadsandSalesAadya),
-
-    path('Monitoring-Form-Leads-Insalvage',leadsandSalesInsalvage),
-    path('Monitoring-Form-Leads-Medicare',leadsandSalesMedicare),
-    path('Monitoring-Form-Leads-CTS',leadsandSalesCTS),
-    path('Monitoring-Form-Leads-Tentamus-Food',leadsandSalesTenamusFood),
-    path('Monitoring-Form-Leads-Tentamus-Pet',leadsandSalesTenamusPet),
-    path('Monitoring-Form-Leads-City-Security',leadsandSalesCitySecurity),
-    path('Monitoring-Form-Leads-Allen-Consulting',leadsandSalesAllenConsulting),
-    path('Monitoring-Form-Leads-system4',leadsandSalesSystem4),
-    path('Monitoring-Form-Leads-Louisville',leadsandSalesLouisville),
-    path('Monitoring-Form-Leads-Info-Think-LLC',leadsandSalesInfoThink),
-    path('Monitoring-Form-Leads-PSECU',leadsandSalesPSECU),
-    path('Monitoring-Form-Leads-Get-A-Rates',leadsandSalesGetRates),
-    path('Monitoring-Form-Leads-Advance-Consultant',leadsandSalesAdvance),
 
     path('Monitoring-Form-new-series-common',newSeriesMonForms),
     path('new-series-inbound',newSeriesInboundForms),
 
-    path('domestic-email-chat-mon-form',domesticChatEmail),
-    path('clear-view',clearView),
-    path('printerpix-monform',printerPix),
+    path('email-chat-mon-form',domesticChatEmail),
 
-    path('upfront-online-llc',upfrontOnlineMonForm),
-    path('micro-distributing',microDistributingMonForm),
-    path('jj-studio',jjStudioMonform),
-    path('pluto-management',plutoManagement),
-    path('sterling-strategies',sterlingStrategies),
 
-    path('amerisave-call',ameriSaveCall),
-    path('amerisave-email',ameriSaveEmail),
 
 
 #### Credentials
@@ -98,7 +66,6 @@ urlpatterns = [
     ##############3
     path('campaign-detailed-view/<str:cname>',campaignwiseDetailedReport),
 
-    path('fame-house-full-report',fameHouseFullReport),
 
     path('export-data',exportAuditReport),
     path('export-data-qa',exportAuditReportQA),

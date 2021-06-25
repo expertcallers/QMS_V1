@@ -4754,13 +4754,778 @@ class ABHindalcoInboundMonForm(models.Model):
 
 
 
+######################################################
+############## Email/CHat ############################
+
+
+class SuperPlayMonForm(models.Model):
+    process = models.CharField(default='Super Play', max_length=50)
+    type = models.CharField(default='Email - Chat', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration=models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class DanielWellinChatEmailMonForm(models.Model):
+    process = models.CharField(default='Daniel Wellington - Chat - Email', max_length=50)
+    type = models.CharField(default='Email - Chat', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration=models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class TerraceoChatEmailMonForm(models.Model):
+    process = models.CharField(default='Terraceo - Chat - Email', max_length=50)
+    type = models.CharField(default='Email - Chat', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration = models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class TonnChatsEmailNewMonForm(models.Model):
+    process = models.CharField(default='Tonn Coa Chat Email', max_length=50)
+    type = models.CharField(default='Email - Chat', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration = models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class PrinterPixMasterMonitoringFormChatsEmail(models.Model):
+    process = models.CharField(default='Printer Pix Chat Email', max_length=50)
+    type = models.CharField(default='Email - Chat', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration = models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class PractoMonForm(models.Model):
+    process = models.CharField(default='Practo', max_length=50)
+    type = models.CharField(default='Email - Chat', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration = models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+class FurBabyMonForm(models.Model):
+    process = models.CharField(default='Fur Baby', max_length=50)
+    type = models.CharField(default='Email - Chat', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration = models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
 
 
 
+class AKDYEmailMonForm(models.Model):
+    process = models.CharField(default='AKDY - Email', max_length=50)
+    type = models.CharField(default='Email - Chat', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration = models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class AmerisaveEmailMonForm(models.Model):
+    process = models.CharField(default='Amerisave Email', max_length=50)
+    type = models.CharField(default='Email - Chat', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration = models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class ClearViewEmailMonForm(models.Model):
+    process = models.CharField(default='Clear View Email', max_length=50)
+    type = models.CharField(default='Email - Chat', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration = models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class FinesseMortgageEmailMonForm(models.Model):
+    process = models.CharField(default='Finesse Mortgage Email', max_length=50)
+    type = models.CharField(default='Email - Chat', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration = models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class DigitalSwissGoldEmailChatMonForm(models.Model):
+    process = models.CharField(default='Digital Swiss Gold Email - Chat', max_length=50)
+    type = models.CharField(default='Email - Chat', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration = models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total = models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
 
 
-
-
+############################################################
 #####  Noom Eva Noom POD ###################################
 
 class ChatMonitoringFormEva(models.Model):
@@ -4884,7 +5649,8 @@ class ChatMonitoringFormPodFather(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
-############# FameHouse New ################3
+#############################################
+############# FameHouse New #################
 
 class FameHouseNewMonForm(models.Model):
     process = models.CharField(default='Fame House', max_length=50)
@@ -4987,7 +5753,7 @@ class FameHouseNewMonForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
-
+#############################################
 ############### FLA #########################
 
 class FLAMonitoringForm(models.Model):
@@ -5039,734 +5805,7 @@ class FLAMonitoringForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-######## EMail/Chat ##########################
-
-
-
-class MasterMonitoringFormTonnChatsEmail(models.Model):
-    process = models.CharField(default='Tonn Chat Email', max_length=50)
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-
-    trans_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Customer Experience
-    ce_1 = models.IntegerField()
-    ce_2 = models.IntegerField()
-    ce_3 = models.IntegerField()
-    ce_4 = models.IntegerField()
-    ce_5 = models.IntegerField()
-    ce_6 = models.IntegerField()
-    ce_7 = models.IntegerField()
-    ce_8 = models.IntegerField()
-    ce_9 = models.IntegerField()
-    ce_10 = models.IntegerField()
-    ce_11 = models.IntegerField()
-
-    # Business
-    business_1 = models.IntegerField()
-    business_2 = models.IntegerField()
-
-    # Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    business_total=models.IntegerField(null=True)
-    ce_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-
-
-class PrinterPixMasterMonitoringFormChatsEmail(models.Model):
-    process = models.CharField(default='Printer Pix Chat Email', max_length=50)
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    trans_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Customer Experience
-    ce_1 = models.IntegerField()
-    ce_2 = models.IntegerField()
-    ce_3 = models.IntegerField()
-    ce_4 = models.IntegerField()
-    ce_5 = models.IntegerField()
-    ce_6 = models.IntegerField()
-    ce_7 = models.IntegerField()
-    ce_8 = models.IntegerField()
-    ce_9 = models.IntegerField()
-    ce_10 = models.IntegerField()
-    ce_11 = models.IntegerField()
-
-    # Business
-    business_1 = models.IntegerField()
-    business_2 = models.IntegerField()
-
-    # Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-
-
-
-
-############################## New Forms ############
-
-class FurBabyMonForm(models.Model):
-    process = models.CharField(default='Fur Baby', max_length=50)
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    trans_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Customer Experience
-    ce_1 = models.IntegerField()
-    ce_2 = models.IntegerField()
-    ce_3 = models.IntegerField()
-    ce_4 = models.IntegerField()
-    ce_5 = models.IntegerField()
-    ce_6 = models.IntegerField()
-    ce_7 = models.IntegerField()
-    ce_8 = models.IntegerField()
-    ce_9 = models.IntegerField()
-    ce_10 = models.IntegerField()
-    ce_11 = models.IntegerField()
-
-    # Business
-    business_1 = models.IntegerField()
-    business_2 = models.IntegerField()
-
-    # Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-
-
-########## Domestic CHat ###############
-
-class SuperPlayMonForm(models.Model):
-    process = models.CharField(default='Super Play', max_length=50)
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    trans_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Customer Experience
-    ce_1 = models.IntegerField()
-    ce_2 = models.IntegerField()
-    ce_3 = models.IntegerField()
-    ce_4 = models.IntegerField()
-    ce_5 = models.IntegerField()
-    ce_6 = models.IntegerField()
-    ce_7 = models.IntegerField()
-    ce_8 = models.IntegerField()
-    ce_9 = models.IntegerField()
-    ce_10 = models.IntegerField()
-    ce_11 = models.IntegerField()
-
-    # Business
-    business_1 = models.IntegerField()
-    business_2 = models.IntegerField()
-
-    # Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class DanielWellinChatEmailMonForm(models.Model):
-    process = models.CharField(default=' - Chat - Email', max_length=50)
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    trans_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Customer Experience
-    ce_1 = models.IntegerField()
-    ce_2 = models.IntegerField()
-    ce_3 = models.IntegerField()
-    ce_4 = models.IntegerField()
-    ce_5 = models.IntegerField()
-    ce_6 = models.IntegerField()
-    ce_7 = models.IntegerField()
-    ce_8 = models.IntegerField()
-    ce_9 = models.IntegerField()
-    ce_10 = models.IntegerField()
-    ce_11 = models.IntegerField()
-
-    # Business
-    business_1 = models.IntegerField()
-    business_2 = models.IntegerField()
-
-    # Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-class TerraceoChatEmailMonForm(models.Model):
-    process = models.CharField(default='Terraceo - Chat - Email', max_length=50)
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    trans_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Customer Experience
-    ce_1 = models.IntegerField()
-    ce_2 = models.IntegerField()
-    ce_3 = models.IntegerField()
-    ce_4 = models.IntegerField()
-    ce_5 = models.IntegerField()
-    ce_6 = models.IntegerField()
-    ce_7 = models.IntegerField()
-    ce_8 = models.IntegerField()
-    ce_9 = models.IntegerField()
-    ce_10 = models.IntegerField()
-    ce_11 = models.IntegerField()
-
-    # Business
-    business_1 = models.IntegerField()
-    business_2 = models.IntegerField()
-
-    # Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-######################################
-
-
-
-
-
-
-
-
-
-
-
-
-class AKDYEmailMonForm(models.Model):
-
-    process = models.CharField(default='AKDY - Email', max_length=50)
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    trans_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone = models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    duration = models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Customer Experience
-    ce_1 = models.IntegerField()
-    ce_2 = models.IntegerField()
-    ce_3 = models.IntegerField()
-    ce_4 = models.IntegerField()
-    ce_5 = models.IntegerField()
-    ce_6 = models.IntegerField()
-    ce_7 = models.IntegerField()
-    ce_8 = models.IntegerField()
-    ce_9 = models.IntegerField()
-    ce_10 = models.IntegerField()
-    ce_11 = models.IntegerField()
-
-    # Business
-    business_1 = models.IntegerField()
-    business_2 = models.IntegerField()
-
-    # Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total = models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50, null=True)
-    week = models.CharField(max_length=20, null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class PractoMonForm(models.Model):
-    process = models.CharField(default='Practo', max_length=50)
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    customer_name = models.CharField(max_length=50)
-    customer_contact = models.CharField(max_length=100)
-    trans_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-    zone=models.CharField(max_length=50)
-    concept = models.CharField(max_length=60)
-    duration=models.IntegerField()
-
-    # mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-
-    category = models.CharField(max_length=20)
-
-    # Customer Experience
-    ce_1 = models.IntegerField()
-    ce_2 = models.IntegerField()
-    ce_3 = models.IntegerField()
-    ce_4 = models.IntegerField()
-    ce_5 = models.IntegerField()
-    ce_6 = models.IntegerField()
-    ce_7 = models.IntegerField()
-    ce_8 = models.IntegerField()
-    ce_9 = models.IntegerField()
-    ce_10 = models.IntegerField()
-    ce_11 = models.IntegerField()
-
-    # Business
-    business_1 = models.IntegerField()
-    business_2 = models.IntegerField()
-
-    # Compliance
-    compliance_1 = models.IntegerField()
-    compliance_2 = models.IntegerField()
-    compliance_3 = models.IntegerField()
-    compliance_4 = models.IntegerField()
-    compliance_5 = models.IntegerField()
-
-    areas_improvement = models.TextField()
-    positives = models.TextField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    ce_total = models.IntegerField(null=True)
-    business_total=models.IntegerField(null=True)
-    compliance_total = models.IntegerField(null=True)
-    overall_score = models.IntegerField(null=True)
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-
-
-
-
-
-
-
-
-
-
-
-class PlutoManagementMonForm(models.Model):
-
-    process = models.CharField(default='Pluto Management', max_length=50)
-
-    emp_id = models.IntegerField()
-    associate_name = models.CharField(max_length=50)
-    qa = models.CharField(max_length=50)
-    team_lead = models.CharField(max_length=50)
-    trans_date = models.DateField()
-    audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
-
-    # Mgt
-    manager = models.CharField(max_length=50)
-    manager_id = models.IntegerField()
-    category = models.CharField(max_length=20)
-
-    #Parameters
-
-    ownership = models.CharField(max_length=100)
-    title_number = models.CharField(max_length=100)
-    property_number = models.CharField(max_length=100)
-    property_road = models.CharField(max_length=100)
-    property_city = models.CharField(max_length=100)
-    property_post = models.CharField(max_length=100)
-    property_council = models.CharField(max_length=100)
-    adressee_firstname = models.CharField(max_length=100)
-    company = models.CharField(max_length=100)
-    send_name = models.CharField(max_length=100)
-    send_road = models.CharField(max_length=100)
-    send_city = models.CharField(max_length=100)
-    send_post = models.CharField(max_length=100)
-    result = models.IntegerField()
-    comments = models.TextField()
-
-    added_by = models.CharField(max_length=30)
-    status = models.BooleanField(default=False)
-    closed_date = models.DateTimeField(null=True)
-    emp_comments = models.TextField(null=True)
-
-    overall_score = models.IntegerField()
-
-    am = models.CharField(max_length=50,null=True)
-    week = models.CharField(max_length=20,null=True)
-    ##############
-    fatal = models.BooleanField(default=False)
-    fatal_count = models.IntegerField(default=0)
-    disput_status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.associate_name
-
-    def snippet(self):
-        return self.comments[:100] + '...'
-
-
-
-
-
-
-
-
-
-
-
-
+############# End of Forms ##############################
 
 class Empdata(models.Model):
     uid=models.IntegerField(unique=True)

@@ -21,7 +21,7 @@ admin.site.register(FLAMonitoringForm)     # view done
 
 
 admin.site.register(MTCosmeticsMonForm)      # view done
-admin.site.register(MasterMonitoringFormTonnChatsEmail)     # view done
+
 admin.site.register(MasterMonitoringFormTonnCoaInboundCalls)
 admin.site.register(MonitoringFormLeadsAadhyaSolution)
 admin.site.register(PrinterPixMasterMonitoringFormInboundCalls)
@@ -75,7 +75,7 @@ admin.site.register(PractoMonForm)
 admin.site.register(ScalaMonForm)
 admin.site.register(GoldenEastMonForm)
 admin.site.register(CitizenCapitalMonForm)
-admin.site.register(PlutoManagementMonForm)
+
 admin.site.register(RitBrainMonForm)
 
 admin.site.register(RestaurentSolMonForm)
