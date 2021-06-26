@@ -6,23 +6,7 @@
         <div class="container-lg" style="padding-bottom: 20px">
             <div class="row">
                 <div class="col-md-6" style="padding: 80px 30px">
-                    <h2 style="color:white">Campaigns</h2>
-                    <br>
-                    <div>
-                        <form action="/campaign-view" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <span style="color: gold;font-size: 14px">Add Coaching</span>
-                            <select name="campaign_id" style="padding: 2px;font-size: 12px;border-radius: 3px">
-                            {% for c in campaigns %}
-                            <option value="{{c.id}}">{{c.name}}</option>
-                             {% endfor %}
-                            </select>
-                            <br>
-                            <br>
-                            <br>
-                            <button class="btn btn-primary" style="max-width: 125px;font-size: 13px;">Add Coaching</button>
-                        </form>
-                    </div>
+
                 </div>
                 <div class="col-md-6" style="padding-top: 50px;text-align: right;padding-right: 60px">
                     <div class="profile-head">
@@ -43,6 +27,91 @@
 
     </div>
 </section>
+
+<div class="container-lg" style="margin-top:50px">
+    <h2>Monitoring Forms</h2>
+    <br>
+    <div class="row">
+        <div class="col-md-3">
+            <div>
+                <div>
+                    <h4>Outbound</h4>
+                        <form action="/campaign-view" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <p>Select Campaign</p>
+                            <select name="campaign_id" style="padding: 2px;font-size: 12px;border-radius: 3px">
+                            {% for c in campaigns %}
+                            <option value="{{c.id}}">{{c.name}}</option>
+                             {% endfor %}
+                            </select>
+                            <br>
+                            <br>
+                            <button class="btn btn-primary" style="max-width: 125px;font-size: 13px;">Add Coaching</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div>
+                <div>
+                    <h4>Inbound</h4>
+                        <form action="/campaign-view" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <p>Select Campaign</p>
+                            <select name="campaign_id" style="padding: 2px;font-size: 12px;border-radius: 3px">
+                            {% for c in campaigns_inbound %}
+                            <option value="{{c.id}}">{{c.name}}</option>
+                             {% endfor %}
+                            </select>
+                            <br>
+                            <br>
+                            <button class="btn btn-primary" style="max-width: 125px;font-size: 13px;background: chocolate;border-color: chocolate;">Add Coaching</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div>
+                <div>
+                    <h4>Email/Chat</h4>
+                        <form action="/campaign-view" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <p>Select Campaign</p>
+                            <select name="campaign_id" style="padding: 2px;font-size: 12px;border-radius: 3px">
+                            {% for c in campaigns_email_chat %}
+                            <option value="{{c.id}}">{{c.name}}</option>
+                             {% endfor %}
+                            </select>
+                            <br>
+                            <br>
+                            <button class="btn btn-primary" style="max-width: 125px;font-size: 13px;background: #096b1f;border-color: #096b1f;">Add Coaching</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div>
+                <div>
+                    <h4>Other</h4>
+                        <form action="/campaign-view" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <p>Select Campaign</p>
+                            <select name="campaign_id" style="padding: 2px;font-size: 12px;border-radius: 3px">
+                            {% for c in campaigns_other %}
+                            <option value="{{c.id}}">{{c.name}}</option>
+                             {% endfor %}
+                            </select>
+                            <br>
+                            <br>
+                            <button class="btn btn-primary" style="max-width: 125px;font-size: 13px;background: #bd2130;border-color: #bd2130;">Add Coaching</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div class="container-lg" style="margin-top: 40px">
 

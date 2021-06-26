@@ -41,7 +41,7 @@
                             <label for="calldate">Ticket Date</label>
                             <input type="date" class="form-control" id="calldate" name="ticketdate" required>
                             <label for="auditdate">Audit Date</label>
-                            <input type="date" class="form-control" id="auditdate" name="auditdate" required>
+                            <input type="date" class="form-control" id="auditdate" name="auditdate" value="{{date}}" readonly>
                         </div>
                          <div class="col-md-4">
                             <label for="tickettype">Ticket Type</label>
@@ -73,7 +73,7 @@
                             <input type="text" class="form-control" id="zone" name="ticket_no" required>
                         </div>
                          <div class="col-md-4">
-                             <input type="hidden" class="form-control" name="campaign" value="{{agent.process}}">
+                             <input type="hidden" class="form-control" name="campaign" value="{{campaign.name}}">
                         </div>
                     </div>
                 </div>

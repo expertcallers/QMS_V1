@@ -1761,8 +1761,6 @@ def coachingDispute(request,pk):
 
 def qahome(request):
 
-
-
     list_of_monforms = [ # OutBound
                         MonitoringFormLeadsAadhyaSolution,AccutimeMonForm,MonitoringFormLeadsAdvanceConsultants,
                         MonitoringFormLeadsAllenConsulting,CamIndustrialMonForm,CitizenCapitalMonForm,MonitoringFormLeadsCitySecurity,
@@ -1785,7 +1783,16 @@ def qahome(request):
                         # Email/CHat
                         SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
                         PrinterPixMasterMonitoringFormChatsEmail,PractoMonForm,FurBabyMonForm,AKDYEmailMonForm,AmerisaveEmailMonForm,
-                        ClearViewEmailMonForm,FinesseMortgageEmailMonForm,DigitalSwissGoldEmailChatMonForm
+                        ClearViewEmailMonForm,FinesseMortgageEmailMonForm,DigitalSwissGoldEmailChatMonForm,
+
+                        #FLA
+                        FLAMonitoringForm,
+
+                        #Noom
+                        ChatMonitoringFormEva,ChatMonitoringFormPodFather,
+
+                        #FameHouse
+                        FameHouseNewMonForm
 
                         ]
 
@@ -1867,7 +1874,7 @@ def qahome(request):
 
             #############################################
 
-        campaigns_from_db = Campaigns.objects.all()
+        campaigns_from_db = Campaigns.objects.filter(type='outbound')
 
         data={'teams':teams,
 
@@ -1968,7 +1975,10 @@ def qahome(request):
             fatal_list.append(fatal_count)
 
             #############################################
-        campaigns_from_db = Campaigns.objects.all()
+        campaigns_from_db = Campaigns.objects.filter(type='Outbound').order_by('name')
+        campaigns_inbound = Campaigns.objects.filter(type='Inbound').order_by('name')
+        campaigns_email_chat = Campaigns.objects.filter(type='Email - Chat').order_by('name')
+        campaigns_other = Campaigns.objects.exclude(type__in=['Outbound','Inbound','Email - Chat'])
 
         data = {'teams': teams,
 
@@ -1982,438 +1992,14 @@ def qahome(request):
                 'camp_wise_count': campaign_wise_count,
                 'fatal_list': fatal_list,
 
-                'campaigns':campaigns_from_db
+                'campaigns':campaigns_from_db,
+                'campaigns_inbound':campaigns_inbound,
+                'campaigns_email_chat':campaigns_email_chat,
+                'campaigns_other':campaigns_other,
 
                 }
 
         return render(request, 'qa-home.html', data)
-
-# Final Forms
-
-def chatCoachingformEva(request):
-    if request.method == 'POST':
-        category='chat'
-        associate_name = request.POST['empname']
-        emp_id = request.POST['empid']
-        qa = request.POST['qa']
-        team_lead = request.POST['tl']
-        ticket_no=request.POST['ticketnumber']
-        trans_date = request.POST['transdate']
-        audit_date = request.POST['auditdate']
-        campaign = request.POST['campaign']
-        concept = request.POST['concept']
-        evaluator=request.POST['evaluator']
-
-        #######################################
-        prof_obj = Profile.objects.get(emp_id=emp_id)
-        manager = prof_obj.manager
-
-        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
-
-        manager_emp_id = manager_emp_id_obj.emp_id
-        manager_name = manager
-        #########################################
-
-
-        # Customer Experience
-        ce_1 = int(request.POST['ce_1'])
-        ce_2 = int(request.POST['ce_2'])
-        ce_3 = int(request.POST['ce_3'])
-        ce_4 = int(request.POST['ce_4'])
-
-        ce_total=ce_1+ce_2+ce_3+ce_4
-
-        #Compliance
-        compliance_1 = int(request.POST['compliance_1'])
-        compliance_2 = int(request.POST['compliance_2'])
-        compliance_3 = int(request.POST['compliance_3'])
-        compliance_4 = int(request.POST['compliance_4'])
-        compliance_5 = int(request.POST['compliance_5'])
-        compliance_6 = int(request.POST['compliance_6'])
-
-        #################################################
-
-        fatal_list = [compliance_1,compliance_2,compliance_3,compliance_4,compliance_5,compliance_6]
-        fatal_list_count = []
-        for i in fatal_list:
-            if i == 0:
-                fatal_list_count.append(i)
-
-        no_of_fatals = len(fatal_list_count)
-
-        ####################################################
-
-
-
-        compliance_total=compliance_1+compliance_2+compliance_3+compliance_4+compliance_5+compliance_6
-
-        if compliance_1==0 or compliance_2==0 or compliance_3==0 or compliance_4==0 or compliance_5==0 or compliance_6==0:
-            overall_score=0
-            fatal=True
-        else:
-            overall_score=ce_total+compliance_total
-            fatal=False
-
-        areas_improvement = request.POST['areaimprovement']
-        positives = request.POST['positives']
-        comments = request.POST['comments']
-        added_by = request.user.profile.emp_name
-
-        week = request.POST['week']
-        am = request.POST['am']
-
-        chat = ChatMonitoringFormEva(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                                     manager=manager_name,manager_id=manager_emp_id,
-
-                                     trans_date=trans_date, audit_date=audit_date,ticket_no=ticket_no,
-                                     campaign=campaign,concept=concept,evaluator=evaluator,
-
-                                     ce_1=ce_1,ce_2=ce_2,ce_3=ce_3,ce_4=ce_4,ce_total=ce_total,
-
-                                     compliance_1=compliance_1,compliance_2=compliance_2,compliance_3=compliance_3,
-                                     compliance_4=compliance_4,compliance_5=compliance_5,compliance_6=compliance_6,
-                                     compliance_total=compliance_total,
-
-                                     areas_improvement=areas_improvement,
-                                     positives=positives, comments=comments,
-                                     added_by=added_by,
-
-                                     overall_score=overall_score,category=category,
-                                     week=week,am=am,fatal_count=no_of_fatals,fatal=fatal
-                                     )
-        chat.save()
-        return redirect('/employees/qahome')
-    else:
-        teams = Team.objects.all()
-        users = User.objects.all()
-        data = {'teams': teams, 'users': users}
-        return render(request, 'mon-forms/ECPL-EVA&NOVO-Monitoring-Form-chat.html', data)
-
-def chatCoachingformPodFather(request):
-    if request.method == 'POST':
-        category='chat'
-        associate_name = request.POST['empname']
-        emp_id = request.POST['empid']
-        qa = request.POST['qa']
-        team_lead = request.POST['tl']
-        ticket_no=request.POST['ticketnumber']
-        trans_date = request.POST['transdate']
-        audit_date = request.POST['auditdate']
-        campaign = request.POST['campaign']
-        concept = request.POST['concept']
-        evaluator=request.POST['evaluator']
-
-        #######################################
-        prof_obj = Profile.objects.get(emp_id=emp_id)
-        manager = prof_obj.manager
-
-        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
-
-        manager_emp_id = manager_emp_id_obj.emp_id
-        manager_name = manager
-        #########################################
-
-        # Customer Experience
-        ce_1 = int(request.POST['ce_1'])
-        ce_2 = int(request.POST['ce_2'])
-        ce_3 = int(request.POST['ce_3'])
-        ce_4 = int(request.POST['ce_4'])
-
-        ce_total=ce_1+ce_2+ce_3+ce_4
-
-        #Compliance
-        compliance_1 = int(request.POST['compliance_1'])
-        compliance_2 = int(request.POST['compliance_2'])
-        compliance_3 = int(request.POST['compliance_3'])
-        compliance_4 = int(request.POST['compliance_4'])
-        compliance_5 = int(request.POST['compliance_5'])
-        compliance_6 = int(request.POST['compliance_6'])
-
-        #################################################
-
-        fatal_list = [compliance_1, compliance_2, compliance_3, compliance_4, compliance_5, compliance_6]
-        fatal_list_count = []
-        for i in fatal_list:
-            if i == 0:
-                fatal_list_count.append(i)
-
-        no_of_fatals = len(fatal_list_count)
-
-        ####################################################
-
-
-        compliance_total=compliance_1+compliance_2+compliance_3+compliance_4+compliance_5+compliance_6
-
-        if compliance_1==0 or compliance_2==0 or compliance_3==0 or compliance_4==0 or compliance_5==0 or compliance_6==0:
-            overall_score=0
-            fatal =True
-        else:
-            overall_score=ce_total+compliance_total
-            fatal = False
-
-        areas_improvement = request.POST['areaimprovement']
-        positives = request.POST['positives']
-        comments = request.POST['comments']
-        added_by = request.user.profile.emp_name
-
-        week = request.POST['week']
-        am = request.POST['am']
-
-        chat = ChatMonitoringFormPodFather(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                                           manager=manager_name,manager_id=manager_emp_id,
-
-                                     trans_date=trans_date, audit_date=audit_date,ticket_no=ticket_no,
-                                     campaign=campaign,concept=concept,evaluator=evaluator,
-
-                                     ce_1=ce_1,ce_2=ce_2,ce_3=ce_3,ce_4=ce_4,ce_total=ce_total,
-
-                                     compliance_1=compliance_1,compliance_2=compliance_2,compliance_3=compliance_3,
-                                     compliance_4=compliance_4,compliance_5=compliance_5,compliance_6=compliance_6,
-                                     compliance_total=compliance_total,
-
-                                     areas_improvement=areas_improvement,
-                                     positives=positives, comments=comments,
-                                     added_by=added_by,
-
-                                     overall_score=overall_score,category=category,
-                                           week=week,am=am,fatal_count=no_of_fatals,fatal=fatal
-                                     )
-        chat.save()
-        return redirect('/employees/qahome')
-    else:
-        teams = Team.objects.all()
-        users = User.objects.all()
-        data = {'teams': teams, 'users': users}
-        return render(request,'mon-forms/ECPL-Pod-Father-Monitoring-Form-chat.html', data)
-
-
-
-def fameHouseNew(request):
-
-    if request.method == 'POST':
-        category='Email'
-        associate_name = request.POST['empname']
-        emp_id = request.POST['empid']
-        qa = request.POST['qa']
-        team_lead = request.POST['tl']
-
-        ticket_no=request.POST['ticket_no']
-        ticket_type = request.POST['ticket_type']
-
-        trans_date = request.POST['ticketdate']
-        audit_date = request.POST['auditdate']
-
-        campaign = request.POST['campaign']
-
-        week = request.POST['week']
-        am = request.POST['am']
-
-        #######################################
-        prof_obj = Profile.objects.get(emp_id=emp_id)
-        manager = prof_obj.manager
-
-        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
-
-        manager_emp_id = manager_emp_id_obj.emp_id
-        manager_name = manager
-        #########################################
-
-        # Immediate fails:
-        compliance_1 = int(request.POST['compliance_1'])
-        compliance_2 = int(request.POST['compliance_2'])
-        compliance_3 = int(request.POST['compliance_3'])
-        compliance_4 = int(request.POST['compliance_4'])
-        compliance_5 = int(request.POST['compliance_5'])
-        compliance_6 = int(request.POST['compliance_6'])
-
-        compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4 + compliance_5 + compliance_6
-
-
-        na_list = []
-        sum_list = []
-        def scoreCalc(pk):
-
-            if pk == 'NA':
-                na_list.append(pk)
-                return pk
-            else:
-                sum_list.append(int(pk))
-                return int(pk)
-
-
-        # Opening
-
-        opening_1 = scoreCalc(request.POST['opening_1'])
-        opening_2 = scoreCalc(request.POST['opening_2'])
-        opening_3 = scoreCalc(request.POST['opening_3'])
-
-        #opening_total = opening_1+opening_2+opening_3
-
-        # Customer Issue Resolution
-
-        cir_1 = scoreCalc(request.POST['cir_1'])
-        cir_2 = scoreCalc(request.POST['cir_2'])
-        cir_3 = scoreCalc(request.POST['cir_3'])
-        cir_4 = scoreCalc(request.POST['cir_4'])
-        cir_5 = scoreCalc(request.POST['cir_5'])
-
-        #cir_total = cir_1+cir_2+cir_3+cir_4+cir_5
-
-        # Macro Usage
-        macro_1 = scoreCalc(request.POST['macro_1'])
-        macro_2 = scoreCalc(request.POST['macro_2'])
-
-        #macro_total = macro_1 + macro_2
-
-        # Formatting
-        formatting_1 = scoreCalc(request.POST['formatting_1'])
-        formatting_2 = scoreCalc(request.POST['formatting_2'])
-        formatting_3 = scoreCalc(request.POST['formatting_3'])
-
-       # formatting_total = formatting_1 + formatting_2 + formatting_3
-
-        # Documentation
-        doc_1 = scoreCalc(request.POST['doc_1'])
-        doc_2 = scoreCalc(request.POST['doc_2'])
-        doc_3 = scoreCalc(request.POST['doc_3'])
-        doc_4 = scoreCalc(request.POST['doc_4'])
-
-       # doc_total= doc_1 + doc_2 + doc_3 + doc_4
-
-        # Etiquette
-        et_1 = scoreCalc(request.POST['et_1'])
-        et_2 = scoreCalc(request.POST['et_2'])
-        et_3 = scoreCalc(request.POST['et_3'])
-        et_4 = scoreCalc(request.POST['et_4'])
-
-       # et_total = et_1 + et_2 + et_3 + et_4
-
-        # Closing
-        closing_1 = scoreCalc(request.POST['closing_1'])
-        closing_2 = scoreCalc(request.POST['closing_2'])
-
-       # closing_total = closing_1 + closing_2
-
-
-        fatal_list=[compliance_1,compliance_2,compliance_3,compliance_4,compliance_5,compliance_6]
-
-        fatal_list_count=[]
-        for i in fatal_list:
-            if i==0:
-                fatal_list_count.append(i)
-        no_of_fatals=len(fatal_list_count)
-
-
-        if compliance_1 == 0 or compliance_2 ==0 or compliance_3==0 or compliance_4==0 or compliance_5==0 or compliance_6==0:
-            overall_score=0
-            fatal=True
-        else:
-            overall_score= (sum(sum_list)/len(sum_list))*100
-            fatal=False
-
-
-        #################################################
-
-        areas_improvement = request.POST['areaimprovement']
-        positives = request.POST['positives']
-        comments = request.POST['comments']
-
-        added_by = request.user.profile.emp_name
-
-
-        famehouse = FameHouseNewMonForm(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                                     manager=manager_name,manager_id=manager_emp_id,am=am,
-
-                                     trans_date=trans_date, audit_date=audit_date,ticket_no=ticket_no,
-                                     campaign=campaign,
-                                     compliance_1=compliance_1,compliance_2=compliance_2,compliance_3=compliance_3,compliance_4=compliance_4,compliance_5=compliance_5,compliance_6=compliance_6,compliance_total=compliance_total,
-                                     opening_1=opening_1,opening_2=opening_2,opening_3=opening_3,
-                                     cir_1=cir_1,cir_2=cir_2,cir_3=cir_3,cir_4=cir_4,cir_5=cir_5,
-                                     macro_1=macro_1,macro_2=macro_2,
-                                     formatting_1=formatting_1,formatting_2=formatting_2,formatting_3=formatting_3,
-                                     doc_1=doc_1,doc_2=doc_2,doc_3=doc_3,doc_4=doc_4,
-                                     et_1=et_1,et_2=et_2,et_3=et_3,et_4=et_4,
-                                     closing_1=closing_1,closing_2=closing_2,
-
-                                     areas_improvement=areas_improvement,
-                                     positives=positives, comments=comments,
-                                     added_by=added_by,ticket_type=ticket_type,
-
-                                     category=category,overall_score=overall_score,
-                                            week=week,fatal=fatal,fatal_count=no_of_fatals
-                                     )
-
-        famehouse.save()
-        return redirect('/employees/qahome')
-    else:
-        teams = Team.objects.all()
-        users = User.objects.all()
-        data = {'teams': teams, 'users': users}
-        return render(request, 'mon-forms/Fame-house-mon-form.html', data)
-
-
-
-def flaMonForm(request):
-    if request.method == 'POST':
-        category='other'
-        associate_name = request.POST['empname']
-        emp_id = request.POST['empid']
-        qa = request.POST['qa']
-        team_lead = request.POST['tl']
-        order_id=request.POST['order_id']
-        trans_date = request.POST['transdate']
-        audit_date = request.POST['auditdate']
-        campaign = request.POST['campaign']
-        concept = request.POST['concept']
-        service=request.POST['service']
-        check_list=request.POST['checklist']
-
-        #######################################
-        prof_obj=Profile.objects.get(emp_id=emp_id)
-        manager=prof_obj.manager
-
-        manager_emp_id_obj=Profile.objects.get(emp_name=manager)
-
-        manager_emp_id=manager_emp_id_obj.emp_id
-        manager_name=manager
-        #########################################
-
-        # Macros
-        checklist_1 = int(request.POST['checklist_1'])
-
-        reason_for_failure=request.POST['reason_for_failure']
-        areas_improvement = request.POST['areaimprovement']
-        positives = request.POST['positives']
-        comments = request.POST['comments']
-        added_by = request.user.profile.emp_name
-
-        week = request.POST['week']
-        am = request.POST['am']
-
-        fla = FLAMonitoringForm(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                                     manager=manager_name,manager_id=manager_emp_id,
-
-                                     trans_date=trans_date, audit_date=audit_date,order_id=order_id,
-                                     campaign=campaign,concept=concept,service=service,
-
-                                     check_list=check_list,
-                                     checklist_1=checklist_1,
-
-                                     reason_for_failure=reason_for_failure,
-                                     areas_improvement=areas_improvement,
-                                     positives=positives, comments=comments,
-                                     added_by=added_by,
-
-                                     overall_score=checklist_1,category=category,
-                                week=week,am=am
-                                     )
-        fla.save()
-        return redirect('/employees/qahome')
-    else:
-        teams = Team.objects.all()
-        users = User.objects.all()
-        data = {'teams': teams, 'users': users}
-        return render(request, 'mon-forms/FLA-mon-form.html', data)
 
 
 
@@ -2458,142 +2044,22 @@ def selectCoachingForm(request):
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/email-chat.html', data)
 
-
-
-        '''if audit_form=='Noom-EVA':
-            agent=Profile.objects.get(emp_id=agent_id)
-            data = {'agent':agent,'team':team}
-            return render(request, 'mon-forms/ECPL-EVA&NOVO-Monitoring-Form-chat.html', data)
-
-        elif audit_form=='Noom-POD':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team}
-            return render(request, 'mon-forms/ECPL-Pod-Father-Monitoring-Form-chat.html', data)
-
-        elif audit_form=='Nucleus':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team}
-            return render(request, 'mon-forms/ECPL-INBOUND-CALL-MONITORING-FORM.html', data)
-
-        elif audit_form=='Fame House':
-
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team}
-            return render(request, 'mon-forms/fame-house-new.html', data)
-
-        elif audit_form=='FLA':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-
+        elif campaign_type == 'FLA':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/FLA-mon-form.html', data)
 
+        elif campaign_type == 'Noom Eva':
+            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+            return render(request, 'mon-forms/ECPL-EVA&NOVO-Monitoring-Form-chat.html', data)
 
+        elif campaign_type == 'Noom POD':
 
-        elif audit_form=='Tonn Chat Email':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team}
-            return render(request, 'mon-forms/ECPL-Chat-Email-MONITORING-FORM.html', data)
+            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+            return render(request, 'mon-forms/ECPL-Pod-Father-Monitoring-Form-chat.html', data)
 
-
-        elif audit_form=='Movement of Insurance':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team}
-            return render(request, 'mon-forms/Master-Monitoring-Form-Movement-Insurance.html', data)
-
-        elif audit_form=='Wit Digital':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team}
-            return render(request, 'mon-forms/Wit-Digital-Mastering-Monitoring-Form.html', data)
-
-        elif audit_form == 'Printer Pix Chat Email':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team}
-            return render(request, 'mon-forms/Printer-Pix-Master-Monitoring-Form-Chats-Email.html', data)
-
-        elif audit_form == 'Printer Pix Inbound':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team}
-            return render(request, 'mon-forms/Printer-Pix-Master-Monitoring-Form-Inbound-Calls.html', data)
-
-        elif audit_form == 'AAdya' or audit_form == 'Insalvage' or audit_form == 'Medicare' or audit_form == 'CTS' or audit_form == 'Tentamus Food' or audit_form == 'Tentamus Pet' or audit_form == 'City Security' or audit_form == 'Allen Consulting' or audit_form == 'System4' or audit_form == 'Louisville' or audit_form == 'Info Think LLC' or audit_form == 'PSECU' or audit_form == 'Get A Rates' or audit_form == 'Advance Consultants' or audit_form == 'Upfront Online LLC' or audit_form == 'Micro Distributing' or audit_form == 'JJ Studio':
-
-
-
-        elif audit_form == 'Zero Stress Marketing' or audit_form =='WTU' or audit_form =='Roof Well' or audit_form == 'Glyde App' or audit_form == 'Millennium Scientific' or audit_form == 'Finesse Mortgage' or audit_form == 'Stand Spot' or audit_form == 'Cam Industrial' or audit_form == 'Optimal Student Loan' or audit_form == 'Navigator Bio' or audit_form == 'AKDY - Inbound':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team,'date':new_today_date}
-            return render(request, 'mon-forms/new-series-common.html', data)
-
-        elif audit_form == 'Ibiz' or audit_form == 'Aditya Birla Cellulose' or audit_form == 'Bhagyalaxmi Industries' or audit_form == 'Digital Swiss Gold' or audit_form == 'Naffa Innovations' or audit_form =='Daniel Wellington - Inbound' or audit_form =='Protostar' or audit_form == 'Kappi machine' or audit_form == 'Somethings Brewing' or audit_form == 'AB - Hindalco' or audit_form == 'Embassy Luxury' or audit_form == 'IIB' or audit_form == 'Terraceo - Lead' or audit_form == 'Kalki Fashions':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team,'date':new_today_date}
-            return render(request, 'mon-forms/new-series-common.html', data)
-
-        elif audit_form=='MT Cosmetic':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-            return render(request, 'mon-forms/new-series-common.html', data)
-
-        elif audit_form=='Scala' or audit_form=='Citizen Capital' or audit_form=='Golden East':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-            return render(request, 'mon-forms/new-series-common.html', data)
-
-
-        elif audit_form == 'Super Play' or audit_form =='Daniel Wellington - Chat - Email' or audit_form =='Terraceo - Chat - Email' or audit_form =='Practo':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team,'date':new_today_date}
-            return render(request, 'mon-forms/email-chat.html', data)
-
-        elif audit_form == 'Fur Baby' or audit_form == 'Maxwell Properties'or audit_form == 'AKDY - Email':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-            return render(request, 'mon-forms/inter-email-chat.html', data)
-
-        elif audit_form == 'Clear View':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-            return render(request, 'mon-forms/clear-view.html', data)
-        elif audit_form == 'PrinterPix':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-            return render(request, 'mon-forms/printer-pix.html', data)
-
-        elif audit_form == 'Pluto Management':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-            return render(request, 'mon-forms/pluto-management.html', data)
-
-        elif audit_form == 'Sterling Strategies':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-            return render(request, 'mon-forms/sterling-strategies.html', data)
-
-        elif audit_form == 'Ri8Brain':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-            return render(request, 'mon-forms/new-series-common.html', data)
-
-        elif audit_form == 'Healthy Plus' or audit_form == 'Solar Campaign' or audit_form == 'Yes Health Molina':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-            return render(request, 'mon-forms/new-series-common.html', data)
-
-        elif audit_form == 'Restaurant Solution Group' or audit_form =='QBIQ' or audit_form =='Accutime' or audit_form =='Tonn Coa - Inbound':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-            return render(request, 'mon-forms/new-series-common.html', data)
-
-        elif audit_form == 'Amerisave - Call':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-            return render(request, 'mon-forms/amerisave-calls.html', data)
-
-        elif audit_form == 'Amerisave - Email':
-            agent = Profile.objects.get(emp_id=agent_id)
-            data = {'agent': agent, 'team': team, 'date': new_today_date}
-            return render(request, 'mon-forms/amerisave-email.html', data)'''
-
+        elif campaign_type =='Fame House':
+            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+            return render(request, 'mon-forms/fame-house-new.html', data)
 
 
     else:
@@ -3965,6 +3431,14 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(MonitoringFormLeadsAadhyaSolution)
             return response
 
+        elif campaign == 'AB Hindalco Outbound':
+            response = exportAadyaseries(ABHindalcoOutboundMonForm)
+            return response
+
+        elif campaign == 'Aditya Birla Outbound':
+            response = exportAadyaseries(AdityaBirlaOutboundMonForm)
+            return response
+
         elif campaign == 'Insalvage':
             response = exportAadyaseries(MonitoringFormLeadsInsalvage)
             return response
@@ -4053,8 +3527,6 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(MillenniumScientificMonForm)
             return response
 
-
-
         elif campaign == 'Stand Spot':
             response = exportAadyaseries(StandSpotMonForm)
             return response
@@ -4071,19 +3543,13 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(NavigatorBioMonForm)
             return response
 
-
-
         elif campaign == 'Ibiz':
             response = exportAadyaseries(IbizMonForm)
             return response
 
-
-
         elif campaign == 'Protostar':
             response = exportAadyaseries(ProtostarMonForm)
             return response
-
-
 
         elif campaign == 'Embassy Luxury':
             response = exportAadyaseries(EmbassyLuxuryMonForm)
@@ -4116,8 +3582,6 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(RitBrainMonForm)
             return response
 
-
-
         elif campaign == 'Restaurant Solution Group':
             response = exportAadyaseries(RestaurentSolMonForm)
             return response
@@ -4130,8 +3594,6 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(AccutimeMonForm)
             return response
 
-
-
         elif campaign == 'Solar Campaign':
             response = exportAadyaseries(SolarCampaignMonForm)
             return response
@@ -4140,9 +3602,298 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(YesHealthMolinaMonForm)
             return response
 
+        elif campaign == 'Amerisave Outbound':
+            response = exportAadyaseries(AmerisaveoutboundMonForm)
+            return response
+        elif campaign == 'BhagyaLakshmi Outbound':
+            response = exportAadyaseries(BhagyaLakshmiOutbound)
+            return response
+        elif campaign == 'Clear View Outbound':
+            response = exportAadyaseries(ClearViewOutboundMonForm)
+            return response
+        elif campaign == 'Daniel Wellington Outbound':
+            response = exportAadyaseries(DanielWellingtonOutboundMonForm)
+            return response
+        elif campaign == 'Digital Swiss Gold Outbound':
+            response = exportAadyaseries(DigitalSwissGoldOutboundMonForm)
+            return response
+        elif campaign == 'Healthyplus Outbound':
+            response = exportAadyaseries(HealthyplusOutboundMonForm)
+            return response
+        elif campaign == 'Maxwell Properties':
+            response = exportAadyaseries(MaxwellPropertiesOutboundMonForm)
+            return response
+        elif campaign == 'Movement of Insurance':
+            response = exportAadyaseries(MovementofInsuranceOutboundMonForm)
+            return response
+        elif campaign == 'Sterling Strategies':
+            response = exportAadyaseries(SterlingStrategiesOutboundMonForm)
+            return response
+        elif campaign == 'Tonn Coa Outbound':
+            response = exportAadyaseries(TonnCoaOutboundMonForm)
+            return response
+        elif campaign == 'Wit Digital':
+            response = exportAadyaseries(WitDigitalOutboundMonForm)
+            return response
 
-        ########## other campaigns ##############
 
+
+        ######## Inbound ###############################
+
+        def exportinbound(monform):
+
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact',
+
+                       'Used Standard Opening Protocol',
+                       'Personalization ( Report Building, Addressing by Name)',
+                       'Acknowledged Appropriately',
+                       'Active Listening without Interruption / Paraphrasing',
+                       'Used Empathetic Statements whenever required',
+                       'Clear Grammar / Sentence Structure',
+                       'Tone & Intonation / Rate of Speech',
+                       'Diction/ Choice of Words / Phrase',
+                       'Took Ownership on the call',
+                       'Followed Hold Procedure Appropriately / Dead Air',
+                       'Offered Additional Assistance & Closed Call as per Protocol',
+
+                       'Probing / Tactful Finding / Rebuttal',
+                       'Complete Information Provided',
+
+                       'Professional / Courtesy',
+                       'Verification process followed',
+                       'Case Study',
+                       'Process & Procedure Followed',
+                       'First Call Resolution',
+
+                       'status',
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = monform.objects.filter(audit_date__range=[start_date, end_date], qa=qa
+                                                                             ).values_list(
+                'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager','customer_name','customer_contact',
+
+                'ce_1',
+                'ce_2',
+                'ce_3',
+                'ce_4',
+                'ce_5',
+                'ce_6',
+                'ce_7',
+                'ce_8',
+                'ce_9',
+                'ce_10',
+                'ce_11',
+
+                'business_1',
+                'business_2',
+
+                'compliance_1',
+                'compliance_2',
+                'compliance_3',
+                'compliance_4',
+                'compliance_5',
+
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
+        if campaign == 'Printer Pix Inbound':
+            response = exportinbound(PrinterPixMasterMonitoringFormInboundCalls)
+            return response
+        elif campaign == 'AB Hindalco Inbound':
+            response = exportinbound(ABHindalcoInboundMonForm)
+            return response
+        elif campaign == 'Aditya Birla Inbound':
+            response = exportinbound(AdityaBirlainboundMonForm)
+            return response
+        elif campaign == 'AKDY Inbound':
+            response = exportinbound(AKDYInboundMonFormNew)
+            return response
+        elif campaign == 'BhagyaLakshmi Inbound':
+            response = exportinbound(BhagyaLakshmiInboundMonForm)
+            return response
+        elif campaign == 'Daniel Wellington Inbound':
+            response = exportinbound(DanielwellingtoInboundMonForm)
+            return response
+        elif campaign == 'Digital Swiss Gold Inbound':
+            response = exportinbound(DigitalSwissGoldInboundMonForm)
+            return response
+        elif campaign == 'Finesse Mortgage Inbound':
+            response = exportinbound(FinesseMortgageInboundMonForm)
+            return response
+        elif campaign == 'Healthyplus Inbound':
+            response = exportinbound(HealthyplusInboundMonForm)
+            return response
+        elif campaign == 'Kappi machine':
+            response = exportinbound(KappimachineInboundCalls)
+            return response
+        elif campaign == 'Naffa Innovations':
+            response = exportinbound(NaffaInnovationsInboundCalls)
+            return response
+        elif campaign == 'Nucleus Media':
+            response = exportinbound(NuclusInboundCalls)
+            return response
+        elif campaign == 'Somethings Brewing':
+            response = exportinbound(SomethingsBrewingInbound)
+            return response
+        elif campaign == 'Tonn Coa Inbound':
+            response = exportinbound(MasterMonitoringFormTonnCoaInboundCalls)
+            return response
+
+
+        #########    Email/CHat ##########################
+
+        def exportEmailChat(monform):
+
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact',
+
+                       'Associate used the standard greeting format',
+                       'Appropriate responses ( acknowledging at the right time)',
+                       'Ownership on Emails / Chat Answered within 30 Seconds',
+                       'Personalization ( building a Raport, Addressing by name)',
+                       'Empathy/Sympathy',
+                       'Sentence structure',
+                       'Punctuation (full stop, comma, and brackets, used in writing to separate sentences)',
+                       'Grammar (Tense, Noun, etc.)',
+                       'Probing done whenever necessary',
+                       'Recap (Summarization of the conversation)',
+                       'Associate used the standard closing format',
+
+                       'Accurate Resolution/Information is provided as per the process',
+                       'Worked on the Ticket Assigned / Chat Responded within 5 mins',
+
+                       'Professional / Courtesy',
+                       'Verification process followed',
+                       'Case Study',
+                       'Process & Procedure Followed',
+                       'First Chat / Email Resolution',
+
+                       'status',
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = monform.objects.filter(
+                audit_date__range=[start_date, end_date], qa=qa).values_list(
+                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager','customer_name','customer_contact',
+
+                'ce_1',
+                'ce_2',
+                'ce_3',
+                'ce_4',
+                'ce_5',
+                'ce_6',
+                'ce_7',
+                'ce_8',
+                'ce_9',
+                'ce_10',
+                'ce_11',
+
+                'business_1',
+                'business_2',
+
+                'compliance_1',
+                'compliance_2',
+                'compliance_3',
+                'compliance_4',
+                'compliance_5',
+
+                'status', 'closed_date', 'fatal','areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
+        if campaign == 'Printer Pix Chat Email':
+            response = exportEmailChat(PrinterPixMasterMonitoringFormChatsEmail)
+            return response
+        elif campaign == 'AKDY - Email':
+            response = exportEmailChat(AKDYEmailMonForm)
+            return response
+        elif campaign == 'Amerisave Email':
+            response = exportEmailChat(AmerisaveEmailMonForm)
+            return response
+        elif campaign == 'Clear View Email':
+            response = exportEmailChat(ClearViewEmailMonForm)
+            return response
+        elif campaign == 'Daniel Wellington - Chat - Email':
+            response = exportEmailChat(DanielWellinChatEmailMonForm)
+            return response
+        elif campaign == 'Digital Swiss Gold Email - Chat':
+            response = exportEmailChat(DigitalSwissGoldEmailChatMonForm)
+            return response
+        elif campaign == 'Finesse Mortgage Email':
+            response = exportEmailChat(FinesseMortgageEmailMonForm)
+            return response
+        elif campaign == 'Fur Baby':
+            response = exportEmailChat(FurBabyMonForm)
+            return response
+        elif campaign == 'Practo':
+            response = exportEmailChat(PractoMonForm)
+            return response
+        elif campaign == 'Super Play':
+            response = exportEmailChat(SuperPlayMonForm)
+            return response
+        elif campaign == 'Terraceo - Chat - Email':
+            response = exportEmailChat(TerraceoChatEmailMonForm)
+            return response
+        elif campaign == 'Tonn Coa Chat Email':
+            response = exportEmailChat(TonnChatsEmailNewMonForm)
+            return response
+
+            ########## other campaigns ##############
 
         elif campaign == 'Fame House':
 
@@ -4155,7 +3906,7 @@ def exportAuditReportQA(request):
             font_style = xlwt.XFStyle()
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
-                       'Fatal Count', 'qa', 'am', 'team_lead', 'manager','ticket_no','ticket_type',
+                       'Fatal Count', 'qa', 'am', 'team_lead', 'manager', 'ticket_no', 'ticket_type',
 
                        'Shipping product incorrectly-wrong item, no exchange just shipping product',
                        'Responding to an escalated ticket/any ticket outside of agents skills/assignments',
@@ -4194,7 +3945,6 @@ def exportAuditReportQA(request):
                        'Agent asked the customer if they could be of additional help:',
                        'Agent used an appropriate closing:',
 
-
                        'status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
@@ -4205,7 +3955,7 @@ def exportAuditReportQA(request):
             font_style = xlwt.XFStyle()
             rows = FameHouseNewMonForm.objects.filter(audit_date__range=[start_date, end_date], qa=qa).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
-                'am', 'team_lead', 'manager','ticket_no','ticket_type',
+                'am', 'team_lead', 'manager', 'ticket_no', 'ticket_type',
 
                 'compliance_1',
                 'compliance_2',
@@ -4259,9 +4009,7 @@ def exportAuditReportQA(request):
 
             return response
 
-
-
-        elif campaign == 'Noom-POD':
+        elif campaign == 'Noom POD':
 
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
@@ -4273,7 +4021,7 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','ticket_no',
+                       'qa', 'am', 'team_lead', 'manager', 'ticket_no',
 
                        'If the user is missed to hit "finish" after sending the respective response. If the response is added with unwanted space and Punctuation. If the user name is miss-spelled/alphanumeric name on dashboard,we should use “Hey there!”.',
                        'If the "You last checked in" user is not sent with respective message or sent twice with the response',
@@ -4299,7 +4047,7 @@ def exportAuditReportQA(request):
                                                               ).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager','ticket_no',
+                'team_lead', 'manager', 'ticket_no',
 
                 'ce_1',
                 'ce_2',
@@ -4328,7 +4076,7 @@ def exportAuditReportQA(request):
 
             return response
 
-        elif campaign == 'Noom-EVA':
+        elif campaign == 'Noom Eva':
 
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
@@ -4340,7 +4088,7 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','ticket_no',
+                       'qa', 'am', 'team_lead', 'manager', 'ticket_no',
 
                        'If the user is missed to hit "finish" after sending the respective response. If the response is added with unwanted space and Punctuation. If the user name is miss-spelled/alphanumeric name on dashboard,we should use “Hey there!”.',
                        'If the "You last checked in" user is not sent with respective message or sent twice with the response',
@@ -4365,7 +4113,7 @@ def exportAuditReportQA(request):
             rows = ChatMonitoringFormEva.objects.filter(audit_date__range=[start_date, end_date], qa=qa).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager','ticket_no',
+                'team_lead', 'manager', 'ticket_no',
 
                 'ce_1',
                 'ce_2',
@@ -4394,697 +4142,7 @@ def exportAuditReportQA(request):
 
             return response
 
-
-
-        elif campaign == 'Printer Pix Inbound':
-
-            response = HttpResponse(content_type='application/ms-excel')
-            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
-            wb = xlwt.Workbook(encoding='utf-8')
-            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
-            # Sheet header, first row
-            row_num = 0
-            font_style = xlwt.XFStyle()
-            font_style.font.bold = True
-            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
-                       'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager',
-
-                       'Used Standard Opening Protocol',
-                       'Personalization ( Report Building, Addressing by Name)',
-                       'Acknowledged Appropriately',
-                       'Active Listening without Interruption / Paraphrasing',
-                       'Used Empathetic Statements whenever required',
-                       'Clear Grammar / Sentence Structure',
-                       'Tone & Intonation / Rate of Speech',
-                       'Diction/ Choice of Words / Phrase',
-                       'Took Ownership on the call',
-                       'Followed Hold Procedure Appropriately / Dead Air',
-                       'Offered Additional Assistance & Closed Call as per Protocol',
-
-                       'Probing / Tactful Finding / Rebuttal',
-                       'Complete Information Provided',
-
-                       'Professional / Courtesy',
-                       'Verification process followed',
-                       'Case Study',
-                       'Process & Procedure Followed',
-                       'First Call Resolution',
-
-                       'status',
-                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
-
-            for col_num in range(len(columns)):
-                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
-
-            # Sheet body, remaining rows
-            font_style = xlwt.XFStyle()
-            rows = PrinterPixMasterMonitoringFormInboundCalls.objects.filter(audit_date__range=[start_date, end_date], qa=qa
-                                                                             ).values_list(
-                'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
-                'am',
-                'team_lead', 'manager',
-
-                'ce_1',
-                'ce_2',
-                'ce_3',
-                'ce_4',
-                'ce_5',
-                'ce_6',
-                'ce_7',
-                'ce_8',
-                'ce_9',
-                'ce_10',
-                'ce_11',
-
-                'business_1',
-                'business_2',
-
-                'compliance_1',
-                'compliance_2',
-                'compliance_3',
-                'compliance_4',
-                'compliance_5',
-
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
-
-            import datetime
-            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
-                    rows]
-
-            for row in rows:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-
-            wb.save(response)
-
-            return response
-
-
-
-
-
-        elif campaign == 'Printer Pix Chat Email':
-
-            response = HttpResponse(content_type='application/ms-excel')
-            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
-            wb = xlwt.Workbook(encoding='utf-8')
-            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
-            # Sheet header, first row
-            row_num = 0
-            font_style = xlwt.XFStyle()
-            font_style.font.bold = True
-            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
-                       'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager',
-
-                       'Associate used the standard greeting format',
-                       'Appropriate responses ( acknowledging at the right time)',
-                       'Ownership on Emails / Chat',
-                       'Personalization ( building a Raport, Addressing by name)',
-                       'Empathy/Sympathy',
-                       'Sentence structure',
-                       'Punctuation (full stop, comma, and brackets, used in writing to separate sentences)',
-                       'Grammar (Tense, Noun, etc.)',
-                       'Probing done whenever necessary',
-                       'Recap (Summarization of the conversation)',
-                       'Associate used the standard closing format',
-
-                       'Accurate Resolution/Information is provided as per the process',
-                       'Worked on the Ticket Assigned / Chat Responded within 5 mins',
-
-                       'Professional / Courtesy',
-                       'Verification process followed',
-                       'Case Study',
-                       'Process & Procedure Followed',
-                       'First Chat / Email Resolution',
-
-                       'status',
-                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
-
-            for col_num in range(len(columns)):
-                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
-
-            # Sheet body, remaining rows
-            font_style = xlwt.XFStyle()
-            rows = PrinterPixMasterMonitoringFormChatsEmail.objects.filter(
-                audit_date__range=[start_date, end_date], qa=qa).values_list(
-                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
-                'am',
-                'team_lead', 'manager',
-
-                'ce_1',
-                'ce_2',
-                'ce_3',
-                'ce_4',
-                'ce_5',
-                'ce_6',
-                'ce_7',
-                'ce_8',
-                'ce_9',
-                'ce_10',
-                'ce_11',
-
-                'business_1',
-                'business_2',
-
-                'compliance_1',
-                'compliance_2',
-                'compliance_3',
-                'compliance_4',
-                'compliance_5',
-
-                'status', 'closed_date', 'fatal')
-
-            import datetime
-            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
-                    rows]
-
-            for row in rows:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-
-            wb.save(response)
-
-            return response
-
-        elif campaign == 'Fur Baby':
-
-            response = HttpResponse(content_type='application/ms-excel')
-            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
-            wb = xlwt.Workbook(encoding='utf-8')
-            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
-            # Sheet header, first row
-            row_num = 0
-            font_style = xlwt.XFStyle()
-            font_style.font.bold = True
-            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
-                       'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager',
-
-                       'Associate used the standard greeting format',
-                       'Appropriate responses ( acknowledging at the right time)',
-                       'Ownership on Emails / Chat Answered within 30',
-                       'Personalization ( building a Raport, Addressing by name)',
-                       'Empathy/Sympathy',
-                       'Sentence structure',
-                       'Punctuation (full stop, comma, and brackets, used in writing to separate sentences)',
-                       'Grammar (Tense, Noun, etc.)',
-                       'Probing done whenever necessary',
-                       'Recap (Summarization of the conversation)',
-                       'Associate used the standard closing format',
-
-                       'Accurate Resolution/Information is provided as per the process',
-                       'Worked on the Ticket Assigned / Chat Responded within 3 mins',
-
-                       'Professional / Courtesy',
-                       'Follow up done on the Pending Tickets( Chats & Email)',
-                       'Retruns Updated in the google sheet',
-                       'Process & Procedure Followed (Refund Process Followed)',
-                       'First Chat / Email Resolution',
-
-                       'status',
-                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
-
-            for col_num in range(len(columns)):
-                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
-
-            # Sheet body, remaining rows
-            font_style = xlwt.XFStyle()
-            rows = FurBabyMonForm.objects.filter(
-                audit_date__range=[start_date, end_date], qa=qa).values_list(
-                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
-                'am',
-                'team_lead', 'manager',
-
-                'ce_1',
-                'ce_2',
-                'ce_3',
-                'ce_4',
-                'ce_5',
-                'ce_6',
-                'ce_7',
-                'ce_8',
-                'ce_9',
-                'ce_10',
-                'ce_11',
-
-                'business_1',
-                'business_2',
-
-                'compliance_1',
-                'compliance_2',
-                'compliance_3',
-                'compliance_4',
-                'compliance_5',
-
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
-
-            import datetime
-            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
-                    rows]
-
-            for row in rows:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-
-            wb.save(response)
-
-            return response
-
-
-        elif campaign == 'AKDY - Email':
-
-            response = HttpResponse(content_type='application/ms-excel')
-            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
-            wb = xlwt.Workbook(encoding='utf-8')
-            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
-            # Sheet header, first row
-            row_num = 0
-            font_style = xlwt.XFStyle()
-            font_style.font.bold = True
-            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
-                       'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager',
-
-                       'Associate used the standard greeting format',
-                       'Appropriate responses ( acknowledging at the right time)',
-                       'Ownership on Emails / Chat Answered within 30',
-                       'Personalization ( building a Raport, Addressing by name)',
-                       'Empathy/Sympathy',
-                       'Sentence structure',
-                       'Punctuation (full stop, comma, and brackets, used in writing to separate sentences)',
-                       'Grammar (Tense, Noun, etc.)',
-                       'Probing done whenever necessary',
-                       'Recap (Summarization of the conversation)',
-                       'Associate used the standard closing format',
-
-                       'Accurate Resolution/Information is provided as per the process',
-                       'Worked on the Ticket Assigned / Chat Responded within 3 mins',
-
-                       'Professional / Courtesy',
-                       'Follow up done on the Pending Tickets( Chats & Email)',
-                       'Retruns Updated in the google sheet',
-                       'Process & Procedure Followed (Refund Process Followed)',
-                       'First Chat / Email Resolution',
-
-                       'status',
-                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
-
-            for col_num in range(len(columns)):
-                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
-
-            # Sheet body, remaining rows
-            font_style = xlwt.XFStyle()
-            rows = AKDYEmailMonForm.objects.filter(
-                audit_date__range=[start_date, end_date], qa=qa).values_list(
-                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
-                'am',
-                'team_lead', 'manager',
-
-                'ce_1',
-                'ce_2',
-                'ce_3',
-                'ce_4',
-                'ce_5',
-                'ce_6',
-                'ce_7',
-                'ce_8',
-                'ce_9',
-                'ce_10',
-                'ce_11',
-
-                'business_1',
-                'business_2',
-
-                'compliance_1',
-                'compliance_2',
-                'compliance_3',
-                'compliance_4',
-                'compliance_5',
-
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
-
-            import datetime
-            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
-                    rows]
-
-            for row in rows:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-
-            wb.save(response)
-
-            return response
-
-        elif campaign == 'Daniel Wellington - Chat - Email':
-
-            response = HttpResponse(content_type='application/ms-excel')
-            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
-            wb = xlwt.Workbook(encoding='utf-8')
-            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
-            # Sheet header, first row
-            row_num = 0
-            font_style = xlwt.XFStyle()
-            font_style.font.bold = True
-            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
-                       'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact',
-
-                       'Associate used the standard greeting format',
-                       'Appropriate responses ( acknowledging at the right time)',
-                       'Ownership on Emails / Chat',
-                       'Personalization ( building a Raport, Addressing by name)',
-                       'Empathy/Sympathy',
-                       'Sentence structure',
-                       'Punctuation (full stop, comma, and brackets, used in writing to separate sentences)',
-                       'Grammar (Tense, Noun, etc.)',
-                       'Probing done whenever necessary',
-                       'Recap (Summarization of the conversation)',
-                       'Associate used the standard closing format',
-
-                       'Accurate Resolution/Information is provided as per the process',
-                       'Worked on the Ticket Assigned / Chat Responded within 5 mins',
-
-                       'Professional / Courtesy',
-                       'Verification process followed',
-                       'Case Study',
-                       'Process & Procedure Followed',
-                       'First Chat / Email Resolution',
-
-                       'status',
-                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
-
-            for col_num in range(len(columns)):
-                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
-
-            # Sheet body, remaining rows
-            font_style = xlwt.XFStyle()
-            rows = DanielWellinChatEmailMonForm.objects.filter(
-                audit_date__range=[start_date, end_date], qa=qa).values_list(
-                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
-                'am',
-                'team_lead', 'manager','customer_name','customer_contact',
-
-                'ce_1',
-                'ce_2',
-                'ce_3',
-                'ce_4',
-                'ce_5',
-                'ce_6',
-                'ce_7',
-                'ce_8',
-                'ce_9',
-                'ce_10',
-                'ce_11',
-
-                'business_1',
-                'business_2',
-
-                'compliance_1',
-                'compliance_2',
-                'compliance_3',
-                'compliance_4',
-                'compliance_5',
-
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
-
-            import datetime
-            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
-                    rows]
-
-            for row in rows:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-
-            wb.save(response)
-
-            return response
-
-        elif campaign == 'Terraceo - Chat - Email':
-
-            response = HttpResponse(content_type='application/ms-excel')
-            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
-            wb = xlwt.Workbook(encoding='utf-8')
-            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
-            # Sheet header, first row
-            row_num = 0
-            font_style = xlwt.XFStyle()
-            font_style.font.bold = True
-            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
-                       'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact',
-
-                       'Associate used the standard greeting format',
-                       'Appropriate responses ( acknowledging at the right time)',
-                       'Ownership on Emails / Chat',
-                       'Personalization ( building a Raport, Addressing by name)',
-                       'Empathy/Sympathy',
-                       'Sentence structure',
-                       'Punctuation (full stop, comma, and brackets, used in writing to separate sentences)',
-                       'Grammar (Tense, Noun, etc.)',
-                       'Probing done whenever necessary',
-                       'Recap (Summarization of the conversation)',
-                       'Associate used the standard closing format',
-
-                       'Accurate Resolution/Information is provided as per the process',
-                       'Worked on the Ticket Assigned / Chat Responded within 5 mins',
-
-                       'Professional / Courtesy',
-                       'Verification process followed',
-                       'Case Study',
-                       'Process & Procedure Followed',
-                       'First Chat / Email Resolution',
-
-                       'status',
-                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
-
-            for col_num in range(len(columns)):
-                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
-
-            # Sheet body, remaining rows
-            font_style = xlwt.XFStyle()
-            rows = TerraceoChatEmailMonForm.objects.filter(
-                audit_date__range=[start_date, end_date], qa=qa).values_list(
-                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
-                'am',
-                'team_lead', 'manager','customer_name','customer_contact',
-
-                'ce_1',
-                'ce_2',
-                'ce_3',
-                'ce_4',
-                'ce_5',
-                'ce_6',
-                'ce_7',
-                'ce_8',
-                'ce_9',
-                'ce_10',
-                'ce_11',
-
-                'business_1',
-                'business_2',
-
-                'compliance_1',
-                'compliance_2',
-                'compliance_3',
-                'compliance_4',
-                'compliance_5',
-
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
-
-            import datetime
-            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
-                    rows]
-
-            for row in rows:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-
-            wb.save(response)
-
-            return response
-
-        elif campaign == 'Super Play':
-
-            response = HttpResponse(content_type='application/ms-excel')
-            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
-            wb = xlwt.Workbook(encoding='utf-8')
-            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
-            # Sheet header, first row
-            row_num = 0
-            font_style = xlwt.XFStyle()
-            font_style.font.bold = True
-            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
-                       'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact',
-
-                       'Associate used the standard greeting format',
-                       'Appropriate responses ( acknowledging at the right time)',
-                       'Ownership on Emails / Chat',
-                       'Personalization ( building a Raport, Addressing by name)',
-                       'Empathy/Sympathy',
-                       'Sentence structure',
-                       'Punctuation (full stop, comma, and brackets, used in writing to separate sentences)',
-                       'Grammar (Tense, Noun, etc.)',
-                       'Probing done whenever necessary',
-                       'Recap (Summarization of the conversation)',
-                       'Associate used the standard closing format',
-
-                       'Accurate Resolution/Information is provided as per the process',
-                       'Worked on the Ticket Assigned / Chat Responded within 5 mins',
-
-                       'Professional / Courtesy',
-                       'Verification process followed',
-                       'Case Study',
-                       'Process & Procedure Followed',
-                       'First Chat / Email Resolution',
-
-                       'status',
-                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
-
-            for col_num in range(len(columns)):
-                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
-
-            # Sheet body, remaining rows
-            font_style = xlwt.XFStyle()
-            rows = SuperPlayMonForm.objects.filter(
-                audit_date__range=[start_date, end_date], qa=qa).values_list(
-                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
-                'am',
-                'team_lead', 'manager','customer_name','customer_contact',
-
-                'ce_1',
-                'ce_2',
-                'ce_3',
-                'ce_4',
-                'ce_5',
-                'ce_6',
-                'ce_7',
-                'ce_8',
-                'ce_9',
-                'ce_10',
-                'ce_11',
-
-                'business_1',
-                'business_2',
-
-                'compliance_1',
-                'compliance_2',
-                'compliance_3',
-                'compliance_4',
-                'compliance_5',
-
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
-
-            import datetime
-            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
-                    rows]
-
-            for row in rows:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-
-            wb.save(response)
-
-            return response
-
-        elif campaign == 'Practo':
-
-            response = HttpResponse(content_type='application/ms-excel')
-            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
-            wb = xlwt.Workbook(encoding='utf-8')
-            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
-            # Sheet header, first row
-            row_num = 0
-            font_style = xlwt.XFStyle()
-            font_style.font.bold = True
-            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
-                       'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact',
-
-                       'Associate used the standard greeting format',
-                       'Appropriate responses ( acknowledging at the right time)',
-                       'Ownership on Emails / Chat',
-                       'Personalization ( building a Raport, Addressing by name)',
-                       'Empathy/Sympathy',
-                       'Sentence structure',
-                       'Punctuation (full stop, comma, and brackets, used in writing to separate sentences)',
-                       'Grammar (Tense, Noun, etc.)',
-                       'Probing done whenever necessary',
-                       'Recap (Summarization of the conversation)',
-                       'Associate used the standard closing format',
-
-                       'Accurate Resolution/Information is provided as per the process',
-                       'Worked on the Ticket Assigned / Chat Responded within 5 mins',
-
-                       'Professional / Courtesy',
-                       'Verification process followed',
-                       'Case Study',
-                       'Process & Procedure Followed',
-                       'First Chat / Email Resolution',
-
-                       'status',
-                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
-
-            for col_num in range(len(columns)):
-                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
-
-            # Sheet body, remaining rows
-            font_style = xlwt.XFStyle()
-            rows = PractoMonForm.objects.filter(
-                audit_date__range=[start_date, end_date], qa=qa).values_list(
-                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
-                'am',
-                'team_lead', 'manager','customer_name','customer_contact',
-
-                'ce_1',
-                'ce_2',
-                'ce_3',
-                'ce_4',
-                'ce_5',
-                'ce_6',
-                'ce_7',
-                'ce_8',
-                'ce_9',
-                'ce_10',
-                'ce_11',
-
-                'business_1',
-                'business_2',
-
-                'compliance_1',
-                'compliance_2',
-                'compliance_3',
-                'compliance_4',
-                'compliance_5',
-
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
-
-            import datetime
-            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
-                    rows]
-
-            for row in rows:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-
-            wb.save(response)
-
-            return response
-
-
-
-
-
+        ########## FLA #########################################
         elif campaign == 'FLA':
 
             response = HttpResponse(content_type='application/ms-excel')
@@ -5139,6 +4197,7 @@ def exportAuditReportQA(request):
 
     else:
         pass
+
 #------------------ New Series MonForms ----------------copy Aadya---------#
 
 def newSeriesMonForms(request):
@@ -5251,8 +4310,6 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(MillenniumScientificMonForm)
             return redirect('/employees/qahome')
 
-
-
         elif campaign_name == 'Stand Spot':
             newseriesAddCoaching(StandSpotMonForm)
             return redirect('/employees/qahome')
@@ -5268,8 +4325,6 @@ def newSeriesMonForms(request):
         elif campaign_name == 'Navigator Bio':
             newseriesAddCoaching(NavigatorBioMonForm)
             return redirect('/employees/qahome')
-
-
 
         elif campaign_name == 'AAdya':
             newseriesAddCoaching(MonitoringFormLeadsAadhyaSolution)
@@ -5347,13 +4402,9 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(IbizMonForm)
             return redirect('/employees/qahome')
 
-
-
         elif campaign_name == 'Protostar':
             newseriesAddCoaching(ProtostarMonForm)
             return redirect('/employees/qahome')
-
-
 
         elif campaign_name == 'Embassy Luxury':
             newseriesAddCoaching(EmbassyLuxuryMonForm)
@@ -5398,8 +4449,6 @@ def newSeriesMonForms(request):
         elif campaign_name == 'Accutime':
             newseriesAddCoaching(AccutimeMonForm)
             return redirect('/employees/qahome')
-
-
 
         elif campaign_name == 'Solar Campaign':
             newseriesAddCoaching(SolarCampaignMonForm)
@@ -5808,10 +4857,428 @@ def domesticChatEmail(request):
     else:
         return redirect('/employees/qahome')
 
+# Other Forms
+
+def chatCoachingformEva(request):
+    if request.method == 'POST':
+        category='Email/Chat Other'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        ticket_no=request.POST['ticketnumber']
+        trans_date = request.POST['transdate']
+        audit_date = request.POST['auditdate']
+        campaign = request.POST['campaign']
+        concept = request.POST['concept']
+        evaluator=request.POST['evaluator']
+
+        #######################################
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
+
+        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+
+        manager_emp_id = manager_emp_id_obj.emp_id
+        manager_name = manager
+        #########################################
 
 
+        # Customer Experience
+        ce_1 = int(request.POST['ce_1'])
+        ce_2 = int(request.POST['ce_2'])
+        ce_3 = int(request.POST['ce_3'])
+        ce_4 = int(request.POST['ce_4'])
+
+        ce_total=ce_1+ce_2+ce_3+ce_4
+
+        #Compliance
+        compliance_1 = int(request.POST['compliance_1'])
+        compliance_2 = int(request.POST['compliance_2'])
+        compliance_3 = int(request.POST['compliance_3'])
+        compliance_4 = int(request.POST['compliance_4'])
+        compliance_5 = int(request.POST['compliance_5'])
+        compliance_6 = int(request.POST['compliance_6'])
+
+        #################################################
+
+        fatal_list = [compliance_1,compliance_2,compliance_3,compliance_4,compliance_5,compliance_6]
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 0:
+                fatal_list_count.append(i)
+
+        no_of_fatals = len(fatal_list_count)
+
+        ####################################################
+
+        compliance_total=compliance_1+compliance_2+compliance_3+compliance_4+compliance_5+compliance_6
+
+        if compliance_1==0 or compliance_2==0 or compliance_3==0 or compliance_4==0 or compliance_5==0 or compliance_6==0:
+            overall_score=0
+            fatal=True
+        else:
+            overall_score=ce_total+compliance_total
+            fatal=False
+
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+        added_by = request.user.profile.emp_name
+
+        week = request.POST['week']
+        am = request.POST['am']
+
+        chat = ChatMonitoringFormEva(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                                     manager=manager_name,manager_id=manager_emp_id,
+
+                                     trans_date=trans_date, audit_date=audit_date,ticket_no=ticket_no,
+                                     campaign=campaign,concept=concept,evaluator=evaluator,
+
+                                     ce_1=ce_1,ce_2=ce_2,ce_3=ce_3,ce_4=ce_4,ce_total=ce_total,
+
+                                     compliance_1=compliance_1,compliance_2=compliance_2,compliance_3=compliance_3,
+                                     compliance_4=compliance_4,compliance_5=compliance_5,compliance_6=compliance_6,
+                                     compliance_total=compliance_total,
+
+                                     areas_improvement=areas_improvement,
+                                     positives=positives, comments=comments,
+                                     added_by=added_by,
+
+                                     overall_score=overall_score,category=category,
+                                     week=week,am=am,fatal_count=no_of_fatals,fatal=fatal
+                                     )
+        chat.save()
+        return redirect('/employees/qahome')
+    else:
+        teams = Team.objects.all()
+        users = User.objects.all()
+        data = {'teams': teams, 'users': users}
+        return render(request, 'mon-forms/ECPL-EVA&NOVO-Monitoring-Form-chat.html', data)
+
+def chatCoachingformPodFather(request):
+    if request.method == 'POST':
+        category='Email/Chat Other'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        ticket_no=request.POST['ticketnumber']
+        trans_date = request.POST['transdate']
+        audit_date = request.POST['auditdate']
+        campaign = request.POST['campaign']
+        concept = request.POST['concept']
+        evaluator=request.POST['evaluator']
+
+        #######################################
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
+
+        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+
+        manager_emp_id = manager_emp_id_obj.emp_id
+        manager_name = manager
+        #########################################
+
+        # Customer Experience
+        ce_1 = int(request.POST['ce_1'])
+        ce_2 = int(request.POST['ce_2'])
+        ce_3 = int(request.POST['ce_3'])
+        ce_4 = int(request.POST['ce_4'])
+
+        ce_total=ce_1+ce_2+ce_3+ce_4
+
+        #Compliance
+        compliance_1 = int(request.POST['compliance_1'])
+        compliance_2 = int(request.POST['compliance_2'])
+        compliance_3 = int(request.POST['compliance_3'])
+        compliance_4 = int(request.POST['compliance_4'])
+        compliance_5 = int(request.POST['compliance_5'])
+        compliance_6 = int(request.POST['compliance_6'])
+
+        #################################################
+
+        fatal_list = [compliance_1, compliance_2, compliance_3, compliance_4, compliance_5, compliance_6]
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 0:
+                fatal_list_count.append(i)
+
+        no_of_fatals = len(fatal_list_count)
+
+        ####################################################
+
+        compliance_total=compliance_1+compliance_2+compliance_3+compliance_4+compliance_5+compliance_6
+
+        if compliance_1==0 or compliance_2==0 or compliance_3==0 or compliance_4==0 or compliance_5==0 or compliance_6==0:
+            overall_score=0
+            fatal =True
+        else:
+            overall_score=ce_total+compliance_total
+            fatal = False
+
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+        added_by = request.user.profile.emp_name
+
+        week = request.POST['week']
+        am = request.POST['am']
+
+        chat = ChatMonitoringFormPodFather(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                                           manager=manager_name,manager_id=manager_emp_id,
+
+                                     trans_date=trans_date, audit_date=audit_date,ticket_no=ticket_no,
+                                     campaign=campaign,concept=concept,evaluator=evaluator,
+
+                                     ce_1=ce_1,ce_2=ce_2,ce_3=ce_3,ce_4=ce_4,ce_total=ce_total,
+
+                                     compliance_1=compliance_1,compliance_2=compliance_2,compliance_3=compliance_3,
+                                     compliance_4=compliance_4,compliance_5=compliance_5,compliance_6=compliance_6,
+                                     compliance_total=compliance_total,
+
+                                     areas_improvement=areas_improvement,
+                                     positives=positives, comments=comments,
+                                     added_by=added_by,
+
+                                     overall_score=overall_score,category=category,
+                                           week=week,am=am,fatal_count=no_of_fatals,fatal=fatal
+                                     )
+        chat.save()
+        return redirect('/employees/qahome')
+    else:
+        teams = Team.objects.all()
+        users = User.objects.all()
+        data = {'teams': teams, 'users': users}
+        return render(request,'mon-forms/ECPL-Pod-Father-Monitoring-Form-chat.html', data)
 
 
+def fameHouseNew(request):
+
+    if request.method == 'POST':
+        category='Email/Chat Other'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+
+        ticket_no=request.POST['ticket_no']
+        ticket_type = request.POST['ticket_type']
+
+        trans_date = request.POST['ticketdate']
+        audit_date = request.POST['auditdate']
+
+        campaign = request.POST['campaign']
+
+        week = request.POST['week']
+        am = request.POST['am']
+
+        #######################################
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
+
+        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+
+        manager_emp_id = manager_emp_id_obj.emp_id
+        manager_name = manager
+        #########################################
+
+        # Immediate fails:
+        compliance_1 = int(request.POST['compliance_1'])
+        compliance_2 = int(request.POST['compliance_2'])
+        compliance_3 = int(request.POST['compliance_3'])
+        compliance_4 = int(request.POST['compliance_4'])
+        compliance_5 = int(request.POST['compliance_5'])
+        compliance_6 = int(request.POST['compliance_6'])
+
+        compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4 + compliance_5 + compliance_6
+
+
+        na_list = []
+        sum_list = []
+        def scoreCalc(pk):
+
+            if pk == 'NA':
+                na_list.append(pk)
+                return pk
+            else:
+                sum_list.append(int(pk))
+                return int(pk)
+
+
+        # Opening
+
+        opening_1 = scoreCalc(request.POST['opening_1'])
+        opening_2 = scoreCalc(request.POST['opening_2'])
+        opening_3 = scoreCalc(request.POST['opening_3'])
+
+        #opening_total = opening_1+opening_2+opening_3
+
+        # Customer Issue Resolution
+
+        cir_1 = scoreCalc(request.POST['cir_1'])
+        cir_2 = scoreCalc(request.POST['cir_2'])
+        cir_3 = scoreCalc(request.POST['cir_3'])
+        cir_4 = scoreCalc(request.POST['cir_4'])
+        cir_5 = scoreCalc(request.POST['cir_5'])
+
+        #cir_total = cir_1+cir_2+cir_3+cir_4+cir_5
+
+        # Macro Usage
+        macro_1 = scoreCalc(request.POST['macro_1'])
+        macro_2 = scoreCalc(request.POST['macro_2'])
+
+        #macro_total = macro_1 + macro_2
+
+        # Formatting
+        formatting_1 = scoreCalc(request.POST['formatting_1'])
+        formatting_2 = scoreCalc(request.POST['formatting_2'])
+        formatting_3 = scoreCalc(request.POST['formatting_3'])
+
+       # formatting_total = formatting_1 + formatting_2 + formatting_3
+
+        # Documentation
+        doc_1 = scoreCalc(request.POST['doc_1'])
+        doc_2 = scoreCalc(request.POST['doc_2'])
+        doc_3 = scoreCalc(request.POST['doc_3'])
+        doc_4 = scoreCalc(request.POST['doc_4'])
+
+       # doc_total= doc_1 + doc_2 + doc_3 + doc_4
+
+        # Etiquette
+        et_1 = scoreCalc(request.POST['et_1'])
+        et_2 = scoreCalc(request.POST['et_2'])
+        et_3 = scoreCalc(request.POST['et_3'])
+        et_4 = scoreCalc(request.POST['et_4'])
+
+       # et_total = et_1 + et_2 + et_3 + et_4
+
+        # Closing
+        closing_1 = scoreCalc(request.POST['closing_1'])
+        closing_2 = scoreCalc(request.POST['closing_2'])
+
+       # closing_total = closing_1 + closing_2
+
+
+        fatal_list=[compliance_1,compliance_2,compliance_3,compliance_4,compliance_5,compliance_6]
+
+        fatal_list_count=[]
+        for i in fatal_list:
+            if i==0:
+                fatal_list_count.append(i)
+        no_of_fatals=len(fatal_list_count)
+
+
+        if compliance_1 == 0 or compliance_2 ==0 or compliance_3==0 or compliance_4==0 or compliance_5==0 or compliance_6==0:
+            overall_score=0
+            fatal=True
+        else:
+            overall_score= (sum(sum_list)/len(sum_list))*100
+            fatal=False
+
+        #################################################
+
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+
+        added_by = request.user.profile.emp_name
+
+
+        famehouse = FameHouseNewMonForm(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                                     manager=manager_name,manager_id=manager_emp_id,am=am,
+
+                                     trans_date=trans_date, audit_date=audit_date,ticket_no=ticket_no,
+                                     campaign=campaign,
+                                     compliance_1=compliance_1,compliance_2=compliance_2,compliance_3=compliance_3,compliance_4=compliance_4,compliance_5=compliance_5,compliance_6=compliance_6,compliance_total=compliance_total,
+                                     opening_1=opening_1,opening_2=opening_2,opening_3=opening_3,
+                                     cir_1=cir_1,cir_2=cir_2,cir_3=cir_3,cir_4=cir_4,cir_5=cir_5,
+                                     macro_1=macro_1,macro_2=macro_2,
+                                     formatting_1=formatting_1,formatting_2=formatting_2,formatting_3=formatting_3,
+                                     doc_1=doc_1,doc_2=doc_2,doc_3=doc_3,doc_4=doc_4,
+                                     et_1=et_1,et_2=et_2,et_3=et_3,et_4=et_4,
+                                     closing_1=closing_1,closing_2=closing_2,
+
+                                     areas_improvement=areas_improvement,
+                                     positives=positives, comments=comments,
+                                     added_by=added_by,ticket_type=ticket_type,
+
+                                     category=category,overall_score=overall_score,
+                                            week=week,fatal=fatal,fatal_count=no_of_fatals
+                                     )
+
+        famehouse.save()
+        return redirect('/employees/qahome')
+    else:
+        teams = Team.objects.all()
+        users = User.objects.all()
+        data = {'teams': teams, 'users': users}
+        return render(request, 'mon-forms/fame-house-new.html', data)
+
+
+def flaMonForm(request):
+    if request.method == 'POST':
+        category='FLA'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        order_id=request.POST['order_id']
+        trans_date = request.POST['transdate']
+        audit_date = request.POST['auditdate']
+        campaign = request.POST['campaign']
+        concept = request.POST['concept']
+        service=request.POST['service']
+        check_list=request.POST['checklist']
+
+        #######################################
+        prof_obj=Profile.objects.get(emp_id=emp_id)
+        manager=prof_obj.manager
+
+        manager_emp_id_obj=Profile.objects.get(emp_name=manager)
+
+        manager_emp_id=manager_emp_id_obj.emp_id
+        manager_name=manager
+        #########################################
+
+        # Macros
+        checklist_1 = int(request.POST['checklist_1'])
+
+        reason_for_failure=request.POST['reason_for_failure']
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+        added_by = request.user.profile.emp_name
+
+        week = request.POST['week']
+        am = request.POST['am']
+
+        fla = FLAMonitoringForm(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                                     manager=manager_name,manager_id=manager_emp_id,
+
+                                     trans_date=trans_date, audit_date=audit_date,order_id=order_id,
+                                     campaign=campaign,concept=concept,service=service,
+
+                                     check_list=check_list,
+                                     checklist_1=checklist_1,
+
+                                     reason_for_failure=reason_for_failure,
+                                     areas_improvement=areas_improvement,
+                                     positives=positives, comments=comments,
+                                     added_by=added_by,
+
+                                     overall_score=checklist_1,category=category,
+                                week=week,am=am
+                                     )
+        fla.save()
+        return redirect('/employees/qahome')
+    else:
+        teams = Team.objects.all()
+        users = User.objects.all()
+        data = {'teams': teams, 'users': users}
+        return render(request, 'mon-forms/FLA-mon-form.html', data)
+
+############## End Mon Forms ##############################
 
 
 
@@ -5832,8 +5299,6 @@ def desiChanger(request):
         prof = Profile.objects.get(emp_id = i)
         prof.emp_desi = 'QA'
         prof.save()
-
-
 
 
 def addSingleProfile(request):

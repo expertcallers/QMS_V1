@@ -5529,7 +5529,8 @@ class DigitalSwissGoldEmailChatMonForm(models.Model):
 #####  Noom Eva Noom POD ###################################
 
 class ChatMonitoringFormEva(models.Model):
-    process=models.CharField(default='Noom-EVA',max_length=50)
+    process=models.CharField(default='Noom Eva',max_length=50)
+    type = models.CharField(default='Email/Chat Other', max_length=50)
     emp_id = models.IntegerField()
     associate_name = models.CharField(max_length=50)
     qa = models.CharField(max_length=50)
@@ -5590,8 +5591,8 @@ class ChatMonitoringFormEva(models.Model):
         return self.comments[:100] + '...'
 
 class ChatMonitoringFormPodFather(models.Model):
-    process = models.CharField(default='Noom-POD', max_length=50)
-
+    process = models.CharField(default='Noom POD', max_length=50)
+    type = models.CharField(default='Email/Chat Other', max_length=50)
     emp_id = models.IntegerField()
     associate_name = models.CharField(max_length=50)
     qa = models.CharField(max_length=50)
@@ -5654,7 +5655,7 @@ class ChatMonitoringFormPodFather(models.Model):
 
 class FameHouseNewMonForm(models.Model):
     process = models.CharField(default='Fame House', max_length=50)
-
+    type = models.CharField(default='Email/Chat Other', max_length=50)
     emp_id = models.IntegerField()
     associate_name = models.CharField(max_length=50)
     qa = models.CharField(max_length=50)
@@ -5758,7 +5759,7 @@ class FameHouseNewMonForm(models.Model):
 
 class FLAMonitoringForm(models.Model):
     process = models.CharField(default='FLA', max_length=50)
-
+    type = models.CharField(default='FLA', max_length=50)
     emp_id = models.IntegerField()
     associate_name = models.CharField(max_length=50)
     qa = models.CharField(max_length=50)

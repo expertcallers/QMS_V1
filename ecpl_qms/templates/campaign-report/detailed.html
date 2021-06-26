@@ -2,9 +2,6 @@
 {% block main %}
 {% load static %}
 
-
-
-
 <div class="container-fluid" style="background-image: url(/static/images/dashboard.jpg);height: 300px;background-size: cover;margin-top:79px;">
     <div style="background: #2f374e;opacity: 77%;height: 300px">
     <div class="row" style="padding-top: 50px;padding-left: 50px;color:white;">
@@ -102,6 +99,7 @@
                             <label for="" class="datelabel">End Date</label>
                             <input type="date" name="end_date" required class="dateinput form-control">
                             <br>
+                            <input type="hidden" name="qa" id="" value="None">
                             <button class="btn btn-secondary" style="width: 90px;height: 28px; font-size: 11px;">Export</button>
                 </form>
             </div>

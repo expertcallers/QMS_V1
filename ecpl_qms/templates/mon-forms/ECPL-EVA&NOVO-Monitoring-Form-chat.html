@@ -32,10 +32,10 @@
                             <label for="transdate">Transaction Handled Date</label>
                             <input type="date" class="form-control" id="transdate" name="transdate" required>
                             <label>Audit Date</label>
-                            <input type="date" class="form-control" name="auditdate" required>
+                            <input type="date" class="form-control" name="auditdate" value="{{date}}" readonly>
                         </div>
                          <div class="col-md-4">
-                             <input type="hidden" class="form-control" name="campaign" value="{{agent.process}}">
+                             <input type="hidden" class="form-control" name="campaign" value="{{campaign.name}}">
 
                             <label for="evaluator">Evaluator Name</label>
                             <input type="text" class="form-control" id="evaluator" name="evaluator" required>
