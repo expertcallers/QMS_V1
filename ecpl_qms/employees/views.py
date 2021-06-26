@@ -14,6 +14,42 @@ from django.contrib.auth.models import User
 from .models import *
 from . import forms
 
+list_of_monforms = [ # OutBound
+                        MonitoringFormLeadsAadhyaSolution,AccutimeMonForm,MonitoringFormLeadsAdvanceConsultants,
+                        MonitoringFormLeadsAllenConsulting,CamIndustrialMonForm,CitizenCapitalMonForm,MonitoringFormLeadsCitySecurity,
+                        MonitoringFormLeadsCTS,EmbassyLuxuryMonForm,MonitoringFormLeadsGetARates,GlydeAppMonForm,GoldenEastMonForm,IbizMonForm,
+                        IIBMonForm,MonitoringFormLeadsInfothinkLLC,MonitoringFormLeadsInsalvage,JJStudioMonForm,KalkiFashions,MonitoringFormLeadsLouisville,
+                        MonitoringFormLeadsMedicare,MicroDistributingMonForm,MillenniumScientificMonForm,MTCosmeticsMonForm,NavigatorBioMonForm,OptimalStudentLoanMonForm,
+                        ProtostarMonForm,MonitoringFormLeadsPSECU,QBIQMonForm,RestaurentSolMonForm,RitBrainMonForm,
+                        RoofWellMonForm,ScalaMonForm,SolarCampaignMonForm,StandSpotMonForm,MonitoringFormLeadsSystem4,MonitoringFormLeadsTentamusFood,MonitoringFormLeadsTentamusPet,
+                        TerraceoLeadMonForm,UpfrontOnlineLLCMonform,WTUMonForm,YesHealthMolinaMonForm,ZeroStressMarketingMonForm,
+                        ABHindalcoOutboundMonForm,AdityaBirlaOutboundMonForm,AmerisaveoutboundMonForm,BhagyaLakshmiOutbound,
+                        ClearViewOutboundMonForm,DanielWellingtonOutboundMonForm,DigitalSwissGoldOutboundMonForm,HealthyplusOutboundMonForm,
+                        MaxwellPropertiesOutboundMonForm,MovementofInsuranceOutboundMonForm,SterlingStrategiesOutboundMonForm,TonnCoaOutboundMonForm,WitDigitalOutboundMonForm,
+
+                        # Inbound
+                        MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
+                        NuclusInboundCalls,NaffaInnovationsInboundCalls,KappimachineInboundCalls,HealthyplusInboundMonForm,
+                        FinesseMortgageInboundMonForm,DigitalSwissGoldInboundMonForm,DanielwellingtoInboundMonForm,BhagyaLakshmiInboundMonForm,
+                        AKDYInboundMonFormNew,AdityaBirlainboundMonForm,ABHindalcoInboundMonForm,
+
+                        # Email/CHat
+                        SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
+                        PrinterPixMasterMonitoringFormChatsEmail,PractoMonForm,FurBabyMonForm,AKDYEmailMonForm,AmerisaveEmailMonForm,
+                        ClearViewEmailMonForm,FinesseMortgageEmailMonForm,DigitalSwissGoldEmailChatMonForm,
+
+                        #FLA
+                        FLAMonitoringForm,
+
+                        #Noom
+                        ChatMonitoringFormEva,ChatMonitoringFormPodFather,
+
+                        #FameHouse
+                        FameHouseNewMonForm
+
+                        ]
+
+
 #Index
 def index(request):
     return render(request,'index.html')
@@ -316,7 +352,7 @@ def agenthome(request):
 
         ################### opn_count #############
 
-        list_of_monforms = []
+
 
         all_coaching_list = []
         open_coaching_list=[]
@@ -389,9 +425,6 @@ def agenthome(request):
 
         ################### opn_count #############
 
-        list_of_monforms = [
-
-                        ]
 
         all_coaching_list = []
         open_coaching_list = []
@@ -476,6 +509,8 @@ def coachingViewAgents(request,process,pk):
 def coachingViewQaDetailed(request,process,pk):
 
     process_name = process
+
+    ########## Outbound ##############################
 
     if process_name == 'AAdya':
         coaching = MonitoringFormLeadsAadhyaSolution.objects.get(id=pk)
@@ -752,11 +787,141 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    ########### Inbound ########################
 
+    if process_name == 'AB Hindalco Inbound':
+        coaching = ABHindalcoInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'Aditya Birla Inbound':
+        coaching = AdityaBirlainboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'AKDY Inbound':
+        coaching = AKDYInboundMonFormNew.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'BhagyaLakshmi Inbound':
+        coaching = BhagyaLakshmiInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'Daniel Wellington Inbound':
+        coaching = DanielwellingtoInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Digital Swiss Gold Inbound':
+        coaching = DigitalSwissGoldInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Finesse Mortgage Inbound':
+        coaching = FinesseMortgageInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Healthyplus Inbound':
+        coaching = HealthyplusInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Kappi machine':
+        coaching = KappimachineInboundCalls.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Naffa Innovations':
+        coaching = NaffaInnovationsInboundCalls.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Nucleus Media':
+        coaching = NuclusInboundCalls.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Printer Pix Inbound':
+        coaching = PrinterPixMasterMonitoringFormInboundCalls.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Somethings Brewing':
+        coaching = SomethingsBrewingInbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Tonn Coa Inbound':
+        coaching = MasterMonitoringFormTonnCoaInboundCalls.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    ############# Email/Chat ##############################
+
+    if process_name == 'AKDY - Email':
+        coaching = AKDYEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Amerisave Email':
+        coaching = AmerisaveEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Clear View Email':
+        coaching = ClearViewEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Daniel Wellington - Chat - Email':
+        coaching = DanielWellinChatEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Digital Swiss Gold Email - Chat':
+        coaching = DigitalSwissGoldEmailChatMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Finesse Mortgage Email':
+        coaching = FinesseMortgageEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Fur Baby':
+        coaching = FurBabyMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Practo':
+        coaching = PractoMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    if process_name == 'Printer Pix Chat Email':
+        coaching = PrinterPixMasterMonitoringFormChatsEmail.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Super Play':
+        coaching = SuperPlayMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Terraceo - Chat - Email':
+        coaching = TerraceoChatEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Tonn Coa Chat Email':
+        coaching = TonnChatsEmailNewMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    ################ Others ##########################################################
 
     if process_name == 'Fame House':
         coaching = FameHouseNewMonForm.objects.get(id=pk)
@@ -773,7 +938,6 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-pod-chat.html', data)
 
-
     if process_name == 'FLA':
         coaching = FLAMonitoringForm.objects.get(id=pk)
         data = {'coaching': coaching}
@@ -781,9 +945,6 @@ def coachingViewQaDetailed(request,process,pk):
 
     else:
         pass
-
-
-
 
 
 # Campaign wise coaching view - qa - manager
@@ -872,82 +1033,18 @@ def campaignwiseCoachings(request):
 
 
 def campaignwiseCoachingsQA(request):
-
     if request.method == 'POST':
         campaign = request.POST['campaign']
-        status=request.POST['status']
-
         start_date = request.POST['start_date']
         end_date = request.POST['end_date']
         qa = request.POST['qa']
 
-        list_of_monforms = [ ]
-
-        if start_date and end_date:
-
-            if status=='all':
-
-                coaching_list=[]
-
-                def dateAll(monform):
-                    obj=monform.objects.filter(qa=qa,process=campaign,audit_date__range=[start_date, end_date])
-                    return obj
-
-                for i in list_of_monforms:
-
-                    obj=dateAll(i)
-                    coaching_list.append(obj)
-
-            else:
-
-                coaching_list = []
-
-                def datestatusAll(monform):
-                    obj = monform.objects.filter(qa=qa,process=campaign,status=status,audit_date__range=[start_date, end_date])
-                    return obj
-
-                for i in list_of_monforms:
-                    obj = datestatusAll(i)
-                    coaching_list.append(obj)
-
-            data={'coaching_list':coaching_list,
-
-                 }
-
-            return render(request,'campaign-wise-coaching-view.html',data)
-
-
-        else:
-
-            if status=='all':
-
-                coaching_list=[]
-
-                def dateAll(monform):
-                    obj=monform.objects.filter(qa=qa,process=campaign)
-                    return obj
-
-                for i in list_of_monforms:
-
-                    obj=dateAll(i)
-                    coaching_list.append(obj)
-
-            else:
-
-                coaching_list = []
-
-                def datestatusAll(monform):
-                    obj = monform.objects.filter(qa=qa,process=campaign,status=status)
-                    return obj
-
-                for i in list_of_monforms:
-                    obj = datestatusAll(i)
-                    coaching_list.append(obj)
-
-            data={'coaching_list':coaching_list,
-                 }
-
-            return render(request,'campaign-wise-coaching-view.html',data)
+        coaching_list = []
+        for i in list_of_monforms:
+            coaching = i.objects.filter(qa=qa,process=campaign,audit_date__range=[start_date, end_date])
+            coaching_list.append(coaching)
+        data={'coaching_list':coaching_list}
+        return render(request,'campaign-wise-coaching-view.html',data)
 
     else:
         pass
@@ -2042,247 +2139,110 @@ def coachingDispute(request,pk):
 
 def qahome(request):
 
-    list_of_monforms = [ # OutBound
-                        MonitoringFormLeadsAadhyaSolution,AccutimeMonForm,MonitoringFormLeadsAdvanceConsultants,
-                        MonitoringFormLeadsAllenConsulting,CamIndustrialMonForm,CitizenCapitalMonForm,MonitoringFormLeadsCitySecurity,
-                        MonitoringFormLeadsCTS,EmbassyLuxuryMonForm,MonitoringFormLeadsGetARates,GlydeAppMonForm,GoldenEastMonForm,IbizMonForm,
-                        IIBMonForm,MonitoringFormLeadsInfothinkLLC,MonitoringFormLeadsInsalvage,JJStudioMonForm,KalkiFashions,MonitoringFormLeadsLouisville,
-                        MonitoringFormLeadsMedicare,MicroDistributingMonForm,MillenniumScientificMonForm,MTCosmeticsMonForm,NavigatorBioMonForm,OptimalStudentLoanMonForm,
-                        ProtostarMonForm,MonitoringFormLeadsPSECU,QBIQMonForm,RestaurentSolMonForm,RitBrainMonForm,
-                        RoofWellMonForm,ScalaMonForm,SolarCampaignMonForm,StandSpotMonForm,MonitoringFormLeadsSystem4,MonitoringFormLeadsTentamusFood,MonitoringFormLeadsTentamusPet,
-                        TerraceoLeadMonForm,UpfrontOnlineLLCMonform,WTUMonForm,YesHealthMolinaMonForm,ZeroStressMarketingMonForm,
-                        ABHindalcoOutboundMonForm,AdityaBirlaOutboundMonForm,AmerisaveoutboundMonForm,BhagyaLakshmiOutbound,
-                        ClearViewOutboundMonForm,DanielWellingtonOutboundMonForm,DigitalSwissGoldOutboundMonForm,HealthyplusOutboundMonForm,
-                        MaxwellPropertiesOutboundMonForm,MovementofInsuranceOutboundMonForm,SterlingStrategiesOutboundMonForm,TonnCoaOutboundMonForm,WitDigitalOutboundMonForm,
-
-                        # Inbound
-                        MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
-                        NuclusInboundCalls,NaffaInnovationsInboundCalls,KappimachineInboundCalls,HealthyplusInboundMonForm,
-                        FinesseMortgageInboundMonForm,DigitalSwissGoldInboundMonForm,DanielwellingtoInboundMonForm,BhagyaLakshmiInboundMonForm,
-                        AKDYInboundMonFormNew,AdityaBirlainboundMonForm,ABHindalcoInboundMonForm,
-
-                        # Email/CHat
-                        SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
-                        PrinterPixMasterMonitoringFormChatsEmail,PractoMonForm,FurBabyMonForm,AKDYEmailMonForm,AmerisaveEmailMonForm,
-                        ClearViewEmailMonForm,FinesseMortgageEmailMonForm,DigitalSwissGoldEmailChatMonForm,
-
-                        #FLA
-                        FLAMonitoringForm,
-
-                        #Noom
-                        ChatMonitoringFormEva,ChatMonitoringFormPodFather,
-
-                        #FameHouse
-                        FameHouseNewMonForm
-
-                        ]
-
-    empw_list = []
-
     if request.method=='POST':
-
-        qa_name=request.user.profile.emp_name
-        user_id=request.user.id
-        teams=Team.objects.all()
 
         currentMonth = request.POST['month']
         currentYear = request.POST['year']
 
-
-
-        for i in list_of_monforms:
-            emp_wise = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,added_by=qa_name).values(
-            'associate_name','process').annotate(dcount=Count('associate_name')).annotate(davg=Avg('overall_score')).order_by(
-            '-davg')
-            empw_list.append(emp_wise)
-
-
+        qa_name = request.user.profile.emp_name
         # Total NO of Coachings
-        total_coaching_ids=[]
-
+        total_coaching_ids = []
         for i in list_of_monforms:
-            x=i.objects.filter(added_by=qa_name)
-
+            x = i.objects.filter(added_by=qa_name)
             for i in x:
                 total_coaching_ids.append(i.id)
+        total_coaching = len(total_coaching_ids)
 
-        total_coaching=len(total_coaching_ids)
-
-        # All coaching objects
-
-        all_coaching_obj=[]
-
+        list_open_campaigns = []
         for i in list_of_monforms:
-            x=i.objects.filter(added_by=qa_name,audit_date__year=currentYear, audit_date__month=currentMonth).order_by('audit_date')
-            all_coaching_obj.append(x)
-
-    ##### Open_campaigns_objects  ############
-
-        list_open_campaigns=[]
-
-        for i in list_of_monforms:
-            opn_cmp_obj=i.objects.filter(status=False,added_by=qa_name,audit_date__year=currentYear, audit_date__month=currentMonth)
+            opn_cmp_obj = i.objects.filter(status=False, added_by=qa_name, audit_date__year=currentYear,audit_date__month=currentMonth)
             list_open_campaigns.append(opn_cmp_obj)
 
-    ################### opn_count #############
-
-        list_of_open_count=[]
-
+        list_of_open_count = []
         for i in list_of_monforms:
-
-            count=i.objects.filter(added_by=qa_name,status=False,audit_date__year=currentYear, audit_date__month=currentMonth).count()
+            count = i.objects.filter(added_by=qa_name, status=False, audit_date__year=currentYear,audit_date__month=currentMonth).count()
             list_of_open_count.append(count)
-
-        total_open_coachings=sum(list_of_open_count)
-
-        ######## Quality Score
-
-        ###################  Avg Campaignwise
+        total_open_coachings = sum(list_of_open_count)
 
         avg_campaignwise = []
-        campaign_wise_count = []
-        fatal_list = []
-
         for i in list_of_monforms:
-            emp_wise = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,qa=qa_name).values('process').annotate(davg=Avg('overall_score'))
-            camp_wise_count = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth, overall_score__lt=100).values('process').annotate(
-                dcount=Count('associate_name'))
-            fatal_count = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth).values('process').annotate(dcount=Sum('fatal_count'))
-
+            emp_wise = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth, qa=qa_name).values(
+                'process').annotate(davg=Avg('overall_score'))
             avg_campaignwise.append(emp_wise)
-            campaign_wise_count.append(camp_wise_count)
-            fatal_list.append(fatal_count)
 
-            #############################################
+        #############################################
+        campaigns_from_db = Campaigns.objects.filter(type='Outbound').order_by('name')
+        campaigns_inbound = Campaigns.objects.filter(type='Inbound').order_by('name')
+        campaigns_email_chat = Campaigns.objects.filter(type='Email - Chat').order_by('name')
+        campaigns_other = Campaigns.objects.exclude(type__in=['Outbound', 'Inbound', 'Email - Chat'])
+        all_campaigns = Campaigns.objects.all().order_by('name')
+        data = {
+            'total_open': total_open_coachings,
+            'total_coaching': total_coaching,
+            'open_campaigns': list_open_campaigns,
+            'avg_campaignwise': avg_campaignwise,
+            'campaigns': campaigns_from_db,
+            'campaigns_inbound': campaigns_inbound,
+            'campaigns_email_chat': campaigns_email_chat,
+            'campaigns_other': campaigns_other,
+            'all_campaigns': all_campaigns,
+            'month': currentMonth,
+            'year': currentYear,
+        }
 
-        campaigns_from_db = Campaigns.objects.filter(type='outbound')
-
-        data={'teams':teams,
-
-              'total_open':total_open_coachings,'total_coaching':total_coaching,
-              'all_c_obj':all_coaching_obj,
-
-              'open_campaigns':list_open_campaigns,
-              'emp_wise_score':empw_list,
-
-              'avg_campaignwise': avg_campaignwise,
-              'camp_wise_count': campaign_wise_count,
-              'fatal_list': fatal_list,
-              'campaigns':campaigns_from_db,
-
-              }
-
-        return render(request,'qa-home.html',data)
+        return render(request, 'qa-home.html', data)
 
     else:
         qa_name = request.user.profile.emp_name
-        user_id = request.user.id
-        teams = Team.objects.all()
-
         currentMonth = datetime.now().month
         currentYear = datetime.now().year
 
-        ######### List of All Coachings ##############3
-
-
-        empw_list = []
-
-        for i in list_of_monforms:
-            emp_wise = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,
-                                        added_by=qa_name).values(
-                'associate_name','process').annotate(dcount=Count('associate_name')).annotate(davg=Avg('overall_score')).order_by(
-                '-davg')[:10]
-            empw_list.append(emp_wise)
-
         # Total NO of Coachings
         total_coaching_ids = []
-
         for i in list_of_monforms:
             x = i.objects.filter(added_by=qa_name)
-
             for i in x:
                 total_coaching_ids.append(i.id)
-
         total_coaching = len(total_coaching_ids)
 
-        # All coaching objects
-
-        all_coaching_obj = []
-
-        for i in list_of_monforms:
-            x = i.objects.filter(added_by=qa_name, audit_date__year=currentYear,
-                                 audit_date__month=currentMonth).order_by('audit_date')
-            all_coaching_obj.append(x)
-
-        ##### Open_campaigns_objects  ###############
-
         list_open_campaigns = []
-
         for i in list_of_monforms:
-            opn_cmp_obj = i.objects.filter(status=False, added_by=qa_name, audit_date__year=currentYear,
-                                           audit_date__month=currentMonth)
+            opn_cmp_obj = i.objects.filter(status=False, added_by=qa_name, audit_date__year=currentYear,audit_date__month=currentMonth)
             list_open_campaigns.append(opn_cmp_obj)
 
-        ################### opn_count #############
-
         list_of_open_count = []
-
         for i in list_of_monforms:
-            count = i.objects.filter(added_by=qa_name, status=False, audit_date__year=currentYear,
-                                     audit_date__month=currentMonth).count()
+            count = i.objects.filter(added_by=qa_name, status=False, audit_date__year=currentYear,audit_date__month=currentMonth).count()
             list_of_open_count.append(count)
-
         total_open_coachings = sum(list_of_open_count)
 
-        ######## Quality Score
-
-        ###################  Avg Campaignwise
-
         avg_campaignwise = []
-        campaign_wise_count = []
-        fatal_list = []
-
         for i in list_of_monforms:
             emp_wise = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,qa=qa_name).values(
                 'process').annotate(davg=Avg('overall_score'))
-            camp_wise_count = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,
-                                               overall_score__lt=100).values('process').annotate(
-                dcount=Count('associate_name'))
-            fatal_count = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth).values(
-                'process').annotate(dcount=Sum('fatal_count'))
-
             avg_campaignwise.append(emp_wise)
-            campaign_wise_count.append(camp_wise_count)
-            fatal_list.append(fatal_count)
 
-            #############################################
+        #############################################
         campaigns_from_db = Campaigns.objects.filter(type='Outbound').order_by('name')
         campaigns_inbound = Campaigns.objects.filter(type='Inbound').order_by('name')
         campaigns_email_chat = Campaigns.objects.filter(type='Email - Chat').order_by('name')
         campaigns_other = Campaigns.objects.exclude(type__in=['Outbound','Inbound','Email - Chat'])
         all_campaigns = Campaigns.objects.all().order_by('name')
-        data = {'teams': teams,
-
-                'total_open': total_open_coachings, 'total_coaching': total_coaching,
-                'all_c_obj': all_coaching_obj,
-
+        data = {
+                'total_open': total_open_coachings,
+                'total_coaching': total_coaching,
                 'open_campaigns': list_open_campaigns,
-                'emp_wise_score': empw_list,
-
                 'avg_campaignwise': avg_campaignwise,
-                'camp_wise_count': campaign_wise_count,
-                'fatal_list': fatal_list,
-
                 'campaigns':campaigns_from_db,
                 'campaigns_inbound':campaigns_inbound,
                 'campaigns_email_chat':campaigns_email_chat,
                 'campaigns_other':campaigns_other,
                 'all_campaigns':all_campaigns,
-
+                'month':currentMonth,
+                'year':currentYear,
                 }
 
         return render(request, 'qa-home.html', data)
-
 
 
 #campaign View
