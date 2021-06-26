@@ -380,3 +380,7 @@ background: gold;
     font-size: 14px;
     margin: 10px 10px;
 }
+.monforms h6 {
+    font-weight: 600;
+    text-shadow: 1px 1px lightgrey;
+}
