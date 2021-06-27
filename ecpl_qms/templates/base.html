@@ -26,14 +26,24 @@
                     {% if user.profile.emp_desi == "QA" %}
                         <i class="fa fa-home" aria-hidden="true" style="color: antiquewhite;padding: 6px"></i>
                         <li class="nav_item"><a href="/employees/qahome" style="margin-right: 100px;font-size: 19px;color: antiquewhite;">Home</a></li>
-
-                    {% elif user.profile.emp_desi == "AM" or "Manager" or "Team Leader" or "Trainer" %}
+                    {% elif user.profile.emp_desi == "AM"%}
                         <i class="fa fa-home" aria-hidden="true" style="color: antiquewhite;padding: 6px"></i>
                         <li class="nav_item"><a href="/employees/manager-home" style="margin-right: 100px;font-size: 19px;color: antiquewhite;">Home</a></li>
+                    {% elif user.profile.emp_desi == "Manager"%}
+                        <i class="fa fa-home" aria-hidden="true" style="color: antiquewhite;padding: 6px"></i>
+                        <li class="nav_item"><a href="/employees/manager-home" style="margin-right: 100px;font-size: 19px;color: antiquewhite;">Home</a></li>
+                    {% elif user.profile.emp_desi == "Team Leader"%}
+                        <i class="fa fa-home" aria-hidden="true" style="color: antiquewhite;padding: 6px"></i>
+                        <li class="nav_item"><a href="/employees/manager-home" style="margin-right: 100px;font-size: 19px;color: antiquewhite;">Home</a></li>
+                    {% elif user.profile.emp_desi == "Trainer"%}
+                        <i class="fa fa-home" aria-hidden="true" style="color: antiquewhite;padding: 6px"></i>
+                        <li class="nav_item"><a href="/employees/manager-home" style="margin-right: 100px;font-size: 19px;color: antiquewhite;">Home</a></li>
+                    {% else %}
+                        <i class="fa fa-home" aria-hidden="true" style="color: antiquewhite;padding: 6px"></i>
+                        <li class="nav_item"><a href="/employees/agenthome" style="margin-right: 100px;font-size: 19px;color: antiquewhite;">Home</a></li>
                     {% endif %}
 
                     <li class="nav-item" style="color: White;margin-right: 50px"><small style="margin-right: 1px;color: white;font-size: 10px;font-style: italic;">Welcome,</small>{{user.profile.emp_name}}</li>
-
                         <li class="nav-item"><a href="/employees/logout" style="color: #8ec3ff;margin: 10px 5px;">logout</a></li>
                         <li class="nav-item"><a href="/employees/change_password" style="margin: 10px 2px;color:#ffeb3b !important;font-size:12px;">Change Password</a></li>
 
@@ -42,8 +52,6 @@
                     <li class="nav-item"><a class="nav-link" href="/employees/login">login</a></li>
                     <li class="nav_item"><a class="nav-link" href="/employees/signup">Register</a></li>
                     {% endif %}
-
-
 
                 </ul>
                 <div>
