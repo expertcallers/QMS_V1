@@ -62,8 +62,10 @@ admin.site.register(IbizMonForm)
 admin.site.register(DanielWellinChatEmailMonForm)
 
 admin.site.register(ProtostarMonForm)
-
-
+admin.site.register(ABHindalcoInboundMonForm)
+admin.site.register(AmerisaveEmailMonForm)
+admin.site.register(DanielWellingtonOutboundMonForm)
+admin.site.register(DigitalSwissGoldOutboundMonForm)
 admin.site.register(EmbassyLuxuryMonForm)
 admin.site.register(IIBMonForm)
 admin.site.register(TerraceoLeadMonForm)

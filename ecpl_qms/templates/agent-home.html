@@ -2,58 +2,82 @@
 {% block main %}
 {% load static %}
 
-<section class="profile_1" style="background-image: url(/static/images/dashboard.jpg);height: 300px;background-size: cover;"">
+<section class="profile_1" style="background-image: url(/static/images/dashboard.jpg);height: 400px;background-size: cover;"">
 
-    <div class="container-fluid" style="background: #101c48;opacity: 77%;height: 300px">
-        <div style="padding: 50px 40px;margin-top:75px">
+    <div class="container-fluid" style="background: #2f374e;opacity: 77%;height: 400px">
+        <div class="row">
+            <div class="col-md-6">
+                <div style="padding: 50px 40px;margin-top:75px">
 
-            <div style="color:white">
-                <small>Overall Score</small>
-                <h1>{{overall_score}}%</h1>
+                    <div style="color:white;line-height:26px">
+
+                        <h4 style="color:white"><small style="color:#ffeb3b"></small>{{user.profile.emp_name}}</h4><br>
+                        <div style="margin-left:30px;">
+                            <span style="color:lightgrey"><small style="color:#ffeb3b"><i>Emp ID :</i></small>{{user.profile.emp_id}}</span><br>
+                            <span style="color:lightgrey"><small style="color:#ffeb3b"><i>Team :</i></small>{{user.profile.team}}</span><br>
+                            <span style="color:lightgrey"><small style="color:#ffeb3b"><i>Designation :</i></small>{{user.profile.emp_desi}}</span><br>
+                            <small style="color:#ffeb3b">Overall Quality Score</small>
+                            <h1>{{overall_score}}%</h1>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="agentprofile" style="padding: 50px 40px">
-            <span style="color:white"><small style="color:#ffeb3b">Employee Name :</small>{{user.profile.emp_name}}</span>
-            <span style="color:white"><small style="color:#ffeb3b">Employee ID :</small>{{user.profile.emp_id}}</span>
-            <!--
-            <span style="color:white"><small style="color:#ffeb3b">Email Address :</small>{{user.profile.email}}</span>
-            -->
-            <span style="color:white"><small style="color:#ffeb3b">Team :</small>{{user.profile.team}}</span>
-            <span style="color:white"><small style="color:#ffeb3b">Designation :</small>{{user.profile.emp_desi}}</span>
-        </div>
-
     </div>
 </section>
 
+<div class="container-lg" style="margin-top:100px">
+    <div class="row">
+        <div class="col-md-8">
 
-<div class="container-fluid" style="margin-top:100px">
+        </div>
+        <div class="col-md-2">
+            <div style="background: aliceblue;padding: 15px 15px;box-shadow: 1px 1px 10px lightgrey;margin: 10px;">
+                <p>Total Feedbacks</p>
+                <p style="font-weight: 600;font-size: 22px;margin-left: 25%;color: #2f374e;">{{total_coachings}}</p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div style="background: aliceblue;padding: 15px 15px;box-shadow: 1px 1px 10px lightgrey;margin: 10px;">
+                <p>Open Feedbacks</p>
+                <p style="font-weight: 600;font-size: 22px;margin-left: 25%;color: #2f374e;">{{total_open}}</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="container-lg" style="margin-top:100px">
     <div class="row">
         <div class="col-md-4">
-            <h4 style="font-weight: 600;letter-spacing: 7px;">Campaign Scores</h4>
+            <h4 style="font-weight: 600;letter-spacing: 7px;color:#a0616a">Campaign Scores</h4>
             <br>
             <div class="row">
             {% for i in avg_campaignwise %}
                 {% for j in i %}
                 <div class="col-md-12">
-                    <p style="font-size: 24px;margin-left: 30px">{{j.process}}<small style="color:grey;margin-left:20px">{{j.davg|floatformat:2}}%</small></p>
+                    <span style="font-size: 14px;margin-left: 30px"><i>{{j.process}}</i> :<small style="font-size:22px;color:Darkgreen;">{{j.davg|floatformat:2}}%</small></span>
 
                 </div>
                 {% endfor %}
         {% endfor%}
                 </div>
         </div>
-        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <img src="{% static 'images/report4.png' %}" alt="" class="img-fluid">
+        </div>
         <div class="col-md-6">
-            <h4 style="font-weight: 600;letter-spacing: 7px;">Failed and Fatal List</h4>
+            <h4 style="font-weight: 600;letter-spacing: 7px;color:#a0616a">Failed and Fatal List</h4>
             <br>
             <div class="row">
                 {% for i in camp_wise_count %}
                 {% for j in i %}
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div style="margin-left:30px">
-                            <h4>{{j.process}}</h4>
+                            <span style="font-size:14px"><i>{{j.process}}</i> :</span>
                             <span style="font-size: 12px;color: darkblue;">Failed Audits</span>
-                            <span style="font-weight: 600;font-size: 22px">{{j.dcount}}</span><br>
+                            <span style="font-weight: 600;font-size: 22px">{{j.dcount}}</span>
                             <span style="font-size: 12px;color: darkblue;">Fatal Parameters</span>
                             <span style="font-weight: 600;font-size: 22px">{{j.dfcount}}</span>
                         </div>
@@ -65,11 +89,11 @@
     </div>
 </div>
 
-<section style="padding:100px 0px">
+<section style="padding:50px 0px">
     <div class="container-lg">
         <div class="row">
-            <div class="col-md-7" style="margin-top:50px">
-                 <h5 style="color: #101c48;font-size: 24px;font-weight: 600">List of Open Coachings</h5>
+            <div class="col-md-12" style="margin-top:50px">
+                 <h4 style="font-weight: 600;letter-spacing: 7px;color:#a0616a">List of Open Coachings</h4>
                 <br>
                     <div class="row" style="overflow: scroll;height: 300px;">
                         <table class="table">
@@ -85,6 +109,7 @@
 
                             {% for i in open_coaching %}
                                 {% for j in i %}
+
                             <tr style="line-height: 2px">
                                 <td>{{j.process}}</td>
                                 <td>{{j.audit_date}}</td>
@@ -99,16 +124,15 @@
                                 <td><a href="/employees/coaching-view-emp/{{j.process}}/{{j.id}}"><br>View</a></td>
                             </tr>
 
-
                                 {% endfor %}
                             {% endfor %}
 
                         </table>
                     </div>
                 <br>
-                <h5 style="color:grey">List of Dispute Coachings</h5>
+                <h4 style="font-weight: 600;letter-spacing: 7px;color:#a0616a">List of Dispute Coachings</h4>
                 <br>
-                <div class="row" style="overflow: scroll;height: 300px;">
+                <div style="overflow: scroll;height: 300px;">
                         <table class="table">
                             <tr>
                                 <th>Date</th>
@@ -139,7 +163,15 @@
                     </div>
 
         </div>
-            <div class="col-md-1"></div>
+
+
+    </div>
+    </div>
+</section>
+
+<!--
+<div>
+    <div class="col-md-1"></div>
             <div class="col-md-4">
                 <div>
                     <div style="padding: 20px;color:black;">
@@ -183,47 +215,7 @@
                     </div>
                 </div>
             </div>
-
-
-
-    </div>
-    </div>
-</section>
-
- <span class="vertical-line"></span>
-
-<div>
-    <p>Test</p>
-    {% for a in avg_score_all %}
-        {{a.davg}}
-    {% endfor %}
 </div>
-
-<div>
-    <form action="/employees/agenthome" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <label for="">Choose Month</label>
-                    <select name="month" id="" class="form-control">
-                        <option value="1" class="form-control">Jan</option>
-                        <option value="2" class="form-control">Feb</option>
-                        <option value="3" class="form-control">March</option>
-                        <option value="4" class="form-control">April</option>
-                        <option value="5" class="form-control">May</option>
-                        <option value="6" class="form-control">June</option>
-                        <option value="7" class="form-control">July</option>
-                        <option value="8" class="form-control">August</option>
-                        <option value="9" class="form-control">September</option>
-                        <option value="10" class="form-control">October</option>
-                        <option value="11" class="form-control">November</option>
-                        <option value="12" class="form-control">Dec</option>
-                    </select>
-                    <label for="">Choose Year</label>
-                    <select name="year" id="" class="form-control">
-                        <option value="2021" class="form-control">2021</option>
-                    </select>
-                    <br>
-                    <button class="btn btn-info">View</button>
-                </form>
-</div>
+-->
 
 {% endblock %}
