@@ -287,10 +287,9 @@ def managerWiseReport(request):
         return render(request,'manager-wise-report.html',data)
 
 def qualityDashboardMgt(request):
+    from django.db.models import Avg
 
-    mon_forms = []
-
-    campaigns = None
+    campaigns = Campaigns.objects.all()
     import datetime
     user_id = request.user.id
     employees = Profile.objects.filter(emp_desi='CRO')
@@ -306,7 +305,7 @@ def qualityDashboardMgt(request):
         ###### Campaign-quick-report ########
         camp_wise_tot=[]
 
-        for i in mon_forms:
+        for i in list_of_monforms:
 
             camp_wise_total = i.objects.filter(audit_date__year=year, audit_date__month=month).values(
                 'process').annotate(dcount=Count('process')).annotate(davg=Avg('overall_score'))
@@ -325,14 +324,40 @@ def qualityDashboardMgt(request):
 
         ###### Campaign-quick-report ########
 
+        outbound_avg_list = []
+        inbound_avg_list = []
+        email_chat_avg_list = []
+
         camp_wise_tot = []
-        for i in mon_forms:
+        for i in list_of_monforms:
             camp_wise_total = i.objects.filter(audit_date__year=year, audit_date__month=month).values(
                 'process').annotate(dcount=Count('process')).annotate(davg=Avg('overall_score'))
             camp_wise_tot.append(camp_wise_total)
 
+            outbound_score = i.objects.filter(type='Outbound').aggregate(davg=Avg('overall_score'))
+            if outbound_score['davg']:
+                outbound_avg_list.append(outbound_score['davg'])
+
+            inbound_score = i.objects.filter(type='Inbound').aggregate(davg=Avg('overall_score'))
+            if inbound_score['davg']:
+                inbound_avg_list.append(inbound_score['davg'])
+
+            email_chat_score = i.objects.filter(type='Email - Chat').aggregate(davg=Avg('overall_score'))
+            if email_chat_score['davg']:
+                email_chat_avg_list.append(email_chat_score['davg'])
+
+
+        outbound_avg = sum(outbound_avg_list)/len(outbound_avg_list)
+        inbound_avg = sum(inbound_avg_list) / len(inbound_avg_list)
+        email_chat_avg = sum(email_chat_avg_list) / len(email_chat_avg_list)
+
+        #
         data = {'employees': employees, 'managers': managers, 'campaigns': campaigns,
-            'teams': teams, 'camp_total': camp_wise_tot}
+            'teams': teams, 'camp_total': camp_wise_tot,
+                'outbound_avg':outbound_avg,
+                'inbound_avg':inbound_avg,
+                'email_chat_avg':email_chat_avg,
+                }
 
         return render(request, 'quality-dashboard-management.html', data)
 
@@ -413,20 +438,16 @@ def agenthome(request):
     data = {'all_coachings': all_coaching_list,
             'open_coaching': open_coaching_list,
             'disput_coaching': disput_list,
-
             'total_open': total_open_coachings,
             'total_coachings':total_coachings,
             'team': team,
             'overall_score': avg_score,
             'avg_campaignwise': avg_campaignwise,
             'camp_wise_count': campaign_wise_count,
-
             }
 
     return render(request, 'agent-home.html', data)
 
-
-# Coaching View ---------------------------- !!!
 
 def coachingViewAgents(request,process,pk):
     process_name = process
@@ -1316,33 +1337,20 @@ def campaignwiseCoachings(request):
     if request.method == 'POST':
         campaign = request.POST['campaign']
         status=request.POST['status']
-
         start_date = request.POST['start_date']
         end_date = request.POST['end_date']
-
-        list_of_monforms = [
-
-                        ]
-
         if start_date and end_date:
-
             if status=='all':
-
                 coaching_list=[]
-
                 def dateAll(monform):
                     obj=monform.objects.filter(process=campaign,audit_date__range=[start_date, end_date])
                     return obj
 
                 for i in list_of_monforms:
-
                     obj=dateAll(i)
                     coaching_list.append(obj)
-
             else:
-
                 coaching_list = []
-
                 def datestatusAll(monform):
                     obj = monform.objects.filter(process=campaign,status=status,audit_date__range=[start_date, end_date])
                     return obj
@@ -1354,29 +1362,22 @@ def campaignwiseCoachings(request):
             data={'coaching_list':coaching_list,
 
                  }
-
             return render(request,'campaign-wise-coaching-view.html',data)
-
 
         else:
 
             if status=='all':
-
                 coaching_list=[]
-
                 def dateAll(monform):
                     obj=monform.objects.filter(process=campaign)
                     return obj
 
                 for i in list_of_monforms:
-
                     obj=dateAll(i)
                     coaching_list.append(obj)
 
             else:
-
                 coaching_list = []
-
                 def datestatusAll(monform):
                     obj = monform.objects.filter(process=campaign,status=status)
                     return obj
@@ -1389,7 +1390,6 @@ def campaignwiseCoachings(request):
                  }
 
             return render(request,'campaign-wise-coaching-view.html',data)
-
     else:
         pass
 
@@ -1639,219 +1639,20 @@ def campaignwiseDetailedReport(request,cname):
 
             return data
 
-        if campaign=='Fame House':
-            data=campaignWiseCalculator(FameHouseNewMonForm)
-            return render(request, 'campaign-report/detailed.html',data)
+        for i in list_of_monforms:
+            obj = i.objects.all()
+            if obj.count() > 0:
+                if obj[0].process == campaign:
+                    monform = i
+                else:
+                    pass
+            else:
+                pass
 
-        if campaign=='Noom-POD':
-            data = campaignWiseCalculator(ChatMonitoringFormPodFather)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign=='Noom-EVA':
-            data = campaignWiseCalculator(ChatMonitoringFormEva)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign=='FLA':
-            data = campaignWiseCalculator(FLAMonitoringForm)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign=='MT Cosmetic':
-            data = campaignWiseCalculator(MTCosmeticsMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign=='Printer Pix Chat Email':
-            data = campaignWiseCalculator(PrinterPixMasterMonitoringFormChatsEmail)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign=='Printer Pix Inbound':
-            data = campaignWiseCalculator(PrinterPixMasterMonitoringFormInboundCalls)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign=='AAdya':
-            data = campaignWiseCalculator(MonitoringFormLeadsAadhyaSolution)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign=='Insalvage':
-            data = campaignWiseCalculator(MonitoringFormLeadsInsalvage)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign=='Medicare':
-            data = campaignWiseCalculator(MonitoringFormLeadsMedicare)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign=='CTS':
-            data = campaignWiseCalculator(MonitoringFormLeadsCTS)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign=='Tentamus Food':
-            data = campaignWiseCalculator(MonitoringFormLeadsTentamusFood)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign=='Tentamus Pet':
-            data = campaignWiseCalculator(MonitoringFormLeadsTentamusPet)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign=='City Security':
-            data = campaignWiseCalculator(MonitoringFormLeadsCitySecurity)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Allen Consulting':
-            data = campaignWiseCalculator(MonitoringFormLeadsAllenConsulting)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'System4':
-            data = campaignWiseCalculator(MonitoringFormLeadsSystem4)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Louisville':
-            data = campaignWiseCalculator(MonitoringFormLeadsLouisville)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Info Think LLC':
-            data = campaignWiseCalculator(MonitoringFormLeadsInfothinkLLC)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'PSECU':
-            data = campaignWiseCalculator(MonitoringFormLeadsPSECU)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Get A Rates':
-            data = campaignWiseCalculator(MonitoringFormLeadsGetARates)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Advance Consultants':
-            data = campaignWiseCalculator(MonitoringFormLeadsAdvanceConsultants)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Fur Baby':
-            data = campaignWiseCalculator(FurBabyMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
+        data = campaignWiseCalculator(monform)
+        return render(request, 'campaign-report/detailed.html', data)
 
 
-        if campaign == 'Upfront Online LLC':
-            data = campaignWiseCalculator(UpfrontOnlineLLCMonform)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Micro Distributing':
-            data = campaignWiseCalculator(MicroDistributingMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'JJ Studio':
-            data = campaignWiseCalculator(JJStudioMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Zero Stress Marketing':
-            data = campaignWiseCalculator(ZeroStressMarketingMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'WTU':
-            data = campaignWiseCalculator(WTUMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Roof Well':
-            data = campaignWiseCalculator(RoofWellMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Glyde App':
-            data = campaignWiseCalculator(GlydeAppMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Millennium Scientific':
-            data = campaignWiseCalculator(MillenniumScientificMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-        if campaign == 'Stand Spot':
-            data = campaignWiseCalculator(StandSpotMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Cam Industrial':
-            data = campaignWiseCalculator(CamIndustrialMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Optimal Student Loan':
-            data = campaignWiseCalculator(OptimalStudentLoanMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Navigator Bio':
-            data = campaignWiseCalculator(NavigatorBioMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-
-        if campaign == 'AKDY - Email':
-            data = campaignWiseCalculator(AKDYEmailMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Ibiz':
-            data = campaignWiseCalculator(IbizMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-
-
-
-
-        if campaign == 'Daniel Wellington - Chat - Email':
-            data = campaignWiseCalculator(DanielWellinChatEmailMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Protostar':
-            data = campaignWiseCalculator(ProtostarMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-
-        if campaign == 'Embassy Luxury':
-            data = campaignWiseCalculator(EmbassyLuxuryMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'IIB':
-            data = campaignWiseCalculator(IIBMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Terraceo - Lead':
-            data = campaignWiseCalculator(TerraceoLeadMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Terraceo - Chat - Email':
-            data = campaignWiseCalculator(TerraceoChatEmailMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Kalki Fashions':
-            data = campaignWiseCalculator(KalkiFashions)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Super Play':
-            data = campaignWiseCalculator(SuperPlayMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Practo':
-            data = campaignWiseCalculator(PractoMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Scala':
-            data = campaignWiseCalculator(ScalaMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Citizen Capital':
-            data = campaignWiseCalculator(CitizenCapitalMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Golden East':
-            data = campaignWiseCalculator(GoldenEastMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-        if campaign == 'Ri8Brain':
-            data = campaignWiseCalculator(RitBrainMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Restaurant Solution Group':
-            data = campaignWiseCalculator(RestaurentSolMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'QBIQ':
-            data = campaignWiseCalculator(QBIQMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Accutime':
-            data = campaignWiseCalculator(AccutimeMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-        if campaign == 'Solar Campaign':
-            data = campaignWiseCalculator(SolarCampaignMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Yes Health Molina':
-            data = campaignWiseCalculator(YesHealthMolinaMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-        else:
-            return render(request,'')
 
     else:
         from datetime import datetime
@@ -2006,217 +1807,18 @@ def campaignwiseDetailedReport(request,cname):
 
             return data
 
-        if campaign == 'Fame House':
-            data = campaignWiseCalculator(FameHouseNewMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
+        for i in list_of_monforms:
+            obj = i.objects.all()
+            if obj.count() > 0:
+                if obj[0].process == campaign:
+                    monform = i
+                else:
+                    pass
+            else:
+                pass
 
-        if campaign == 'Noom-POD':
-            data = campaignWiseCalculator(ChatMonitoringFormPodFather)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Noom-EVA':
-            data = campaignWiseCalculator(ChatMonitoringFormEva)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'FLA':
-            data = campaignWiseCalculator(FLAMonitoringForm)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'MT Cosmetic':
-            data = campaignWiseCalculator(MTCosmeticsMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Printer Pix Chat Email':
-            data = campaignWiseCalculator(PrinterPixMasterMonitoringFormChatsEmail)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Printer Pix Inbound':
-            data = campaignWiseCalculator(PrinterPixMasterMonitoringFormInboundCalls)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'AAdya':
-            data = campaignWiseCalculator(MonitoringFormLeadsAadhyaSolution)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Insalvage':
-            data = campaignWiseCalculator(MonitoringFormLeadsInsalvage)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Medicare':
-            data = campaignWiseCalculator(MonitoringFormLeadsMedicare)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'CTS':
-            data = campaignWiseCalculator(MonitoringFormLeadsCTS)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Tentamus Food':
-            data = campaignWiseCalculator(MonitoringFormLeadsTentamusFood)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Tentamus Pet':
-            data = campaignWiseCalculator(MonitoringFormLeadsTentamusPet)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'City Security':
-            data = campaignWiseCalculator(MonitoringFormLeadsCitySecurity)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Allen Consulting':
-            data = campaignWiseCalculator(MonitoringFormLeadsAllenConsulting)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'System4':
-            data = campaignWiseCalculator(MonitoringFormLeadsSystem4)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Louisville':
-            data = campaignWiseCalculator(MonitoringFormLeadsLouisville)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Info Think LLC':
-            data = campaignWiseCalculator(MonitoringFormLeadsInfothinkLLC)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'PSECU':
-            data = campaignWiseCalculator(MonitoringFormLeadsPSECU)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Get A Rates':
-            data = campaignWiseCalculator(MonitoringFormLeadsGetARates)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Advance Consultants':
-            data = campaignWiseCalculator(MonitoringFormLeadsAdvanceConsultants)
-            return render(request, 'campaign-report/detailed.html', data)
-        if campaign == 'Fur Baby':
-            data = campaignWiseCalculator(FurBabyMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Upfront Online LLC':
-            data = campaignWiseCalculator(UpfrontOnlineLLCMonform)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Micro Distributing':
-            data = campaignWiseCalculator(MicroDistributingMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'JJ Studio':
-            data = campaignWiseCalculator(JJStudioMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Zero Stress Marketing':
-            data = campaignWiseCalculator(ZeroStressMarketingMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'WTU':
-            data = campaignWiseCalculator(WTUMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Roof Well':
-            data = campaignWiseCalculator(RoofWellMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Glyde App':
-            data = campaignWiseCalculator(GlydeAppMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Millennium Scientific':
-            data = campaignWiseCalculator(MillenniumScientificMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-        if campaign == 'Stand Spot':
-            data = campaignWiseCalculator(StandSpotMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Cam Industrial':
-            data = campaignWiseCalculator(CamIndustrialMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Optimal Student Loan':
-            data = campaignWiseCalculator(OptimalStudentLoanMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Navigator Bio':
-            data = campaignWiseCalculator(NavigatorBioMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-
-        if campaign == 'AKDY - Email':
-            data = campaignWiseCalculator(AKDYEmailMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Ibiz':
-            data = campaignWiseCalculator(IbizMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-        if campaign == 'Daniel Wellington - Chat - Email':
-            data = campaignWiseCalculator(DanielWellinChatEmailMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Protostar':
-            data = campaignWiseCalculator(ProtostarMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-        if campaign == 'Embassy Luxury':
-            data = campaignWiseCalculator(EmbassyLuxuryMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'IIB':
-            data = campaignWiseCalculator(IIBMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Terraceo - Lead':
-            data = campaignWiseCalculator(TerraceoLeadMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Terraceo - Chat - Email':
-            data = campaignWiseCalculator(TerraceoChatEmailMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Kalki Fashions':
-            data = campaignWiseCalculator(KalkiFashions)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Super Play':
-            data = campaignWiseCalculator(SuperPlayMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Practo':
-            data = campaignWiseCalculator(PractoMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Scala':
-            data = campaignWiseCalculator(ScalaMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Citizen Capital':
-            data = campaignWiseCalculator(CitizenCapitalMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Golden East':
-            data = campaignWiseCalculator(GoldenEastMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-        if campaign == 'Ri8Brain':
-            data = campaignWiseCalculator(RitBrainMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-        if campaign == 'Restaurant Solution Group':
-            data = campaignWiseCalculator(RestaurentSolMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'QBIQ':
-            data = campaignWiseCalculator(QBIQMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Accutime':
-            data = campaignWiseCalculator(AccutimeMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-
-        if campaign == 'Solar Campaign':
-            data = campaignWiseCalculator(SolarCampaignMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-        if campaign == 'Yes Health Molina':
-            data = campaignWiseCalculator(YesHealthMolinaMonForm)
-            return render(request, 'campaign-report/detailed.html', data)
-
-
-        else:
-            return render(request, '')
-
-
+        data = campaignWiseCalculator(monform)
+        return render(request, 'campaign-report/detailed.html', data)
 
 
 def signCoaching(request,pk):
@@ -2286,7 +1888,7 @@ def coachingDispute(request,pk):
         obj.disput_status=True
         obj.emp_comments=emp_comments
         obj.save()
-        #sendEmail(manager_email)
+        sendEmail(manager_email)
         data={'team':team}
         return render(request,'coaching-dispute-message.html',data)
     else:

@@ -37,16 +37,13 @@
             <div class="col-md-6">
                 <div class="profile-head" style="margin-top: 127px;text-align: right;margin-right: 50px;">
                         <p style="color:white"><small style="color:grey"></small>{{user.profile.emp_name}}<i class="fas fa-user" style="color:white;"></i></p>
-
                         <p style="color:white"><small style="color:grey"></small>{{user.profile.emp_id}}<i class="fas fa-id-card-alt"></i></p>
                         <p style="color:white"><small style="color:grey"></small>{{user.profile.email}}<i class="fas fa-envelope"></i><a href="/employees/update-email-address/{{user.profile.emp_id}}"><i class="fas fa-edit"></i></a></p>
                         <p style="color:white"><small style="color:grey"></small>{{user.profile.team}}<i class="fas fa-users"></i></p>
-
                         <p style="color:white"><small style="color:grey"></small>{{user.profile.emp_desi}}<i class="fas fa-briefcase"></i></p>
                 </div>
             </div>
         </div>
-
     </div>
     </div>
 </section>
@@ -56,51 +53,30 @@
             <div class="row" style="margin-left:20px;">
                 <div class="col-md-12">
                     <div class="row">
-                    <div class="col-md-2">
-                        <h6>Inbound</h6>
-                        <br>
-                        <p>{{inbound|floatformat:2}}%</p>
-                        <!-- <a href="/employees/inbound-summary">View More</a>-->
-                    </div>
-                        <!--
-                    <div class="col-md-2">
-                        <h5>Outbound</h5>
-                        <p>{{outbound}}%</p>
-                        <a href="/employees/outbound-summary">View More</a>
-
-                    </div>
-                    -->
-                    <div class="col-md-2">
-                        <h6>Chat</h6>
-                        <br>
-                        <p>{{chat|floatformat:2}}%</p>
-                       <!-- <a href="/employees/chat-summary">View More</a>-->
-                    </div>
-                    <div class="col-md-2">
-                        <h6>Email</h6>
-                        <br>
-                        <p>{{email|floatformat:2}}%</p>
-                             <!-- <a href="/employees/email-summary">View More</a>-->
-                    </div>
-
-                    <div class="col-md-2">
-                        <h6>Other</h6>
-                        <br>
-                        <p>{{ other|floatformat:2 }}%</p>
-                             <!-- <a href="/employees/other-summary">View More</a>-->
-                    </div>
-                    <div class="col-md-2">
-                        <h6>Outbound</h6>
-                        <br>
-                        <p>{{leads|floatformat:2}}%</p>
-                             <!-- <a href="/employees/leads-summary">View More</a>-->
-                    </div>
+                        <div class="col-md-4">
+                            <h4>Overall ECPL Score</h4>
+                            <i class="fas fa-arrow-right" style="float:right"></i>
+                        </div>
+                        <div class="col-md-2">
+                            <h6>Outbound</h6>
+                            <br>
+                            <p>{{outbound_avg|floatformat:2}}%</p>
+                                 <!-- <a href="/employees/leads-summary">View More</a>-->
+                        </div>
+                        <div class="col-md-2">
+                            <h6>Inbound</h6>
+                            <br>
+                            <p>{{inbound_avg|floatformat:2}}%</p>
+                            <!-- <a href="/employees/inbound-summary">View More</a>-->
+                        </div>
+                        <div class="col-md-2">
+                            <h6>Email/Chat</h6>
+                            <br>
+                            <p>{{email_chat_avg|floatformat:2}}%</p>
+                                 <!-- <a href="/employees/email-summary">View More</a>-->
+                        </div>
                     </div>
             </div>
-            <div class="col-md-6">
-
-            </div>
-
         </div>
     </div>
 
