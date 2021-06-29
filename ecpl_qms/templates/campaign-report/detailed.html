@@ -38,7 +38,9 @@
         </div>
         <div class="col-md-8">
             <h3 style="margin-top: 70px;margin-left: 70px;font-weight: 700;text-shadow: 2px 2px lightgrey;font-size: 38px;color:wheat;">{{process}}</h3>
+
         </div>
+
 
     </div>
     </div>
@@ -130,48 +132,70 @@
     <div class="row">
 
         <div class="col-md-6">
-            <h4>Fatal Errors</h4>
-            <div class="campwisedetailtables" style="overflow: scroll;height:300px">
+            <h4 style="font-size: 19px;color: #e8612d;font-weight: 600;">Associate-wise Quality Score</h4>
 
-                <table class="table">
-                    <tr>
-                        <th>Name</th>
-                        <th>Fatal Errors</th>
-                    </tr>
-                    {% for e in emp_wise_fatal %}
-                    <tr>
-                        <td>{{e.associate_name}}</td>
-                        <td>{{e.dcount}}</td>
-                    </tr>
+            <div style="overflow:scroll;max-height:300px;">
+                <br>
+
+                    {% for e in emp_wise %}
+
+                        <span>{{e.associate_name}} :</span>
+
+                        <span style="margin-left:20px;font-size:16px;color:Darkblue">{{e.davg|floatformat:2}}%</span>
+
+                <br>
                     {% endfor %}
-                </table>
+
+
             </div>
+            <br>
+            <h4 style="font-size: 19px;color: #e8612d;font-weight: 600;">Fatal Errors</h4>
+            <div style="overflow: scroll;max-height:300px">
+
+                <br>
+
+                    {% for e in emp_wise_fatal %}
+
+                    <span>{{e.associate_name}} :</span>
+                    <span style="margin-left:20px;font-size:16px;color:Darkblue">{{e.dcount}}</span>
+                <br>
+                    {% endfor %}
+
+            </div>
+
         </div>
         <div class="col-md-6">
-            <h4>Associate-wise</h4>
+            <div style="overflow: scroll;max-height:300px">
+                <h4 style="font-size: 19px;color: #e8612d;font-weight: 600;">Coachings in Open Status</h4>
+                 <br>
 
-            <div class="campwisedetailtables" style="overflow:scroll;height:300px;">
-                <table class="table">
-                    <tr>
-                        <th>Name</th>
-                        <th>Audit Count</th>
-                        <th>Score</th>
-                    </tr>
-                    {% for e in emp_wise %}
-                    <tr>
-                        <td>{{e.associate_name}}</td>
-                        <td>{{e.dcount}}</td>
-                        <td>{{e.davg|floatformat:2}}%</td>
-                    </tr>
+                    {% for p in emp_coaching %}
+                        <span>{{p.associate_name}} :</span>
+                        <span style="margin-left:20px;font-size:16px;color:Darkblue">{{p.dcount}}</span>
+                <br>
                     {% endfor %}
-                </table>
-
             </div>
+            <br>
+            <div style="overflow: scroll;max-height:300px">
+                <h4 style="font-size: 19px;color: #e8612d;font-weight: 600;">Coachings in Dispute Status</h4>
+                 <br>
+
+                    {% for p in dispute_coaching %}
+                        <span>{{p.associate_name}} :</span>
+                        <span style="margin-left:20px;font-size:16px;color:Darkblue">{{p.dcount}}</span>
+                <br>
+                    {% endfor %}
+            </div>
+
         </div>
     </div>
 </div>
 
+<div style="margin-bottom:200px">
 
+</div>
+
+<!--
 
 <div class="container-lg" style="margin-top:100px" id="qaweekly">
     <h4>QA-wise Report</h4><br>
@@ -632,30 +656,7 @@
 
 </div>
 
-<div class="container-lg">
-    <div class="row">
-        <div class="col-md-6">
-            <table>
-                <tr>
-                    <th>Associate Name</th>
-                    <th>Open Coachings</th>
-                </tr>
-
-
-                    {% for p in emp_coaching %}
-                <tr>
-                        <td>{{p.associate_name}}</td>
-                        <td>{{p.dcount}}</td>
-                </tr>
-                    {% endfor %}
-
-
-            </table>
-        </div>
-    </div>
-
-
-</div>
+-->
 
 
 

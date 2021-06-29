@@ -386,3 +386,7 @@ background: gold;
     font-weight: 600;
     text-shadow: 1px 1px lightgrey;
 }
+
+.coachingStatus h1 {
+    margin-left:20px;
+}

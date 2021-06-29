@@ -175,7 +175,7 @@
                                         <label for="agent">Select Employee</label>
                                         <select name="emp_id" id="agent" class="form-control">
                                             {% for employee in employees %}
-                                            <option value="{{employee.emp_id}}" class="form-control">{{employee.emp_name}}</option>
+                                            <option value="{{employee.emp_id}}" class="form-control">{{employee.emp_name}} - {{employee.emp_id}}</option>
                                             {% endfor %}
                                         </select><br>
                                         <select name="month" id="" class="form-control">

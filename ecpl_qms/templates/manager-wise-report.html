@@ -5,7 +5,7 @@
 <section style="margin-top:100px">
     <div class="container-lg">
         <h4>Quality Report - <span style="color: darkblue;font-size: 28px;font-weight: 600">{{profile.emp_name}}</span></h4>
-        <hr>
+
     </div>
 </section>
 
@@ -14,33 +14,24 @@
         <h6><b>Overall</b></h6>
         <br>
         <div class="row">
-            <div class="col-md-6">
-
-                    <table class="table">
-                        <tr>
-                            <th>Process</th>
-                            <th>Total Audits</th>
-                            <th>Score</th>
-                        </tr>
-
-                    {% for i in associate_data %}
+            {% for i in associate_data %}
                     {% for j in i %}
-                        <tr>
-                            <td>{{j.process}}</td>
-                            <td>{{j.dcount}}</td>
-                            <td>{{j.davg|floatformat:2}}%</td>
-                        </tr>
+                            <div class="col-md-3">
+                                <div style="padding:10px 20px;background: #2f374e;color: #d8d7ff;box-shadow: 1px 1px 10px lightgrey;margin: 10px;">
+                                    <p style="font-size:12px">Process :<span style="font-size:16 px">{{j.process}}</span></p>
+                                    <p>Audits :<span>{{j.dcount}}</span></p>
+                                    <p>Score :<span>{{j.davg|floatformat:2}}%</span></p>
+                                </div>
+                            </div>
                     {% endfor %}
                     {% endfor %}
-                    </table>
-            </div>
         </div>
     </div>
 </section>
 
 <section style="padding-top: 30px;padding-left: 40px;margin-bottom:100px">
     <div class="container-lg">
-        <h6><b>Failed Audit</b></h6>
+        <h6><b>Failed Audits</b></h6>
         <br>
         <div class="row">
             <div class="col-md-5">

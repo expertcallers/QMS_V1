@@ -93,4 +93,6 @@ urlpatterns = [
 
     path('change-password',changePassword),
 
+    path('delete',deleteData),
+
 ]

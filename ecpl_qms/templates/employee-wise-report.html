@@ -2,48 +2,61 @@
 {% block main %}
 {% load static %}
 
-<section style="margin-top:100px">
-    <div class="container-lg">
-        <h4>Quality Report - <span style="color: darkblue;font-size: 28px;font-weight: 600">{{profile.emp_name}}</span></h4>
-        <hr>
+
+
+<section style="margin-top:60px">
+    <div class="container-fluid" style="background-image: url(/static/images/dashboard.jpg);height: 350px;background-size: cover;">
+        <div class="row" style="background: #2f374e;opacity: 77%;height: 350px">
+            <div class="col-md-6" style="margin-top:70px;margin-left:50px">
+                <h4><span style="color: #fff;font-size: 28px;font-weight: 600">{{profile.emp_name}}</span></h4>
+                <div style="margin-left: 29px;margin-top: 20px;">
+                    <p style="color:#d8ff01"><span style="font-size: 13px;font-style: italic;color: #ffcccc;margin-right:20px">Emp ID :</span>{{profile.emp_id}}</p>
+                    <p style="color:#d8ff01"><span style="font-size: 13px;font-style: italic;color: #ffcccc;margin-right:20px">Team Lead :</span>{{profile.team_lead}}</p>
+
+                    <p style="color:#d8ff01"><span style="font-size: 13px;font-style: italic;color: #ffcccc;margin-right:20px">AM :</span>{{profile.am}}</p>
+                    <p style="color:#d8ff01"><span style="font-size: 13px;font-style: italic;color: #ffcccc;margin-right:20px">Manager :</span>{{profile.manager}}</p>
+                </div>
+
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <div style="margin-top:130px;text-align: right">
+                    <span style="color: white;font-style: oblique;">Overall Quality Score</span>
+                    <h1 style="color: lightgoldenrodyellow;margin: 20px 30px;">{{avg_score}} %</h1>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 
 <section style="padding-top: 30px;padding-left: 40px">
     <div class="container-lg">
-        <h6><b>Overall</b></h6>
+        <h6><b>Campaign-wise Scores</b></h6>
         <br>
         <div class="row">
-            <div class="col-md-6">
-
-                    <table class="table">
-                        <tr>
-                            <th>Process</th>
-                            <th>Total Audits</th>
-                            <th>Score</th>
-                        </tr>
-
                     {% for i in associate_data %}
                     {% for j in i %}
-                        <tr>
-                            <td>{{j.process}}</td>
-                            <td>{{j.dcount}}</td>
-                            <td>{{j.davg|floatformat:2}}%</td>
-                        </tr>
+                            <div class="col-md-3">
+                                <div style="padding:10px 20px;background: #2f374e;color: #d8d7ff;box-shadow: 1px 1px 10px lightgrey;margin: 10px;">
+                                    <p style="font-size:12px">Process :<span style="font-size:16 px">{{j.process}}</span></p>
+                                    <p>Audits :<span>{{j.dcount}}</span></p>
+                                    <p>Score :<span>{{j.davg|floatformat:2}}%</span></p>
+                                </div>
+                            </div>
                     {% endfor %}
                     {% endfor %}
-                    </table>
-            </div>
         </div>
     </div>
 </section>
 
 <section style="padding-top: 30px;padding-left: 40px;margin-bottom:100px">
     <div class="container-lg">
-        <h6><b>Failed Audit</b></h6>
+
         <br>
         <div class="row">
             <div class="col-md-5">
+                <h6><b>Fatal Errors</b></h6>
                 <div>
                     <table class="table">
                         <tr>
@@ -61,7 +74,9 @@
                     </table>
                 </div>
             </div>
+            <div class="col-md-2"></div>
             <div class="col-md-5">
+                <h6><b>Other Errors</b></h6>
                 <div>
                     <table class="table">
                         <tr>

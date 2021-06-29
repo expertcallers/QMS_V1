@@ -2,7 +2,7 @@
 {% block main %}
 {% load static %}
 
-<section class="profile_1" style="background-image: url(/static/images/dashboard.jpg);height: 400px;background-size: cover;"">
+<section class="profile_1" style="background-image: url(/static/images/dashboard.jpg);height: 400px;background-size: cover;">
 
     <div class="container-fluid" style="background: #2f374e;opacity: 77%;height: 400px">
         <div class="row">
@@ -95,7 +95,7 @@
             <div class="col-md-12" style="margin-top:50px">
                  <h4 style="font-weight: 600;letter-spacing: 7px;color:#a0616a">List of Open Coachings</h4>
                 <br>
-                    <div class="row" style="overflow: scroll;height: 300px;">
+                    <div class="row" style="overflow: scroll;max-height: 300px;">
                         <table class="table">
                             <tr>
                                 <th>Process</th>
@@ -104,7 +104,7 @@
                                 <th>Result</th>
                                 <th>Customer Name</th>
                                 <th>QA</th>
-                                <th></th>
+                                <th>View</th>
                             </tr>
 
                             {% for i in open_coaching %}
@@ -132,19 +132,22 @@
                 <br>
                 <h4 style="font-weight: 600;letter-spacing: 7px;color:#a0616a">List of Dispute Coachings</h4>
                 <br>
-                <div style="overflow: scroll;height: 300px;">
+                <div style="overflow: scroll;max-height: 300px;">
                         <table class="table">
                             <tr>
+                                <th>Process</th>
                                 <th>Date</th>
                                 <th>Score</th>
                                 <th>Result</th>
                                 <th>customer Name</th>
-                                <th></th>
+                                <th>View</th>
+
                             </tr>
 
                             {% for i in disput_coaching %}
                                 {% for j in i %}
                             <tr style="line-height: 2px">
+                                <td>{{j.process}}</td>
                                 <td>{{j.audit_date}}</td>
                                 <td>{{j.overall_score}}</td>
                                 {% if j.overall_score < 100 %}
