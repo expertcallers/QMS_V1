@@ -32,15 +32,15 @@
 
         </div>
         <div class="col-md-2">
-            <div style="background: aliceblue;padding: 15px 15px;box-shadow: 1px 1px 10px lightgrey;margin: 10px;">
+            <div style="background: #10263a;padding: 15px 15px;box-shadow: 1px 1px 10px black;margin: 10px;color: white">
                 <p>Total Feedbacks</p>
-                <p style="font-weight: 600;font-size: 22px;margin-left: 25%;color: #2f374e;">{{total_coachings}}</p>
+                <p style="font-weight: 600;font-size: 22px;margin-left: 25%;color: #f7ffb9;">{{total_coachings}}</p>
             </div>
         </div>
         <div class="col-md-2">
-            <div style="background: aliceblue;padding: 15px 15px;box-shadow: 1px 1px 10px lightgrey;margin: 10px;">
+            <div style="background: #10263a;padding: 15px 15px;box-shadow: 1px 1px 10px black;margin: 10px;color: white">
                 <p>Open Feedbacks</p>
-                <p style="font-weight: 600;font-size: 22px;margin-left: 25%;color: #2f374e;">{{total_open}}</p>
+                <p style="font-weight: 600;font-size: 22px;margin-left: 25%;color: #f9ac3a;">{{total_open}}</p>
             </div>
         </div>
 
@@ -64,10 +64,10 @@
         {% endfor%}
                 </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
             <img src="{% static 'images/report4.png' %}" alt="" class="img-fluid">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <h4 style="font-weight: 600;letter-spacing: 7px;color:#a0616a">Failed and Fatal List</h4>
             <br>
             <div class="row">
@@ -95,7 +95,7 @@
             <div class="col-md-12" style="margin-top:50px">
                  <h4 style="font-weight: 600;letter-spacing: 7px;color:#a0616a">List of Open Coachings</h4>
                 <br>
-                    <div class="row" style="overflow: scroll;max-height: 300px;">
+                    <div class="row" style="overflow: scroll;height: 300px;">
                         <table class="table">
                             <tr>
                                 <th>Process</th>
@@ -132,7 +132,7 @@
                 <br>
                 <h4 style="font-weight: 600;letter-spacing: 7px;color:#a0616a">List of Dispute Coachings</h4>
                 <br>
-                <div style="overflow: scroll;max-height: 300px;">
+                <div style="overflow: scroll;height: 300px;">
                         <table class="table">
                             <tr>
                                 <th>Process</th>

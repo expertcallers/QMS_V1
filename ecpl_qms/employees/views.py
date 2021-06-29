@@ -26,6 +26,7 @@ list_of_monforms = [ # OutBound
                         ABHindalcoOutboundMonForm,AdityaBirlaOutboundMonForm,AmerisaveoutboundMonForm,BhagyaLakshmiOutbound,
                         ClearViewOutboundMonForm,DanielWellingtonOutboundMonForm,DigitalSwissGoldOutboundMonForm,HealthyplusOutboundMonForm,
                         MaxwellPropertiesOutboundMonForm,MovementofInsuranceOutboundMonForm,SterlingStrategiesOutboundMonForm,TonnCoaOutboundMonForm,WitDigitalOutboundMonForm,
+                        PosTechOutboundMonForm,SchindlerMediaOutboundMonForm,UPSOutboundMonForm,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -216,12 +217,6 @@ def employeeWiseReport(request):
             total_score = 100
         avg_score = round(total_score, 2)
 
-        ############################
-
-
-
-
-
         # Score in All forms
         for i in list_of_monforms:
             coaching = i.objects.filter(emp_id=emp_id, audit_date__year=currentYear,
@@ -242,10 +237,6 @@ def employeeWiseReport(request):
                 associate_data.append(emp_wise)
                 associate_data_fatal.append(emp_wise_fatal)
                 associate_data_errors.append(emp_wise_errors)
-
-
-
-
 
         data = {'profile':profile,'associate_data':associate_data,
                 'associate_data_fatal':associate_data_fatal,
@@ -782,6 +773,21 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'PosTech':
+        coaching = PosTechOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Schindler Media':
+        coaching = SchindlerMediaOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'UPS':
+        coaching = UPSOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -923,12 +929,12 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-fame-house-new.html', data)
 
-    if process_name == 'Noom-EVA':
+    if process_name == 'Noom Eva':
         coaching = ChatMonitoringFormEva.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-eva-chat.html', data)
 
-    if process_name == 'Noom-POD':
+    if process_name == 'Noom POD':
         coaching = ChatMonitoringFormPodFather.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-pod-chat.html', data)
@@ -1223,6 +1229,22 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'PosTech':
+        coaching = PosTechOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Schindler Media':
+        coaching = SchindlerMediaOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'UPS':
+        coaching = UPSOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1364,12 +1386,12 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-fame-house-new.html', data)
 
-    if process_name == 'Noom-EVA':
+    if process_name == 'Noom Eva':
         coaching = ChatMonitoringFormEva.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-eva-chat.html', data)
 
-    if process_name == 'Noom-POD':
+    if process_name == 'Noom POD':
         coaching = ChatMonitoringFormPodFather.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-pod-chat.html', data)
@@ -1476,10 +1498,6 @@ def campaignwiseCoachingsAgent(request):
         start_date = request.POST['start_date']
         end_date = request.POST['end_date']
         emp_name=request.POST['emp_name']
-
-        list_of_monforms = [
-
-                        ]
 
 
         if start_date and end_date:
@@ -1782,7 +1800,7 @@ def coachingDispute(request,pk):
         obj.disput_status=True
         obj.emp_comments=emp_comments
         obj.save()
-        sendEmail(manager_email)
+        #sendEmail(manager_email)
         data={'team':team}
         return render(request,'coaching-dispute-message.html',data)
     else:
@@ -2297,6 +2315,17 @@ def exportAuditReport(request):
             response = exportAadyaseries(WitDigitalOutboundMonForm)
             return response
 
+        elif campaign == 'PosTech':
+            response = exportAadyaseries(PosTechOutboundMonForm)
+            return response
+
+        elif campaign == 'Schindler Media':
+            response = exportAadyaseries(SchindlerMediaOutboundMonForm)
+            return response
+
+        elif campaign == 'UPS':
+            response = exportAadyaseries(UPSOutboundMonForm)
+            return response
 
 
         ######## Inbound ###############################
@@ -3158,6 +3187,18 @@ def exportAuditReportQA(request):
             return response
         elif campaign == 'Wit Digital':
             response = exportAadyaseries(WitDigitalOutboundMonForm)
+            return response
+
+        elif campaign == 'PosTech':
+            response = exportAadyaseries(PosTechOutboundMonForm)
+            return response
+
+        elif campaign == 'Schindler Media':
+            response = exportAadyaseries(SchindlerMediaOutboundMonForm)
+            return response
+
+        elif campaign == 'UPS':
+            response = exportAadyaseries(UPSOutboundMonForm)
             return response
 
 
@@ -4034,6 +4075,18 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(WitDigitalOutboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'PosTech':
+            newseriesAddCoaching(PosTechOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Schindler Media':
+            newseriesAddCoaching(SchindlerMediaOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'UPS':
+            newseriesAddCoaching(UPSOutboundMonForm)
+            return redirect('/employees/qahome')
+
 
         else:
             pass
@@ -4902,4 +4955,3 @@ def deleteData(request):
     for i in list_of_monforms:
         i.objects.all().delete()
 
-        

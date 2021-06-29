@@ -7,32 +7,7 @@
     <div class="container-lg">
         <div class="row">
             <div class="col-md-6">
-                <div style="margin-top: 135px;max-width: 250px;margin-left: 35px;color: wheat;">
-                    <form action="/employees/manager-home" method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <label for="">Choose Month</label>
-                        <select name="month" id="" class="form-control">
-                            <option value="1" class="form-control">Jan</option>
-                            <option value="2" class="form-control">Feb</option>
-                            <option value="3" class="form-control">March</option>
-                            <option value="4" class="form-control">April</option>
-                            <option value="5" class="form-control">May</option>
-                            <option value="6" class="form-control">June</option>
-                            <option value="7" class="form-control">July</option>
-                            <option value="8" class="form-control">August</option>
-                            <option value="9" class="form-control">September</option>
-                            <option value="10" class="form-control">October</option>
-                            <option value="11" class="form-control">November</option>
-                            <option value="12" class="form-control">Dec</option>
-                        </select>
-                        <label for="">Choose Year</label>
-                        <select name="year" id="" class="form-control">
-                            <option value="2021" class="form-control">2021</option>
-                        </select>
-                        <br>
-                        <button class="btn btn-info">View</button>
-                    </form>
-                </div>
+
             </div>
             <div class="col-md-6">
                 <div class="profile-head" style="margin-top: 127px;text-align: right;margin-right: 50px;">
@@ -82,12 +57,12 @@
 
 </section>
 
-<section style="margin:50px 100px">
+<section style="margin:100px 100px">
     <div class="container-lg">
         <div class="row">
             <div class="col-md-6">
                 <div style="width:300px">
-                    <h2 style="color:grey">View Feedbacks</h2>
+                    <h4 style="color:grey"><b>View Feedbacks</b></h4>
                     <br>
                     <form action="/employees/campaign-wise-coaching-view" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -114,12 +89,12 @@
                     </form>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="background: #d3d3d359;padding: 20px;">
 
-                <h4 class="text-center"><b>Campaign-wise Quick Report</b></h4>
+                <h4 class="text-center" style="color:grey"><b>Campaign-wise Quick Report</b></h4>
                     <br>
                         <div style="overflow:scroll;max-height:430px;">
-                            <table class="table table-hover">
+                            <table class="table table-hover" style="background:#fff;color:darkgreen">
                                 <tr>
                                     <th>Process</th>
                                     <th>Audit Count</th>
@@ -160,6 +135,44 @@
         </div>
     </div>
 </section>
+
+<div class="container-lg" style="margin-top:100px">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{% static 'images/report5.png' %}" alt="" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+
+            <div style="margin-top: 50px;max-width: 250px;margin-left: 35px;color: Darkgreen;">
+                <h4>View Old Report</h4><br>
+                    <form action="/employees/manager-home" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="">Choose Month</label>
+                        <select name="month" id="" class="form-control">
+                            <option value="1" class="form-control">Jan</option>
+                            <option value="2" class="form-control">Feb</option>
+                            <option value="3" class="form-control">March</option>
+                            <option value="4" class="form-control">April</option>
+                            <option value="5" class="form-control">May</option>
+                            <option value="6" class="form-control">June</option>
+                            <option value="7" class="form-control">July</option>
+                            <option value="8" class="form-control">August</option>
+                            <option value="9" class="form-control">September</option>
+                            <option value="10" class="form-control">October</option>
+                            <option value="11" class="form-control">November</option>
+                            <option value="12" class="form-control">Dec</option>
+                        </select>
+                        <label for="">Choose Year</label>
+                        <select name="year" id="" class="form-control">
+                            <option value="2021" class="form-control">2021</option>
+                        </select>
+                        <br>
+                        <button class="btn btn-info">View</button>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
 
 
 <section>

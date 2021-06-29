@@ -6,32 +6,6 @@
     <div style="background: #2f374e;opacity: 77%;height: 300px">
     <div class="row" style="padding-top: 50px;padding-left: 50px;color:white;">
         <div class="col-md-3">
-
-            <form action="/employees/campaign-detailed-view/{{process}}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <label for="">Choose Month</label>
-                    <select name="month" id="" class="form-control">
-
-                        <option value="1" class="form-control">Jan</option>
-                        <option value="2" class="form-control">Feb</option>
-                        <option value="3" class="form-control">March</option>
-                        <option value="4" class="form-control">April</option>
-                        <option value="5" class="form-control">May</option>
-                        <option value="6" class="form-control">June</option>
-                        <option value="7" class="form-control">July</option>
-                        <option value="8" class="form-control">August</option>
-                        <option value="9" class="form-control">September</option>
-                        <option value="10" class="form-control">October</option>
-                        <option value="11" class="form-control">November</option>
-                        <option value="12" class="form-control">Dec</option>
-                    </select>
-                    <label for="">Choose Year</label>
-                    <select name="year" id="" class="form-control">
-                        <option value="2021" class="form-control">2021</option>
-                    </select>
-                    <br>
-                    <button class="btn btn-info">View</button>
-                </form>
         </div>
         <div class="col-md-1">
 
@@ -50,7 +24,7 @@
     <div class="row">
         <div class="col-md-3"><br>
             <h4>Quality Report For</h4>
-            <div style="padding: 29px;font-size: 27px;font-weight: 600;">
+            <div style="padding: 20px;font-size: 27px;font-weight: 600;">
                 <span>{{cmonth}}</span><span>/</span><span>{{cyear}}</span>
             </div>
 
@@ -106,12 +80,12 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-6" style="height: 310px;padding:30px">
+        <div class="col-md-6" style="height: 310px;padding:30px;background-image: url(/static/images/bg-1.jpg);height: 350px;background-size: cover;">
             <h4>Weekly Score</h4>
-            <br>
+
             <table class="table table-hover" style="background: #ffffff;color: black;">
                 <tr>
-                    <td></td>
+                    <td>Week</td>
                     <td>Audits</td>
                     <td>Score</td>
                 </tr>
@@ -128,13 +102,51 @@
     </div>
 </div>
 
+<div class="container-lg" style="margin-top:100px">
+    <div class="row">
+        <div class="col-md-6">
+            <div>
+                <img src="{% static 'images/report7.png' %}" alt="" class="img-fluid" style="max-width:400px">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4>View Old Report</h4><br>
+            <form action="/employees/campaign-detailed-view/{{process}}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="">Choose Month</label>
+                    <select name="month" id="" class="form-control">
+
+                        <option value="1" class="form-control">Jan</option>
+                        <option value="2" class="form-control">Feb</option>
+                        <option value="3" class="form-control">March</option>
+                        <option value="4" class="form-control">April</option>
+                        <option value="5" class="form-control">May</option>
+                        <option value="6" class="form-control">June</option>
+                        <option value="7" class="form-control">July</option>
+                        <option value="8" class="form-control">August</option>
+                        <option value="9" class="form-control">September</option>
+                        <option value="10" class="form-control">October</option>
+                        <option value="11" class="form-control">November</option>
+                        <option value="12" class="form-control">Dec</option>
+                    </select>
+                    <label for="">Choose Year</label>
+                    <select name="year" id="" class="form-control">
+                        <option value="2021" class="form-control">2021</option>
+                    </select>
+                    <br>
+                    <button class="btn btn-info">View</button>
+                </form>
+        </div>
+    </div>
+</div>
+
 <div class="container-lg" style="margin-top:100px;">
     <div class="row">
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <h4 style="font-size: 19px;color: #e8612d;font-weight: 600;">Associate-wise Quality Score</h4>
 
-            <div style="overflow:scroll;max-height:300px;">
+            <div style="overflow:scroll;height:300px;">
                 <br>
 
                     {% for e in emp_wise %}
@@ -150,7 +162,7 @@
             </div>
             <br>
             <h4 style="font-size: 19px;color: #e8612d;font-weight: 600;">Fatal Errors</h4>
-            <div style="overflow: scroll;max-height:300px">
+            <div style="overflow: scroll;height:300px">
 
                 <br>
 
@@ -164,9 +176,16 @@
             </div>
 
         </div>
-        <div class="col-md-6">
-            <div style="overflow: scroll;max-height:300px">
-                <h4 style="font-size: 19px;color: #e8612d;font-weight: 600;">Coachings in Open Status</h4>
+        <div class="col-md-4">
+            <div style="margin-top:30%">
+                <img src="{% static 'images/report6.png' %}" alt="" class="img-fluid" style="max-width:300px">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h4 style="font-size: 19px;color: #e8612d;font-weight: 600;">Coachings in Open Status</h4>
+
+            <div style="overflow: scroll;height:300px">
+
                  <br>
 
                     {% for p in emp_coaching %}
@@ -176,7 +195,7 @@
                     {% endfor %}
             </div>
             <br>
-            <div style="overflow: scroll;max-height:300px">
+            <div style="overflow: scroll;height:300px">
                 <h4 style="font-size: 19px;color: #e8612d;font-weight: 600;">Coachings in Dispute Status</h4>
                  <br>
 
@@ -187,11 +206,13 @@
                     {% endfor %}
             </div>
 
+
+
         </div>
     </div>
 </div>
 
-<div style="margin-bottom:200px">
+<div style="margin-bottom:50px">
 
 </div>
 
