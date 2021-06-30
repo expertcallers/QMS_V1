@@ -3011,9 +3011,6 @@ def exportAuditReport(request):
 
             return response
 
-
-
-
         else:
             return redirect(request, 'error-pages/export-error.html')
     else:

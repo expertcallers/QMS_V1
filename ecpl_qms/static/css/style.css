@@ -213,7 +213,7 @@ color:grey;
 }
 
 #dashboardcampaigns .col-md-4 {
-    border: 1px solid grey;
+    border: 1px solid white;
     margin: 20px;
     padding: 20px;
     border-radius: 10px;
@@ -244,6 +244,7 @@ color:grey;
     box-shadow: 2px -1px 10px lightgrey;
     border-radius: 7px;
     color:white;
+    cursor:pointer;
 }
 
 .campwisedetailtables{
