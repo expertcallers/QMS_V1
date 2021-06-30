@@ -28,7 +28,7 @@ urlpatterns = [
 
 
 #### Credentials
-
+    path('accounts/login/',login_view),
     path('signup',signup),
     path('login',login_view),
     path('logout',logout_view),

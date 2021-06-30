@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table{
+                padding: 10px;
+                line-height: 30px;
+                width:auto;
+        }
+    </style>
+</head>
+<body>
+<div style="margin-left:100px;margin-top:50px">
+    <h2 style="letter-spacing: 10px;color: #4b4ba2;">Coaching Dispute</h2>
+ 
+    <table>
+        <tr>
+            <td>Employee Name</td>
+            <td><span style="font-size:18px;color:Darkgreen;font-weight:600;">{{emp_name}}</span></td>
+        </tr>
+
+        <tr>
+            <td>Campaign</td>
+            <td><span style="font-size:18px;color:Darkgreen;font-weight:600;">{{process}}</span></td>
+        </tr>
+    </table>
+</div>
+
+<div style="margin-left:100px;margin-top:20px">
+    <p>The QA score for the following transaction is being disputed by the above user</p>
+    <p><a href="http://127.0.0.1:8000/employees/coaching-view-qa-all/{{process}}/{{id}}">View Audit Details</a></p>
+</div>
+
+<div style="margin-left:100px;margin-top:20px;margin-bottom:100px">
+    <div>
+        <p>Request you to follow up on this with the concerned as the coaching will remain OPEN until resolved, and will not reflect in the QA Scorecard</p>
+    </div>
+</div>
+
+</body>
+</html>

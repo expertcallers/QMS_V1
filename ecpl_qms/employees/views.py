@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
@@ -5,8 +6,9 @@ from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.template.loader import get_template
 from django_pivot.pivot import pivot
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.db.models import Count,Avg,Sum
 import xlwt
 from django.http import HttpResponse
@@ -455,11 +457,8 @@ def agenthome(request):
     def openCampaigns(monforms):
         all_obj = monforms.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,
                                            associate_name=agent_name).order_by('-audit_date')
-        open_obj = monforms.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,
-                                          associate_name=agent_name, status=False, disput_status=False).order_by(
-            '-audit_date')
-        disp_obj = monforms.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,
-                                           associate_name=agent_name, disput_status=True).order_by('-audit_date')
+        open_obj = monforms.objects.filter(associate_name=agent_name, status=False, disput_status=False).order_by('-audit_date')
+        disp_obj = monforms.objects.filter(associate_name=agent_name, disput_status=True).order_by('-audit_date')
 
         all_coaching_list.append(all_obj)
         open_coaching_list.append(open_obj)
@@ -1868,17 +1867,17 @@ def coachingDispute(request,pk):
         cid = pk
         process = request.POST['campaign']
 
-        # Email Contents
-        subject_of_email='Coaching dispute of -'+emp_name
-        body_of_email = 'Hello ,'+ '\n' + 'The QA socre for the following call is being disputed by '+' - '+emp_name +'\n for the following reasons -- >\n' + emp_comments +'\n -- Request you to follow up on this with the concerned as the coaching will remain OPEN until resolved, and will not reflect in the QA Scorecard.'
+        '''html_path = 'dispute-template.html'
+        data = {'id': cid,'process':process,'emp_name':emp_name}
+        email_template = get_template(html_path).render(data)
+        receiver_email = 'kaleshcv2@gmail.com'
+        email_msg = EmailMessage('QMS - Coaching Dispute',
+                                 email_template, 'qms@expertcallers.com',
+                                 [receiver_email,],
+                                 reply_to=['qms@expertcallers.com'])
+        email_msg.content_subtype = 'html'
+        email_msg.send(fail_silently=False)'''
 
-        def sendEmail(email):
-
-            send_mail(subject_of_email, #Subject
-                      body_of_email,#Body
-                      'qms@expertcallers.com',# From
-                      ['kalesh.cv@expertcallers.com','kaleshcv2@gmail.com'],# To
-                      fail_silently=False)
 
         for i in list_of_monforms:
             obj = i.objects.all()
@@ -1894,7 +1893,7 @@ def coachingDispute(request,pk):
         obj.disput_status=True
         obj.emp_comments=emp_comments
         obj.save()
-        #sendEmail(manager_email)
+
         data={'team':team}
         return render(request,'coaching-dispute-message.html',data)
     else:
@@ -1911,7 +1910,7 @@ def qahome(request):
         # Total NO of Coachings
         total_coaching_ids = []
         for i in list_of_monforms:
-            x = i.objects.filter(added_by=qa_name)
+            x = i.objects.filter(added_by=qa_name,audit_date__year=currentYear,audit_date__month=currentMonth)
             for i in x:
                 total_coaching_ids.append(i.id)
         total_coaching = len(total_coaching_ids)
@@ -1982,7 +1981,7 @@ def qahome(request):
         # Total NO of Coachings
         total_coaching_ids = []
         for i in list_of_monforms:
-            x = i.objects.filter(added_by=qa_name)
+            x = i.objects.filter(added_by=qa_name,audit_date__year=currentYear,audit_date__month=currentMonth)
             for i in x:
                 total_coaching_ids.append(i.id)
         total_coaching = len(total_coaching_ids)

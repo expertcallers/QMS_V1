@@ -24,7 +24,9 @@
                     <div style="background: #273944;padding: 50px 100px;margin: 30px 50px;border-radius: 10px;box-shadow: 1px 1px 10px lightgrey;">
                         <i class="fa fa-sign-in" style="color:#db2a1b"></i><h2 class="form-header" style="color:#1c7ba8">Login</h2>
                         <br>
+
                         <form class="login-form" action="/employees/login" method="post">
+
                         {% csrf_token %}
 
                         {{form|crispy}}
