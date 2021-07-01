@@ -262,34 +262,113 @@ def managerWiseReport(request):
         profile=Profile.objects.get(emp_id=manager_emp_id)
         manager_name=profile.emp_name
         # Mon Form List
+        category = request.POST['category']
 
         associate_data = []
         associate_data_fatal = []
         associate_data_errors = []
 
-        # Score in All forms
-        for i in list_of_monforms:
-            coaching = i.objects.filter(manager_id=manager_emp_id, audit_date__year=currentYear,
-                                        audit_date__month=currentMonth)
-            if coaching.count() > 0:
+        if category == 'manager':
 
-                emp_wise = i.objects.filter(manager_id=manager_emp_id, audit_date__year=currentYear,
-                                            audit_date__month=currentMonth).values(
-                    'process').annotate(dcount=Count('associate_name')).annotate(
-                    davg=Avg('overall_score'))
-                emp_wise_fatal = i.objects.filter(manager_id=manager_emp_id, audit_date__year=currentYear,
-                                                  audit_date__month=currentMonth).values(
-                    'process').annotate(dsum=Sum('fatal_count'))
+            # Score in All forms
+            for i in list_of_monforms:
+                coaching = i.objects.filter(manager_id=manager_emp_id, audit_date__year=currentYear,
+                                            audit_date__month=currentMonth)
+                if coaching.count() > 0:
 
-                emp_wise_errors = i.objects.filter(manager_id=manager_emp_id, audit_date__year=currentYear,
-                                                   audit_date__month=currentMonth, overall_score__lt=100).values(
-                    'process').annotate(dcount=Count('process'))
+                    emp_wise = i.objects.filter(manager_id=manager_emp_id, audit_date__year=currentYear,
+                                                audit_date__month=currentMonth).values(
+                        'process').annotate(dcount=Count('associate_name')).annotate(
+                        davg=Avg('overall_score'))
+                    emp_wise_fatal = i.objects.filter(manager_id=manager_emp_id, audit_date__year=currentYear,
+                                                      audit_date__month=currentMonth).values(
+                        'process').annotate(dsum=Sum('fatal_count'))
 
-                associate_data.append(emp_wise)
-                associate_data_fatal.append(emp_wise_fatal)
-                associate_data_errors.append(emp_wise_errors)
-            else:
-                pass
+                    emp_wise_errors = i.objects.filter(manager_id=manager_emp_id, audit_date__year=currentYear,
+                                                       audit_date__month=currentMonth, overall_score__lt=100).values(
+                        'process').annotate(dcount=Count('process'))
+
+                    associate_data.append(emp_wise)
+                    associate_data_fatal.append(emp_wise_fatal)
+                    associate_data_errors.append(emp_wise_errors)
+                else:
+                    pass
+
+        elif category == 'qa':
+
+            # Score in All forms
+            for i in list_of_monforms:
+                coaching = i.objects.filter(qa=manager_name, audit_date__year=currentYear,
+                                            audit_date__month=currentMonth)
+                if coaching.count() > 0:
+
+                    emp_wise = i.objects.filter(qa=manager_name, audit_date__year=currentYear,
+                                                audit_date__month=currentMonth).values(
+                        'process').annotate(dcount=Count('associate_name')).annotate(
+                        davg=Avg('overall_score'))
+                    emp_wise_fatal = i.objects.filter(qa=manager_name, audit_date__year=currentYear,
+                                                      audit_date__month=currentMonth).values(
+                        'process').annotate(dsum=Sum('fatal_count'))
+
+                    emp_wise_errors = i.objects.filter(qa=manager_name, audit_date__year=currentYear,
+                                                       audit_date__month=currentMonth, overall_score__lt=100).values(
+                        'process').annotate(dcount=Count('process'))
+
+                    associate_data.append(emp_wise)
+                    associate_data_fatal.append(emp_wise_fatal)
+                    associate_data_errors.append(emp_wise_errors)
+                else:
+                    pass
+
+        elif category == 'tl':
+            # Score in All forms
+            for i in list_of_monforms:
+                coaching = i.objects.filter(team_lead=manager_name, audit_date__year=currentYear,
+                                            audit_date__month=currentMonth)
+                if coaching.count() > 0:
+
+                    emp_wise = i.objects.filter(team_lead=manager_name, audit_date__year=currentYear,
+                                                audit_date__month=currentMonth).values(
+                        'process').annotate(dcount=Count('associate_name')).annotate(
+                        davg=Avg('overall_score'))
+                    emp_wise_fatal = i.objects.filter(team_lead=manager_name, audit_date__year=currentYear,
+                                                      audit_date__month=currentMonth).values(
+                        'process').annotate(dsum=Sum('fatal_count'))
+
+                    emp_wise_errors = i.objects.filter(team_lead=manager_name, audit_date__year=currentYear,
+                                                       audit_date__month=currentMonth, overall_score__lt=100).values(
+                        'process').annotate(dcount=Count('process'))
+
+                    associate_data.append(emp_wise)
+                    associate_data_fatal.append(emp_wise_fatal)
+                    associate_data_errors.append(emp_wise_errors)
+                else:
+                    pass
+
+        elif category == 'am':
+            # Score in All forms
+            for i in list_of_monforms:
+                coaching = i.objects.filter(am=manager_name, audit_date__year=currentYear,
+                                            audit_date__month=currentMonth)
+                if coaching.count() > 0:
+
+                    emp_wise = i.objects.filter(am=manager_name, audit_date__year=currentYear,
+                                                audit_date__month=currentMonth).values(
+                        'process').annotate(dcount=Count('associate_name')).annotate(
+                        davg=Avg('overall_score'))
+                    emp_wise_fatal = i.objects.filter(am=manager_name, audit_date__year=currentYear,
+                                                      audit_date__month=currentMonth).values(
+                        'process').annotate(dsum=Sum('fatal_count'))
+
+                    emp_wise_errors = i.objects.filter(am=manager_name, audit_date__year=currentYear,
+                                                       audit_date__month=currentMonth, overall_score__lt=100).values(
+                        'process').annotate(dcount=Count('process'))
+
+                    associate_data.append(emp_wise)
+                    associate_data_fatal.append(emp_wise_fatal)
+                    associate_data_errors.append(emp_wise_errors)
+                else:
+                    pass
 
         data = {'profile': profile, 'associate_data': associate_data,
                 'associate_data_fatal': associate_data_fatal,
@@ -304,6 +383,10 @@ def qualityDashboardMgt(request):
     import datetime
     employees = Profile.objects.exclude(emp_desi__in=['AM','Manager','Team Leader','Trainer','QA']).order_by('emp_name')
     managers = Profile.objects.filter(emp_desi='Manager')
+    ams = Profile.objects.filter(emp_desi='AM')
+    tls = Profile.objects.filter(emp_desi='Team Leader')
+    qas = Profile.objects.filter(emp_desi='QA')
+
     teams = Team.objects.all()
 
     # Date Time
@@ -352,6 +435,9 @@ def qualityDashboardMgt(request):
                 'outbound_avg': outbound_avg,
                 'inbound_avg': inbound_avg,
                 'email_chat_avg': email_chat_avg,
+                'ams':ams,
+                'tls':tls,
+                'qas':qas,
                 }
 
         return render(request, 'quality-dashboard-management.html', data)
@@ -402,6 +488,9 @@ def qualityDashboardMgt(request):
                 'outbound_avg':outbound_avg,
                 'inbound_avg':inbound_avg,
                 'email_chat_avg':email_chat_avg,
+                'ams': ams,
+                'tls': tls,
+                'qas': qas,
                 }
 
         return render(request, 'quality-dashboard-management.html', data)
@@ -2075,7 +2164,7 @@ def selectCoachingForm(request):
 
         elif campaign_type == 'Inbound':
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
-            return render(request, 'mon-forms/new-series-Inbound.html', data)
+            return render(request, 'mon-forms/new-series-inbound.html', data)
 
         elif campaign_type == 'Email - Chat':
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}

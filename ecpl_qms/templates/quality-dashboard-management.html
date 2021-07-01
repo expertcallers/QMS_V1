@@ -254,7 +254,7 @@
                                         <br>
 
                                         <input type="hidden" value="{{team.name}}" name="team">
-
+                                        <input type="hidden" name="category" id="" value="manager">
                                         <button class="btn btn-info">View Report</button>
                                     </form>
                     </div>
@@ -264,6 +264,134 @@
         </div>
     </div>
 </section>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <section style="margin:100px 30px">
+                    <h4>Quality Report - QA</h4><br>
+                    <div class="row" style="margin-left: 50px">
+                                    <form action="/employees/manager-wise-report" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                        <label for="agent">Select QA</label>
+                                        <select name="emp_id" class="form-control">
+                                            {% for manager in qas %}
+                                            <option value="{{manager.emp_id}}" class="form-control">{{manager.emp_name}}</option>
+                                            {% endfor %}
+                                        </select><br>
+
+                                        <select name="month" id="" class="form-control">
+                                            <option value="1" class="form-control">Jan</option>
+                                            <option value="2" class="form-control">Feb</option>
+                                            <option value="3" class="form-control">March</option>
+                                            <option value="4" class="form-control">April</option>
+                                            <option value="5" class="form-control">May</option>
+                                            <option value="6" class="form-control">June</option>
+                                            <option value="7" class="form-control">July</option>
+                                            <option value="8" class="form-control">August</option>
+                                            <option value="9" class="form-control">September</option>
+                                            <option value="10" class="form-control">October</option>
+                                            <option value="11" class="form-control">November</option>
+                                            <option value="12" class="form-control">Dec</option>
+                                        </select>
+                                        <br>
+
+                                        <select name="year" id="" class="form-control">
+                                            <option value="2021" class="form-control">2021</option>
+                                        </select>
+                                        <br>
+
+                                        <input type="hidden" value="{{team.name}}" name="team">
+                                        <input type="hidden" name="category" id="" value="qa">
+                                        <button class="btn btn-info">View Report</button>
+                                    </form>
+                    </div>
+                </section>
+        </div>
+        <div class="col-md-4">
+            <section style="margin:100px 30px">
+                    <h4>Quality Report - Team Leader</h4><br>
+                    <div class="row" style="margin-left: 50px">
+                                    <form action="/employees/manager-wise-report" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                        <label for="agent">Select TL</label>
+                                        <select name="emp_id" id="agent" class="form-control">
+                                            {% for manager in tls %}
+                                            <option value="{{manager.emp_id}}" class="form-control">{{manager.emp_name}}</option>
+                                            {% endfor %}
+                                        </select><br>
+
+                                        <select name="month" id="" class="form-control">
+                                            <option value="1" class="form-control">Jan</option>
+                                            <option value="2" class="form-control">Feb</option>
+                                            <option value="3" class="form-control">March</option>
+                                            <option value="4" class="form-control">April</option>
+                                            <option value="5" class="form-control">May</option>
+                                            <option value="6" class="form-control">June</option>
+                                            <option value="7" class="form-control">July</option>
+                                            <option value="8" class="form-control">August</option>
+                                            <option value="9" class="form-control">September</option>
+                                            <option value="10" class="form-control">October</option>
+                                            <option value="11" class="form-control">November</option>
+                                            <option value="12" class="form-control">Dec</option>
+                                        </select>
+                                        <br>
+
+                                        <select name="year" id="" class="form-control">
+                                            <option value="2021" class="form-control">2021</option>
+                                        </select>
+                                        <br>
+
+                                        <input type="hidden" value="{{team.name}}" name="team">
+                                        <input type="hidden" name="category" id="" value="tl">
+                                        <button class="btn btn-info">View Report</button>
+                                    </form>
+                    </div>
+                </section>
+        </div>
+        <div class="col-md-4">
+            <section style="margin:100px 30px">
+                    <h4>Quality Report - AM</h4><br>
+                    <div class="row" style="margin-left: 50px">
+                                    <form action="/employees/manager-wise-report" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                        <label for="agent">Select AM</label>
+                                        <select name="emp_id" id="agent" class="form-control">
+                                            {% for manager in ams %}
+                                            <option value="{{manager.emp_id}}" class="form-control">{{manager.emp_name}}</option>
+                                            {% endfor %}
+                                        </select><br>
+
+                                        <select name="month" id="" class="form-control">
+                                            <option value="1" class="form-control">Jan</option>
+                                            <option value="2" class="form-control">Feb</option>
+                                            <option value="3" class="form-control">March</option>
+                                            <option value="4" class="form-control">April</option>
+                                            <option value="5" class="form-control">May</option>
+                                            <option value="6" class="form-control">June</option>
+                                            <option value="7" class="form-control">July</option>
+                                            <option value="8" class="form-control">August</option>
+                                            <option value="9" class="form-control">September</option>
+                                            <option value="10" class="form-control">October</option>
+                                            <option value="11" class="form-control">November</option>
+                                            <option value="12" class="form-control">Dec</option>
+                                        </select>
+                                        <br>
+
+                                        <select name="year" id="" class="form-control">
+                                            <option value="2021" class="form-control">2021</option>
+                                        </select>
+                                        <br>
+
+                                        <input type="hidden" value="{{team.name}}" name="team">
+                                        <input type="hidden" name="category" id="" value="am">
+                                        <button class="btn btn-info">View Report</button>
+                                    </form>
+                    </div>
+                </section>
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}
