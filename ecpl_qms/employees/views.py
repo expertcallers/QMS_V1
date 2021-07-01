@@ -1868,7 +1868,7 @@ def coachingDispute(request,pk):
         process = request.POST['campaign']
 
         '''html_path = 'dispute-template.html'
-        data = {'id': cid,'process':process,'emp_name':emp_name}
+        data = {'id': cid,'process':process,'emp_name':emp_name,'emp_comments':emp_comments}
         email_template = get_template(html_path).render(data)
         receiver_email = 'kaleshcv2@gmail.com'
         email_msg = EmailMessage('QMS - Coaching Dispute',
