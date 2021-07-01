@@ -5152,6 +5152,7 @@ def addNewCampaign(request):
 
 def deleteData(request):
 
-    for i in list_of_monforms:
-        i.objects.all().delete()
+    pass
+    '''for i in list_of_monforms:
+        i.objects.all().delete()'''
 
