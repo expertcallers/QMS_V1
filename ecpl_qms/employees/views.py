@@ -4943,11 +4943,14 @@ def fameHouseNew(request):
         prof_obj = Profile.objects.get(emp_id=emp_id)
         manager = prof_obj.manager
 
-        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+        try:
+            manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+            manager_emp_id = manager_emp_id_obj.emp_id
 
-        manager_emp_id = manager_emp_id_obj.emp_id
+        except Profile.DoesNotExist:
+            manager_emp_id = 0
+
         manager_name = manager
-        #########################################
 
         # Immediate fails:
         compliance_1 = int(request.POST['compliance_1'])
@@ -4956,9 +4959,7 @@ def fameHouseNew(request):
         compliance_4 = int(request.POST['compliance_4'])
         compliance_5 = int(request.POST['compliance_5'])
         compliance_6 = int(request.POST['compliance_6'])
-
         compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4 + compliance_5 + compliance_6
-
 
         na_list = []
         sum_list = []
@@ -5244,4 +5245,54 @@ def deleteData(request):
     pass
     '''for i in list_of_monforms:
         i.objects.all().delete()'''
+
+
+
+def campaignDetails(request):
+
+    if request.method == 'POST':
+        category = request.POST['campaign']
+
+        for i in list_of_monforms:
+            obj = i.objects.all()
+            if obj.count() >0:
+                if obj[0].process == category:
+                    campaign = i
+                else:
+                    pass
+            else:
+                pass
+
+        print(campaign)
+        campaigns = Campaigns.objects.all()
+        data = {'campaigns': campaigns}
+        return render(request, 'all-campaigns.html', data)
+
+    else:
+        campaigns = Campaigns.objects.all()
+        data = {'campaigns':campaigns}
+        return render(request,'all-campaigns.html',data)
+
+
+
+def AllProfileUpdate(request):
+
+    new = ABCprofile.objects.all()
+
+    prof = Profile.objects.all()
+
+    for i in new:
+        for j in prof:
+            if j.emp_id == i.emp_id:
+                j.manager = i.manager
+                j.am = i.am
+                j.team_lead = i.tl
+                j.save()
+
+
+
+
+
+
+
 

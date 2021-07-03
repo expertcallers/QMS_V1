@@ -94,5 +94,8 @@ urlpatterns = [
     path('change-password',changePassword),
 
     path('delete',deleteData),
+    path('campaigns',campaignDetails),
+
+    path('allprofileupdate',AllProfileUpdate),
 
 ]

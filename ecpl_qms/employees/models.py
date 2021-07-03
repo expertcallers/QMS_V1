@@ -6592,3 +6592,8 @@ class ProfileNewtoAddUserandProfile(models.Model):
 class latest(models.Model):
     ser = models.IntegerField()
 
+class ABCprofile(models.Model):
+    emp_id = models.IntegerField()
+    manager = models.CharField(max_length=100)
+    am = models.CharField(max_length=100)
+    tl = models.CharField(max_length=100)
