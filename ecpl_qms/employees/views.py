@@ -30,6 +30,7 @@ list_of_monforms = [ # OutBound
                         MaxwellPropertiesOutboundMonForm,MovementofInsuranceOutboundMonForm,SterlingStrategiesOutboundMonForm,TonnCoaOutboundMonForm,WitDigitalOutboundMonForm,
                         PosTechOutboundMonForm,SchindlerMediaOutboundMonForm,UPSOutboundMonForm,
                         PickPackDeliveriesMonForm,MarceloPerezMonForm,MedTechGroupOutboundMonForm,DigitalSignageOutboundMonForm,
+                        HiveIncubatorsOutboundMonForm,KaapiMachinesOutboundMonForm,SomethingsBrewingOutboundMonForm,NaffaOutboundMonForm,JBNOutboundMonForm,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -37,12 +38,14 @@ list_of_monforms = [ # OutBound
                         FinesseMortgageInboundMonForm,DigitalSwissGoldInboundMonForm,DanielwellingtoInboundMonForm,BhagyaLakshmiInboundMonForm,
                         AKDYInboundMonFormNew,AdityaBirlainboundMonForm,ABHindalcoInboundMonForm,
                         RainbowDiagnosticsInboundMonForm,DecentralizedVisionLTDInboundMonForm,
+                        AmerisaveInboundMonForm,IEDHHInboundMonForm,
 
                         # Email/CHat
                         SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
                         PrinterPixMasterMonitoringFormChatsEmail,PractoMonForm,FurBabyMonForm,AKDYEmailMonForm,AmerisaveEmailMonForm,
                         ClearViewEmailMonForm,FinesseMortgageEmailMonForm,DigitalSwissGoldEmailChatMonForm,
                         RainbowDiagnosticsEmailMonForm,HiveIncubatorEmailMonForm,MedTechGroupEmailMonForm,
+                        Ri8BrainEmailMonForm,ScalaEmailMonForm,KalkiFashionEmailMonForm,MaxwellEmailMonForm,
 
                         #FLA
                         FLAMonitoringForm,
@@ -899,6 +902,31 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Hive Incubators Outbound':
+        coaching = HiveIncubatorsOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Kaapi Machines Outbound':
+        coaching = KaapiMachinesOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Somethings Brewing Outbound':
+        coaching = SomethingsBrewingOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Naffa Outbound':
+        coaching = NaffaOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'JBN':
+        coaching = JBNOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -981,6 +1009,16 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'IEDHH':
+        coaching = IEDHHInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Amerisave Inbound':
+        coaching = AmerisaveInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -1055,6 +1093,26 @@ def coachingViewAgents(request,process,pk):
 
     elif process_name == 'MedTech Group Email':
         coaching = MedTechGroupEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Ri8 Brain Email':
+        coaching = Ri8BrainEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Scala Email':
+        coaching = ScalaEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
+    elif process_name == 'kalki Fashion Email':
+        coaching = KalkiFashionEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Maxwell Email':
+        coaching = MaxwellEmailMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
@@ -1400,6 +1458,31 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Hive Incubators Outbound':
+        coaching = HiveIncubatorsOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Kaapi Machines Outbound':
+        coaching = KaapiMachinesOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Somethings Brewing Outbound':
+        coaching = SomethingsBrewingOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Naffa Outbound':
+        coaching = NaffaOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'JBN':
+        coaching = JBNOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
 
     ########### Inbound ########################
 
@@ -1483,6 +1566,16 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'IEDHH':
+        coaching = IEDHHInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Amerisave Inbound':
+        coaching = AmerisaveInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
 
     ############# Email/Chat ##############################
 
@@ -1560,6 +1653,28 @@ def coachingViewQaDetailed(request,process,pk):
         coaching = MedTechGroupEmailMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Ri8 Brain Email':
+        coaching = Ri8BrainEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Scala Email':
+        coaching = ScalaEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'kalki Fashion Email':
+        coaching = KalkiFashionEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Maxwell Email':
+        coaching = MaxwellEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+
 
     ################ Others ##########################################################
 
@@ -2525,6 +2640,26 @@ def exportAuditReport(request):
             response = exportAadyaseries(DigitalSignageOutboundMonForm)
             return response
 
+        elif campaign == 'Hive Incubators Outbound':
+            response = exportAadyaseries(HiveIncubatorsOutboundMonForm)
+            return response
+
+        elif campaign == 'Kaapi Machines Outbound':
+            response = exportAadyaseries(KaapiMachinesOutboundMonForm)
+            return response
+
+        elif campaign == 'Somethings Brewing Outbound':
+            response = exportAadyaseries(SomethingsBrewingOutboundMonForm)
+            return response
+
+        elif campaign == 'Naffa Outbound':
+            response = exportAadyaseries(NaffaOutboundMonForm)
+            return response
+
+        elif campaign == 'JBN':
+            response = exportAadyaseries(JBNOutboundMonForm)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -2663,6 +2798,13 @@ def exportAuditReport(request):
             response = exportinbound(DecentralizedVisionLTDInboundMonForm)
             return response
 
+        elif campaign == 'IEDHH':
+            response = exportinbound(IEDHHInboundMonForm)
+            return response
+
+        elif campaign == 'Amerisave Inbound':
+            response = exportinbound(AmerisaveInboundMonForm)
+            return response
 
         #########    Email/CHat ##########################
 
@@ -2798,6 +2940,22 @@ def exportAuditReport(request):
 
         elif campaign == 'MedTech Group Email':
             response = exportEmailChat(MedTechGroupEmailMonForm)
+            return response
+
+        elif campaign == 'Ri8 Brain Email':
+            response = exportEmailChat(Ri8BrainEmailMonForm)
+            return response
+
+        elif campaign == 'Scala Email':
+            response = exportEmailChat(ScalaEmailMonForm)
+            return response
+
+        elif campaign == 'kalki Fashion Email':
+            response = exportEmailChat(KalkiFashionEmailMonForm)
+            return response
+
+        elif campaign == 'Maxwell Email':
+            response = exportEmailChat(MaxwellEmailMonForm)
             return response
 
             ########## other campaigns ##############
@@ -3431,6 +3589,25 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(DigitalSignageOutboundMonForm)
             return response
 
+        elif campaign == 'Hive Incubators Outbound':
+            response = exportAadyaseries(HiveIncubatorsOutboundMonForm)
+            return response
+
+        elif campaign == 'Kaapi Machines Outbound':
+            response = exportAadyaseries(KaapiMachinesOutboundMonForm)
+            return response
+
+        elif campaign == 'Somethings Brewing Outbound':
+            response = exportAadyaseries(SomethingsBrewingOutboundMonForm)
+            return response
+
+        elif campaign == 'Naffa Outbound':
+            response = exportAadyaseries(NaffaOutboundMonForm)
+            return response
+
+        elif campaign == 'JBN':
+            response = exportAadyaseries(JBNOutboundMonForm)
+            return response
 
 
         ######## Inbound ###############################
@@ -3571,6 +3748,14 @@ def exportAuditReportQA(request):
             response = exportinbound(DecentralizedVisionLTDInboundMonForm)
             return response
 
+        elif campaign == 'IEDHH':
+            response = exportinbound(IEDHHInboundMonForm)
+            return response
+
+        elif campaign == 'Amerisave Inbound':
+            response = exportinbound(AmerisaveInboundMonForm)
+            return response
+
         #########    Email/CHat ##########################
 
         def exportEmailChat(monform):
@@ -3706,6 +3891,23 @@ def exportAuditReportQA(request):
         elif campaign == 'MedTech Group Email':
             response = exportEmailChat(MedTechGroupEmailMonForm)
             return response
+
+        elif campaign == 'Ri8 Brain Email':
+            response = exportEmailChat(Ri8BrainEmailMonForm)
+            return response
+
+        elif campaign == 'Scala Email':
+            response = exportEmailChat(ScalaEmailMonForm)
+            return response
+
+        elif campaign == 'kalki Fashion Email':
+            response = exportEmailChat(KalkiFashionEmailMonForm)
+            return response
+
+        elif campaign == 'Maxwell Email':
+            response = exportEmailChat(MaxwellEmailMonForm)
+            return response
+
 
             ########## other campaigns ##############
 
@@ -4352,6 +4554,25 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(DigitalSignageOutboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Hive Incubators Outbound':
+            newseriesAddCoaching(HiveIncubatorsOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Kaapi Machines Outbound':
+            newseriesAddCoaching(KaapiMachinesOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Somethings Brewing Outbound':
+            newseriesAddCoaching(SomethingsBrewingOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Naffa Outbound':
+            newseriesAddCoaching(NaffaOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'JBN':
+            newseriesAddCoaching(JBNOutboundMonForm)
+            return redirect('/employees/qahome')
 
         else:
             pass
@@ -4532,6 +4753,14 @@ def newSeriesInboundForms(request):
 
         elif campaign_name == 'Decentralized Vision LTD':
             inboundAddCoaching(DecentralizedVisionLTDInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'IEDHH':
+            inboundAddCoaching(IEDHHInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Amerisave Inbound':
+            inboundAddCoaching(AmerisaveInboundMonForm)
             return redirect('/employees/qahome')
 
 
@@ -4715,6 +4944,23 @@ def domesticChatEmail(request):
         elif campaign_name == 'MedTech Group Email':
             domesticEmailChatAddCoaching(MedTechGroupEmailMonForm)
             return redirect('/employees/qahome')
+
+        elif campaign_name == 'Ri8 Brain Email':
+            domesticEmailChatAddCoaching(Ri8BrainEmailMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Scala Email':
+            domesticEmailChatAddCoaching(ScalaEmailMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'kalki Fashion Email':
+            domesticEmailChatAddCoaching(KalkiFashionEmailMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Maxwell Email':
+            domesticEmailChatAddCoaching(MaxwellEmailMonForm)
+            return redirect('/employees/qahome')
+
 
 
         else:
