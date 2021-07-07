@@ -85,6 +85,10 @@ admin.site.register(QBIQMonForm)
 admin.site.register(AccutimeMonForm)
 admin.site.register(latest)
 
+admin.site.register(HiveIncubatorsOutboundMonForm)
+admin.site.register(IEDHHInboundMonForm)
+admin.site.register(Ri8BrainEmailMonForm)
+
 
 
 
