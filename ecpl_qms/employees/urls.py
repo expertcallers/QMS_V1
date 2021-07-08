@@ -15,6 +15,7 @@ urlpatterns = [
     path('ECPL-Pod-Father-Monitoring-Form-chat',chatCoachingformPodFather),
 
     path('fame-house-new',fameHouseNew),
+    path('gubagoo-audit-submit',gubaGooNew),
 
     path('ECPL-FLA-MONITORING_FORM',flaMonForm),
 

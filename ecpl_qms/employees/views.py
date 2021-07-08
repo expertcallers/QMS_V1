@@ -2302,6 +2302,12 @@ def selectCoachingForm(request):
             data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
             return render(request, 'mon-forms/fame-house-new.html', data)
 
+        elif campaign_type =='Gubagoo':
+            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+            return render(request, 'mon-forms/gubagoo.html', data)
+
+
+
 
     else:
         return redirect('/employees/qahome')
@@ -5390,6 +5396,140 @@ def flaMonForm(request):
         users = User.objects.all()
         data = {'teams': teams, 'users': users}
         return render(request, 'mon-forms/FLA-mon-form.html', data)
+
+
+def gubaGooNew(request):
+
+    if request.method == 'POST':
+        cat1chat1 = request.POST['cat1chat1']
+        cat1chat2 = request.POST['cat1chat2']
+        cat1chat3 = request.POST['cat1chat3']
+        cat1chat4 = request.POST['cat1chat4']
+        cat1chat5 = request.POST['cat1chat5']
+        cat1chat6 = request.POST['cat1chat6']
+
+        cat2chat1 = request.POST['cat2chat1']
+        cat2chat2 = request.POST['cat2chat2']
+        cat2chat3 = request.POST['cat2chat3']
+        cat2chat4 = request.POST['cat2chat4']
+        cat2chat5 = request.POST['cat2chat5']
+        cat2chat6 = request.POST['cat2chat6']
+
+        cat3chat1 = request.POST['cat3chat1']
+        cat3chat2 = request.POST['cat3chat2']
+        cat3chat3 = request.POST['cat3chat3']
+        cat3chat4 = request.POST['cat3chat4']
+        cat3chat5 = request.POST['cat3chat5']
+        cat3chat6 = request.POST['cat3chat6']
+
+        cat4chat1 = request.POST['cat4chat1']
+        cat4chat2 = request.POST['cat4chat2']
+        cat4chat3 = request.POST['cat4chat3']
+        cat4chat4 = request.POST['cat4chat4']
+        cat4chat5 = request.POST['cat4chat5']
+        cat4chat6 = request.POST['cat4chat6']
+
+        cat5chat1 = request.POST['cat5chat1']
+        cat5chat2 = request.POST['cat5chat2']
+        cat5chat3 = request.POST['cat5chat3']
+        cat5chat4 = request.POST['cat5chat4']
+        cat5chat5 = request.POST['cat5chat5']
+        cat5chat6 = request.POST['cat5chat6']
+
+        cat6chat1 = request.POST['cat6chat1']
+        cat6chat2 = request.POST['cat6chat2']
+        cat6chat3 = request.POST['cat6chat3']
+        cat6chat4 = request.POST['cat6chat4']
+        cat6chat5 = request.POST['cat6chat5']
+        cat6chat6 = request.POST['cat6chat6']
+
+        cat7chat1 = request.POST['cat7chat1']
+        cat7chat2 = request.POST['cat7chat2']
+        cat7chat3 = request.POST['cat7chat3']
+        cat7chat4 = request.POST['cat7chat4']
+        cat7chat5 = request.POST['cat7chat5']
+        cat7chat6 = request.POST['cat7chat6']
+
+        cat8chat1 = request.POST['cat8chat1']
+        cat8chat2 = request.POST['cat8chat2']
+        cat8chat3 = request.POST['cat8chat3']
+        cat8chat4 = request.POST['cat8chat4']
+        cat8chat5 = request.POST['cat8chat5']
+        cat8chat6 = request.POST['cat8chat6']
+
+        cat9chat1 = request.POST['cat9chat1']
+        cat9chat2 = request.POST['cat9chat2']
+        cat9chat3 = request.POST['cat9chat3']
+        cat9chat4 = request.POST['cat9chat4']
+        cat9chat5 = request.POST['cat9chat5']
+        cat9chat6 = request.POST['cat9chat6']
+
+        cat10chat1 = request.POST['cat10chat1']
+        cat10chat2 = request.POST['cat10chat2']
+        cat10chat3 = request.POST['cat10chat3']
+        cat10chat4 = request.POST['cat10chat4']
+        cat10chat5 = request.POST['cat10chat5']
+        cat10chat6 = request.POST['cat10chat6']
+
+        cat11chat1 = request.POST['cat11chat1']
+        cat11chat2 = request.POST['cat11chat2']
+        cat11chat3 = request.POST['cat11chat3']
+        cat11chat4 = request.POST['cat11chat4']
+        cat11chat5 = request.POST['cat11chat5']
+        cat11chat6 = request.POST['cat11chat6']
+
+        cat12chat1 = request.POST['cat12chat1']
+        cat12chat2 = request.POST['cat12chat2']
+        cat12chat3 = request.POST['cat12chat3']
+        cat12chat4 = request.POST['cat12chat4']
+        cat12chat5 = request.POST['cat12chat5']
+        cat12chat6 = request.POST['cat12chat6']
+
+        cat13chat1 = request.POST['cat13chat1']
+        cat13chat2 = request.POST['cat13chat2']
+        cat13chat3 = request.POST['cat13chat3']
+        cat13chat4 = request.POST['cat13chat4']
+        cat13chat5 = request.POST['cat13chat5']
+        cat13chat6 = request.POST['cat13chat6']
+
+        cat14chat1 = request.POST['cat14chat1']
+        cat14chat2 = request.POST['cat14chat2']
+        cat14chat3 = request.POST['cat14chat3']
+        cat14chat4 = request.POST['cat14chat4']
+        cat14chat5 = request.POST['cat14chat5']
+        cat14chat6 = request.POST['cat14chat6']
+
+        cat15chat1 = request.POST['cat15chat1']
+        cat15chat2 = request.POST['cat15chat2']
+        cat15chat3 = request.POST['cat15chat3']
+        cat15chat4 = request.POST['cat15chat4']
+        cat15chat5 = request.POST['cat15chat5']
+        cat15chat6 = request.POST['cat15chat6']
+
+        cat16chat1 = request.POST['cat16chat1']
+        cat16chat2 = request.POST['cat16chat2']
+        cat16chat3 = request.POST['cat16chat3']
+        cat16chat4 = request.POST['cat16chat4']
+        cat16chat5 = request.POST['cat16chat5']
+        cat16chat6 = request.POST['cat16chat6']
+
+        cat1 = [cat1chat1,cat1chat2,cat1chat3,cat1chat4,cat1chat5]
+
+        ycount = cat1.count('y')
+        pcount = cat1.count('p')
+        fcount = cat1.count('n')
+        nacount = cat1.count('NA')
+
+        cat1score = (ycount + pcount)/5 * 100
+
+        print(cat1score)
+
+
+
+
+
+
+
 
 ############## End Mon Forms ##############################
 
