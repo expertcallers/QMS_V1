@@ -7259,6 +7259,124 @@ class FLAMonitoringForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
+class GubagooMonitoringForm(models.Model):
+    process = models.CharField(default='Gubagoo', max_length=50)
+    type = models.CharField(default='Gubagoo', max_length=50)
+
+    cat1chat1 = models.CharField(max_length=10)
+    cat1chat2 = models.CharField(max_length=10)
+    cat1chat3 = models.CharField(max_length=10)
+    cat1chat4 = models.CharField(max_length=10)
+    cat1chat5 = models.CharField(max_length=10)
+
+    cat2chat1 = models.CharField(max_length=10)
+    cat2chat2 = models.CharField(max_length=10)
+    cat2chat3 = models.CharField(max_length=10)
+    cat2chat4 = models.CharField(max_length=10)
+    cat2chat5 = models.CharField(max_length=10)
+
+    cat3chat1 = models.CharField(max_length=10)
+    cat3chat2 = models.CharField(max_length=10)
+    cat3chat3 = models.CharField(max_length=10)
+    cat3chat4 = models.CharField(max_length=10)
+    cat3chat5 = models.CharField(max_length=10)
+
+    cat4chat1 = models.CharField(max_length=10)
+    cat4chat2 = models.CharField(max_length=10)
+    cat4chat3 = models.CharField(max_length=10)
+    cat4chat4 = models.CharField(max_length=10)
+    cat4chat5 = models.CharField(max_length=10)
+
+    cat5chat1 = models.CharField(max_length=10)
+    cat5chat2 = models.CharField(max_length=10)
+    cat5chat3 = models.CharField(max_length=10)
+    cat5chat4 = models.CharField(max_length=10)
+    cat5chat5 = models.CharField(max_length=10)
+
+    cat6chat1 = models.CharField(max_length=10)
+    cat6chat2 = models.CharField(max_length=10)
+    cat6chat3 = models.CharField(max_length=10)
+    cat6chat4 = models.CharField(max_length=10)
+    cat6chat5 = models.CharField(max_length=10)
+
+    cat7chat1 = models.CharField(max_length=10)
+    cat7chat2 = models.CharField(max_length=10)
+    cat7chat3 = models.CharField(max_length=10)
+    cat7chat4 = models.CharField(max_length=10)
+    cat7chat5 = models.CharField(max_length=10)
+
+    cat8chat1 = models.CharField(max_length=10)
+    cat8chat2 = models.CharField(max_length=10)
+    cat8chat3 = models.CharField(max_length=10)
+    cat8chat4 = models.CharField(max_length=10)
+    cat8chat5 = models.CharField(max_length=10)
+
+    cat9chat1 = models.CharField(max_length=10)
+    cat9chat2 = models.CharField(max_length=10)
+    cat9chat3 = models.CharField(max_length=10)
+    cat9chat4 = models.CharField(max_length=10)
+    cat9chat5 = models.CharField(max_length=10)
+
+    cat10chat1 = models.CharField(max_length=10)
+    cat10chat2 = models.CharField(max_length=10)
+    cat10chat3 = models.CharField(max_length=10)
+    cat10chat4 = models.CharField(max_length=10)
+    cat10chat5 = models.CharField(max_length=10)
+
+    cat11chat1 = models.CharField(max_length=10)
+    cat11chat2 = models.CharField(max_length=10)
+    cat11chat3 = models.CharField(max_length=10)
+    cat11chat4 = models.CharField(max_length=10)
+    cat11chat5 = models.CharField(max_length=10)
+
+    cat12chat1 = models.CharField(max_length=10)
+    cat12chat2 = models.CharField(max_length=10)
+    cat12chat3 = models.CharField(max_length=10)
+    cat12chat4 = models.CharField(max_length=10)
+    cat12chat5 = models.CharField(max_length=10)
+
+    cat13chat1 = models.CharField(max_length=10)
+    cat13chat2 = models.CharField(max_length=10)
+    cat13chat3 = models.CharField(max_length=10)
+    cat13chat4 = models.CharField(max_length=10)
+    cat13chat5 = models.CharField(max_length=10)
+
+    cat14chat1 = models.CharField(max_length=10)
+    cat14chat2 = models.CharField(max_length=10)
+    cat14chat3 = models.CharField(max_length=10)
+    cat14chat4 = models.CharField(max_length=10)
+    cat14chat5 = models.CharField(max_length=10)
+
+    cat15chat1 = models.CharField(max_length=10)
+    cat15chat2 = models.CharField(max_length=10)
+    cat15chat3 = models.CharField(max_length=10)
+    cat15chat4 = models.CharField(max_length=10)
+    cat15chat5 = models.CharField(max_length=10)
+
+    cat16chat1 = models.CharField(max_length=10)
+    cat16chat2 = models.CharField(max_length=10)
+    cat16chat3 = models.CharField(max_length=10)
+    cat16chat4 = models.CharField(max_length=10)
+    cat16chat5 = models.CharField(max_length=10)
+
+    cat1score = models.IntegerField()
+    cat2score = models.IntegerField()
+    cat3score = models.IntegerField()
+    cat4score = models.IntegerField()
+    cat5score = models.IntegerField()
+    cat6score = models.IntegerField()
+    cat7score = models.IntegerField()
+    cat8score = models.IntegerField()
+    cat9score = models.IntegerField()
+    cat10score = models.IntegerField()
+    cat11score = models.IntegerField()
+    cat12score = models.IntegerField()
+    cat13score = models.IntegerField()
+    cat14score = models.IntegerField()
+    cat15score = models.IntegerField()
+    cat16score = models.IntegerField()
+
+
 ############# End of Forms ##############################
 
 class Empdata(models.Model):
