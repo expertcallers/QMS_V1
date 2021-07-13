@@ -4604,7 +4604,6 @@ class JBNOutboundMonForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
-
 class QuickAutoPartsOutboundMonForm(models.Model):
     process = models.CharField(default='Quick Auto Parts', max_length=50)
     type = models.CharField(default='Outbound', max_length=50)
@@ -4666,6 +4665,7 @@ class QuickAutoPartsOutboundMonForm(models.Model):
         return self.associate_name
     def snippet(self):
         return self.comments[:100] + '...'
+
 
 
 ##############################################
