@@ -73,6 +73,7 @@ admin.site.register(latest)
 admin.site.register(HiveIncubatorsOutboundMonForm)
 admin.site.register(IEDHHInboundMonForm)
 admin.site.register(Ri8BrainEmailMonForm)
+admin.site.register(QuickAutoPartsOutboundMonForm)
 
 
 
