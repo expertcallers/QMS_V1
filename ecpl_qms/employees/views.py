@@ -31,6 +31,7 @@ list_of_monforms = [ # OutBound
                         PosTechOutboundMonForm,SchindlerMediaOutboundMonForm,UPSOutboundMonForm,
                         PickPackDeliveriesMonForm,MarceloPerezMonForm,MedTechGroupOutboundMonForm,DigitalSignageOutboundMonForm,
                         HiveIncubatorsOutboundMonForm,KaapiMachinesOutboundMonForm,SomethingsBrewingOutboundMonForm,NaffaOutboundMonForm,JBNOutboundMonForm,
+                        QuickAutoPartsOutboundMonForm,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -927,6 +928,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Quick Auto Parts':
+        coaching = QuickAutoPartsOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1480,6 +1486,11 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'JBN':
         coaching = JBNOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Quick Auto Parts':
+        coaching = QuickAutoPartsOutboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -2666,6 +2677,10 @@ def exportAuditReport(request):
             response = exportAadyaseries(JBNOutboundMonForm)
             return response
 
+        elif campaign == 'Quick Auto Parts':
+            response = exportAadyaseries(QuickAutoPartsOutboundMonForm)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -3613,6 +3628,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'JBN':
             response = exportAadyaseries(JBNOutboundMonForm)
+            return response
+
+        elif campaign == 'Quick Auto Parts':
+            response = exportAadyaseries(QuickAutoPartsOutboundMonForm)
             return response
 
 
@@ -4578,6 +4597,10 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'JBN':
             newseriesAddCoaching(JBNOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Quick Auto Parts':
+            newseriesAddCoaching(QuickAutoPartsOutboundMonForm)
             return redirect('/employees/qahome')
 
         else:

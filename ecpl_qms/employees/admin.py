@@ -14,14 +14,9 @@ admin.site.register(ProfileNewtoAddUserandProfile)
 
 admin.site.register(ChatMonitoringFormEva)     # view done
 admin.site.register(ChatMonitoringFormPodFather)     # view done
-
 admin.site.register(FameHouseNewMonForm)
-
 admin.site.register(FLAMonitoringForm)     # view done
-
-
 admin.site.register(MTCosmeticsMonForm)      # view done
-
 admin.site.register(MasterMonitoringFormTonnCoaInboundCalls)
 admin.site.register(MonitoringFormLeadsAadhyaSolution)
 admin.site.register(PrinterPixMasterMonitoringFormInboundCalls)
@@ -43,24 +38,18 @@ admin.site.register(FurBabyMonForm)
 admin.site.register(UpfrontOnlineLLCMonform)
 admin.site.register(MicroDistributingMonForm)
 admin.site.register(JJStudioMonForm)
-
 admin.site.register(ZeroStressMarketingMonForm)
 admin.site.register(WTUMonForm)
 admin.site.register(RoofWellMonForm)
 admin.site.register(GlydeAppMonForm)
 admin.site.register(MillenniumScientificMonForm)
-
 admin.site.register(StandSpotMonForm)
 admin.site.register(CamIndustrialMonForm)
 admin.site.register(OptimalStudentLoanMonForm)
 admin.site.register(NavigatorBioMonForm)
-
 admin.site.register(AKDYEmailMonForm)
-
 admin.site.register(IbizMonForm)
-
 admin.site.register(DanielWellinChatEmailMonForm)
-
 admin.site.register(ProtostarMonForm)
 admin.site.register(ABHindalcoInboundMonForm)
 admin.site.register(AmerisaveEmailMonForm)
@@ -73,18 +62,14 @@ admin.site.register(TerraceoChatEmailMonForm)
 admin.site.register(KalkiFashions)
 admin.site.register(SuperPlayMonForm)
 admin.site.register(PractoMonForm)
-
 admin.site.register(ScalaMonForm)
 admin.site.register(GoldenEastMonForm)
 admin.site.register(CitizenCapitalMonForm)
-
 admin.site.register(RitBrainMonForm)
-
 admin.site.register(RestaurentSolMonForm)
 admin.site.register(QBIQMonForm)
 admin.site.register(AccutimeMonForm)
 admin.site.register(latest)
-
 admin.site.register(HiveIncubatorsOutboundMonForm)
 admin.site.register(IEDHHInboundMonForm)
 admin.site.register(Ri8BrainEmailMonForm)
