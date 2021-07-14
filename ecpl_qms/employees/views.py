@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.template.loader import get_template
-from django_pivot.pivot import pivot
+import django_pivot.pivot
 from django.core.mail import send_mail, EmailMessage
 from django.db.models import Count,Avg,Sum
 import xlwt
