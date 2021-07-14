@@ -11,13 +11,15 @@
             <div class="col-md-5">
                 <form action="/employees/update-profile" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                    <select name=""emp_id id="">
+                    <select name="id">
                         {% for f in profiles %}
-                            <option value="">{{f.emp_name}} - {{f.emp_id}} </option>
+                            <option value="{{f.id}}">{{f.emp_name}} - {{f.emp_id}} </option>
                         {% endfor %}
 
                     </select>
                     <br>
+                    <p>Designation</p>
+                    <input type="text" name="desi" id="">
                     <input class="btn btn-info" type="submit" value="Update Profile" style="margin-top:30px;">
                 </form>
             </div>
@@ -25,16 +27,4 @@
 </div>
 
 
-<div class="container-lg">
-        <div class="row">
-            <div class="col-md-5">
-            </div>
-                <div style="margin: 20px 0px;color: red;font-size: 21px">
-                    {% for m in messages %}
-                        {{m}}
-                    {% endfor %}
-                </div>
-        </div>
-</div>
-<p>test New</p>
 {% endblock %}
