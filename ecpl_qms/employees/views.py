@@ -5611,7 +5611,18 @@ def addSingleProfile(request):
 def updateProfile(request):
 
     if request.method=='POST':
-        pass
+        id = request.POST['id']
+        desi = request.POST['desi']
+
+        emp = Profile.objects.get(id=id)
+
+        emp.emp_desi = desi
+        emp.save()
+
+        return render(request, 'update-profile.html',)
+
+
+
     else:
         profiles=Profile.objects.all()
         data={'profiles':profiles}
