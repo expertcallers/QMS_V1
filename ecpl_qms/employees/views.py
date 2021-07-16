@@ -32,6 +32,8 @@ list_of_monforms = [ # OutBound
                         PickPackDeliveriesMonForm,MarceloPerezMonForm,MedTechGroupOutboundMonForm,DigitalSignageOutboundMonForm,
                         HiveIncubatorsOutboundMonForm,KaapiMachinesOutboundMonForm,SomethingsBrewingOutboundMonForm,NaffaOutboundMonForm,JBNOutboundMonForm,
                         QuickAutoPartsOutboundMonForm,
+                        ApexCommunicationsOutboundMonForm,LawOfficesOutboundMonForm,WokeUpEnergyOutboundMonForm,
+                        FinnesseMortgageOutboundMonForm,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -47,6 +49,7 @@ list_of_monforms = [ # OutBound
                         ClearViewEmailMonForm,FinesseMortgageEmailMonForm,DigitalSwissGoldEmailChatMonForm,
                         RainbowDiagnosticsEmailMonForm,HiveIncubatorEmailMonForm,MedTechGroupEmailMonForm,
                         Ri8BrainEmailMonForm,ScalaEmailMonForm,KalkiFashionEmailMonForm,MaxwellEmailMonForm,
+                        TanaorJewelryEmailMonForm,DecentralizedVisionEmailChatMonForm,
 
                         #FLA
                         FLAMonitoringForm,
@@ -933,6 +936,26 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Apex Communications Inc':
+        coaching = ApexCommunicationsOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Law Offices of Robert and Geller':
+        coaching = LawOfficesOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Woke Up Energy':
+        coaching = WokeUpEnergyOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Finnesse Mortgage Outbound':
+        coaching = FinnesseMortgageOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1119,6 +1142,16 @@ def coachingViewAgents(request,process,pk):
 
     elif process_name == 'Maxwell Email':
         coaching = MaxwellEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Tanaor Jewelry':
+        coaching = TanaorJewelryEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Decentralized Vision Email Chat':
+        coaching = DecentralizedVisionEmailChatMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
@@ -1494,6 +1527,26 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Apex Communications Inc':
+        coaching = ApexCommunicationsOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Law Offices of Robert and Geller':
+        coaching = LawOfficesOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Woke Up Energy':
+        coaching = WokeUpEnergyOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Finnesse Mortgage Outbound':
+        coaching = FinnesseMortgageOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
 
     ########### Inbound ########################
 
@@ -1685,6 +1738,15 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
+    elif process_name == 'Tanaor Jewelry':
+        coaching = TanaorJewelryEmailMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Decentralized Vision Email Chat':
+        coaching = DecentralizedVisionEmailChatMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
 
     ################ Others ##########################################################
@@ -2681,6 +2743,22 @@ def exportAuditReport(request):
             response = exportAadyaseries(QuickAutoPartsOutboundMonForm)
             return response
 
+        elif campaign == 'Apex Communications Inc':
+            response = exportAadyaseries(ApexCommunicationsOutboundMonForm)
+            return response
+
+        elif campaign == 'Law Offices of Robert and Geller':
+            response = exportAadyaseries(LawOfficesOutboundMonForm)
+            return response
+
+        elif campaign == 'Woke Up Energy':
+            response = exportAadyaseries(WokeUpEnergyOutboundMonForm)
+            return response
+
+        elif campaign == 'Finnesse Mortgage Outbound':
+            response = exportAadyaseries(FinnesseMortgageOutboundMonForm)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -2977,6 +3055,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Maxwell Email':
             response = exportEmailChat(MaxwellEmailMonForm)
+            return response
+
+        elif campaign == 'Tanaor Jewelry':
+            response = exportEmailChat(TanaorJewelryEmailMonForm)
+            return response
+
+        elif campaign == 'Decentralized Vision Email Chat':
+            response = exportEmailChat(DecentralizedVisionEmailChatMonForm)
             return response
 
             ########## other campaigns ##############
@@ -3634,6 +3720,22 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(QuickAutoPartsOutboundMonForm)
             return response
 
+        elif campaign == 'Apex Communications Inc':
+            response = exportAadyaseries(ApexCommunicationsOutboundMonForm)
+            return response
+
+        elif campaign == 'Law Offices of Robert and Geller':
+            response = exportAadyaseries(LawOfficesOutboundMonForm)
+            return response
+
+        elif campaign == 'Woke Up Energy':
+            response = exportAadyaseries(WokeUpEnergyOutboundMonForm)
+            return response
+
+        elif campaign == 'Finnesse Mortgage Outbound':
+            response = exportAadyaseries(FinnesseMortgageOutboundMonForm)
+            return response
+
 
         ######## Inbound ###############################
 
@@ -3931,6 +4033,14 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Maxwell Email':
             response = exportEmailChat(MaxwellEmailMonForm)
+            return response
+
+        elif campaign == 'Tanaor Jewelry':
+            response = exportEmailChat(TanaorJewelryEmailMonForm)
+            return response
+
+        elif campaign == 'Decentralized Vision Email Chat':
+            response = exportEmailChat(DecentralizedVisionEmailChatMonForm)
             return response
 
 
@@ -4603,6 +4713,22 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(QuickAutoPartsOutboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Apex Communications Inc':
+            newseriesAddCoaching(ApexCommunicationsOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Law Offices of Robert and Geller':
+            newseriesAddCoaching(LawOfficesOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Woke Up Energy':
+            newseriesAddCoaching(WokeUpEnergyOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Finnesse Mortgage Outbound':
+            newseriesAddCoaching(FinnesseMortgageOutboundMonForm)
+            return redirect('/employees/qahome')
+
         else:
             pass
 
@@ -4990,6 +5116,13 @@ def domesticChatEmail(request):
             domesticEmailChatAddCoaching(MaxwellEmailMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Tanaor Jewelry':
+            domesticEmailChatAddCoaching(TanaorJewelryEmailMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Decentralized Vision Email Chat':
+            domesticEmailChatAddCoaching(DecentralizedVisionEmailChatMonForm)
+            return redirect('/employees/qahome')
 
 
         else:
