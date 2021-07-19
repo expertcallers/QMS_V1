@@ -2139,22 +2139,24 @@ def coachingDispute(request,pk):
         emp_name=request.user.profile.emp_name
         team = request.user.profile.process
         manager_name = request.user.profile.manager
-        manager_mail=Profile.objects.get(emp_name=manager_name)
-        manager_email=manager_mail.email
+        try:
+            manager_mail=Profile.objects.get(emp_name=manager_name)
+            manager_email = manager_mail.email
+        except Profile.DoesNotExist:
+            manager_email = 'user@expertcallers.com'
+
         cid = pk
         process = request.POST['campaign']
-
-        '''html_path = 'dispute-template.html'
+        html_path = 'dispute-template.html'
         data = {'id': cid,'process':process,'emp_name':emp_name,'emp_comments':emp_comments}
         email_template = get_template(html_path).render(data)
-        receiver_email = 'kaleshcv2@gmail.com'
+        receiver_email = manager_email
         email_msg = EmailMessage('QMS - Coaching Dispute',
                                  email_template, 'qms@expertcallers.com',
                                  [receiver_email,],
                                  reply_to=['qms@expertcallers.com'])
         email_msg.content_subtype = 'html'
-        email_msg.send(fail_silently=False)'''
-
+        email_msg.send(fail_silently=False)
 
         for i in list_of_monforms:
             obj = i.objects.all()
