@@ -5694,194 +5694,228 @@ def gubaGooNew(request):
             pcount = lst.count('p')
             fcount = lst.count('n')
             nacount = lst.count('NA')
-
             cat1score = (ycount + pcount)/5 * 100
-            return cat1score
+            
+            if fcount ==3 or fcount ==4 or fcount ==5:
+                fscore = 0.025
+            elif fcount == 6:
+                fscore = 0.05
+            elif fcount <=2:
+                fscore = 0        
+            
+            return cat1score,fscore
+    
 
-        cat1score = scoreCalc(cat1)
-        cat2score = scoreCalc(cat2)
-        cat3score = scoreCalc(cat3)
-        cat4score = scoreCalc(cat4)
-        cat5score = scoreCalc(cat5)
-        cat6score = scoreCalc(cat6)
-        cat7score = scoreCalc(cat7)
-        cat8score = scoreCalc(cat8)
-        cat9score = scoreCalc(cat9)
-        cat10score = scoreCalc(cat10)
-        cat11score = scoreCalc(cat11)
-        cat12score = scoreCalc(cat12)
-        cat13score = scoreCalc(cat13)
-        cat14score = scoreCalc(cat14)
-        cat15score = scoreCalc(cat15)
-        cat16score = scoreCalc(cat16)
-
-    #### Failing percentage
-
-    ######### chat 1 calculation  ##############
-
-    total_score = 293
-    ####### Greeting ###########################
-
-    def catAndTotalScore(c,tot,score):
-
-        if c == 'y':
-            c = score
-            tot=tot
-            return (c,tot)
-        elif c == 'n':
-            c = 0
-            tot = tot
-            return (c,tot)
-        elif c == 'p':
-            c = 0
-            tot = tot-score
-            return (c,tot)
-        else:
-            c = score
-            tot = tot
-            return (c,tot)
+        cat1score,cat1fscore = scoreCalc(cat1)
+        cat2score,cat2fscore = scoreCalc(cat2)
+        cat3score,cat3fscore = scoreCalc(cat3)
+        cat4score,cat4fscore = scoreCalc(cat4)
+        cat5score,cat5fscore = scoreCalc(cat5)
+        cat6score,cat6fscore = scoreCalc(cat6)
+        cat7score,cat7fscore = scoreCalc(cat7)
+        cat8score,cat8fscore = scoreCalc(cat8)
+        cat9score,cat9fscore = scoreCalc(cat9)
+        cat10score,cat10fscore = scoreCalc(cat10)
+        cat11score,cat11fscore = scoreCalc(cat11)
+        cat12score,cat12fscore = scoreCalc(cat12)
+        cat13score,cat13fscore = scoreCalc(cat13)
+        cat14score,cat14fscore = scoreCalc(cat14)
+        cat15score,cat15fscore= scoreCalc(cat15)
+        cat16score,cat16fscore = scoreCalc(cat16)
+        
+        total_failing_score =   cat1fscore + cat2fscore + cat3fscore + cat4fscore + cat5fscore + cat6fscore + \
+                                cat7fscore + cat8fscore + cat9fscore + cat10fscore + \
+                                cat11fscore + cat12fscore + \
+                                cat13fscore + cat14fscore + \
+                                cat15fscore + cat16fscore      
 
 
-    cat1chat1score, total_score = catAndTotalScore(cat1chat1, total_score, 10)
-    cat2chat1score, total_score = catAndTotalScore(cat2chat1, total_score, 10)
-    cat3chat1score, total_score = catAndTotalScore(cat3chat1, total_score, 40)
-    cat4chat1score, total_score = catAndTotalScore(cat4chat1, total_score, 40)
-    cat5chat1score, total_score = catAndTotalScore(cat5chat1, total_score, 15)
-    cat6chat1score, total_score = catAndTotalScore(cat6chat1, total_score, 15)
-    cat7chat1score, total_score = catAndTotalScore(cat7chat1, total_score, 12)
-    cat8chat1score, total_score = catAndTotalScore(cat8chat1, total_score, 12)
-    cat9chat1score, total_score = catAndTotalScore(cat9chat1, total_score, 40)
-    cat10chat1score, total_score = catAndTotalScore(cat10chat1, total_score, 40)
-    cat11chat1score, total_score = catAndTotalScore(cat11chat1, total_score, 15)
-    cat12chat1score, total_score = catAndTotalScore(cat12chat1, total_score, 13)
-    cat13chat1score, total_score = catAndTotalScore(cat13chat1, total_score, 11)
-    cat14chat1score, total_score = catAndTotalScore(cat14chat1, total_score, 10)
-    cat15chat1score, total_score = catAndTotalScore(cat15chat1, total_score, 10)
+        ######### chat 1 calculation  ##############
 
-    chat1_total = cat1chat1score+cat2chat1score+cat3chat1score+cat4chat1score+cat5chat1score+cat6chat1score+cat7chat1score+cat8chat1score+cat9chat1score+cat10chat1score+cat11chat1score+cat12chat1score+cat13chat1score+cat14chat1score+cat15chat1score
+        total_score = 293
+        ####### Greeting ###########################
 
-    chat1_total_score = (chat1_total/total_score)*100
-    print(chat1_total_score)
+        def catAndTotalScore(c,tot,score):
 
-    ############################# chat2 ####################################
-    total_score = 293
+            if c == 'y':
+                c = score
+                tot=tot
+                return (c,tot)
+            elif c == 'n':
+                c = 0
+                tot = tot
+                return (c,tot)
+            elif c == 'p':
+                c = 0
+                tot = tot-score
+                return (c,tot)
+            else:
+                c = score
+                tot = tot
+                return (c,tot)
 
-    cat1chat2score, total_score = catAndTotalScore(cat1chat2, total_score, 10)
-    cat2chat2score, total_score = catAndTotalScore(cat2chat2, total_score, 10)
-    cat3chat2score, total_score = catAndTotalScore(cat3chat2, total_score, 40)
-    cat4chat2score, total_score = catAndTotalScore(cat4chat2, total_score, 40)
-    cat5chat2score, total_score = catAndTotalScore(cat5chat2, total_score, 15)
-    cat6chat2score, total_score = catAndTotalScore(cat6chat2, total_score, 15)
-    cat7chat2score, total_score = catAndTotalScore(cat7chat2, total_score, 12)
-    cat8chat2score, total_score = catAndTotalScore(cat8chat2, total_score, 12)
-    cat9chat2score, total_score = catAndTotalScore(cat9chat2, total_score, 40)
-    cat10chat2score, total_score = catAndTotalScore(cat10chat2, total_score, 40)
-    cat11chat2score, total_score = catAndTotalScore(cat11chat2, total_score, 15)
-    cat12chat2score, total_score = catAndTotalScore(cat12chat2, total_score, 13)
-    cat13chat2score, total_score = catAndTotalScore(cat13chat2, total_score, 11)
-    cat14chat2score, total_score = catAndTotalScore(cat14chat2, total_score, 10)
-    cat15chat2score, total_score = catAndTotalScore(cat15chat2, total_score, 10)
 
-    chat2_total = cat1chat2score + cat2chat2score + cat3chat2score + cat4chat2score + cat5chat2score + cat6chat2score + cat7chat2score + cat8chat2score + cat9chat2score + cat10chat2score + cat11chat2score + cat12chat2score + cat13chat2score + cat14chat2score + cat15chat2score
-    chat2_total_score = (chat2_total / total_score) * 100
-    print(chat2_total_score)
+        cat1chat1score, total_score = catAndTotalScore(cat1chat1, total_score, 10)
+        cat2chat1score, total_score = catAndTotalScore(cat2chat1, total_score, 10)
+        cat3chat1score, total_score = catAndTotalScore(cat3chat1, total_score, 40)
+        cat4chat1score, total_score = catAndTotalScore(cat4chat1, total_score, 40)
+        cat5chat1score, total_score = catAndTotalScore(cat5chat1, total_score, 15)
+        cat6chat1score, total_score = catAndTotalScore(cat6chat1, total_score, 15)
+        cat7chat1score, total_score = catAndTotalScore(cat7chat1, total_score, 12)
+        cat8chat1score, total_score = catAndTotalScore(cat8chat1, total_score, 12)
+        cat9chat1score, total_score = catAndTotalScore(cat9chat1, total_score, 40)
+        cat10chat1score, total_score = catAndTotalScore(cat10chat1, total_score, 40)
+        cat11chat1score, total_score = catAndTotalScore(cat11chat1, total_score, 15)
+        cat12chat1score, total_score = catAndTotalScore(cat12chat1, total_score, 13)
+        cat13chat1score, total_score = catAndTotalScore(cat13chat1, total_score, 11)
+        cat14chat1score, total_score = catAndTotalScore(cat14chat1, total_score, 10)
+        cat15chat1score, total_score = catAndTotalScore(cat15chat1, total_score, 10)
 
-    ############################# chat3 ####################################
-    total_score = 293
+        chat1_total = cat1chat1score+cat2chat1score+cat3chat1score+cat4chat1score+cat5chat1score+cat6chat1score+cat7chat1score+cat8chat1score+cat9chat1score+cat10chat1score+cat11chat1score+cat12chat1score+cat13chat1score+cat14chat1score+cat15chat1score
 
-    cat1chat3score, total_score = catAndTotalScore(cat1chat3, total_score, 10)
-    cat2chat3score, total_score = catAndTotalScore(cat2chat3, total_score, 10)
-    cat3chat3score, total_score = catAndTotalScore(cat3chat3, total_score, 40)
-    cat4chat3score, total_score = catAndTotalScore(cat4chat3, total_score, 40)
-    cat5chat3score, total_score = catAndTotalScore(cat5chat3, total_score, 15)
-    cat6chat3score, total_score = catAndTotalScore(cat6chat3, total_score, 15)
-    cat7chat3score, total_score = catAndTotalScore(cat7chat3, total_score, 12)
-    cat8chat3score, total_score = catAndTotalScore(cat8chat3, total_score, 12)
-    cat9chat3score, total_score = catAndTotalScore(cat9chat3, total_score, 40)
-    cat10chat3score, total_score = catAndTotalScore(cat10chat3, total_score, 40)
-    cat11chat3score, total_score = catAndTotalScore(cat11chat3, total_score, 15)
-    cat12chat3score, total_score = catAndTotalScore(cat12chat3, total_score, 13)
-    cat13chat3score, total_score = catAndTotalScore(cat13chat3, total_score, 11)
-    cat14chat3score, total_score = catAndTotalScore(cat14chat3, total_score, 10)
-    cat15chat3score, total_score = catAndTotalScore(cat15chat3, total_score, 10)
+        chat1_total_score = (chat1_total/total_score)*100
+        # print(chat1_total_score)
 
-    chat3_total = cat1chat3score + cat2chat3score + cat3chat3score + cat4chat3score + cat5chat3score + cat6chat3score + cat7chat3score + cat8chat3score + cat9chat3score + cat10chat3score + cat11chat3score + cat12chat3score + cat13chat3score + cat14chat3score + cat15chat3score
-    chat3_total_score = (chat3_total / total_score) * 100
-    print(chat3_total_score)
+        ############################# chat2 ####################################
+        total_score = 293
 
-    ############################# chat4 ####################################
-    total_score = 293
-    cat1chat4score, total_score = catAndTotalScore(cat1chat4, total_score, 10)
-    cat2chat4score, total_score = catAndTotalScore(cat2chat4, total_score, 10)
-    cat3chat4score, total_score = catAndTotalScore(cat3chat4, total_score, 40)
-    cat4chat4score, total_score = catAndTotalScore(cat4chat4, total_score, 40)
-    cat5chat4score, total_score = catAndTotalScore(cat5chat4, total_score, 15)
-    cat6chat4score, total_score = catAndTotalScore(cat6chat4, total_score, 15)
-    cat7chat4score, total_score = catAndTotalScore(cat7chat4, total_score, 12)
-    cat8chat4score, total_score = catAndTotalScore(cat8chat4, total_score, 12)
-    cat9chat4score, total_score = catAndTotalScore(cat9chat4, total_score, 40)
-    cat10chat4score, total_score = catAndTotalScore(cat10chat4, total_score, 40)
-    cat11chat4score, total_score = catAndTotalScore(cat11chat4, total_score, 15)
-    cat12chat4score, total_score = catAndTotalScore(cat12chat4, total_score, 13)
-    cat13chat4score, total_score = catAndTotalScore(cat13chat4, total_score, 11)
-    cat14chat4score, total_score = catAndTotalScore(cat14chat4, total_score, 10)
-    cat15chat4score, total_score = catAndTotalScore(cat15chat4, total_score, 10)
+        cat1chat2score, total_score = catAndTotalScore(cat1chat2, total_score, 10)
+        cat2chat2score, total_score = catAndTotalScore(cat2chat2, total_score, 10)
+        cat3chat2score, total_score = catAndTotalScore(cat3chat2, total_score, 40)
+        cat4chat2score, total_score = catAndTotalScore(cat4chat2, total_score, 40)
+        cat5chat2score, total_score = catAndTotalScore(cat5chat2, total_score, 15)
+        cat6chat2score, total_score = catAndTotalScore(cat6chat2, total_score, 15)
+        cat7chat2score, total_score = catAndTotalScore(cat7chat2, total_score, 12)
+        cat8chat2score, total_score = catAndTotalScore(cat8chat2, total_score, 12)
+        cat9chat2score, total_score = catAndTotalScore(cat9chat2, total_score, 40)
+        cat10chat2score, total_score = catAndTotalScore(cat10chat2, total_score, 40)
+        cat11chat2score, total_score = catAndTotalScore(cat11chat2, total_score, 15)
+        cat12chat2score, total_score = catAndTotalScore(cat12chat2, total_score, 13)
+        cat13chat2score, total_score = catAndTotalScore(cat13chat2, total_score, 11)
+        cat14chat2score, total_score = catAndTotalScore(cat14chat2, total_score, 10)
+        cat15chat2score, total_score = catAndTotalScore(cat15chat2, total_score, 10)
 
-    chat4_total = cat1chat4score + cat2chat4score + cat3chat4score + cat4chat4score + cat5chat4score + cat6chat4score + cat7chat4score + cat8chat4score + cat9chat4score + cat10chat4score + cat11chat4score + cat12chat4score + cat13chat4score + cat14chat4score + cat15chat4score
-    chat4_total_score = (chat4_total / total_score) * 100
-    print(chat4_total_score)
+        chat2_total = cat1chat2score + cat2chat2score + cat3chat2score + cat4chat2score + cat5chat2score + cat6chat2score + cat7chat2score + cat8chat2score + cat9chat2score + cat10chat2score + cat11chat2score + cat12chat2score + cat13chat2score + cat14chat2score + cat15chat2score
+        chat2_total_score = (chat2_total / total_score) * 100
+        # print(chat2_total_score)
 
-    ############################# chat5 ####################################
-    total_score = 293
+        ############################# chat3 ####################################
+        total_score = 293
 
-    cat1chat5score, total_score = catAndTotalScore(cat1chat5, total_score, 10)
-    cat2chat5score, total_score = catAndTotalScore(cat2chat5, total_score, 10)
-    cat3chat5score, total_score = catAndTotalScore(cat3chat5, total_score, 40)
-    cat4chat5score, total_score = catAndTotalScore(cat4chat5, total_score, 40)
-    cat5chat5score, total_score = catAndTotalScore(cat5chat5, total_score, 15)
-    cat6chat5score, total_score = catAndTotalScore(cat6chat5, total_score, 15)
-    cat7chat5score, total_score = catAndTotalScore(cat7chat5, total_score, 12)
-    cat8chat5score, total_score = catAndTotalScore(cat8chat5, total_score, 12)
-    cat9chat5score, total_score = catAndTotalScore(cat9chat5, total_score, 40)
-    cat10chat5score, total_score = catAndTotalScore(cat10chat5, total_score, 40)
-    cat11chat5score, total_score = catAndTotalScore(cat11chat5, total_score, 15)
-    cat12chat5score, total_score = catAndTotalScore(cat12chat5, total_score, 13)
-    cat13chat5score, total_score = catAndTotalScore(cat13chat5, total_score, 11)
-    cat14chat5score, total_score = catAndTotalScore(cat14chat5, total_score, 10)
-    cat15chat5score, total_score = catAndTotalScore(cat15chat5, total_score, 10)
+        cat1chat3score, total_score = catAndTotalScore(cat1chat3, total_score, 10)
+        cat2chat3score, total_score = catAndTotalScore(cat2chat3, total_score, 10)
+        cat3chat3score, total_score = catAndTotalScore(cat3chat3, total_score, 40)
+        cat4chat3score, total_score = catAndTotalScore(cat4chat3, total_score, 40)
+        cat5chat3score, total_score = catAndTotalScore(cat5chat3, total_score, 15)
+        cat6chat3score, total_score = catAndTotalScore(cat6chat3, total_score, 15)
+        cat7chat3score, total_score = catAndTotalScore(cat7chat3, total_score, 12)
+        cat8chat3score, total_score = catAndTotalScore(cat8chat3, total_score, 12)
+        cat9chat3score, total_score = catAndTotalScore(cat9chat3, total_score, 40)
+        cat10chat3score, total_score = catAndTotalScore(cat10chat3, total_score, 40)
+        cat11chat3score, total_score = catAndTotalScore(cat11chat3, total_score, 15)
+        cat12chat3score, total_score = catAndTotalScore(cat12chat3, total_score, 13)
+        cat13chat3score, total_score = catAndTotalScore(cat13chat3, total_score, 11)
+        cat14chat3score, total_score = catAndTotalScore(cat14chat3, total_score, 10)
+        cat15chat3score, total_score = catAndTotalScore(cat15chat3, total_score, 10)
 
-    chat5_total = cat1chat5score + cat2chat5score + cat3chat5score + cat4chat5score + cat5chat5score + cat6chat5score + cat7chat5score + cat8chat5score + cat9chat5score + cat10chat5score + cat11chat5score + cat12chat5score + cat13chat5score + cat14chat5score + cat15chat5score
-    chat5_total_score = (chat5_total / total_score) * 100
-    print(chat5_total_score)
+        chat3_total = cat1chat3score + cat2chat3score + cat3chat3score + cat4chat3score + cat5chat3score + cat6chat3score + cat7chat3score + cat8chat3score + cat9chat3score + cat10chat3score + cat11chat3score + cat12chat3score + cat13chat3score + cat14chat3score + cat15chat3score
+        chat3_total_score = (chat3_total / total_score) * 100
+        # print(chat3_total_score)
 
-    ############################# chat6 ####################################
-    total_score = 293
+        ############################# chat4 ####################################
+        total_score = 293
+        cat1chat4score, total_score = catAndTotalScore(cat1chat4, total_score, 10)
+        cat2chat4score, total_score = catAndTotalScore(cat2chat4, total_score, 10)
+        cat3chat4score, total_score = catAndTotalScore(cat3chat4, total_score, 40)
+        cat4chat4score, total_score = catAndTotalScore(cat4chat4, total_score, 40)
+        cat5chat4score, total_score = catAndTotalScore(cat5chat4, total_score, 15)
+        cat6chat4score, total_score = catAndTotalScore(cat6chat4, total_score, 15)
+        cat7chat4score, total_score = catAndTotalScore(cat7chat4, total_score, 12)
+        cat8chat4score, total_score = catAndTotalScore(cat8chat4, total_score, 12)
+        cat9chat4score, total_score = catAndTotalScore(cat9chat4, total_score, 40)
+        cat10chat4score, total_score = catAndTotalScore(cat10chat4, total_score, 40)
+        cat11chat4score, total_score = catAndTotalScore(cat11chat4, total_score, 15)
+        cat12chat4score, total_score = catAndTotalScore(cat12chat4, total_score, 13)
+        cat13chat4score, total_score = catAndTotalScore(cat13chat4, total_score, 11)
+        cat14chat4score, total_score = catAndTotalScore(cat14chat4, total_score, 10)
+        cat15chat4score, total_score = catAndTotalScore(cat15chat4, total_score, 10)
 
-    cat1chat6score, total_score = catAndTotalScore(cat1chat6, total_score, 10)
-    cat2chat6score, total_score = catAndTotalScore(cat2chat6, total_score, 10)
-    cat3chat6score, total_score = catAndTotalScore(cat3chat6, total_score, 40)
-    cat4chat6score, total_score = catAndTotalScore(cat4chat6, total_score, 40)
-    cat5chat6score, total_score = catAndTotalScore(cat5chat6, total_score, 15)
-    cat6chat6score, total_score = catAndTotalScore(cat6chat6, total_score, 15)
-    cat7chat6score, total_score = catAndTotalScore(cat7chat6, total_score, 12)
-    cat8chat6score, total_score = catAndTotalScore(cat8chat6, total_score, 12)
-    cat9chat6score, total_score = catAndTotalScore(cat9chat6, total_score, 40)
-    cat10chat6score, total_score = catAndTotalScore(cat10chat6, total_score, 40)
-    cat11chat6score, total_score = catAndTotalScore(cat11chat6, total_score, 15)
-    cat12chat6score, total_score = catAndTotalScore(cat12chat6, total_score, 13)
-    cat13chat6score, total_score = catAndTotalScore(cat13chat6, total_score, 11)
-    cat14chat6score, total_score = catAndTotalScore(cat14chat6, total_score, 10)
-    cat15chat6score, total_score = catAndTotalScore(cat15chat6, total_score, 10)
+        chat4_total = cat1chat4score + cat2chat4score + cat3chat4score + cat4chat4score + cat5chat4score + cat6chat4score + cat7chat4score + cat8chat4score + cat9chat4score + cat10chat4score + cat11chat4score + cat12chat4score + cat13chat4score + cat14chat4score + cat15chat4score
+        chat4_total_score = (chat4_total / total_score) * 100
+        # print(chat4_total_score)
 
-    chat6_total = cat1chat6score + cat2chat6score + cat3chat6score + cat4chat6score + cat5chat6score + cat6chat6score + cat7chat6score + cat8chat6score + cat9chat6score + cat10chat6score + cat11chat6score + cat12chat6score + cat13chat6score + cat14chat6score + cat15chat6score
-    chat6_total_score = (chat6_total / total_score) * 100
-    print(chat6_total_score)
+        ############################# chat5 ####################################
+        total_score = 293
 
+        cat1chat5score, total_score = catAndTotalScore(cat1chat5, total_score, 10)
+        cat2chat5score, total_score = catAndTotalScore(cat2chat5, total_score, 10)
+        cat3chat5score, total_score = catAndTotalScore(cat3chat5, total_score, 40)
+        cat4chat5score, total_score = catAndTotalScore(cat4chat5, total_score, 40)
+        cat5chat5score, total_score = catAndTotalScore(cat5chat5, total_score, 15)
+        cat6chat5score, total_score = catAndTotalScore(cat6chat5, total_score, 15)
+        cat7chat5score, total_score = catAndTotalScore(cat7chat5, total_score, 12)
+        cat8chat5score, total_score = catAndTotalScore(cat8chat5, total_score, 12)
+        cat9chat5score, total_score = catAndTotalScore(cat9chat5, total_score, 40)
+        cat10chat5score, total_score = catAndTotalScore(cat10chat5, total_score, 40)
+        cat11chat5score, total_score = catAndTotalScore(cat11chat5, total_score, 15)
+        cat12chat5score, total_score = catAndTotalScore(cat12chat5, total_score, 13)
+        cat13chat5score, total_score = catAndTotalScore(cat13chat5, total_score, 11)
+        cat14chat5score, total_score = catAndTotalScore(cat14chat5, total_score, 10)
+        cat15chat5score, total_score = catAndTotalScore(cat15chat5, total_score, 10)
+
+        chat5_total = cat1chat5score + cat2chat5score + cat3chat5score + cat4chat5score + cat5chat5score + cat6chat5score + cat7chat5score + cat8chat5score + cat9chat5score + cat10chat5score + cat11chat5score + cat12chat5score + cat13chat5score + cat14chat5score + cat15chat5score
+        chat5_total_score = (chat5_total / total_score) * 100
+        # print(chat5_total_score)
+
+        ############################# chat6 ####################################
+        total_score = 293
+
+        cat1chat6score, total_score = catAndTotalScore(cat1chat6, total_score, 10)
+        cat2chat6score, total_score = catAndTotalScore(cat2chat6, total_score, 10)
+        cat3chat6score, total_score = catAndTotalScore(cat3chat6, total_score, 40)
+        cat4chat6score, total_score = catAndTotalScore(cat4chat6, total_score, 40)
+        cat5chat6score, total_score = catAndTotalScore(cat5chat6, total_score, 15)
+        cat6chat6score, total_score = catAndTotalScore(cat6chat6, total_score, 15)
+        cat7chat6score, total_score = catAndTotalScore(cat7chat6, total_score, 12)
+        cat8chat6score, total_score = catAndTotalScore(cat8chat6, total_score, 12)
+        cat9chat6score, total_score = catAndTotalScore(cat9chat6, total_score, 40)
+        cat10chat6score, total_score = catAndTotalScore(cat10chat6, total_score, 40)
+        cat11chat6score, total_score = catAndTotalScore(cat11chat6, total_score, 15)
+        cat12chat6score, total_score = catAndTotalScore(cat12chat6, total_score, 13)
+        cat13chat6score, total_score = catAndTotalScore(cat13chat6, total_score, 11)
+        cat14chat6score, total_score = catAndTotalScore(cat14chat6, total_score, 10)
+        cat15chat6score, total_score = catAndTotalScore(cat15chat6, total_score, 10)
+
+        chat6_total = cat1chat6score + cat2chat6score + cat3chat6score + cat4chat6score + cat5chat6score + cat6chat6score + cat7chat6score + cat8chat6score + cat9chat6score + cat10chat6score + cat11chat6score + cat12chat6score + cat13chat6score + cat14chat6score + cat15chat6score
+        chat6_total_score = (chat6_total / total_score) * 100
+        # print(chat6_total_score)
+        # print('----------------------------------------------------------')
+        # print('Failing Score',total_failing_score)
+
+        total_chat_sum = chat1_total_score + chat2_total_score + chat3_total_score + \
+                           chat4_total_score + chat5_total_score + chat6_total_score 
+
+        total_chat_score = total_chat_sum/6
+
+        # print(total_chat_score,'Total CHat Score')
+
+        total_failing_perc = total_failing_score * 100
+
+        total_audit_score = total_chat_score - total_failing_perc
+
+        # print(total_audit_score,'Total Audit Score')      
+
+        data = {
+                'chat1':chat1_total_score,'chat2':chat2_total_score,
+                'chat3':chat3_total_score,'chat4':chat4_total_score,
+                'chat5':chat5_total_score,'chat6':chat6_total_score,
+                'failing':total_failing_perc,
+                'overall':total_audit_score,
+        }
+
+        return render(request,'mon-forms/gubagoo-result.html',data)               
 
 ############## End Mon Forms ##############################
-
-
-
 
 
 def processNameChanger(request):

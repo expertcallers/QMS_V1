@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block main %}
+
+<div class="container" style="margin-top:200px">
+    <h2>Test</h2>
+    <div class="row">
+        <div>
+            <div class="table">
+                <table class="table">
+                    <tr>
+                        <td>Chat1</td>
+                        <td>Chat2</td>
+                        <td>Chat3</td>
+                        <td>Chat4</td>
+                        <td>Chat5</td>
+                        <td>Chat6</td>
+                    </tr>   
+                    <tr>
+                        <td>{{chat1}}</td>
+                        <td>{{chat2}}</td>
+                        <td>{{chat3}}</td>
+                        <td>{{chat4}}</td>
+                        <td>{{chat5}}</td>
+                        <td>{{chat6}}</td>
+                    </tr> 
+                </table>                
+            </div>
+            <div>
+                <p>Failing % - {{failing}}</p>
+                <br>
+                <h2>Final Score - {{overall}}</h2>
+            </div>
+        </div>
+    </div>
+</div>   
+
+
+{% endblock %}

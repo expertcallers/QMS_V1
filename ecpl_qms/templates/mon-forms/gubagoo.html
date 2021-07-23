@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block main %}
 
-    <section id="outboundform">
+    <section id="outboundform-gubagoo">
         <div class="container-lg">
             <form action="/employees/gubagoo-audit-submit" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <h2 class="text-center">Gubagoo</h2>
+                <h2 class="text-center" style="margin-top: 100px;">Gubagoo</h2>
                 <div class="basic">
                     <div class="row">
                         <div>
