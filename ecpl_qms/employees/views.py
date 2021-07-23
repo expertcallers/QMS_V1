@@ -2150,7 +2150,7 @@ def coachingDispute(request,pk):
         html_path = 'dispute-template.html'
         data = {'id': cid,'process':process,'emp_name':emp_name,'emp_comments':emp_comments}
         email_template = get_template(html_path).render(data)
-        receiver_email = manager_email
+        receiver_email = "kaleshcv2@gmail.com"
         email_msg = EmailMessage('QMS - Coaching Dispute',
                                  email_template, 'qms@expertcallers.com',
                                  [receiver_email,],
@@ -5565,112 +5565,128 @@ def gubaGooNew(request):
         cat1chat3 = request.POST['cat1chat3']
         cat1chat4 = request.POST['cat1chat4']
         cat1chat5 = request.POST['cat1chat5']
-        cat1 = [cat1chat1, cat1chat2, cat1chat3, cat1chat4, cat1chat5]
+        cat1chat6 = request.POST['cat1chat6']
+        cat1 = [cat1chat1, cat1chat2, cat1chat3, cat1chat4, cat1chat5,cat1chat6]
 
         cat2chat1 = request.POST['cat2chat1']
         cat2chat2 = request.POST['cat2chat2']
         cat2chat3 = request.POST['cat2chat3']
         cat2chat4 = request.POST['cat2chat4']
         cat2chat5 = request.POST['cat2chat5']
-        cat2 = [cat2chat1, cat2chat2, cat2chat3, cat2chat4, cat2chat5]
+        cat2chat6 = request.POST['cat2chat6']
+        cat2 = [cat2chat1, cat2chat2, cat2chat3, cat2chat4, cat2chat5,cat2chat6]
 
         cat3chat1 = request.POST['cat3chat1']
         cat3chat2 = request.POST['cat3chat2']
         cat3chat3 = request.POST['cat3chat3']
         cat3chat4 = request.POST['cat3chat4']
         cat3chat5 = request.POST['cat3chat5']
-        cat3 = [cat3chat1, cat3chat2, cat3chat3, cat3chat4, cat3chat5]
+        cat3chat6 = request.POST['cat3chat6']
+        cat3 = [cat3chat1, cat3chat2, cat3chat3, cat3chat4, cat3chat5,cat3chat6]
 
         cat4chat1 = request.POST['cat4chat1']
         cat4chat2 = request.POST['cat4chat2']
         cat4chat3 = request.POST['cat4chat3']
         cat4chat4 = request.POST['cat4chat4']
         cat4chat5 = request.POST['cat4chat5']
-        cat4 = [cat4chat1, cat4chat2, cat4chat3, cat4chat4, cat4chat5]
+        cat4chat6 = request.POST['cat4chat6']
+        cat4 = [cat4chat1, cat4chat2, cat4chat3, cat4chat4, cat4chat5,cat4chat6]
 
         cat5chat1 = request.POST['cat5chat1']
         cat5chat2 = request.POST['cat5chat2']
         cat5chat3 = request.POST['cat5chat3']
         cat5chat4 = request.POST['cat5chat4']
         cat5chat5 = request.POST['cat5chat5']
-        cat5 = [cat5chat1, cat5chat2, cat5chat3, cat5chat4, cat5chat5]
+        cat5chat6 = request.POST['cat5chat6']
+        cat5 = [cat5chat1, cat5chat2, cat5chat3, cat5chat4, cat5chat5,cat5chat6]
 
         cat6chat1 = request.POST['cat6chat1']
         cat6chat2 = request.POST['cat6chat2']
         cat6chat3 = request.POST['cat6chat3']
         cat6chat4 = request.POST['cat6chat4']
         cat6chat5 = request.POST['cat6chat5']
-        cat6 = [cat6chat1, cat6chat2, cat6chat3, cat6chat4, cat6chat5]
+        cat6chat6 = request.POST['cat6chat6']
+        cat6 = [cat6chat1, cat6chat2, cat6chat3, cat6chat4, cat6chat6]
 
         cat7chat1 = request.POST['cat7chat1']
         cat7chat2 = request.POST['cat7chat2']
         cat7chat3 = request.POST['cat7chat3']
         cat7chat4 = request.POST['cat7chat4']
         cat7chat5 = request.POST['cat7chat5']
-        cat7 = [cat7chat1, cat7chat2, cat7chat3, cat7chat4, cat7chat5]
+        cat7chat6 = request.POST['cat7chat6']
+        cat7 = [cat7chat1, cat7chat2, cat7chat3, cat7chat4, cat7chat5,cat7chat6]
 
         cat8chat1 = request.POST['cat8chat1']
         cat8chat2 = request.POST['cat8chat2']
         cat8chat3 = request.POST['cat8chat3']
         cat8chat4 = request.POST['cat8chat4']
         cat8chat5 = request.POST['cat8chat5']
-        cat8 = [cat8chat1, cat8chat2, cat8chat3, cat8chat4, cat8chat5]
+        cat8chat6 = request.POST['cat8chat6']
+        cat8 = [cat8chat1, cat8chat2, cat8chat3, cat8chat4, cat8chat5,cat8chat6]
 
         cat9chat1 = request.POST['cat9chat1']
         cat9chat2 = request.POST['cat9chat2']
         cat9chat3 = request.POST['cat9chat3']
         cat9chat4 = request.POST['cat9chat4']
         cat9chat5 = request.POST['cat9chat5']
-        cat9 = [cat9chat1, cat9chat2, cat9chat3, cat9chat4, cat9chat5]
+        cat9chat6 = request.POST['cat9chat6']
+        cat9 = [cat9chat1, cat9chat2, cat9chat3, cat9chat4, cat9chat5,cat9chat6]
 
         cat10chat1 = request.POST['cat10chat1']
         cat10chat2 = request.POST['cat10chat2']
         cat10chat3 = request.POST['cat10chat3']
         cat10chat4 = request.POST['cat10chat4']
         cat10chat5 = request.POST['cat10chat5']
-        cat10 = [cat10chat1, cat10chat2, cat10chat3, cat10chat4, cat10chat5]
+        cat10chat6 = request.POST['cat10chat6']
+        cat10 = [cat10chat1, cat10chat2, cat10chat3, cat10chat4, cat10chat5,cat10chat6]
 
         cat11chat1 = request.POST['cat11chat1']
         cat11chat2 = request.POST['cat11chat2']
         cat11chat3 = request.POST['cat11chat3']
         cat11chat4 = request.POST['cat11chat4']
         cat11chat5 = request.POST['cat11chat5']
-        cat11 = [cat11chat1, cat11chat2, cat11chat3, cat11chat4, cat11chat5]
+        cat11chat6 = request.POST['cat11chat6']
+        cat11 = [cat11chat1, cat11chat2, cat11chat3, cat11chat4, cat11chat5,cat11chat6]
 
         cat12chat1 = request.POST['cat12chat1']
         cat12chat2 = request.POST['cat12chat2']
         cat12chat3 = request.POST['cat12chat3']
         cat12chat4 = request.POST['cat12chat4']
         cat12chat5 = request.POST['cat12chat5']
-        cat12 = [cat12chat1, cat12chat2, cat12chat3, cat12chat4, cat12chat5]
+        cat12chat6 = request.POST['cat12chat6']
+        cat12 = [cat12chat1, cat12chat2, cat12chat3, cat12chat4, cat12chat5,cat12chat6]
 
         cat13chat1 = request.POST['cat13chat1']
         cat13chat2 = request.POST['cat13chat2']
         cat13chat3 = request.POST['cat13chat3']
         cat13chat4 = request.POST['cat13chat4']
         cat13chat5 = request.POST['cat13chat5']
-        cat13 = [cat13chat1, cat13chat2, cat13chat3, cat13chat4, cat13chat5]
+        cat13chat6 = request.POST['cat13chat6']
+        cat13 = [cat13chat1, cat13chat2, cat13chat3, cat13chat4, cat13chat5,cat13chat6]
 
         cat14chat1 = request.POST['cat14chat1']
         cat14chat2 = request.POST['cat14chat2']
         cat14chat3 = request.POST['cat14chat3']
         cat14chat4 = request.POST['cat14chat4']
         cat14chat5 = request.POST['cat14chat5']
-        cat14 = [cat14chat1, cat14chat2, cat14chat3, cat14chat4, cat14chat5]
+        cat14chat6 = request.POST['cat14chat6']
+        cat14 = [cat14chat1, cat14chat2, cat14chat3, cat14chat4, cat14chat5,cat14chat6]
 
         cat15chat1 = request.POST['cat15chat1']
         cat15chat2 = request.POST['cat15chat2']
         cat15chat3 = request.POST['cat15chat3']
         cat15chat4 = request.POST['cat15chat4']
         cat15chat5 = request.POST['cat15chat5']
-        cat15 = [cat15chat1, cat15chat2, cat15chat3, cat15chat4, cat15chat5]
+        cat15chat6 = request.POST['cat15chat6']
+        cat15 = [cat15chat1, cat15chat2, cat15chat3, cat15chat4, cat15chat5,cat15chat6]
 
         cat16chat1 = request.POST['cat16chat1']
         cat16chat2 = request.POST['cat16chat2']
         cat16chat3 = request.POST['cat16chat3']
         cat16chat4 = request.POST['cat16chat4']
         cat16chat5 = request.POST['cat16chat5']
-        cat16 = [cat16chat1, cat16chat2, cat16chat3, cat16chat4, cat16chat5]
+        cat16chat6 = request.POST['cat16chat6']
+        cat16 = [cat16chat1, cat16chat2, cat16chat3, cat16chat4, cat16chat6]
 
 
         def scoreCalc(lst):
@@ -5699,13 +5715,167 @@ def gubaGooNew(request):
         cat15score = scoreCalc(cat15)
         cat16score = scoreCalc(cat16)
 
+    #### Failing percentage
+
+    ######### chat 1 calculation  ##############
+
+    total_score = 293
+    ####### Greeting ###########################
+
+    def catAndTotalScore(c,tot,score):
+
+        if c == 'y':
+            c = score
+            tot=tot
+            return (c,tot)
+        elif c == 'n':
+            c = 0
+            tot = tot
+            return (c,tot)
+        elif c == 'p':
+            c = 0
+            tot = tot-score
+            return (c,tot)
+        else:
+            c = score
+            tot = tot
+            return (c,tot)
 
 
+    cat1chat1score, total_score = catAndTotalScore(cat1chat1, total_score, 10)
+    cat2chat1score, total_score = catAndTotalScore(cat2chat1, total_score, 10)
+    cat3chat1score, total_score = catAndTotalScore(cat3chat1, total_score, 40)
+    cat4chat1score, total_score = catAndTotalScore(cat4chat1, total_score, 40)
+    cat5chat1score, total_score = catAndTotalScore(cat5chat1, total_score, 15)
+    cat6chat1score, total_score = catAndTotalScore(cat6chat1, total_score, 15)
+    cat7chat1score, total_score = catAndTotalScore(cat7chat1, total_score, 12)
+    cat8chat1score, total_score = catAndTotalScore(cat8chat1, total_score, 12)
+    cat9chat1score, total_score = catAndTotalScore(cat9chat1, total_score, 40)
+    cat10chat1score, total_score = catAndTotalScore(cat10chat1, total_score, 40)
+    cat11chat1score, total_score = catAndTotalScore(cat11chat1, total_score, 15)
+    cat12chat1score, total_score = catAndTotalScore(cat12chat1, total_score, 13)
+    cat13chat1score, total_score = catAndTotalScore(cat13chat1, total_score, 11)
+    cat14chat1score, total_score = catAndTotalScore(cat14chat1, total_score, 10)
+    cat15chat1score, total_score = catAndTotalScore(cat15chat1, total_score, 10)
 
+    chat1_total = cat1chat1score+cat2chat1score+cat3chat1score+cat4chat1score+cat5chat1score+cat6chat1score+cat7chat1score+cat8chat1score+cat9chat1score+cat10chat1score+cat11chat1score+cat12chat1score+cat13chat1score+cat14chat1score+cat15chat1score
 
+    chat1_total_score = (chat1_total/total_score)*100
+    print(chat1_total_score)
 
+    ############################# chat2 ####################################
+    total_score = 293
 
+    cat1chat2score, total_score = catAndTotalScore(cat1chat2, total_score, 10)
+    cat2chat2score, total_score = catAndTotalScore(cat2chat2, total_score, 10)
+    cat3chat2score, total_score = catAndTotalScore(cat3chat2, total_score, 40)
+    cat4chat2score, total_score = catAndTotalScore(cat4chat2, total_score, 40)
+    cat5chat2score, total_score = catAndTotalScore(cat5chat2, total_score, 15)
+    cat6chat2score, total_score = catAndTotalScore(cat6chat2, total_score, 15)
+    cat7chat2score, total_score = catAndTotalScore(cat7chat2, total_score, 12)
+    cat8chat2score, total_score = catAndTotalScore(cat8chat2, total_score, 12)
+    cat9chat2score, total_score = catAndTotalScore(cat9chat2, total_score, 40)
+    cat10chat2score, total_score = catAndTotalScore(cat10chat2, total_score, 40)
+    cat11chat2score, total_score = catAndTotalScore(cat11chat2, total_score, 15)
+    cat12chat2score, total_score = catAndTotalScore(cat12chat2, total_score, 13)
+    cat13chat2score, total_score = catAndTotalScore(cat13chat2, total_score, 11)
+    cat14chat2score, total_score = catAndTotalScore(cat14chat2, total_score, 10)
+    cat15chat2score, total_score = catAndTotalScore(cat15chat2, total_score, 10)
 
+    chat2_total = cat1chat2score + cat2chat2score + cat3chat2score + cat4chat2score + cat5chat2score + cat6chat2score + cat7chat2score + cat8chat2score + cat9chat2score + cat10chat2score + cat11chat2score + cat12chat2score + cat13chat2score + cat14chat2score + cat15chat2score
+    chat2_total_score = (chat2_total / total_score) * 100
+    print(chat2_total_score)
+
+    ############################# chat3 ####################################
+    total_score = 293
+
+    cat1chat3score, total_score = catAndTotalScore(cat1chat3, total_score, 10)
+    cat2chat3score, total_score = catAndTotalScore(cat2chat3, total_score, 10)
+    cat3chat3score, total_score = catAndTotalScore(cat3chat3, total_score, 40)
+    cat4chat3score, total_score = catAndTotalScore(cat4chat3, total_score, 40)
+    cat5chat3score, total_score = catAndTotalScore(cat5chat3, total_score, 15)
+    cat6chat3score, total_score = catAndTotalScore(cat6chat3, total_score, 15)
+    cat7chat3score, total_score = catAndTotalScore(cat7chat3, total_score, 12)
+    cat8chat3score, total_score = catAndTotalScore(cat8chat3, total_score, 12)
+    cat9chat3score, total_score = catAndTotalScore(cat9chat3, total_score, 40)
+    cat10chat3score, total_score = catAndTotalScore(cat10chat3, total_score, 40)
+    cat11chat3score, total_score = catAndTotalScore(cat11chat3, total_score, 15)
+    cat12chat3score, total_score = catAndTotalScore(cat12chat3, total_score, 13)
+    cat13chat3score, total_score = catAndTotalScore(cat13chat3, total_score, 11)
+    cat14chat3score, total_score = catAndTotalScore(cat14chat3, total_score, 10)
+    cat15chat3score, total_score = catAndTotalScore(cat15chat3, total_score, 10)
+
+    chat3_total = cat1chat3score + cat2chat3score + cat3chat3score + cat4chat3score + cat5chat3score + cat6chat3score + cat7chat3score + cat8chat3score + cat9chat3score + cat10chat3score + cat11chat3score + cat12chat3score + cat13chat3score + cat14chat3score + cat15chat3score
+    chat3_total_score = (chat3_total / total_score) * 100
+    print(chat3_total_score)
+
+    ############################# chat4 ####################################
+    total_score = 293
+    cat1chat4score, total_score = catAndTotalScore(cat1chat4, total_score, 10)
+    cat2chat4score, total_score = catAndTotalScore(cat2chat4, total_score, 10)
+    cat3chat4score, total_score = catAndTotalScore(cat3chat4, total_score, 40)
+    cat4chat4score, total_score = catAndTotalScore(cat4chat4, total_score, 40)
+    cat5chat4score, total_score = catAndTotalScore(cat5chat4, total_score, 15)
+    cat6chat4score, total_score = catAndTotalScore(cat6chat4, total_score, 15)
+    cat7chat4score, total_score = catAndTotalScore(cat7chat4, total_score, 12)
+    cat8chat4score, total_score = catAndTotalScore(cat8chat4, total_score, 12)
+    cat9chat4score, total_score = catAndTotalScore(cat9chat4, total_score, 40)
+    cat10chat4score, total_score = catAndTotalScore(cat10chat4, total_score, 40)
+    cat11chat4score, total_score = catAndTotalScore(cat11chat4, total_score, 15)
+    cat12chat4score, total_score = catAndTotalScore(cat12chat4, total_score, 13)
+    cat13chat4score, total_score = catAndTotalScore(cat13chat4, total_score, 11)
+    cat14chat4score, total_score = catAndTotalScore(cat14chat4, total_score, 10)
+    cat15chat4score, total_score = catAndTotalScore(cat15chat4, total_score, 10)
+
+    chat4_total = cat1chat4score + cat2chat4score + cat3chat4score + cat4chat4score + cat5chat4score + cat6chat4score + cat7chat4score + cat8chat4score + cat9chat4score + cat10chat4score + cat11chat4score + cat12chat4score + cat13chat4score + cat14chat4score + cat15chat4score
+    chat4_total_score = (chat4_total / total_score) * 100
+    print(chat4_total_score)
+
+    ############################# chat5 ####################################
+    total_score = 293
+
+    cat1chat5score, total_score = catAndTotalScore(cat1chat5, total_score, 10)
+    cat2chat5score, total_score = catAndTotalScore(cat2chat5, total_score, 10)
+    cat3chat5score, total_score = catAndTotalScore(cat3chat5, total_score, 40)
+    cat4chat5score, total_score = catAndTotalScore(cat4chat5, total_score, 40)
+    cat5chat5score, total_score = catAndTotalScore(cat5chat5, total_score, 15)
+    cat6chat5score, total_score = catAndTotalScore(cat6chat5, total_score, 15)
+    cat7chat5score, total_score = catAndTotalScore(cat7chat5, total_score, 12)
+    cat8chat5score, total_score = catAndTotalScore(cat8chat5, total_score, 12)
+    cat9chat5score, total_score = catAndTotalScore(cat9chat5, total_score, 40)
+    cat10chat5score, total_score = catAndTotalScore(cat10chat5, total_score, 40)
+    cat11chat5score, total_score = catAndTotalScore(cat11chat5, total_score, 15)
+    cat12chat5score, total_score = catAndTotalScore(cat12chat5, total_score, 13)
+    cat13chat5score, total_score = catAndTotalScore(cat13chat5, total_score, 11)
+    cat14chat5score, total_score = catAndTotalScore(cat14chat5, total_score, 10)
+    cat15chat5score, total_score = catAndTotalScore(cat15chat5, total_score, 10)
+
+    chat5_total = cat1chat5score + cat2chat5score + cat3chat5score + cat4chat5score + cat5chat5score + cat6chat5score + cat7chat5score + cat8chat5score + cat9chat5score + cat10chat5score + cat11chat5score + cat12chat5score + cat13chat5score + cat14chat5score + cat15chat5score
+    chat5_total_score = (chat5_total / total_score) * 100
+    print(chat5_total_score)
+
+    ############################# chat6 ####################################
+    total_score = 293
+
+    cat1chat6score, total_score = catAndTotalScore(cat1chat6, total_score, 10)
+    cat2chat6score, total_score = catAndTotalScore(cat2chat6, total_score, 10)
+    cat3chat6score, total_score = catAndTotalScore(cat3chat6, total_score, 40)
+    cat4chat6score, total_score = catAndTotalScore(cat4chat6, total_score, 40)
+    cat5chat6score, total_score = catAndTotalScore(cat5chat6, total_score, 15)
+    cat6chat6score, total_score = catAndTotalScore(cat6chat6, total_score, 15)
+    cat7chat6score, total_score = catAndTotalScore(cat7chat6, total_score, 12)
+    cat8chat6score, total_score = catAndTotalScore(cat8chat6, total_score, 12)
+    cat9chat6score, total_score = catAndTotalScore(cat9chat6, total_score, 40)
+    cat10chat6score, total_score = catAndTotalScore(cat10chat6, total_score, 40)
+    cat11chat6score, total_score = catAndTotalScore(cat11chat6, total_score, 15)
+    cat12chat6score, total_score = catAndTotalScore(cat12chat6, total_score, 13)
+    cat13chat6score, total_score = catAndTotalScore(cat13chat6, total_score, 11)
+    cat14chat6score, total_score = catAndTotalScore(cat14chat6, total_score, 10)
+    cat15chat6score, total_score = catAndTotalScore(cat15chat6, total_score, 10)
+
+    chat6_total = cat1chat6score + cat2chat6score + cat3chat6score + cat4chat6score + cat5chat6score + cat6chat6score + cat7chat6score + cat8chat6score + cat9chat6score + cat10chat6score + cat11chat6score + cat12chat6score + cat13chat6score + cat14chat6score + cat15chat6score
+    chat6_total_score = (chat6_total / total_score) * 100
+    print(chat6_total_score)
 
 
 ############## End Mon Forms ##############################
