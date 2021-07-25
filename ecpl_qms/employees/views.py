@@ -2143,14 +2143,14 @@ def coachingDispute(request,pk):
             manager_mail=Profile.objects.get(emp_name=manager_name)
             manager_email = manager_mail.email
         except Profile.DoesNotExist:
-            manager_email = 'user@expertcallers.com'
+            manager_email = 'tabassum.z@expertcallers.com'
 
         cid = pk
         process = request.POST['campaign']
         html_path = 'dispute-template.html'
         data = {'id': cid,'process':process,'emp_name':emp_name,'emp_comments':emp_comments}
         email_template = get_template(html_path).render(data)
-        receiver_email = "kaleshcv2@gmail.com"
+        receiver_email = manager_email
         email_msg = EmailMessage('QMS - Coaching Dispute',
                                  email_template, 'qms@expertcallers.com',
                                  [receiver_email,],
