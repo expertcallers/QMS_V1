@@ -34,6 +34,7 @@ list_of_monforms = [ # OutBound
                         QuickAutoPartsOutboundMonForm,
                         ApexCommunicationsOutboundMonForm,LawOfficesOutboundMonForm,WokeUpEnergyOutboundMonForm,
                         FinnesseMortgageOutboundMonForm,
+                        UnitedMortgageOutboundMonForm,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -41,7 +42,7 @@ list_of_monforms = [ # OutBound
                         FinesseMortgageInboundMonForm,DigitalSwissGoldInboundMonForm,DanielwellingtoInboundMonForm,BhagyaLakshmiInboundMonForm,
                         AKDYInboundMonFormNew,AdityaBirlainboundMonForm,ABHindalcoInboundMonForm,
                         RainbowDiagnosticsInboundMonForm,DecentralizedVisionLTDInboundMonForm,
-                        AmerisaveInboundMonForm,IEDHHInboundMonForm,
+                        AmerisaveInboundMonForm,IEDHHInboundMonForm,ClearViewInboundMonForms,QuickAutoPartsInboundMonForms,
 
                         # Email/CHat
                         SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
@@ -956,6 +957,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'United Mortgage Outbound':
+        coaching = UnitedMortgageOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1045,6 +1051,16 @@ def coachingViewAgents(request,process,pk):
 
     elif process_name == 'Amerisave Inbound':
         coaching = AmerisaveInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Clear View IT Inbound':
+        coaching = ClearViewInboundMonForms.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Quick Auto Parts Inbound':
+        coaching = QuickAutoPartsInboundMonForms.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
@@ -1547,6 +1563,11 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'United Mortgage Outbound':
+        coaching = UnitedMortgageOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
 
     ########### Inbound ########################
 
@@ -1637,6 +1658,16 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Amerisave Inbound':
         coaching = AmerisaveInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Clear View IT Inbound':
+        coaching = ClearViewInboundMonForms.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Quick Auto Parts Inbound':
+        coaching = QuickAutoPartsInboundMonForms.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
@@ -2761,6 +2792,10 @@ def exportAuditReport(request):
             response = exportAadyaseries(FinnesseMortgageOutboundMonForm)
             return response
 
+        elif campaign == 'United Mortgage Outbound':
+            response = exportAadyaseries(UnitedMortgageOutboundMonForm)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -2905,6 +2940,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Amerisave Inbound':
             response = exportinbound(AmerisaveInboundMonForm)
+            return response
+
+        elif campaign == 'Clear View IT Inbound':
+            response = exportinbound(ClearViewInboundMonForms)
+            return response
+
+        elif campaign == 'Quick Auto Parts Inbound':
+            response = exportinbound(QuickAutoPartsInboundMonForms)
             return response
 
         #########    Email/CHat ##########################
@@ -3738,6 +3781,10 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(FinnesseMortgageOutboundMonForm)
             return response
 
+        elif campaign == 'United Mortgage Outbound':
+            response = exportAadyaseries(UnitedMortgageOutboundMonForm)
+            return response
+
 
         ######## Inbound ###############################
 
@@ -3883,6 +3930,14 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Amerisave Inbound':
             response = exportinbound(AmerisaveInboundMonForm)
+            return response
+
+        elif campaign == 'Clear View IT Inbound':
+            response = exportinbound(ClearViewInboundMonForms)
+            return response
+
+        elif campaign == 'Quick Auto Parts Inbound':
+            response = exportinbound(QuickAutoPartsInboundMonForms)
             return response
 
         #########    Email/CHat ##########################
@@ -4731,6 +4786,10 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(FinnesseMortgageOutboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'United Mortgage Outbound':
+            newseriesAddCoaching(UnitedMortgageOutboundMonForm)
+            return redirect('/employees/qahome')
+
         else:
             pass
 
@@ -4918,6 +4977,14 @@ def newSeriesInboundForms(request):
 
         elif campaign_name == 'Amerisave Inbound':
             inboundAddCoaching(AmerisaveInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Clear View IT Inbound':
+            inboundAddCoaching(ClearViewInboundMonForms)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Quick Auto Parts Inbound':
+            inboundAddCoaching(QuickAutoPartsInboundMonForms)
             return redirect('/employees/qahome')
 
 
@@ -5956,16 +6023,23 @@ def updateProfile(request):
         emp = Profile.objects.get(id=id)
 
         emp.emp_desi = desi
-        emp.save()
+        #emp.save()
 
         return render(request, 'update-profile.html',)
-
-
-
     else:
         profiles=Profile.objects.all()
         data={'profiles':profiles}
         return render(request,'update-profile.html',data)
+
+
+def profileDetailedView(request):
+    if request.method == 'POST':
+        id = request.POST['id']
+        obj = Profile.objects.get(id=id)
+
+        data = {'emp':obj}
+
+        return render(request,'profile-detailed-view.html',data)
 
 
 def powerBITest(request):

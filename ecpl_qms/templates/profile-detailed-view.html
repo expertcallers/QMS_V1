@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container-lg" style="padding-top:100px;padding-bottom:50px">
+    <h3>Update Employee Profile</h3>
+</div>
+<div class="container">
+    <div class="row">
+        <div>
+
+            <p>NAME - {{emp.emp_name}}</p>
+            <p>ID - {{emp.emp_id}}</p>
+            <p>Manager - {{emp.manager}}</p>
+            <p>AM - {{emp.am}}</p>
+            <p>TL - {{emp.team_lead}}</p>
+            <p>Process - {{emp.process}}</p>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -75,6 +75,7 @@ urlpatterns = [
     path('update-email-address/<int:pk>',updateEmailAddress),
 
     path('update-profile',updateProfile),
+    path('view-profile-detailed',profileDetailedView),
     path('checkprofile',checkProfile),
 
     #path('add-single-profile',addSingleProfile),
@@ -98,5 +99,6 @@ urlpatterns = [
     path('campaigns',campaignDetails),
 
     path('allprofileupdate',AllProfileUpdate),
+
 
 ]

@@ -8,7 +8,7 @@
 
 </div>
 <div>
-            <div class="col-md-5">
+    <div class="col-md-5">
                 <form action="/employees/update-profile" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                     <select name="id">
@@ -22,9 +22,23 @@
                     <input type="text" name="desi" id="">
                     <input class="btn btn-info" type="submit" value="Update Profile" style="margin-top:30px;">
                 </form>
-            </div>
+    </div>
 
 </div>
 
+<div>
+    <div>
+        <form action="/employees/view-profile-detailed" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <select name="id">
+                        {% for f in profiles %}
+                            <option value="{{f.id}}">{{f.emp_name}} - {{f.emp_id}} </option>
+                        {% endfor %}
+
+                    </select>
+                    <input class="btn btn-info" type="submit" value="View Profile" style="margin-top:30px;">
+        </form>
+    </div>
+</div>
 
 {% endblock %}
