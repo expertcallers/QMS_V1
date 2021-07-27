@@ -140,6 +140,9 @@ def login_view(request):
                 return redirect('/employees/qahome')
             elif user.profile.emp_desi=='Manager' or user.profile.emp_desi=='AM' or user.profile.emp_desi=='Trainer' or user.profile.emp_id==224 or user.profile.emp_id==6479 or user.profile.emp_desi=='Team Leader':
                 return redirect('/employees/manager-home')
+            # Special Access ##########
+            elif user.profile.emp_id==3495 or user.profile.emp_id== 2922:
+                return redirect('/employees/manager-home')
             elif user.profile.emp_desi=='CRO' or user.profile.emp_desi=='Patrolling officer':
                 return redirect('/employees/agenthome')
             else:
