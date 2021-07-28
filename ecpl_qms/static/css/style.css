@@ -38,6 +38,8 @@ h5{
 #outboundform-gubagoo .qn
 {   
     min-width:300px;
+    font-size: 16px;
+    color: darkgreen;
 }
 
 #outboundform .opening,.softskills,.business,.callclosing,.compliance,.other,.basic,.customerexperience

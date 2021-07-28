@@ -5630,6 +5630,13 @@ def gubaGooNew(request):
 
     if request.method == 'POST':
 
+        chat1_id = request.POST['chat1_id']
+        chat2_id = request.POST['chat2_id']
+        chat3_id = request.POST['chat3_id']
+        chat4_id = request.POST['chat4_id']
+        chat5_id = request.POST['chat5_id']
+        chat6_id = request.POST['chat6_id']
+
         cat1chat1 = request.POST['cat1chat1']
         cat1chat2 = request.POST['cat1chat2']
         cat1chat3 = request.POST['cat1chat3']
@@ -5756,7 +5763,7 @@ def gubaGooNew(request):
         cat16chat4 = request.POST['cat16chat4']
         cat16chat5 = request.POST['cat16chat5']
         cat16chat6 = request.POST['cat16chat6']
-        cat16 = [cat16chat1, cat16chat2, cat16chat3, cat16chat4, cat16chat6]
+
 
 
         def scoreCalc(lst):
@@ -5791,13 +5798,13 @@ def gubaGooNew(request):
         cat13score,cat13fscore = scoreCalc(cat13)
         cat14score,cat14fscore = scoreCalc(cat14)
         cat15score,cat15fscore= scoreCalc(cat15)
-        cat16score,cat16fscore = scoreCalc(cat16)
+
         
         total_failing_score =   cat1fscore + cat2fscore + cat3fscore + cat4fscore + cat5fscore + cat6fscore + \
                                 cat7fscore + cat8fscore + cat9fscore + cat10fscore + \
                                 cat11fscore + cat12fscore + \
                                 cat13fscore + cat14fscore + \
-                                cat15fscore + cat16fscore      
+                                cat15fscore
 
 
         ######### chat 1 calculation  ##############
@@ -5824,49 +5831,82 @@ def gubaGooNew(request):
                 tot = tot
                 return (c,tot)
 
-
         cat1chat1score, total_score = catAndTotalScore(cat1chat1, total_score, 10)
         cat2chat1score, total_score = catAndTotalScore(cat2chat1, total_score, 10)
+        greeting_chat1 = cat1chat1score + cat2chat1score
+
         cat3chat1score, total_score = catAndTotalScore(cat3chat1, total_score, 40)
         cat4chat1score, total_score = catAndTotalScore(cat4chat1, total_score, 40)
+        qn_chat1 = cat3chat1score + cat4chat1score
+
         cat5chat1score, total_score = catAndTotalScore(cat5chat1, total_score, 15)
         cat6chat1score, total_score = catAndTotalScore(cat6chat1, total_score, 15)
         cat7chat1score, total_score = catAndTotalScore(cat7chat1, total_score, 12)
         cat8chat1score, total_score = catAndTotalScore(cat8chat1, total_score, 12)
+        lead_chat1 = cat5chat1score + cat6chat1score + cat7chat1score + cat8chat1score
+
         cat9chat1score, total_score = catAndTotalScore(cat9chat1, total_score, 40)
         cat10chat1score, total_score = catAndTotalScore(cat10chat1, total_score, 40)
+        lf_chat1 = cat9chat1score + cat10chat1score
+
         cat11chat1score, total_score = catAndTotalScore(cat11chat1, total_score, 15)
         cat12chat1score, total_score = catAndTotalScore(cat12chat1, total_score, 13)
         cat13chat1score, total_score = catAndTotalScore(cat13chat1, total_score, 11)
+        timing_chat1 = cat11chat1score+cat12chat1score+cat13chat1score
+
         cat14chat1score, total_score = catAndTotalScore(cat14chat1, total_score, 10)
         cat15chat1score, total_score = catAndTotalScore(cat15chat1, total_score, 10)
+        ce_chat1 = cat14chat1score + cat15chat1score
+
+        if cat16chat1 == 'y':
+            autofail_chat1 = (greeting_chat1+qn_chat1+lead_chat1+lf_chat1+timing_chat1+ce_chat1)*(-1)
+        else:
+            autofail_chat1 = 0
 
         chat1_total = cat1chat1score+cat2chat1score+cat3chat1score+cat4chat1score+cat5chat1score+cat6chat1score+cat7chat1score+cat8chat1score+cat9chat1score+cat10chat1score+cat11chat1score+cat12chat1score+cat13chat1score+cat14chat1score+cat15chat1score
-
+        chat1_total += autofail_chat1
         chat1_total_score = (chat1_total/total_score)*100
-        # print(chat1_total_score)
+        chat1_total_score = round(chat1_total_score)
 
         ############################# chat2 ####################################
         total_score = 293
 
         cat1chat2score, total_score = catAndTotalScore(cat1chat2, total_score, 10)
         cat2chat2score, total_score = catAndTotalScore(cat2chat2, total_score, 10)
+        greeting_chat2 = cat1chat2score + cat2chat2score
+
         cat3chat2score, total_score = catAndTotalScore(cat3chat2, total_score, 40)
         cat4chat2score, total_score = catAndTotalScore(cat4chat2, total_score, 40)
+        qn_chat2 = cat3chat2score + cat4chat2score
+
         cat5chat2score, total_score = catAndTotalScore(cat5chat2, total_score, 15)
         cat6chat2score, total_score = catAndTotalScore(cat6chat2, total_score, 15)
         cat7chat2score, total_score = catAndTotalScore(cat7chat2, total_score, 12)
         cat8chat2score, total_score = catAndTotalScore(cat8chat2, total_score, 12)
+        lead_chat2 = cat5chat2score + cat6chat2score + cat7chat2score + cat8chat2score
+
         cat9chat2score, total_score = catAndTotalScore(cat9chat2, total_score, 40)
         cat10chat2score, total_score = catAndTotalScore(cat10chat2, total_score, 40)
+        lf_chat2 = cat9chat2score + cat10chat2score
+
         cat11chat2score, total_score = catAndTotalScore(cat11chat2, total_score, 15)
         cat12chat2score, total_score = catAndTotalScore(cat12chat2, total_score, 13)
         cat13chat2score, total_score = catAndTotalScore(cat13chat2, total_score, 11)
+        timing_chat2 = cat11chat2score + cat12chat2score + cat13chat2score
+
         cat14chat2score, total_score = catAndTotalScore(cat14chat2, total_score, 10)
         cat15chat2score, total_score = catAndTotalScore(cat15chat2, total_score, 10)
+        ce_chat2 = cat14chat2score + cat15chat2score
+
+        if cat16chat2 == 'y':
+            autofail_chat2 = (greeting_chat2 + qn_chat2 + lead_chat2 + lf_chat2 + timing_chat2 + ce_chat2) * (-1)
+        else:
+            autofail_chat2 = 0
 
         chat2_total = cat1chat2score + cat2chat2score + cat3chat2score + cat4chat2score + cat5chat2score + cat6chat2score + cat7chat2score + cat8chat2score + cat9chat2score + cat10chat2score + cat11chat2score + cat12chat2score + cat13chat2score + cat14chat2score + cat15chat2score
+        chat2_total += autofail_chat2
         chat2_total_score = (chat2_total / total_score) * 100
+        chat2_total_score = round(chat2_total_score)
         # print(chat2_total_score)
 
         ############################# chat3 ####################################
@@ -5874,90 +5914,160 @@ def gubaGooNew(request):
 
         cat1chat3score, total_score = catAndTotalScore(cat1chat3, total_score, 10)
         cat2chat3score, total_score = catAndTotalScore(cat2chat3, total_score, 10)
+        greeting_chat3 = cat1chat3score + cat2chat3score
+
         cat3chat3score, total_score = catAndTotalScore(cat3chat3, total_score, 40)
         cat4chat3score, total_score = catAndTotalScore(cat4chat3, total_score, 40)
+        qn_chat3 = cat3chat3score + cat4chat3score
+
         cat5chat3score, total_score = catAndTotalScore(cat5chat3, total_score, 15)
         cat6chat3score, total_score = catAndTotalScore(cat6chat3, total_score, 15)
         cat7chat3score, total_score = catAndTotalScore(cat7chat3, total_score, 12)
         cat8chat3score, total_score = catAndTotalScore(cat8chat3, total_score, 12)
+        lead_chat3 = cat5chat3score + cat6chat3score + cat7chat3score + cat8chat3score
+
         cat9chat3score, total_score = catAndTotalScore(cat9chat3, total_score, 40)
         cat10chat3score, total_score = catAndTotalScore(cat10chat3, total_score, 40)
+        lf_chat3 = cat9chat3score + cat10chat3score
+
         cat11chat3score, total_score = catAndTotalScore(cat11chat3, total_score, 15)
         cat12chat3score, total_score = catAndTotalScore(cat12chat3, total_score, 13)
         cat13chat3score, total_score = catAndTotalScore(cat13chat3, total_score, 11)
+        timing_chat3 = cat11chat3score + cat12chat3score + cat13chat3score
+
         cat14chat3score, total_score = catAndTotalScore(cat14chat3, total_score, 10)
         cat15chat3score, total_score = catAndTotalScore(cat15chat3, total_score, 10)
+        ce_chat3 = cat14chat3score + cat15chat3score
+
+        if cat16chat3 == 'y':
+            autofail_chat3 = (greeting_chat3 + qn_chat3 + lead_chat3 + lf_chat3 + timing_chat3 + ce_chat3) * (-1)
+        else:
+            autofail_chat3 = 0
 
         chat3_total = cat1chat3score + cat2chat3score + cat3chat3score + cat4chat3score + cat5chat3score + cat6chat3score + cat7chat3score + cat8chat3score + cat9chat3score + cat10chat3score + cat11chat3score + cat12chat3score + cat13chat3score + cat14chat3score + cat15chat3score
+        chat3_total += autofail_chat3
         chat3_total_score = (chat3_total / total_score) * 100
+        chat3_total_score = round(chat3_total_score)
         # print(chat3_total_score)
 
         ############################# chat4 ####################################
         total_score = 293
         cat1chat4score, total_score = catAndTotalScore(cat1chat4, total_score, 10)
         cat2chat4score, total_score = catAndTotalScore(cat2chat4, total_score, 10)
+        greeting_chat4 = cat1chat4score + cat2chat4score
+
         cat3chat4score, total_score = catAndTotalScore(cat3chat4, total_score, 40)
         cat4chat4score, total_score = catAndTotalScore(cat4chat4, total_score, 40)
+        qn_chat4 = cat3chat4score + cat4chat4score
+
         cat5chat4score, total_score = catAndTotalScore(cat5chat4, total_score, 15)
         cat6chat4score, total_score = catAndTotalScore(cat6chat4, total_score, 15)
         cat7chat4score, total_score = catAndTotalScore(cat7chat4, total_score, 12)
         cat8chat4score, total_score = catAndTotalScore(cat8chat4, total_score, 12)
+        lead_chat4 = cat5chat4score + cat6chat4score + cat7chat4score + cat8chat4score
+
         cat9chat4score, total_score = catAndTotalScore(cat9chat4, total_score, 40)
         cat10chat4score, total_score = catAndTotalScore(cat10chat4, total_score, 40)
+        lf_chat4 = cat9chat4score + cat10chat4score
+
         cat11chat4score, total_score = catAndTotalScore(cat11chat4, total_score, 15)
         cat12chat4score, total_score = catAndTotalScore(cat12chat4, total_score, 13)
         cat13chat4score, total_score = catAndTotalScore(cat13chat4, total_score, 11)
+        timing_chat4 = cat11chat4score + cat12chat4score + cat13chat4score
+
         cat14chat4score, total_score = catAndTotalScore(cat14chat4, total_score, 10)
         cat15chat4score, total_score = catAndTotalScore(cat15chat4, total_score, 10)
+        ce_chat4 = cat14chat4score + cat15chat4score
+
+        if cat16chat4 == 'y':
+            autofail_chat4 = (greeting_chat4 + qn_chat4 + lead_chat4 + lf_chat4 + timing_chat4 + ce_chat4) * (-1)
+        else:
+            autofail_chat4 = 0
 
         chat4_total = cat1chat4score + cat2chat4score + cat3chat4score + cat4chat4score + cat5chat4score + cat6chat4score + cat7chat4score + cat8chat4score + cat9chat4score + cat10chat4score + cat11chat4score + cat12chat4score + cat13chat4score + cat14chat4score + cat15chat4score
+        chat4_total += autofail_chat4
         chat4_total_score = (chat4_total / total_score) * 100
+        chat4_total_score = round(chat4_total_score)
         # print(chat4_total_score)
 
         ############################# chat5 ####################################
         total_score = 293
-
         cat1chat5score, total_score = catAndTotalScore(cat1chat5, total_score, 10)
         cat2chat5score, total_score = catAndTotalScore(cat2chat5, total_score, 10)
+        greeting_chat5 = cat1chat5score + cat2chat5score
+
         cat3chat5score, total_score = catAndTotalScore(cat3chat5, total_score, 40)
         cat4chat5score, total_score = catAndTotalScore(cat4chat5, total_score, 40)
+        qn_chat5 = cat3chat5score + cat4chat5score
+
         cat5chat5score, total_score = catAndTotalScore(cat5chat5, total_score, 15)
         cat6chat5score, total_score = catAndTotalScore(cat6chat5, total_score, 15)
         cat7chat5score, total_score = catAndTotalScore(cat7chat5, total_score, 12)
         cat8chat5score, total_score = catAndTotalScore(cat8chat5, total_score, 12)
+        lead_chat5 = cat5chat5score + cat6chat5score + cat7chat5score + cat8chat5score
+
         cat9chat5score, total_score = catAndTotalScore(cat9chat5, total_score, 40)
         cat10chat5score, total_score = catAndTotalScore(cat10chat5, total_score, 40)
+        lf_chat5 = cat9chat5score + cat10chat5score
+
         cat11chat5score, total_score = catAndTotalScore(cat11chat5, total_score, 15)
         cat12chat5score, total_score = catAndTotalScore(cat12chat5, total_score, 13)
         cat13chat5score, total_score = catAndTotalScore(cat13chat5, total_score, 11)
+        timing_chat5 = cat11chat5score + cat12chat5score + cat13chat5score
+
         cat14chat5score, total_score = catAndTotalScore(cat14chat5, total_score, 10)
         cat15chat5score, total_score = catAndTotalScore(cat15chat5, total_score, 10)
+        ce_chat5 = cat14chat5score + cat15chat5score
+
+        if cat16chat5 == 'y':
+            autofail_chat5 = (greeting_chat5 + qn_chat5 + lead_chat5 + lf_chat5 + timing_chat5 + ce_chat5) * (-1)
+        else:
+            autofail_chat5 = 0
 
         chat5_total = cat1chat5score + cat2chat5score + cat3chat5score + cat4chat5score + cat5chat5score + cat6chat5score + cat7chat5score + cat8chat5score + cat9chat5score + cat10chat5score + cat11chat5score + cat12chat5score + cat13chat5score + cat14chat5score + cat15chat5score
+        chat5_total += autofail_chat5
         chat5_total_score = (chat5_total / total_score) * 100
+        chat5_total_score = round(chat5_total_score)
         # print(chat5_total_score)
 
         ############################# chat6 ####################################
         total_score = 293
-
         cat1chat6score, total_score = catAndTotalScore(cat1chat6, total_score, 10)
         cat2chat6score, total_score = catAndTotalScore(cat2chat6, total_score, 10)
+        greeting_chat6 = cat1chat6score + cat2chat6score
+
         cat3chat6score, total_score = catAndTotalScore(cat3chat6, total_score, 40)
         cat4chat6score, total_score = catAndTotalScore(cat4chat6, total_score, 40)
+        qn_chat6 = cat3chat6score + cat4chat6score
+
         cat5chat6score, total_score = catAndTotalScore(cat5chat6, total_score, 15)
         cat6chat6score, total_score = catAndTotalScore(cat6chat6, total_score, 15)
         cat7chat6score, total_score = catAndTotalScore(cat7chat6, total_score, 12)
         cat8chat6score, total_score = catAndTotalScore(cat8chat6, total_score, 12)
+        lead_chat6 = cat5chat6score + cat6chat6score + cat7chat6score + cat8chat6score
+
         cat9chat6score, total_score = catAndTotalScore(cat9chat6, total_score, 40)
         cat10chat6score, total_score = catAndTotalScore(cat10chat6, total_score, 40)
+        lf_chat6 = cat9chat6score + cat10chat6score
+
         cat11chat6score, total_score = catAndTotalScore(cat11chat6, total_score, 15)
         cat12chat6score, total_score = catAndTotalScore(cat12chat6, total_score, 13)
         cat13chat6score, total_score = catAndTotalScore(cat13chat6, total_score, 11)
+        timing_chat6 = cat11chat6score + cat12chat6score + cat13chat6score
+
         cat14chat6score, total_score = catAndTotalScore(cat14chat6, total_score, 10)
         cat15chat6score, total_score = catAndTotalScore(cat15chat6, total_score, 10)
+        ce_chat6 = cat14chat6score + cat15chat6score
+
+        if cat16chat6 == 'y':
+            autofail_chat6 = (greeting_chat6 + qn_chat6 + lead_chat6 + lf_chat6 + timing_chat6 + ce_chat6) * (-1)
+        else:
+            autofail_chat6 = 0
 
         chat6_total = cat1chat6score + cat2chat6score + cat3chat6score + cat4chat6score + cat5chat6score + cat6chat6score + cat7chat6score + cat8chat6score + cat9chat6score + cat10chat6score + cat11chat6score + cat12chat6score + cat13chat6score + cat14chat6score + cat15chat6score
+        chat6_total += autofail_chat6
         chat6_total_score = (chat6_total / total_score) * 100
+        chat6_total_score = round(chat6_total_score)
         # print(chat6_total_score)
         # print('----------------------------------------------------------')
         # print('Failing Score',total_failing_score)
@@ -5972,6 +6082,7 @@ def gubaGooNew(request):
         total_failing_perc = total_failing_score * 100
 
         total_audit_score = total_chat_score - total_failing_perc
+        total_audit_score = round(total_audit_score)
 
         # print(total_audit_score,'Total Audit Score')      
 
@@ -5981,6 +6092,8 @@ def gubaGooNew(request):
                 'chat5':chat5_total_score,'chat6':chat6_total_score,
                 'failing':total_failing_perc,
                 'overall':total_audit_score,
+                'chat1_id':chat1_id,'chat2_id':chat2_id,'chat3_id':chat3_id,
+                'chat4_id': chat4_id,'chat5_id':chat5_id,'chat6_id':chat6_id,
         }
 
         return render(request,'mon-forms/gubagoo-result.html',data)               
