@@ -5781,30 +5781,78 @@ def gubaGooNew(request):
                 fscore = 0        
             
             return cat1score,fscore
-    
 
-        cat1score,cat1fscore = scoreCalc(cat1)
-        cat2score,cat2fscore = scoreCalc(cat2)
-        cat3score,cat3fscore = scoreCalc(cat3)
-        cat4score,cat4fscore = scoreCalc(cat4)
-        cat5score,cat5fscore = scoreCalc(cat5)
-        cat6score,cat6fscore = scoreCalc(cat6)
-        cat7score,cat7fscore = scoreCalc(cat7)
-        cat8score,cat8fscore = scoreCalc(cat8)
-        cat9score,cat9fscore = scoreCalc(cat9)
-        cat10score,cat10fscore = scoreCalc(cat10)
-        cat11score,cat11fscore = scoreCalc(cat11)
-        cat12score,cat12fscore = scoreCalc(cat12)
-        cat13score,cat13fscore = scoreCalc(cat13)
-        cat14score,cat14fscore = scoreCalc(cat14)
-        cat15score,cat15fscore= scoreCalc(cat15)
+        def autoFailCalculation(a,b,lst):
 
-        
-        total_failing_score =   cat1fscore + cat2fscore + cat3fscore + cat4fscore + cat5fscore + cat6fscore + \
+            fcount = lst.count('n')
+            if fcount == 3 or fcount == 4 or fcount == 5:
+                fscore = a
+                return fscore
+            elif fcount == 6:
+                fscore = b
+                return fscore
+            elif fcount <= 2:
+                fscore = 0
+                return fscore
+
+        cat1fscore = autoFailCalculation(0.025,0.05,cat1)
+        cat2fscore = autoFailCalculation(0.025,0.05,cat2)
+
+        cat3fscore = autoFailCalculation(0.05,0.1,cat3)
+        cat4fscore = autoFailCalculation(0.075,0.125,cat4)
+
+        cat5fscore = autoFailCalculation(0.03,0.05,cat5)
+        cat6fscore = autoFailCalculation(0.03,0.05,cat6)
+        cat7fscore = autoFailCalculation(0.03,0.05,cat7)
+        cat8fscore = autoFailCalculation(0.03,0.05,cat8)
+
+        cat9fscore = autoFailCalculation(0.15,0.3,cat9)
+        cat10fscore = autoFailCalculation(0.025,0.05,cat10)
+
+        cat11fscore = autoFailCalculation(0.025,0.05,cat11)
+        cat13fscore = autoFailCalculation(0.025,0.05,cat13)
+
+        cat14fscore = autoFailCalculation(0.025,0.05,cat14)
+        cat15fscore = autoFailCalculation(0.025,0.05,cat15)
+
+
+        cat1score = scoreCalc(cat1)
+        cat2score = scoreCalc(cat2)
+        cat3score = scoreCalc(cat3)
+        cat4score = scoreCalc(cat4)
+        cat5score = scoreCalc(cat5)
+        cat6score = scoreCalc(cat6)
+        cat7score = scoreCalc(cat7)
+        cat8score = scoreCalc(cat8)
+        cat9score = scoreCalc(cat9)
+        cat10score = scoreCalc(cat10)
+        cat11score = scoreCalc(cat11)
+        cat12score = scoreCalc(cat12)
+        cat13score = scoreCalc(cat13)
+        cat14score = scoreCalc(cat14)
+        cat15score= scoreCalc(cat15)
+
+        print(cat1fscore)
+        print(cat2fscore)
+        print(cat3fscore)
+        print(cat4fscore)
+        print(cat5fscore)
+        print(cat6fscore)
+        print(cat7fscore)
+        print(cat8fscore)
+        print(cat9fscore)
+        print(cat10fscore)
+        print(cat11fscore)
+        print(cat13fscore)
+        print(cat14fscore)
+        print(cat15fscore)
+
+
+
+        total_failing_score = cat1fscore + cat2fscore + cat3fscore + cat4fscore + cat5fscore + cat6fscore + \
                                 cat7fscore + cat8fscore + cat9fscore + cat10fscore + \
-                                cat11fscore + cat12fscore + \
-                                cat13fscore + cat14fscore + \
-                                cat15fscore
+                                cat11fscore + cat13fscore + \
+                                cat14fscore + cat15fscore
 
 
         ######### chat 1 calculation  ##############
