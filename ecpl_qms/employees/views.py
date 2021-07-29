@@ -5832,7 +5832,7 @@ def gubaGooNew(request):
         cat14score = scoreCalc(cat14)
         cat15score= scoreCalc(cat15)
 
-        print(cat1fscore)
+        '''print(cat1fscore)
         print(cat2fscore)
         print(cat3fscore)
         print(cat4fscore)
@@ -5845,7 +5845,7 @@ def gubaGooNew(request):
         print(cat11fscore)
         print(cat13fscore)
         print(cat14fscore)
-        print(cat15fscore)
+        print(cat15fscore)'''
 
 
 
