@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block main %}
+
+    <div class="container-lg" style="padding:100px 0px">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div>
+                    <h6><b>Please Select Manager, AM and Team Leader</b></h6>
+                    <br>
+                    <form action="/employees/coaching-dispute-submit/{{id}}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label>Manager</label>
+                        <select name="manager_email" id="" class="form-control">
+                            {% for m in managers %}
+                            <option value="{{m.email}}" class="form-control">{{m.emp_name}}</option>
+                            {% endfor %}
+                        </select>
+                        <br>
+                        <label>AM</label>
+                        <select name="am_email" id="" class="form-control">
+                            {% for m in ams %}
+                            <option value="{{m.email}}" class="form-control">{{m.emp_name}}</option>
+                            {% endfor %}
+                        </select>
+                        <br>
+                        <label>Team Leader</label>
+                        <select name="tl_email" id="" class="form-control">
+                            {% for m in tls %}
+                            <option value="{{m.email}}" class="form-control">{{m.emp_name}}</option>
+                            {% endfor %}
+                        </select>
+
+                        <input type="hidden" name="campaign" id="" value="{{process}}">
+                        <input type="hidden" name="emp_comments_dispute" value="{{emp_comments}}">
+                        <input type="hidden" name="id" value="{{id}}">
+                        <br><br>
+                        <div>
+                            <h6><b>Employee Comments for Dispute</b></h6>
+                            <p>{{emp_comments}}</p>
+
+                        </div>
+                        <div>
+                            <br>
+                            <button class="btn btn-primary">Submit Dispute</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+
+        </div>
+
+
+    </div>
+
+{% endblock %}

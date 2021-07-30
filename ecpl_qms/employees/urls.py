@@ -61,6 +61,7 @@ urlpatterns = [
     path('coaching-summary-view',coachingSummaryView),
     path('coaching-success',coachingSuccess),
     path('coaching-dispute/<int:pk>',coachingDispute),
+    path('coaching-dispute-submit/<int:pk>',coachingDisputeFinal),
 
     # Summary
 

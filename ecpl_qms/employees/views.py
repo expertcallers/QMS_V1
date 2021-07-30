@@ -2169,28 +2169,32 @@ def coachingSuccess(request):
 
 def coachingDispute(request,pk):
     if request.method == 'POST':
+        id = pk
+        managers = Profile.objects.filter(emp_desi='Manager').order_by('emp_name')
+        ams = Profile.objects.filter(emp_desi='AM').order_by('emp_name')
+        tls = Profile.objects.filter(emp_desi='Team Leader').order_by('emp_name')
+
+        process = request.POST['campaign']
         emp_comments = request.POST['emp_comments_dispute']
+
+        data = {'managers':managers,'ams':ams,'tls':tls,
+                'emp_comments':emp_comments,'process':process,
+                'id':id
+                }
+        return render(request,'select-manager-am-tl.html',data)
+
+
+def coachingDisputeFinal(request,pk):
+    if request.method == 'POST':
+
         emp_name=request.user.profile.emp_name
         team = request.user.profile.process
-        manager_name = request.user.profile.manager
-        try:
-            manager_mail=Profile.objects.get(emp_name=manager_name)
-            manager_email = manager_mail.email
-        except Profile.DoesNotExist:
-            manager_email = 'tabassum.z@expertcallers.com'
-
         cid = pk
         process = request.POST['campaign']
-        html_path = 'dispute-template.html'
-        data = {'id': cid,'process':process,'emp_name':emp_name,'emp_comments':emp_comments}
-        email_template = get_template(html_path).render(data)
-        receiver_email = manager_email
-        email_msg = EmailMessage('QMS - Coaching Dispute',
-                                 email_template, 'qms@expertcallers.com',
-                                 [receiver_email,],
-                                 reply_to=['qms@expertcallers.com'])
-        email_msg.content_subtype = 'html'
-        email_msg.send(fail_silently=False)
+        manager_email = request.POST['manager_email']
+        am_email = request.POST['am_email']
+        tl_email = request.POST['tl_email']
+        emp_comments = request.POST['emp_comments_dispute']
 
         for i in list_of_monforms:
             obj = i.objects.all()
@@ -2207,7 +2211,21 @@ def coachingDispute(request,pk):
         obj.emp_comments=emp_comments
         obj.save()
 
-        data={'team':team}
+        # ##### sending EMAIL ##### #
+        receive_list = [manager_email, am_email, tl_email,'tabassum.z@expertcallers.com']
+        html_path = 'dispute-template.html'
+        data = {'id': cid, 'process': process, 'emp_name': emp_name, 'emp_comments': emp_comments}
+        email_template = get_template(html_path).render(data)
+
+        email_msg = EmailMessage('QMS - Coaching Dispute',
+                                 email_template, 'qms@expertcallers.com',
+                                 receive_list,
+                                 reply_to=['qms@expertcallers.com'])
+        email_msg.content_subtype = 'html'
+        email_msg.send(fail_silently=False)
+
+        data = {'team': team}
+
         return render(request,'coaching-dispute-message.html',data)
     else:
         return redirect('/employees/agenthome')
