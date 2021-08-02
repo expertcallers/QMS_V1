@@ -2210,9 +2210,19 @@ def coachingDisputeFinal(request,pk):
         obj.disput_status=True
         obj.emp_comments=emp_comments
         obj.save()
+        qn_name = obj.qa
+
+        try:
+            qa_email_id = Profile.objects.get(emp_name=qn_name).email
+            qa_am = Profile.objects.get(emp_name=qn_name).team_lead
+            qa_am_email_id = Profile.objects.get(emp_name=qa_am).email
+        except Profile.DoesNotExist:
+            qa_am_email_id = 'sumitkumar.s@expertcallers.com'
 
         # ##### sending EMAIL ##### #
-        receive_list = [manager_email, am_email, tl_email,'tabassum.z@expertcallers.com']
+        receive_list = [manager_email, am_email, tl_email,'tabassum.z@expertcallers.com',
+                        qa_am_email_id,qa_email_id]
+
         html_path = 'dispute-template.html'
         data = {'id': cid, 'process': process, 'emp_name': emp_name, 'emp_comments': emp_comments}
         email_template = get_template(html_path).render(data)
