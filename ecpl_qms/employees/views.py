@@ -6200,12 +6200,12 @@ def updateProfile(request):
 
     if request.method=='POST':
         id = request.POST['id']
-        desi = request.POST['desi']
+        name = request.POST['desi']
 
         emp = Profile.objects.get(id=id)
 
-        emp.emp_desi = desi
-        #emp.save()
+        emp.emp_name = name
+        emp.save()
 
         return render(request, 'update-profile.html',)
     else:
@@ -6225,7 +6225,6 @@ def profileDetailedView(request):
 
 
 def powerBITest(request):
-
     return render(request,'test-powerbi-view.html')
 
 
