@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block main %}
+
+<div class="container-lg" style="padding:125px 125px">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div>
+                <div>
+                    {% for m in messages %}
+                        <p style="color: #e43535;font-size: 19px">{{m}}</p>
+                    {% endfor %}
+                </div>
+                <h4 style="color: #006c17;text-align: center;letter-spacing: 3px;font-weight: bold;">Register New Employee</h4>
+                <br>
+                <form action="/employees/create-user-profile" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="user-creation">
+                        <label for="">Username [*** must be emp ID ***]</label>
+                        <input type="number" name="user_name" id="" required class="form-control">
+                        <label for="">Password *</label>
+                        <input type="password" name="password1" id="" required class="form-control">
+                        <label for="">Password Confirmation *</label>
+                        <input type="password" name="password2" id="" required class="form-control">
+
+                        <label for="">EMP ID *</label>
+                        <input type="number" name="emp_id" id="" class="form-control" required>
+                        <label for="">EMP Name *</label>
+                        <input type="text" name="emp_name" id="" class="form-control" required>
+                        <label for="">Emp Designation *</label>
+                        <select name="emp_desi" id="" class="form-control" required>
+                            <option value="CRO" class="form-control">CRO</option>
+                            <option value="Patrolling officer" class="form-control">Patrolling officer</option>
+                            <option value="Manager" class="form-control">Manager</option>
+                            <option value="AM" class="form-control">AM</option>
+                            <option value="Team Leader" class="form-control">Team Leader</option>
+                            <option value="QA" class="form-control">QA</option>
+                        </select>
+                        <label for="">Process *</label>
+                        <input type="text" name="process" id="" class="form-control" required>
+                        <label for="">Email ID *</label>
+                        <input type="email" name="email" id="" class="form-control" required>
+
+                        <label for="">Team Leader *</label>
+                        <select name="tl" id="" class="form-control" required>
+                            {% for tl in tls %}
+                            <option value="{{tl.emp_name}}" class="form-control">{{tl.emp_name}}</option>
+                            {% endfor %}
+                        </select>
+
+                        <label for="">AM *</label>
+                        <select name="am" id="" class="form-control" required>
+                            {% for am in ams %}
+                            <option value="{{am.emp_name}}" class="form-control">{{am.emp_name}}</option>
+                            {% endfor %} </select>
+
+                        <label for="">Manager *</label>
+                        <select name="manager" id="" class="form-control" required>
+                            {% for m in managers %}
+                            <option value="{{m.emp_name}}" class="form-control">{{m.emp_name}}</option>
+                            {% endfor %}
+                        </select>
+                        <br>
+                        <p style="color: #006c17;text-align: center;letter-spacing: 3px;font-weight: bold;">Please Authorise</p>
+                        <label for="">Admin ID *</label>
+                        <input type="text" name="admin_id" id="" required class="form-control">
+                        <label for="">Admin Password *</label>
+                        <input type="password" name="admin_password" required class="form-control">
+                        <br>
+                        <button class="btn btn-primary">Submit</button>
+                        <br>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

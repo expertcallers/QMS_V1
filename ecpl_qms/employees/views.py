@@ -96,12 +96,11 @@ def signup(request):
 
         if form.is_valid() and profile_form.is_valid():
             # Admin ID PWD validation
-            if admin_id=='ecpl-qms' and admin_pwd=='500199':
+            if admin_id=='ecpl-qms' and admin_pwd=='3cplQm52021#':
 
                 manager=request.POST['manager']
                 team_lead=request.POST['team-leader']
                 am=request.POST['am']
-
                 user = form.save()
                 profile = profile_form.save(commit=False)
 
@@ -6332,6 +6331,72 @@ def AllProfileUpdate(request):
                 j.team_lead = i.tl
                 j.save()
 
+
+def createUserAndProfile(request):
+    if request.method == 'POST':
+
+        id = request.POST['emp_id']
+        user_name = request.POST['user_name']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        emp_name = request.POST['emp_name']
+        emp_desi = request.POST['emp_desi']
+        process = request.POST['process']
+        email = request.POST['email']
+        manager = request.POST['manager']
+        am = request.POST['am']
+        tl = request.POST['tl']
+        admin_id = request.POST['admin_id']
+        admin_password = request.POST['admin_password']
+
+        if id != user_name:
+            messages.info(request, 'Emp ID and Username Must be Same !!!')
+            return redirect('/create-user-profile')
+        else:
+            pass
+
+        if password1 != password2:
+            messages.info(request,'Password not matching !!!')
+            return redirect('/create-user-profile')
+        else:
+            password = password1
+
+        if admin_id == 'ecpl-qms' and admin_password == 'EcplQms2021!':
+
+            user = User.objects.filter(username=id)
+            if user.exists():
+                messages.info(request, 'User Already exist !!!')
+                return redirect('/create-user-profile')
+            else:
+
+                user = User.objects.create_user(id=id,username=user_name,password=password)
+                profile = Profile(id=id,emp_name=emp_name,emp_id=id,emp_desi=emp_desi,team=process,
+                              email=email,team_lead=tl,manager=manager,user_id=id,am=am,process=process)
+                user.save()
+                profile.save()
+
+                add_obj = ProfileCreatedByManagers()
+                add_obj.emp_name = emp_name
+                add_obj.emp_id = id
+                add_obj.created_by = request.user.profile.emp_id
+                add_obj.created_date = datetime.now()
+                add_obj.save()
+
+                messages.info(request, 'User has been Created, Please try Login now !!!')
+                return redirect('/create-user-profile')
+
+        else:
+            messages.info(request, 'Incorrect Admin ID or Password !!!')
+            return redirect('/create-user-profile')
+
+    else:
+
+        managers = Profile.objects.filter(emp_desi='Manager')
+        ams = Profile.objects.filter(emp_desi='AM')
+        tls = Profile.objects.filter(emp_desi='Team Leader')
+
+        data = {'managers':managers,'ams':ams,'tls':tls}
+        return render(request,'create-user-profile.html',data)
 
 
 

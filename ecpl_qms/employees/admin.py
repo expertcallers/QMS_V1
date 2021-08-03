@@ -7,6 +7,7 @@ admin.site.register(Profile)
 admin.site.register(Process)
 admin.site.register(Empdata)
 admin.site.register(Campaigns)
+admin.site.register(ProfileCreatedByManagers)
 
 admin.site.register(ProfileNewtoAddUserandProfile)
 

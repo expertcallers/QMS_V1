@@ -403,3 +403,10 @@ background: gold;
     margin-left:20px;
 }
 
+.user-creation label {
+    color: #2f374e;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 14px;
+    margin-bottom: 0px;
+}

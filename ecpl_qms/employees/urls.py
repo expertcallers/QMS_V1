@@ -84,7 +84,7 @@ urlpatterns = [
     ## Admin
 
     path('add-new-campaign',addNewCampaign),
-
+    path('create-user-profile',createUserAndProfile),
 
     #############3
 

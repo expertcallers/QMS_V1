@@ -54,6 +54,12 @@ class Profile(models.Model):
     def __str__(self):
         return self.emp_name
 
+class ProfileCreatedByManagers(models.Model):
+    emp_name = models.CharField(max_length=200)
+    emp_id = models.CharField(max_length=200)
+    created_by = models.CharField(max_length=200)
+    created_date = models.CharField(max_length=200,null=True)
+
 
 class Team(models.Model):
 
