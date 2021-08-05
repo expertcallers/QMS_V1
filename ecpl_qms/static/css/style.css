@@ -410,3 +410,11 @@ background: gold;
     margin-top: 14px;
     margin-bottom: 0px;
 }
+.practo_qn {
+    width:600px;
+    font-weight:600;
+}
+.practo_gn {
+    width:600px;
+    font-size: 12px;
+}

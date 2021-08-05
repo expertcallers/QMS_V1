@@ -2442,6 +2442,9 @@ def selectCoachingForm(request):
             data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
             return render(request, 'mon-forms/gubagoo.html', data)
 
+        elif campaign_type =='Practo':
+            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+            return render(request, 'mon-forms/practo.html', data)
 
 
 
@@ -6171,7 +6174,42 @@ def gubaGooNew(request):
                 'chat4_id': chat4_id,'chat5_id':chat5_id,'chat6_id':chat6_id,
         }
 
-        return render(request,'mon-forms/gubagoo-result.html',data)               
+        return render(request,'mon-forms/gubagoo-result.html',data)
+
+def practoNewVersion(request):
+    if request.method == 'POST':
+
+        p1 = int(request.POST['p1'])
+        p2 = int(request.POST['p2'])
+        p3 = int(request.POST['p3'])
+        p4 = int(request.POST['p4'])
+        p5 = int(request.POST['p5'])
+        p6 = int(request.POST['p6'])
+        p7 = int(request.POST['p7'])
+        p8 = int(request.POST['p8'])
+        p9 = int(request.POST['p9'])
+        p10 = int(request.POST['p10'])
+        p11 = int(request.POST['p11'])
+        p12 = int(request.POST['p12'])
+        p13 = int(request.POST['p13'])
+        p14 = int(request.POST['p14'])
+        p15 = int(request.POST['p15'])
+        p16 = int(request.POST['p16'])
+        p17 = int(request.POST['p17'])
+        p18 = int(request.POST['p18'])
+        p19 = int(request.POST['p19'])
+
+        lst = [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19]
+
+        total_score = sum(lst)
+        total_score_per = (total_score/100)*100
+
+        return render(request,'mon-forms/practo-result.html')
+
+
+
+
+
 
 ############## End Mon Forms ##############################
 

@@ -22,10 +22,8 @@ urlpatterns = [
 
     path('Monitoring-Form-new-series-common',newSeriesMonForms),
     path('new-series-inbound',newSeriesInboundForms),
-
     path('email-chat-mon-form',domesticChatEmail),
-
-
+    path('practo-new-version',practoNewVersion),
 
 
 #### Credentials

@@ -1,0 +1,362 @@
+{% extends 'base.html' %}
+{% block main %}
+
+<div class="container" style="margin-top:100px">
+    <h2 class="text-center">Practo</h2>
+    <div>
+        <div>
+            <div class="basic">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="empname">Associate Name</label>
+                            <select class="form-control" id="empname" required="required" name="empname">
+                                <option value="{{agent.emp_name}}">{{agent.emp_name}}</option>
+                            </select>
+                            <label for="empid">Employee ID</label>
+                            <input type="number" class="form-control" id="empid" name="empid" required value="{{agent.emp_id}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="qa">Quality Analyst</label>
+                            <input type="text" class="form-control" id="qa" name="qa" value="{{user.profile.emp_name}}" required readonly>
+                            <label for="tl">Team Lead</label>
+                            <input type="text" class="form-control" id="tl" name="tl" required value="{{agent.team_lead}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="customer">Customer Name</label>
+                            <input type="text" class="form-control" id="customer" name="customer" required>
+                            <label for="customercontact">Customer Contact</label>
+                            <input type="text" class="form-control" id="customercontact" name="customercontact" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="calldate">Transaction Date</label>
+                            <input type="date" class="form-control" id="calldate" name="trans_date" required>
+                            <label for="auditdate">Audit Date</label>
+                            <input type="text" class="form-control" id="auditdate" name="auditdate" value="{{date}}" readonly>
+                        </div>
+                         <div class="col-md-4">
+                             <input type="hidden" class="form-control" name="campaign1" value="{{agent.process}}">
+                             <label for="zone">Zone</label>
+                            <input type="text" class="form-control" id="zone" name="zone" required>
+                             <label for="concept">Concept</label>
+                            <input type="text" class="form-control" id="concept" name="concept" required>
+                        </div>
+                         <div class="col-md-4">
+
+                             <label for="duration">Call Duration</label><br><br>
+                            <input type="number" placeholder="hh" name="durationh" required style="width:60px;">
+                             <input type="number" placeholder="mm" name="durationm" required style="width:60px;">
+                             <input type="number" placeholder="ss" name="durations" required style="width:60px;">
+
+                        </div>
+                        <div class="col-md-4">
+                            <label for="am">AM</label>
+                            <input type="text" class="form-control" id="am" name="am" value="{{agent.am}}" required>
+                                <label for="week">Week</label>
+                                     <select class="form-control" name="week" id="week" required>
+                                         <option value="week1">Week1</option>
+                                         <option value="week2">Week2</option>
+                                         <option value="week3">Week3</option>
+                                         <option value="week4">Week4</option>
+                                         <option value="week5">Week5</option>
+                                     </select>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div style="margin-left:50px">
+            <form action="/employees/practo-new-version" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Chat Opening (Greetings & being attentive) & Closing</label>
+                        <label for="" class="practo_gn">PSS should greet the user,at the opening of the chat. PSS should be attentive and use correct greeting based on the time. PSS should offer further assistance and follow the chat closing script. Branding, PSS introduction should be present, If the user has already mentioned about the query then, avoid asking "How may I assist you?"</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes1">Yes</label>
+                        <input type="radio" name="p1" id="yes1" value="5">
+                        <label for="no1">No</label>
+                        <input type="radio" name="p1" id="no1" value="0">
+                    </div>
+                </div>
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">FRTAT</label>
+                        <label for="" class="practo_gn">PSS Should start the chat conversation within 1 minute from the time of chat allocation.</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes2">Yes</label>
+                        <input type="radio" name="p2" id="yes2" value="2">
+                        <label for="no2">No</label>
+                        <input type="radio" name="p2" id="no2" value="0">
+                    </div>
+                </div>
+
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Addressing the user/Personalisation of chat</label>
+                        <label for="" class="practo_gn">PSS should address the user with his/her name when the name displayed on the chat with appropriate title. If the user has updated some other name like cookies, unicorn, ball etc, probe for the user's anme aand then address the user's name.</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes3">Yes</label>
+                        <input type="radio" name="p3" id="yes3" value="2">
+                        <label for="no3">No</label>
+                        <input type="radio" name="p3" id="no3" value="0">
+                    </div>
+                </div>
+
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Assurance & Acknowledgement</label>
+                        <label for="" class="practo_gn">PSS should provide the assurance to the user on the issue resolution/query. PSS should also acknowledge the user's query and provide timely acknowledgements throughout the chat. For eg. I do understand your concern, I will certainly help you with this, Glad to hear that, I certainly get your point and I will definitely see what best I can do for you etc</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes4">Yes</label>
+                        <input type="radio" name="p4" id="yes4" value="5">
+                        <label for="no4">No</label>
+                        <input type="radio" name="p4" id="no4" value="0">
+                    </div>
+                </div>
+
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Coherence (understanding the issue) being attentive on chat.</label>
+                        <label for="" class="practo_gn">PSS should be attentive, read and understand the user's query carefully and pay attention to the details provided by the user</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes5">Yes</label>
+                        <input type="radio" name="p5" id="yes5" value="5">
+                        <label for="no5">No</label>
+                        <input type="radio" name="p5" id="no5" value="0">
+                    </div>
+                </div>
+
+                 <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Probing</label>
+                        <label for="" class="practo_gn">PSS should do relevant probing and probe the user correctly to identify the root cause. PSS should be attentive and avoid unnecessary probing. PSS should never assume and provide resolution and it should be confirmed with the user on the chat.</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes6">Yes</label>
+                        <input type="radio" name="p6" id="yes6" value="5">
+                        <label for="no6">No</label>
+                        <input type="radio" name="p6" id="no6" value="0">
+                    </div>
+                </div>
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Interaction: Empathy , Profressional, care</label>
+                        <label for="" class="practo_gn">PSS should empathize/apologize to the user at the right time and provide assurance whenever required in the chat. PSS should maintain professionalism in his/her responses, should display emapthy and care.</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes7">Yes</label>
+                        <input type="radio" name="p7" id="yes7" value="8">
+                        <label for="no7">No</label>
+                        <input type="radio" name="p7" id="no7" value="0">
+                    </div>
+                </div>
+
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Grammar:</label>
+                        <label for="" class="practo_gn">PSS should use correct punctuation, capitalization and proofread for inaccuracies/typos and spacing errors.</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes8">Yes</label>
+                        <input type="radio" name="p8" id="yes8" value="5">
+                        <label for="no8">No</label>
+                        <input type="radio" name="p8" id="no8" value="0">
+                    </div>
+                </div>
+
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Relavant responses</label>
+                        <label for="" class="practo_gn">Sharing incorrect or wrong message (Incorrect window). Shared a wrong/irrelevant response wih the user.</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes9">Yes</label>
+                        <input type="radio" name="p9" id="yes9" value="4">
+                        <label for="no9">No</label>
+                        <input type="radio" name="p9" id="no9" value="0">
+                    </div>
+                </div>
+
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Being courteous & using plesantries</label>
+                        <label for="" class="practo_gn">PSS should be courteous & use pleasantries in the chat. Example: while probing the user/When the user agreed to wait/Thanking the user for sharing the information/Customer connect. Any feel good statements - It was pleasure assisting you etc</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes10">Yes</label>
+                        <input type="radio" name="p10" id="yes10" value="4">
+                        <label for="no10">No</label>
+                        <input type="radio" name="p10" id="no10" value="0">
+                    </div>
+                </div>
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Process followed</label>
+                        <label for="" class="practo_gn">PSS should follow the set process(SOP) for any given query. Follow the escalation metrics. PSS should use all the relevant tools in order to provide resolution. Checking the details in the respective dashboard, updating and checking the trackers, slack channel, PE process document and then providing the resolution etc. Following the appropriate and standard format while sending emails to the internal team whereaver applicable. Following the verification process for the medicines order.</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes11">Yes</label>
+                        <input type="radio" name="p11" id="yes11" value="10">
+                        <label for="no11">No</label>
+                        <input type="radio" name="p11" id="no11" value="0">
+                    </div>
+                </div>
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Explanation skills (Reasoning) & Rebuttal Handling</label>
+                        <label for="" class="practo_gn">PSS should provide proper explanation/reasoning in the chat. The resolution needs to be explained in a simple manner specifying all the details available and should not use any jargons, like "Inventory unavailable, moderation dashboard, fulfillment pending stage" etc. Pss should not sound repititive, and should attempt a different approach to explain the response instead of copy pasting the same response. Sharing the alternatives whenever applicable. PSS should handle the customer objections in an effective manner.</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes12">Yes</label>
+                        <input type="radio" name="p12" id="yes12" value="6">
+                        <label for="no12">No</label>
+                        <input type="radio" name="p12" id="no12" value="0">
+                    </div>
+                </div>
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Sharing the information in a sequential manner</label>
+                        <label for="" class="practo_gn">Sharing the information in a sequential and understandable manner. In case of multiple queries, resolution needs to be provided in a sequential manner, also In case where we need to provide Prime online or inclinic book steps it should be always followed by the doctor's or enahnced listing URL. If there is cancellation as the user wanted inclinic instead of onlone consultation, then after confirming for the cancellation and refund process, share the link and the steps followed by the refund details.</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes13">Yes</label>
+                        <input type="radio" name="p13" id="yes13" value="3">
+                        <label for="no13">No</label>
+                        <input type="radio" name="p13" id="no13" value="0">
+                    </div>
+                </div>
+
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Case Documentation</label>
+                        <label for="" class="practo_gn">PSS should update respective dashboard link for that particular transaction, Remedy dashboard link/Consult dashboardlink/Diagnostic dashboard link/ ARM/Payment/Plus etc in the private note. In case of any query leading to cancellation, payment dashboard link of that particular transaction needs to be documented.</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes14">Yes</label>
+                        <input type="radio" name="p14" id="yes14" value="7">
+                        <label for="no14">No</label>
+                        <input type="radio" name="p14" id="no14" value="0">
+                    </div>
+                </div>
+
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Curation</label>
+                        <label for="" class="practo_gn">PSS should select the correct issue type and sub-issue types in every chat.(labels)</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes15">Yes</label>
+                        <input type="radio" name="p15" id="yes15" value="10">
+                        <label for="no15">No</label>
+                        <input type="radio" name="p15" id="no15" value="0">
+                    </div>
+                </div>
+
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Average speed of answer</label>
+                        <label for="" class="practo_gn">Pss should provide timely responses throughout the chat(2mins). PSS should retreive the chat from hold as per the promised time.</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes16">Yes</label>
+                        <input type="radio" name="p16" id="yes16" value="5">
+                        <label for="no16">No</label>
+                        <input type="radio" name="p16" id="no16" value="0">
+                    </div>
+                </div>
+
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Chat Hold Procedure &: Taking Perrmission before putting the chat on hold.</label>
+                        <label for="" class="practo_gn">PSS should provide responses within 2 minutes unless hold procedure is being followed. PSS should refresh the hold time or respond to the user within 5 minutes from the holdtime. A hold time of 5-10 minutes can be followed while checking with the backend team when required(RX, Book, DX, and Consult). PSS should thank the user after refreshing/released the hold.</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes17">Yes</label>
+                        <input type="radio" name="p17" id="yes17" value="2">
+                        <label for="no17">No</label>
+                        <input type="radio" name="p17" id="no17" value="0">
+                    </div>
+                </div>
+
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Ownership(Linked parameter - Coherence, process followed, explanation skills, probing /being attentive)</label>
+                        <label for="" class="practo_gn">PSS should display ownerhsip in solving the customer query. PSS should follow the set process. PSS should provide correct and complete information to the user, along with the proper reasoning. PSS should do effective probing and be attentive on the chat. Provide alternatives whenever applicable. Did the PSS take enough ownership and followed all the measures to provide the First contact resolution?</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes18">Yes</label>
+                        <input type="radio" name="p18" id="yes18" value="7">
+                        <label for="no18">No</label>
+                        <input type="radio" name="p18" id="no18" value="0">
+                    </div>
+                </div>
+                <!-------------------------------------------------->
+                <div class="row" style="margin-top:30px">
+                    <div class="col-md-7">
+                        <label for="" class="practo_qn">Attitude(linked parameter Assurance(overall), Polite Interaction, Grammar)</label>
+                        <label for="" class="practo_gn">PSS should have the right attitude. Provide assurance to the user whenever applicable. PSS should be polite, courteous and use pleasantries on the chat. PSSs' responses should be grammatically correct. How was the overall attitude of the PSS while interacting with the user? ( Softskills) Was the PSS polite and professional enough while interacting with the user?</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 practo_ans">
+                        <label for="yes19">Yes</label>
+                        <input type="radio" name="p19" id="yes19" value="5">
+                        <label for="no19">No</label>
+                        <input type="radio" name="p19" id="no19" value="0">
+                    </div>
+                </div>
+                <div>
+                    <h4>Comments</h4>
+                    <textarea name="comments" id="cfeedback" cols="30" rows="5" class="form-control" required></textarea>
+                    <input type="hidden" name="campaign" value="{{campaign.name}}">
+                </div>
+                <div style="padding: 30px 30px">
+                    <!-- <button class="btn btn-info"> Submit </button> -->
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
