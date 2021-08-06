@@ -2484,7 +2484,7 @@ def exportAuditReport(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact','zone','concept',
 
                        'Used Standard Opening Protocol',
                        'Introduction of Product / Branding',
@@ -2515,7 +2515,7 @@ def exportAuditReport(request):
                                           ).values_list(
                 'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager', 'customer_name', 'customer_contact',
+                'team_lead', 'manager', 'customer_name', 'customer_contact','zone','concept',
 
                 'oc_1',
                 'oc_2',
@@ -2846,7 +2846,7 @@ def exportAuditReport(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact',
+                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact','zone','concept',
 
                        'Used Standard Opening Protocol',
                        'Personalization ( Report Building, Addressing by Name)',
@@ -2881,7 +2881,7 @@ def exportAuditReport(request):
                                                                              ).values_list(
                 'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager','customer_name','customer_contact',
+                'team_lead', 'manager','customer_name','customer_contact','zone','concept',
 
                 'ce_1',
                 'ce_2',
@@ -3558,7 +3558,7 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact','zone','concept',
 
                        'Used Standard Opening Protocol',
                        'Introduction of Product / Branding',
@@ -3589,7 +3589,7 @@ def exportAuditReportQA(request):
                                           ).values_list(
                 'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager', 'customer_name', 'customer_contact',
+                'team_lead', 'manager', 'customer_name', 'customer_contact','zone','concept',
 
                 'oc_1',
                 'oc_2',
@@ -3921,7 +3921,7 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact',
+                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact','zone','concept',
 
                        'Used Standard Opening Protocol',
                        'Personalization ( Report Building, Addressing by Name)',
@@ -3956,7 +3956,7 @@ def exportAuditReportQA(request):
                                                                              ).values_list(
                 'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager','customer_name','customer_contact',
+                'team_lead', 'manager','customer_name','customer_contact','zone','concept',
 
                 'ce_1',
                 'ce_2',
