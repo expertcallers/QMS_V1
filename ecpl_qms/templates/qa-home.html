@@ -256,7 +256,7 @@
                     <th>Name</th>
                     <th>Score</th>
                     <th>Audit Date</th>
-                    <th>customer Name</th>
+                    <th>customer Name/ID</th>
                     <th>Process</th>
                     <th>View</th>
                 </tr>
@@ -267,7 +267,7 @@
                     <td>{{j.overall_score}}</td>
                     <td>{{j.audit_date}}</td>
                     {% if j.customer_name == None %}
-                    <td>{{j.order_id}}</td>
+                    <td>{{j.order_id}}{{j.conversation_id}}</td>
                     {% else %}
                     <td>{{j.customer_name}}</td>
                     {% endif %}

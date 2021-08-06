@@ -75,7 +75,7 @@ admin.site.register(HiveIncubatorsOutboundMonForm)
 admin.site.register(IEDHHInboundMonForm)
 admin.site.register(Ri8BrainEmailMonForm)
 admin.site.register(QuickAutoPartsOutboundMonForm)
-
+admin.site.register(PractoNewVersion)
 
 
 

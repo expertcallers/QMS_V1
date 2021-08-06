@@ -119,7 +119,7 @@
                                 {% else %}
                                 <td>Pass</td>
                                 {% endif %}
-                                <td>{{j.customer_name}}</td>
+                                <td>{{j.customer_name}}{{j.conversation_id}}</td>
                                 <td>{{j.qa}}</td>
                                 <td><a href="/employees/coaching-view-emp/{{j.process}}/{{j.id}}"><br>View</a></td>
                             </tr>
@@ -155,7 +155,7 @@
                                 {% else %}
                                 <td>Pass</td>
                                 {% endif %}
-                                <td>{{j.customer_name}}</td>
+                                <td>{{j.customer_name}}{{j.conversation_id}}</td>
                                 <td><a href="/employees/coaching-view-emp/{{j.process}}/{{j.id}}"><br>View</a></td>
                             </tr>
 

@@ -1,69 +1,40 @@
 {% extends 'base.html' %}
 {% block main %}
 
-<div class="container" style="margin-top:100px">
-    <h2 class="text-center">{{campaign.name}}</h2>
+<div class="container" style="padding:100px">
+
     <div>
         <div>
-            <form action="/employees/practo-new-version" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-            <div class="basic">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="empname">Associate Name</label>
-                            <select class="form-control" id="empname" required="required" name="empname">
-                                <option value="{{agent.emp_name}}">{{agent.emp_name}}</option>
-                            </select>
-                            <label for="empid">Employee ID</label>
-                            <input type="number" class="form-control" id="empid" name="empid" required value="{{agent.emp_id}}">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="qa">Quality Analyst</label>
-                            <input type="text" class="form-control" id="qa" name="qa" value="{{user.profile.emp_name}}" required readonly>
-                            <label for="tl">Team Lead</label>
-                            <input type="text" class="form-control" id="tl" name="tl" required value="{{agent.team_lead}}">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="customer">conversation ID</label>
-                            <input type="text" class="form-control" id="customer" name="customer" required>
-                            <label for="customercontact">Customer Contact</label>
-                            <input type="text" class="form-control" id="customercontact" name="customercontact" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="calldate">Transaction Date</label>
-                            <input type="date" class="form-control" id="calldate" name="trans_date" required>
-                            <label for="auditdate">Audit Date</label>
-                            <input type="text" class="form-control" id="auditdate" name="auditdate" value="{{date}}" readonly>
-                        </div>
-                         <div class="col-md-4">
-                             <input type="hidden" class="form-control" name="campaign1" value="{{agent.process}}">
-                             <label for="zone">Zone</label>
-                            <input type="text" class="form-control" id="zone" name="zone" required>
-                             <label for="concept">Concept</label>
-                            <input type="text" class="form-control" id="concept" name="concept" required>
-                        </div>
-                         <div class="col-md-4">
+            <h2 class="text-center">Audit Details</h2>
+            <br>
+            <p>campaign - <span style="font-weight: bold;font-size: 20px;margin-left: 20px;">{{coaching.process}}</span></p>
+            {% if coaching.overall_score == 100 %}
+            <p>Result - <span style="font-weight: bold;font-size: 20px;margin-left: 20px;color:Green">Pass</span></p>
+            {% else %}
+            <p>Result - <span style="font-weight: bold;font-size: 20px;margin-left: 20px;color:Red">Fail</span></p>
+            {% endif %}
 
-                             <label for="duration">Call Duration</label><br><br>
-                            <input type="number" placeholder="hh" name="durationh" required style="width:60px;">
-                             <input type="number" placeholder="mm" name="durationm" required style="width:60px;">
-                             <input type="number" placeholder="ss" name="durations" required style="width:60px;">
+            <table class="table table-bordered">
+                <tr>
+                    <td><b>Emp Name</b></td>
+                    <td>{{coaching.associate_name}}</td>
+                    <td><b>Emp ID</b></td>
+                    <td>{{coaching.emp_id}}</td>
+                </tr>
+                <tr>
+                  <td><b>QA</b></td>
+                  <td>{{coaching.qa}}</td>
+                  <td><b>Team Lead</b></td>
+                  <td>{{coaching.team_lead}}</td>
+                </tr>
+                <tr>
+                  <td><b>Transaction Date</b></td>
+                  <td>{{coaching.trans_date}}</td>
+                  <td><b>Conversation ID</b></td>
+                  <td>{{coaching.conversation_id}}</td>
+                </tr>
+            </table>
 
-                        </div>
-                        <div class="col-md-4">
-                            <label for="am">AM</label>
-                            <input type="text" class="form-control" id="am" name="am" value="{{agent.am}}" required>
-                                <label for="week">Week</label>
-                                     <select class="form-control" name="week" id="week" required>
-                                         <option value="week1">Week1</option>
-                                         <option value="week2">Week2</option>
-                                         <option value="week3">Week3</option>
-                                         <option value="week4">Week4</option>
-                                         <option value="week5">Week5</option>
-                                     </select>
-                        </div>
-                    </div>
-                </div>
         </div>
         <div style="margin-left:50px">
 
@@ -74,10 +45,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes1">Yes</label>
-                        <input type="radio" name="p1" id="yes1" value="5" required>
-                        <label for="no1">No</label>
-                        <input type="radio" name="p1" id="no1" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_1}}</h4>
                     </div>
                 </div>
                 <!-------------------------------------------------->
@@ -88,10 +56,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes2">Yes</label>
-                        <input type="radio" name="p2" id="yes2" value="2" required>
-                        <label for="no2">No</label>
-                        <input type="radio" name="p2" id="no2" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_2}}</h4>
                     </div>
                 </div>
 
@@ -103,10 +68,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes3">Yes</label>
-                        <input type="radio" name="p3" id="yes3" value="2" required>
-                        <label for="no3">No</label>
-                        <input type="radio" name="p3" id="no3" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_3}}</h4>
                     </div>
                 </div>
 
@@ -118,10 +80,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes4">Yes</label>
-                        <input type="radio" name="p4" id="yes4" value="5" required>
-                        <label for="no4">No</label>
-                        <input type="radio" name="p4" id="no4" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_4}}</h4>
                     </div>
                 </div>
 
@@ -133,10 +92,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes5">Yes</label>
-                        <input type="radio" name="p5" id="yes5" value="5" required>
-                        <label for="no5">No</label>
-                        <input type="radio" name="p5" id="no5" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_5}}</h4>
                     </div>
                 </div>
 
@@ -148,10 +104,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes6">Yes</label>
-                        <input type="radio" name="p6" id="yes6" value="5" required>
-                        <label for="no6">No</label>
-                        <input type="radio" name="p6" id="no6" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_6}}</h4>
                     </div>
                 </div>
                 <!-------------------------------------------------->
@@ -162,10 +115,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes7">Yes</label>
-                        <input type="radio" name="p7" id="yes7" value="8" required>
-                        <label for="no7">No</label>
-                        <input type="radio" name="p7" id="no7" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_7}}</h4>
                     </div>
                 </div>
 
@@ -177,10 +127,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes8">Yes</label>
-                        <input type="radio" name="p8" id="yes8" value="5" required>
-                        <label for="no8">No</label>
-                        <input type="radio" name="p8" id="no8" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_8}}</h4>
                     </div>
                 </div>
 
@@ -192,10 +139,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes9">Yes</label>
-                        <input type="radio" name="p9" id="yes9" value="4" required>
-                        <label for="no9">No</label>
-                        <input type="radio" name="p9" id="no9" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_9}}</h4>
                     </div>
                 </div>
 
@@ -207,10 +151,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes10">Yes</label>
-                        <input type="radio" name="p10" id="yes10" value="4" required>
-                        <label for="no10">No</label>
-                        <input type="radio" name="p10" id="no10" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_10}}</h4>
                     </div>
                 </div>
                 <!-------------------------------------------------->
@@ -221,10 +162,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes11">Yes</label>
-                        <input type="radio" name="p11" id="yes11" value="10" required>
-                        <label for="no11">No</label>
-                        <input type="radio" name="p11" id="no11" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_11}}</h4>
                     </div>
                 </div>
                 <!-------------------------------------------------->
@@ -235,10 +173,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes12">Yes</label>
-                        <input type="radio" name="p12" id="yes12" value="6" required>
-                        <label for="no12">No</label>
-                        <input type="radio" name="p12" id="no12" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_12}}</h4>
                     </div>
                 </div>
                 <!-------------------------------------------------->
@@ -249,10 +184,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes13">Yes</label>
-                        <input type="radio" name="p13" id="yes13" value="3" required>
-                        <label for="no13">No</label>
-                        <input type="radio" name="p13" id="no13" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_13}}</h4>
                     </div>
                 </div>
 
@@ -264,10 +196,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes14">Yes</label>
-                        <input type="radio" name="p14" id="yes14" value="7" required>
-                        <label for="no14">No</label>
-                        <input type="radio" name="p14" id="no14" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_14}}</h4>
                     </div>
                 </div>
 
@@ -279,10 +208,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes15">Yes</label>
-                        <input type="radio" name="p15" id="yes15" value="10" required>
-                        <label for="no15">No</label>
-                        <input type="radio" name="p15" id="no15" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_15}}</h4>
                     </div>
                 </div>
 
@@ -294,10 +220,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes16">Yes</label>
-                        <input type="radio" name="p16" id="yes16" value="5" required>
-                        <label for="no16">No</label>
-                        <input type="radio" name="p16" id="no16" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_16}}</h4>
                     </div>
                 </div>
 
@@ -309,10 +232,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes17">Yes</label>
-                        <input type="radio" name="p17" id="yes17" value="2" required>
-                        <label for="no17">No</label>
-                        <input type="radio" name="p17" id="no17" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_17}}</h4>
                     </div>
                 </div>
 
@@ -324,10 +244,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes18">Yes</label>
-                        <input type="radio" name="p18" id="yes18" value="7" required>
-                        <label for="no18">No</label>
-                        <input type="radio" name="p18" id="no18" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_18}}</h4>
                     </div>
                 </div>
                 <!-------------------------------------------------->
@@ -338,10 +255,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="yes19">Yes</label>
-                        <input type="radio" name="p19" id="yes19" value="5" required>
-                        <label for="no19">No</label>
-                        <input type="radio" name="p19" id="no19" value="0" required>
+                        <h4 style="margin-top:30px">{{coaching.p_19}}</h4>
                     </div>
                 </div>
                 <!------------ Fatal -------------------->
@@ -353,10 +267,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="pass1">Pass</label>
-                        <input type="radio" name="fatal1" id="pass1" value="pass" required>
-                        <label for="fatal1">Fatal</label>
-                        <input type="radio" name="fatal1" id="fatal1" value="fatal" required>
+                        <h4 style="margin-top:30px">{{coaching.compliance_1}}</h4>
                     </div>
                 </div>
 
@@ -372,31 +283,54 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4 practo_ans">
-                        <label for="pass2">Pass</label>
-                        <input type="radio" name="fatal2" id="pass2" value="pass" required>
-                        <label for="fatal2">Fatal</label>
-                        <input type="radio" name="fatal2" id="fatal2" value="fatal" required>
+                        <h4 style="margin-top:30px">{{coaching.compliance_2}}</h4>
                     </div>
                 </div>
 
-                <div class="other">
-                    <h4>Areas of improvement</h4>
-                    <textarea name="areaimprovement" id="areaimp" cols="30" rows="5" class="form-control" required></textarea>
-                    <br>
-                    <h4>Positives</h4>
-                    <textarea name="positives" id="positives" cols="30" rows="5" class="form-control" required></textarea>
-                    <br>
-                    <h4>Comments</h4>
-                    <textarea name="comments" id="cfeedback" cols="30" rows="5" class="form-control" required></textarea>
-                    <input type="hidden" name="campaign" value="{{campaign.name}}">
-                </div>
-                <div style="padding: 30px 30px">
-                    <button class="btn btn-info"> Submit </button>
-                </div>
-
-          </form>
         </div>
+        <br>
+            <h4>Auditor Comments</h4>
+            <table class="table table-bordered">
+                <tr style="height:110px">
+                  <td style="width: 300px;"><b>Areas of Improvement</b></td>
+                  <td>{{coaching.areas_improvement}}</td>
+                </tr>
+                <tr style="height:110px">
+                  <td style="width: 300px;"><b>Positives</b></td>
+                  <td>{{coaching.positives}}</td>
+                </tr>
+                <tr style="height:110px">
+                  <td style="width: 300px;"><b>Comments</b></td>
+                  <td>{{coaching.comments}}</td>
+                </tr>
+            </table>
+            <h4>Audit Score</h4>
+            <table class="table table-bordered">
+                <tr>
+                  <td><b>Total</b></td>
+                  <td><h2><b>{{coaching.overall_score}}</b></h2></td>
+                </tr>
+            </table>
     </div>
+    <div>
+            <form class="login-form" action="/employees/coaching/signcoaching/{{coaching.id}}" method="post">
+                          {% csrf_token %}
+                <label for="emp_comments">Employee Comments *</label><br>
+                <textarea name="emp_comments" id="emp_comments" cols="30" rows="5" required class="form-control"></textarea>
+                <input type="hidden" value="{{coaching.process}}" name="category">
+                <br>
+                <input class="btn btn-success" type="submit" value="Accept & Sign" style="width: 150px">
+            </form>
+            <br>
+            <form action="/employees/coaching-dispute/{{coaching.id}}" method="POST">
+                {% csrf_token %}
+                <label for="emp_comments_d">Employee Comments *</label><br>
+                <textarea name="emp_comments_dispute" id="emp_comments_d" cols="30" rows="5" required class="form-control"></textarea>
+                <input type="hidden" name="campaign" id="" value="{{coaching.process}}">
+                <br><button class="btn btn-danger" style="width: 150px">Reject & Dispute</button>
+            </form>
+
+        </div>
 </div>
 
 

@@ -126,6 +126,8 @@ class Process(models.Model):
 class Campaigns(models.Model):
     name = models.CharField(max_length=200,null=True)
     type = models.CharField(max_length=10,null=True)
+    def __str__(self):
+        return self.name
 
 
 # Final Forms ----------------------- #
@@ -8010,6 +8012,71 @@ class GubagooMonitoringForm(models.Model):
     cat14score = models.IntegerField()
     cat15score = models.IntegerField()
     cat16score = models.IntegerField()
+
+############### Practo New Version1.1 #################
+
+class PractoNewVersion(models.Model):
+    process = models.CharField(default='Practo', max_length=50)
+    type = models.CharField(default='Practo', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    conversation_id = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    duration = models.IntegerField()
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    p_1 = models.IntegerField()
+    p_2 = models.IntegerField()
+    p_3 = models.IntegerField()
+    p_4 = models.IntegerField()
+    p_5 = models.IntegerField()
+    p_6 = models.IntegerField()
+    p_7 = models.IntegerField()
+    p_8 = models.IntegerField()
+    p_9 = models.IntegerField()
+    p_10 = models.IntegerField()
+    p_11 = models.IntegerField()
+    p_12 = models.IntegerField()
+    p_13 = models.IntegerField()
+    p_14 = models.IntegerField()
+    p_15 = models.IntegerField()
+    p_16 = models.IntegerField()
+    p_17 = models.IntegerField()
+    p_18 = models.IntegerField()
+    p_19 = models.IntegerField()
+
+    compliance_1 = models.CharField(max_length=30)
+    compliance_2 = models.CharField(max_length=30)
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
 
 
 ############# End of Forms ##############################

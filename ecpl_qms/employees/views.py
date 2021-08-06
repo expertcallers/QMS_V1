@@ -46,7 +46,7 @@ list_of_monforms = [ # OutBound
 
                         # Email/CHat
                         SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
-                        PrinterPixMasterMonitoringFormChatsEmail,PractoMonForm,FurBabyMonForm,AKDYEmailMonForm,AmerisaveEmailMonForm,
+                        PrinterPixMasterMonitoringFormChatsEmail,FurBabyMonForm,AKDYEmailMonForm,AmerisaveEmailMonForm,
                         ClearViewEmailMonForm,FinesseMortgageEmailMonForm,DigitalSwissGoldEmailChatMonForm,
                         RainbowDiagnosticsEmailMonForm,HiveIncubatorEmailMonForm,MedTechGroupEmailMonForm,
                         Ri8BrainEmailMonForm,ScalaEmailMonForm,KalkiFashionEmailMonForm,MaxwellEmailMonForm,
@@ -59,7 +59,9 @@ list_of_monforms = [ # OutBound
                         ChatMonitoringFormEva,ChatMonitoringFormPodFather,
 
                         #FameHouse
-                        FameHouseNewMonForm
+                        FameHouseNewMonForm,
+                        #Practo
+                        PractoNewVersion,
 
                         ]
 
@@ -1103,11 +1105,6 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
-    elif process_name == 'Practo':
-        coaching = PractoMonForm.objects.get(id=pk)
-        data = {'coaching': coaching}
-        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
-
     if process_name == 'Printer Pix Chat Email':
         coaching = PrinterPixMasterMonitoringFormChatsEmail.objects.get(id=pk)
         data = {'coaching': coaching}
@@ -1194,6 +1191,11 @@ def coachingViewAgents(request,process,pk):
         coaching = FLAMonitoringForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-fla.html', data)
+
+    if process_name == 'Practo':
+        coaching = PractoNewVersion.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-practo.html', data)
 
     else:
         pass
@@ -1711,10 +1713,6 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
-    elif process_name == 'Practo':
-        coaching = PractoMonForm.objects.get(id=pk)
-        data = {'coaching': coaching}
-        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
     if process_name == 'Printer Pix Chat Email':
         coaching = PrinterPixMasterMonitoringFormChatsEmail.objects.get(id=pk)
@@ -1803,6 +1801,11 @@ def coachingViewQaDetailed(request,process,pk):
         coaching = FLAMonitoringForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-fla.html', data)
+
+    if process_name == 'Practo':
+        coaching = PractoNewVersion.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-practo.html', data)
 
     else:
         pass
@@ -3094,9 +3097,7 @@ def exportAuditReport(request):
         elif campaign == 'Fur Baby':
             response = exportEmailChat(FurBabyMonForm)
             return response
-        elif campaign == 'Practo':
-            response = exportEmailChat(PractoMonForm)
-            return response
+
         elif campaign == 'Super Play':
             response = exportEmailChat(SuperPlayMonForm)
             return response
@@ -3426,6 +3427,93 @@ def exportAuditReport(request):
 
                 'checklist_1',
                 'reason_for_failure',
+
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
+        elif campaign == 'Practo':
+
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager','conversation_id','customer_contact',
+
+                        'Chat Opening (Greetings & being attentive) & Closing',
+                        'FRTAT',
+                       'Addressing the user/Personalisation of chat',
+                       'Assurance & Acknowledgement',
+                       'Coherence (understanding the issue) being attentive on chat.',
+                       'Probing',
+                       'Interaction: Empathy , Profressional, care',
+                       'Grammar:',
+                       'Relavant responses',
+                       'Being courteous & using plesantries',
+                       'Process followed',
+                       'Explanation skills (Reasoning) & Rebuttal Handling',
+                       'Sharing the information in a sequential manner',
+                       'Case Documentation',
+                       'Curation',
+                       'Average speed of answer',
+                       'Chat Hold Procedure &: Taking Perrmission before putting the chat on hold',
+                       'Ownership(Linked parameter - Coherence, process followed, explanation skills, probing /being attentive)',
+                       'Attitude(linked parameter Assurance(overall), Polite Interaction, Grammar)',
+                       'Expectations: Setting correct expectations about issue resolution',
+                       'ZTP(Zero Tolerance Policy)',
+
+
+                       'status',
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = PractoNewVersion.objects.filter(
+                audit_date__range=[start_date, end_date],).values_list(
+                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager','conversation_id','customer_contact',
+                 'p_1',
+                'p_2',
+                'p_3',
+                'p_4',
+                'p_5',
+                'p_6',
+                'p_7',
+                'p_8',
+                'p_9',
+                'p_10',
+                'p_11',
+                'p_12',
+                'p_13',
+                'p_14',
+                'p_15',
+                'p_16',
+                'p_17',
+                'p_18',
+                'p_19',
+                'compliance_1',
+                'compliance_2',
 
                 'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
@@ -4084,9 +4172,7 @@ def exportAuditReportQA(request):
         elif campaign == 'Fur Baby':
             response = exportEmailChat(FurBabyMonForm)
             return response
-        elif campaign == 'Practo':
-            response = exportEmailChat(PractoMonForm)
-            return response
+
         elif campaign == 'Super Play':
             response = exportEmailChat(SuperPlayMonForm)
             return response
@@ -4433,11 +4519,104 @@ def exportAuditReportQA(request):
 
             return response
 
+        ######### Practo New Version #########################################
+        elif campaign == 'Practo':
+
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager','conversation_id','customer_contact',
+
+                        'Chat Opening (Greetings & being attentive) & Closing',
+                        'FRTAT',
+                       'Addressing the user/Personalisation of chat',
+                       'Assurance & Acknowledgement',
+                       'Coherence (understanding the issue) being attentive on chat.',
+                       'Probing',
+                       'Interaction: Empathy , Profressional, care',
+                       'Grammar:',
+                       'Relavant responses',
+                       'Being courteous & using plesantries',
+                       'Process followed',
+                       'Explanation skills (Reasoning) & Rebuttal Handling',
+                       'Sharing the information in a sequential manner',
+                       'Case Documentation',
+                       'Curation',
+                       'Average speed of answer',
+                       'Chat Hold Procedure &: Taking Perrmission before putting the chat on hold',
+                       'Ownership(Linked parameter - Coherence, process followed, explanation skills, probing /being attentive)',
+                       'Attitude(linked parameter Assurance(overall), Polite Interaction, Grammar)',
+                       'Expectations: Setting correct expectations about issue resolution',
+                       'ZTP(Zero Tolerance Policy)',
+
+
+                       'status',
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = PractoNewVersion.objects.filter(
+                audit_date__range=[start_date, end_date], qa=qa).values_list(
+                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager','conversation_id','customer_contact',
+                 'p_1',
+                'p_2',
+                'p_3',
+                'p_4',
+                'p_5',
+                'p_6',
+                'p_7',
+                'p_8',
+                'p_9',
+                'p_10',
+                'p_11',
+                'p_12',
+                'p_13',
+                'p_14',
+                'p_15',
+                'p_16',
+                'p_17',
+                'p_18',
+                'p_19',
+                'compliance_1',
+                'compliance_2',
+
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
+
         else:
             return redirect(request, 'error-pages/export-error.html')
 
+
+
     else:
         pass
+
+
 
 #------------------ New Series MonForms ----------------copy Aadya---------#
 
@@ -6177,38 +6356,108 @@ def gubaGooNew(request):
         return render(request,'mon-forms/gubagoo-result.html',data)
 
 def practoNewVersion(request):
+
     if request.method == 'POST':
 
-        p1 = int(request.POST['p1'])
-        p2 = int(request.POST['p2'])
-        p3 = int(request.POST['p3'])
-        p4 = int(request.POST['p4'])
-        p5 = int(request.POST['p5'])
-        p6 = int(request.POST['p6'])
-        p7 = int(request.POST['p7'])
-        p8 = int(request.POST['p8'])
-        p9 = int(request.POST['p9'])
-        p10 = int(request.POST['p10'])
-        p11 = int(request.POST['p11'])
-        p12 = int(request.POST['p12'])
-        p13 = int(request.POST['p13'])
-        p14 = int(request.POST['p14'])
-        p15 = int(request.POST['p15'])
-        p16 = int(request.POST['p16'])
-        p17 = int(request.POST['p17'])
-        p18 = int(request.POST['p18'])
-        p19 = int(request.POST['p19'])
+        p_1 = int(request.POST['p1'])
+        p_2 = int(request.POST['p2'])
+        p_3 = int(request.POST['p3'])
+        p_4 = int(request.POST['p4'])
+        p_5 = int(request.POST['p5'])
+        p_6 = int(request.POST['p6'])
+        p_7 = int(request.POST['p7'])
+        p_8 = int(request.POST['p8'])
+        p_9 = int(request.POST['p9'])
+        p_10 = int(request.POST['p10'])
+        p_11 = int(request.POST['p11'])
+        p_12 = int(request.POST['p12'])
+        p_13 = int(request.POST['p13'])
+        p_14 = int(request.POST['p14'])
+        p_15 = int(request.POST['p15'])
+        p_16 = int(request.POST['p16'])
+        p_17 = int(request.POST['p17'])
+        p_18 = int(request.POST['p18'])
+        p_19 = int(request.POST['p19'])
 
-        lst = [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19]
+        # Compliance
+        compliance_1 = request.POST['fatal1']
+        compliance_2 = request.POST['fatal2']
+
+        lst = [p_1,p_2,p_3,p_4,p_5,p_6,p_7,p_8,p_9,p_10,p_11,p_12,p_13,p_14,p_15,p_16,p_17,p_18,p_19]
 
         total_score = sum(lst)
-        total_score_per = (total_score/100)*100
 
-        return render(request,'mon-forms/practo-result.html')
+        category = 'Practo'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        conversation_id = request.POST['customer']
+        customer_contact = request.POST['customercontact']
+        trans_date = request.POST['trans_date']
+        audit_date = request.POST['auditdate']
+        campaign = request.POST['campaign']
+        concept = request.POST['concept']
+        zone = request.POST['zone']
+        duration = (int(request.POST['durationh']) * 3600) + (int(request.POST['durationm']) * 60) + int(
+            request.POST['durations'])
 
+        #######################################
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
 
+        try:
+            manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+            manager_emp_id = manager_emp_id_obj.emp_id
+            manager_name = manager
 
+        except Profile.DoesNotExist:
+            manager_emp_id = 0
+            manager_name = manager
 
+        #################################################
+        fatal_list = [compliance_1, compliance_2]
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 'fatal':
+                fatal_list_count.append(i)
+
+        no_of_fatals = len(fatal_list_count)
+        ####################################################
+        if compliance_1 == 'fatal' or compliance_2 == 'fatal':
+            overall_score = 0
+            fatal = True
+        else:
+            overall_score = total_score
+            fatal = False
+
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+        added_by = request.user.profile.emp_name
+
+        week = request.POST['week']
+        am = request.POST['am']
+
+        domestic = PractoNewVersion(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                           manager=manager_name, manager_id=manager_emp_id,
+                           trans_date=trans_date, audit_date=audit_date, conversation_id=conversation_id,
+                           customer_contact=customer_contact,
+                           campaign=campaign, concept=concept, zone=zone, duration=duration,
+
+                            p_1=p_1, p_2=p_2, p_3=p_3, p_4=p_4, p_5=p_5, p_6=p_6, p_7=p_7,
+                            p_8=p_8, p_9=p_9, p_10=p_10, p_11=p_11,p_12=p_12,p_13=p_13,p_14=p_14,
+                            p_15=p_15,p_16=p_16,p_17=p_17,p_18=p_18,p_19=p_19,
+
+                           compliance_1=compliance_1, compliance_2=compliance_2,
+                           areas_improvement=areas_improvement,
+                           positives=positives, comments=comments,
+                           added_by=added_by,
+                           overall_score=overall_score, category=category,
+                           week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+                           )
+        domestic.save()
+        return redirect('/employees/qahome')
 
 
 ############## End Mon Forms ##############################
