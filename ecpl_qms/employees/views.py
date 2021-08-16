@@ -6821,6 +6821,7 @@ def gubaGooNew(request):
                                    overall_score=total_audit_score, category=category,
                                    week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
                                    )
+        gubagoo.save()
 
         gubagoo = GubagooAuditForm(
 
