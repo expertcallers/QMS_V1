@@ -418,3 +418,12 @@ background: gold;
     width:600px;
     font-size: 12px;
 }
+
+.gb-view td {
+    min-width:150px;
+
+}
+
+.gb-view .qn {
+    max-width:300px;
+}

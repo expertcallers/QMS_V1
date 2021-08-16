@@ -1,28 +1,77 @@
 {% extends 'base.html' %}
 {% block main %}
 
-    <section id="outboundform-gubagoo">
-        <div class="container-lg">
-            <form action="/employees/gubagoo-audit-submit" method="POST" enctype="multipart/form-data">
+    <form action="/employees/gubagoo-audit-submit" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <h2 class="text-center" style="margin-top: 100px;">Gubagoo</h2>
+
+    <div class="container" style="margin-top:100px;">
+
+        <h2 class="text-center" style="margin-top: 100px;">{{campaign.name}}</h2>
+            <input type="hidden" name="campaign" value="{{campaign.name}}">
+        <div class="basic">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="empname">Associate Name</label>
+                            <select class="form-control" id="empname" required="required" name="empname">
+                                <option value="{{agent.emp_name}}">{{agent.emp_name}}</option>
+                            </select>
+                            <label for="empid">Employee ID</label>
+                            <input type="number" class="form-control" id="empid" name="empid" required value="{{agent.emp_id}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="qa">Quality Analyst</label>
+                            <input type="text" class="form-control" id="qa" name="qa" value="{{user.profile.emp_name}}" required readonly>
+                            <label for="tl">Team Lead</label>
+                            <input type="text" class="form-control" id="tl" name="tl" required value="{{agent.team_lead}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="calldate">Transaction Date</label>
+                            <input type="date" class="form-control" id="calldate" name="trans_date" required>
+                            <label for="auditdate">Audit Date</label>
+                            <input type="text" class="form-control" id="auditdate" name="auditdate" value="{{date}}" readonly>
+                        </div>
+                         <div class="col-md-4">
+                             <input type="hidden" class="form-control" name="campaign1" value="{{agent.process}}">
+                             <label for="zone">Zone</label>
+                            <input type="text" class="form-control" id="zone" name="zone" required>
+                             <label for="concept">Concept</label>
+                            <input type="text" class="form-control" id="concept" name="concept" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="am">AM</label>
+                            <input type="text" class="form-control" id="am" name="am" value="{{agent.am}}" required>
+                                <label for="week">Week</label>
+                                     <select class="form-control" name="week" id="week" required>
+                                         <option value="week1">Week1</option>
+                                         <option value="week2">Week2</option>
+                                         <option value="week3">Week3</option>
+                                         <option value="week4">Week4</option>
+                                         <option value="week5">Week5</option>
+                                     </select>
+                        </div>
+                    </div>
+                </div>
+    </div>
+
+    <section id="outboundform-gubagoo" style="margin-bottom:100px">
+        <div class="container-lg">
                 <div class="basic">
                     <div class="row">
                         <div>
                             <table class="table">
                                 <tr>
                                     <td><h4>GREETING</h4></td>
-                                    <td><b style="font-size: 14px">Chat 1</b><input type="text" name="chat1_id" style="width: 102px;font-size: 12px"></td>
-                                    <td><b style="font-size: 14px">Chat 2</b><input type="text" name="chat2_id" style="width: 102px;font-size: 12px"></td>
-                                    <td><b style="font-size: 14px">Chat 3</b><input type="text" name="chat3_id" style="width: 102px;font-size: 12px"></td>
-                                    <td><b style="font-size: 14px">Chat 4</b><input type="text" name="chat4_id" style="width: 102px;font-size: 12px"></td>
-                                    <td><b style="font-size: 14px">Chat 5</b><input type="text" name="chat5_id" style="width: 102px;font-size: 12px"></td>
-                                    <td><b style="font-size: 14px">Chat 6</b><input type="text" name="chat6_id" style="width: 102px;font-size: 12px"></td>
+                                    <td><b style="font-size: 14px">Chat 1</b><input type="text" name="chat1_id" style="width: 102px;font-size: 12px" required></td>
+                                    <td><b style="font-size: 14px">Chat 2</b><input type="text" name="chat2_id" style="width: 102px;font-size: 12px" required></td>
+                                    <td><b style="font-size: 14px">Chat 3</b><input type="text" name="chat3_id" style="width: 102px;font-size: 12px" required></td>
+                                    <td><b style="font-size: 14px">Chat 4</b><input type="text" name="chat4_id" style="width: 102px;font-size: 12px" required></td>
+                                    <td><b style="font-size: 14px">Chat 5</b><input type="text" name="chat5_id" style="width: 102px;font-size: 12px" required></td>
+                                    <td><b style="font-size: 14px">Chat 6</b><input type="text" name="chat6_id" style="width: 102px;font-size: 12px" required></td>
                                 </tr>
                                 <tr>
                                     <td class="qn">Was there a greeting?</td>
                                     <td>
-                                        <select name="cat1chat1" id="">
+                                        <select name="cat1chat1" id="cat1chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -32,7 +81,7 @@
                                         <textarea name="cat1chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat1chat2" id="">
+                                        <select name="cat1chat2" id="cat1chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -42,7 +91,7 @@
                                         <textarea name="cat1chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat1chat3" id="">
+                                        <select name="cat1chat3" id="cat1chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -52,7 +101,7 @@
                                         <textarea name="cat1chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat1chat4" id="">
+                                        <select name="cat1chat4" id="cat1chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -62,7 +111,7 @@
                                         <textarea name="cat1chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat1chat5" id="">
+                                        <select name="cat1chat5" id="cat1chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -72,7 +121,7 @@
                                         <textarea name="cat1chat5cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat1chat6" id="">
+                                        <select name="cat1chat6" id="cat1chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -85,7 +134,7 @@
                                 <tr>
                                     <td class="qn">Proper greeting?</td>
                                     <td>
-                                        <select name="cat2chat1" id="">
+                                        <select name="cat2chat1" id="cat2chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -95,7 +144,7 @@
                                         <textarea name="cat2chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat2chat2" id="">
+                                        <select name="cat2chat2" id="cat2chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -105,7 +154,7 @@
                                         <textarea name="cat2chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat2chat3" id="">
+                                        <select name="cat2chat3" id="cat2chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -115,7 +164,7 @@
                                         <textarea name="cat2chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat2chat4" id="">
+                                        <select name="cat2chat4" id="cat2chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -125,7 +174,7 @@
                                         <textarea name="cat2chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat2chat5" id="">
+                                        <select name="cat2chat5" id="cat2chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -135,7 +184,7 @@
                                         <textarea name="cat2chat5cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat2chat6" id="">
+                                        <select name="cat2chat6" id="cat2chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -153,7 +202,7 @@
                                 <tr>
                                     <td class="qn">Did you ask all relevant questions?</td>
                                     <td>
-                                        <select name="cat3chat1" id="">
+                                        <select name="cat3chat1" id="cat3chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -163,7 +212,7 @@
                                         <textarea name="cat3chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat3chat2" id="">
+                                        <select name="cat3chat2" id="cat3chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -173,7 +222,7 @@
                                         <textarea name="cat3chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat3chat3" id="">
+                                        <select name="cat3chat3" id="cat3chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -183,7 +232,7 @@
                                         <textarea name="cat3chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat3chat4" id="">
+                                        <select name="cat3chat4" id="cat3chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -193,7 +242,7 @@
                                         <textarea name="cat3chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat3chat5" id="">
+                                        <select name="cat3chat5" id="cat3chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -203,7 +252,7 @@
                                         <textarea name="cat3chat5cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat3chat6" id="">
+                                        <select name="cat3chat6" id="cat3chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -217,7 +266,7 @@
                                 <tr>
                                     <td class="qn">Were questions answered and/or relevant information/inventory pushed?</td>
                                     <td>
-                                        <select name="cat4chat1" id="">
+                                        <select name="cat4chat1" id="cat4chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -227,7 +276,7 @@
                                         <textarea name="cat4chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat4chat2" id="">
+                                        <select name="cat4chat2" id="cat4chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -237,7 +286,7 @@
                                         <textarea name="cat4chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat4chat3" id="">
+                                        <select name="cat4chat3" id="cat4chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -247,7 +296,7 @@
                                         <textarea name="cat4chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat4chat4" id="">
+                                        <select name="cat4chat4" id="cat4chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -257,7 +306,7 @@
                                         <textarea name="cat4chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat4chat5" id="">
+                                        <select name="cat4chat5" id="cat4chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -268,7 +317,7 @@
                                     </td>
 
                                     <td>
-                                        <select name="cat4chat6" id="">
+                                        <select name="cat4chat6" id="cat4chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -287,7 +336,7 @@
                                 <tr>
                                     <td class="qn">Was the appropriate lead generation used, and at the right time?</td>
                                     <td>
-                                        <select name="cat5chat1" id="">
+                                        <select name="cat5chat1" id="cat5chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -297,7 +346,7 @@
                                         <textarea name="cat5chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat5chat2" id="">
+                                        <select name="cat5chat2" id="cat5chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -307,7 +356,7 @@
                                         <textarea name="cat5chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat5chat3" id="">
+                                        <select name="cat5chat3" id="cat5chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -317,7 +366,7 @@
                                         <textarea name="cat5chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat5chat4" id="">
+                                        <select name="cat5chat4" id="cat5chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -327,7 +376,7 @@
                                         <textarea name="cat5chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat5chat5" id="">
+                                        <select name="cat5chat5" id="cat5chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -338,7 +387,7 @@
                                     </td>
 
                                     <td>
-                                        <select name="cat5chat6" id="">
+                                        <select name="cat5chat6" id="cat5chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -352,7 +401,7 @@
                                 <tr>
                                     <td class="qn">Did the lead generation encompass all of the guests needs?</td>
                                     <td>
-                                        <select name="cat6chat1" id="">
+                                        <select name="cat6chat1" id="cat6chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -362,7 +411,7 @@
                                         <textarea name="cat6chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat6chat2" id="">
+                                        <select name="cat6chat2" id="cat6chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -372,7 +421,7 @@
                                         <textarea name="cat6chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat6chat3" id="">
+                                        <select name="cat6chat3" id="cat6chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -382,7 +431,7 @@
                                         <textarea name="cat6chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat6chat4" id="">
+                                        <select name="cat6chat4" id="cat6chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -392,7 +441,7 @@
                                         <textarea name="cat6chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat6chat5" id="">
+                                        <select name="cat6chat5" id="cat6chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -403,7 +452,7 @@
                                     </td>
 
                                     <td>
-                                        <select name="cat6chat6" id="">
+                                        <select name="cat6chat6" id="cat6chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -416,7 +465,7 @@
                                 <tr>
                                     <td class="qn">Did the customer provide all contact information OR was missing information properly gathered?</td>
                                     <td>
-                                        <select name="cat7chat1" id="">
+                                        <select name="cat7chat1" id="cat7chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -426,7 +475,7 @@
                                         <textarea name="cat7chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat7chat2" id="">
+                                        <select name="cat7chat2" id="cat7chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -435,7 +484,7 @@
                                         <textarea name="cat7chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat7chat3" id="">
+                                        <select name="cat7chat3" id="cat7chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -445,7 +494,7 @@
                                         <textarea name="cat7chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat7chat4" id="">
+                                        <select name="cat7chat4" id="cat7chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -455,7 +504,7 @@
                                         <textarea name="cat7chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat7chat5" id="">
+                                        <select name="cat7chat5" id="cat7chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -466,7 +515,7 @@
                                     </td>
 
                                     <td>
-                                        <select name="cat7chat6" id="">
+                                        <select name="cat7chat6" id="cat7chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -480,7 +529,7 @@
                                 <tr>
                                     <td class="qn">Was the chat properly recapped/ended?</td>
                                     <td>
-                                        <select name="cat8chat1" id="">
+                                        <select name="cat8chat1" id="cat8chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -490,7 +539,7 @@
                                         <textarea name="cat8chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat8chat2" id="">
+                                        <select name="cat8chat2" id="cat8chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -500,7 +549,7 @@
                                         <textarea name="cat8chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat8chat3" id="">
+                                        <select name="cat8chat3" id="cat8chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -510,7 +559,7 @@
                                         <textarea name="cat8chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat8chat4" id="">
+                                        <select name="cat8chat4" id="cat8chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -520,7 +569,7 @@
                                         <textarea name="cat8chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat8chat5" id="">
+                                        <select name="cat8chat5" id="cat8chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -531,7 +580,7 @@
                                     </td>
 
                                     <td>
-                                        <select name="cat8chat6" id="">
+                                        <select name="cat8chat6" id="cat8chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -551,7 +600,7 @@
                                 <tr>
                                     <td class="qn">Was it sent to the correct department? If PSA, was it dispositioned correctly?</td>
                                     <td>
-                                        <select name="cat9chat1" id="">
+                                        <select name="cat9chat1" id="cat9chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -561,7 +610,7 @@
                                         <textarea name="cat9chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat9chat2" id="">
+                                        <select name="cat9chat2" id="cat9chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -571,7 +620,7 @@
                                         <textarea name="cat9chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat9chat3" id="">
+                                        <select name="cat9chat3" id="cat9chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -581,7 +630,7 @@
                                         <textarea name="cat9chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat9chat4" id="">
+                                        <select name="cat9chat4" id="cat9chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -591,7 +640,7 @@
                                         <textarea name="cat9chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat9chat5" id="">
+                                        <select name="cat9chat5" id="cat9chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -601,7 +650,7 @@
                                         <textarea name="cat9chat5cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat9chat6" id="">
+                                        <select name="cat9chat6" id="cat9chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -615,7 +664,7 @@
                                 <tr>
                                     <td class="qn">Was everything within the lead filled out properly?</td>
                                     <td>
-                                        <select name="cat10chat1" id="">
+                                        <select name="cat10chat1" id="cat10chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -625,7 +674,7 @@
                                         <textarea name="cat10chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat10chat2" id="">
+                                        <select name="cat10chat2" id="cat10chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -635,7 +684,7 @@
                                         <textarea name="cat10chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat10chat3" id="">
+                                        <select name="cat10chat3" id="cat10chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -645,7 +694,7 @@
                                         <textarea name="cat10chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat10chat4" id="">
+                                        <select name="cat10chat4" id="cat10chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -655,7 +704,7 @@
                                         <textarea name="cat10chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat10chat5" id="">
+                                        <select name="cat10chat5" id="cat10chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -666,7 +715,7 @@
                                     </td>
 
                                     <td>
-                                        <select name="cat10chat6" id="">
+                                        <select name="cat10chat6" id="cat10chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -685,7 +734,7 @@
                                 <tr>
                                     <td class="qn">Greeting</td>
                                     <td>
-                                        <select name="cat11chat1" id="">
+                                        <select name="cat11chat1" id="cat11chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -695,7 +744,7 @@
                                         <textarea name="cat11chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat11chat2" id="">
+                                        <select name="cat11chat2" id="cat11chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -705,7 +754,7 @@
                                         <textarea name="cat11chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat11chat3" id="">
+                                        <select name="cat11chat3" id="cat11chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -715,7 +764,7 @@
                                         <textarea name="cat11chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat11chat4" id="">
+                                        <select name="cat11chat4" id="cat11chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -725,7 +774,7 @@
                                         <textarea name="cat11chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat11chat5" id="">
+                                        <select name="cat11chat5" id="cat11chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -735,7 +784,7 @@
                                         <textarea name="cat11chat5cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat11chat6" id="">
+                                        <select name="cat11chat6" id="cat11chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -749,7 +798,7 @@
                                 <tr>
                                     <td class="qn">Responses</td>
                                     <td>
-                                        <select name="cat12chat1" id="">
+                                        <select name="cat12chat1" id="cat12chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -759,7 +808,7 @@
                                         <textarea name="cat12chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat12chat2" id="">
+                                        <select name="cat12chat2" id="cat12chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -769,7 +818,7 @@
                                         <textarea name="cat12chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat12chat3" id="">
+                                        <select name="cat12chat3" id="cat12chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -779,7 +828,7 @@
                                         <textarea name="cat12chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat12chat4" id="">
+                                        <select name="cat12chat4" id="cat12chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -789,7 +838,7 @@
                                         <textarea name="cat12chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat12chat5" id="">
+                                        <select name="cat12chat5" id="cat12chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -800,7 +849,7 @@
                                     </td>
 
                                     <td>
-                                        <select name="cat12chat6" id="">
+                                        <select name="cat12chat6" id="cat12chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -814,7 +863,7 @@
                                 <tr>
                                     <td class="qn">Sit Time</td>
                                     <td>
-                                        <select name="cat13chat1" id="">
+                                        <select name="cat13chat1" id="cat13chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -824,7 +873,7 @@
                                         <textarea name="cat13chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat13chat2" id="">
+                                        <select name="cat13chat2" id="cat13chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -834,7 +883,7 @@
                                         <textarea name="cat13chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat13chat3" id="">
+                                        <select name="cat13chat3" id="cat13chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -844,7 +893,7 @@
                                         <textarea name="cat13chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat13chat4" id="">
+                                        <select name="cat13chat4" id="cat13chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -854,7 +903,7 @@
                                         <textarea name="cat13chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat13chat5" id="">
+                                        <select name="cat13chat5" id="cat13chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -865,7 +914,7 @@
                                     </td>
 
                                     <td>
-                                        <select name="cat13chat6" id="">
+                                        <select name="cat13chat6" id="cat13chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -884,7 +933,7 @@
                                 <tr>
                                     <td class="qn">Were there less than 3 grammatical mistakes?</td>
                                     <td>
-                                        <select name="cat14chat1" id="">
+                                        <select name="cat14chat1" id="cat14chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -894,7 +943,7 @@
                                         <textarea name="cat14chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat14chat2" id="">
+                                        <select name="cat14chat2" id="cat14chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -904,7 +953,7 @@
                                         <textarea name="cat14chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat14chat3" id="">
+                                        <select name="cat14chat3" id="cat14chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -914,7 +963,7 @@
                                         <textarea name="cat14chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat14chat4" id="">
+                                        <select name="cat14chat4" id="cat14chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -924,7 +973,7 @@
                                         <textarea name="cat14chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat14chat5" id="">
+                                        <select name="cat14chat5" id="cat14chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -935,7 +984,7 @@
                                     </td>
 
                                     <td>
-                                        <select name="cat14chat6" id="">
+                                        <select name="cat14chat6" id="cat14chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -949,7 +998,7 @@
                                 <tr>
                                     <td class="qn">Was the guest satisfied with the way the operator handled the chat?</td>
                                     <td>
-                                        <select name="cat15chat1" id="">
+                                        <select name="cat15chat1" id="cat15chat1" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -959,7 +1008,7 @@
                                          <textarea name="cat15chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat15chat2" id="">
+                                        <select name="cat15chat2" id="cat15chat2" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -969,7 +1018,7 @@
                                             <textarea name="cat15chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat15chat3" id="">
+                                        <select name="cat15chat3" id="cat15chat3" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -980,7 +1029,7 @@
 
                                     </td>
                                     <td>
-                                        <select name="cat15chat4" id="">
+                                        <select name="cat15chat4" id="cat15chat4" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -990,7 +1039,7 @@
                                             <textarea name="cat15chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat15chat5" id="">
+                                        <select name="cat15chat5" id="cat15chat5" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -1000,7 +1049,7 @@
                                             <textarea name="cat15chat5cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat15chat6" id="">
+                                        <select name="cat15chat6" id="cat15chat6" onchange="changeColor(this.id)" style="background:lightgreen">
                                             <option value="y">Excelling</option>
                                             <option value="p">Partial</option>
                                             <option value="n">Failing</option>
@@ -1014,7 +1063,7 @@
                                 <tr>
                                     <td class="qn">Auto-fail</td>
                                     <td>
-                                        <select name="cat16chat1" id="">
+                                        <select name="cat16chat1" id="cat16chat1" onchange="changeColorNew(this.id)" style="background:lightgreen">
                                             <option value="n">No</option>
                                             <option value="y">Yes</option>
 
@@ -1023,7 +1072,7 @@
                                             <textarea name="cat16chat1cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat16chat2" id="">
+                                        <select name="cat16chat2" id="cat16chat2" onchange="changeColorNew(this.id)" style="background:lightgreen">
                                             <option value="n">No</option>
                                             <option value="y">Yes</option>
                                         </select>
@@ -1031,7 +1080,7 @@
                                             <textarea name="cat16chat2cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat16chat3" id="">
+                                        <select name="cat16chat3" id="cat16chat3" onchange="changeColorNew(this.id)" style="background:lightgreen">
                                             <option value="n">No</option>
                                             <option value="y">Yes</option>
                                         </select>
@@ -1039,7 +1088,7 @@
                                             <textarea name="cat16chat3cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat16chat4" id="">
+                                        <select name="cat16chat4" id="cat16chat4" onchange="changeColorNew(this.id)" style="background:lightgreen">
                                             <option value="n">No</option>
                                             <option value="y">Yes</option>
                                         </select>
@@ -1047,16 +1096,15 @@
                                             <textarea name="cat16chat4cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
                                     <td>
-                                        <select name="cat16chat5" id="">
+                                        <select name="cat16chat5" id="cat16chat5" onchange="changeColorNew(this.id)" style="background:lightgreen">
                                             <option value="n">No</option>
                                             <option value="y">Yes</option>
                                         </select>
                                             <textarea name="cat16chat5cs" id="" cols="12" rows="3" placeholder="comments"></textarea>
                                             <textarea name="cat16chat5cy" id="" cols="12" rows="2" placeholder="category"></textarea>
                                     </td>
-
                                     <td>
-                                        <select name="cat16chat6" id="">
+                                        <select name="cat16chat6" id="cat16chat6" onchange="changeColorNew(this.id)" style="background:lightgreen">
                                            <option value="n">No</option>
                                             <option value="y">Yes</option>
                                         </select>
@@ -1070,10 +1118,47 @@
 
                     </div>
                 </div>
+            <div class="text-right" style="margin-right:50px">
                 <button class="btn btn-primary">Submit</button>
-            </form>
+            </div>
+
+
         </div>
     </section>
+    </form>
 
+<script>
+    function changeColor(pid){
+
+        let ele_id = pid;
+        let res = document.getElementById(ele_id).value
+
+        if (res == 'y'){
+        document.getElementById(ele_id).style.background = "lightgreen";
+        }
+        else if (res == 'p'){
+        document.getElementById(ele_id).style.background = "yellow";
+        }
+        else if (res == 'n'){
+        document.getElementById(ele_id).style.background = "red";
+        }
+        else if (res == 'na'){
+        document.getElementById(ele_id).style.background = "white";
+        }
+    }
+
+    function changeColorNew(pid){
+
+        let ele_id = pid;
+        let res = document.getElementById(ele_id).value
+        if (res == 'y'){
+        document.getElementById(ele_id).style.background = "red";
+        }
+        else if (res == 'n'){
+        document.getElementById(ele_id).style.background = "lightgreen";
+        }
+
+    }
+</script>
 
 {% endblock %}

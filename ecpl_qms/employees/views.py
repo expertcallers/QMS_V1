@@ -34,7 +34,7 @@ list_of_monforms = [ # OutBound
                         QuickAutoPartsOutboundMonForm,
                         ApexCommunicationsOutboundMonForm,LawOfficesOutboundMonForm,WokeUpEnergyOutboundMonForm,
                         FinnesseMortgageOutboundMonForm,
-                        UnitedMortgageOutboundMonForm,
+                        UnitedMortgageOutboundMonForm,CleanLivingHealthWellnessOutboundMonForm,PractoOutboundMonForm,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -62,6 +62,8 @@ list_of_monforms = [ # OutBound
                         FameHouseNewMonForm,
                         #Practo
                         PractoNewVersion,
+                        #Gubagoo
+                        GubagooAuditForm,
 
                         ]
 
@@ -966,6 +968,16 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Clean-Living Health and Wellness':
+        coaching = CleanLivingHealthWellnessOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Practo Outbound':
+        coaching = PractoOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1197,6 +1209,10 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-practo.html', data)
 
+    if process_name == 'Gubagoo':
+        coaching = GubagooAuditForm.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/emp-coaching-view-gubagoo.html',data)
     else:
         pass
 
@@ -1572,6 +1588,15 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Clean-Living Health and Wellness':
+        coaching = CleanLivingHealthWellnessOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Practo Outbound':
+        coaching = PractoOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
     ########### Inbound ########################
 
@@ -1806,6 +1831,11 @@ def coachingViewQaDetailed(request,process,pk):
         coaching = PractoNewVersion.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-practo.html', data)
+    if process_name == 'Gubagoo':
+        coaching = GubagooAuditForm.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/qa-coaching-view-gubagoo.html',data)
+
 
     else:
         pass
@@ -2830,6 +2860,14 @@ def exportAuditReport(request):
 
         elif campaign == 'United Mortgage Outbound':
             response = exportAadyaseries(UnitedMortgageOutboundMonForm)
+            return response
+
+        elif campaign == 'Clean-Living Health and Wellness':
+            response = exportAadyaseries(CleanLivingHealthWellnessOutboundMonForm)
+            return response
+
+        elif campaign == 'Practo Outbound':
+            response = exportAadyaseries(PractoOutboundMonForm)
             return response
 
         ######## Inbound ###############################
@@ -3904,6 +3942,14 @@ def exportAuditReportQA(request):
 
         elif campaign == 'United Mortgage Outbound':
             response = exportAadyaseries(UnitedMortgageOutboundMonForm)
+            return response
+
+        elif campaign == 'Clean-Living Health and Wellness':
+            response = exportAadyaseries(CleanLivingHealthWellnessOutboundMonForm)
+            return response
+
+        elif campaign == 'Practo Outbound':
+            response = exportAadyaseries(PractoOutboundMonForm)
             return response
 
 
@@ -5002,6 +5048,15 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(UnitedMortgageOutboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Clean-Living Health and Wellness':
+            newseriesAddCoaching(CleanLivingHealthWellnessOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Practo Outbound':
+            newseriesAddCoaching(PractoOutboundMonForm)
+            return redirect('/employees/qahome')
+
+
         else:
             pass
 
@@ -5892,7 +5947,7 @@ def gubaGooNew(request):
         cat6chat4 = request.POST['cat6chat4']
         cat6chat5 = request.POST['cat6chat5']
         cat6chat6 = request.POST['cat6chat6']
-        cat6 = [cat6chat1, cat6chat2, cat6chat3, cat6chat4, cat6chat6]
+        cat6 = [cat6chat1, cat6chat2, cat6chat3, cat6chat4 ,cat6chat5,cat6chat6]
 
         cat7chat1 = request.POST['cat7chat1']
         cat7chat2 = request.POST['cat7chat2']
@@ -5972,6 +6027,231 @@ def gubaGooNew(request):
         cat16chat4 = request.POST['cat16chat4']
         cat16chat5 = request.POST['cat16chat5']
         cat16chat6 = request.POST['cat16chat6']
+        ######## DOnE #########################
+
+        cat1chat1cs = request.POST['cat1chat1cs']
+        cat1chat2cs = request.POST['cat1chat2cs']
+        cat1chat3cs = request.POST['cat1chat3cs']
+        cat1chat4cs = request.POST['cat1chat4cs']
+        cat1chat5cs = request.POST['cat1chat5cs']
+        cat1chat6cs = request.POST['cat1chat6cs']
+
+        cat1chat1cy = request.POST['cat1chat1cy']
+        cat1chat2cy = request.POST['cat1chat2cy']
+        cat1chat3cy = request.POST['cat1chat3cy']
+        cat1chat4cy = request.POST['cat1chat4cy']
+        cat1chat5cy = request.POST['cat1chat5cy']
+        cat1chat6cy = request.POST['cat1chat6cy']
+
+        cat2chat1cs = request.POST['cat2chat1cs']
+        cat2chat2cs = request.POST['cat2chat2cs']
+        cat2chat3cs = request.POST['cat2chat3cs']
+        cat2chat4cs = request.POST['cat2chat4cs']
+        cat2chat5cs = request.POST['cat2chat5cs']
+        cat2chat6cs = request.POST['cat2chat6cs']
+
+        cat2chat1cy = request.POST['cat2chat1cy']
+        cat2chat2cy = request.POST['cat2chat2cy']
+        cat2chat3cy = request.POST['cat2chat3cy']
+        cat2chat4cy = request.POST['cat2chat4cy']
+        cat2chat5cy = request.POST['cat2chat5cy']
+        cat2chat6cy = request.POST['cat2chat6cy']
+
+        cat3chat1cs = request.POST['cat3chat1cs']
+        cat3chat2cs = request.POST['cat3chat2cs']
+        cat3chat3cs = request.POST['cat3chat3cs']
+        cat3chat4cs = request.POST['cat3chat4cs']
+        cat3chat5cs = request.POST['cat3chat5cs']
+        cat3chat6cs = request.POST['cat3chat6cs']
+
+        cat3chat1cy = request.POST['cat3chat1cy']
+        cat3chat2cy = request.POST['cat3chat2cy']
+        cat3chat3cy = request.POST['cat3chat3cy']
+        cat3chat4cy = request.POST['cat3chat4cy']
+        cat3chat5cy = request.POST['cat3chat5cy']
+        cat3chat6cy = request.POST['cat3chat6cy']
+
+        cat4chat1cs = request.POST['cat4chat1cs']
+        cat4chat2cs = request.POST['cat4chat2cs']
+        cat4chat3cs = request.POST['cat4chat3cs']
+        cat4chat4cs = request.POST['cat4chat4cs']
+        cat4chat5cs = request.POST['cat4chat5cs']
+        cat4chat6cs = request.POST['cat4chat6cs']
+
+        cat4chat1cy = request.POST['cat4chat1cy']
+        cat4chat2cy = request.POST['cat4chat2cy']
+        cat4chat3cy = request.POST['cat4chat3cy']
+        cat4chat4cy = request.POST['cat4chat4cy']
+        cat4chat5cy = request.POST['cat4chat5cy']
+        cat4chat6cy = request.POST['cat4chat6cy']
+
+        cat5chat1cs = request.POST['cat5chat1cs']
+        cat5chat2cs = request.POST['cat5chat2cs']
+        cat5chat3cs = request.POST['cat5chat3cs']
+        cat5chat4cs = request.POST['cat5chat4cs']
+        cat5chat5cs = request.POST['cat5chat5cs']
+        cat5chat6cs = request.POST['cat5chat6cs']
+
+        cat5chat1cy = request.POST['cat5chat1cy']
+        cat5chat2cy = request.POST['cat5chat2cy']
+        cat5chat3cy = request.POST['cat5chat3cy']
+        cat5chat4cy = request.POST['cat5chat4cy']
+        cat5chat5cy = request.POST['cat5chat5cy']
+        cat5chat6cy = request.POST['cat5chat6cy']
+
+        cat6chat1cs = request.POST['cat6chat1cs']
+        cat6chat2cs = request.POST['cat6chat2cs']
+        cat6chat3cs = request.POST['cat6chat3cs']
+        cat6chat4cs = request.POST['cat6chat4cs']
+        cat6chat5cs = request.POST['cat6chat5cs']
+        cat6chat6cs = request.POST['cat6chat6cs']
+
+        cat6chat1cy = request.POST['cat6chat1cy']
+        cat6chat2cy = request.POST['cat6chat2cy']
+        cat6chat3cy = request.POST['cat6chat3cy']
+        cat6chat4cy = request.POST['cat6chat4cy']
+        cat6chat5cy = request.POST['cat6chat5cy']
+        cat6chat6cy = request.POST['cat6chat6cy']
+
+        cat7chat1cs = request.POST['cat7chat1cs']
+        cat7chat2cs = request.POST['cat7chat2cs']
+        cat7chat3cs = request.POST['cat7chat3cs']
+        cat7chat4cs = request.POST['cat7chat4cs']
+        cat7chat5cs = request.POST['cat7chat5cs']
+        cat7chat6cs = request.POST['cat7chat6cs']
+
+        cat7chat1cy = request.POST['cat7chat1cy']
+        cat7chat2cy = request.POST['cat7chat2cy']
+        cat7chat3cy = request.POST['cat7chat3cy']
+        cat7chat4cy = request.POST['cat7chat4cy']
+        cat7chat5cy = request.POST['cat7chat5cy']
+        cat7chat6cy = request.POST['cat7chat6cy']
+
+        cat8chat1cs = request.POST['cat8chat1cs']
+        cat8chat2cs = request.POST['cat8chat2cs']
+        cat8chat3cs = request.POST['cat8chat3cs']
+        cat8chat4cs = request.POST['cat8chat4cs']
+        cat8chat5cs = request.POST['cat8chat5cs']
+        cat8chat6cs = request.POST['cat8chat6cs']
+
+        cat8chat1cy = request.POST['cat8chat1cy']
+        cat8chat2cy = request.POST['cat8chat2cy']
+        cat8chat3cy = request.POST['cat8chat3cy']
+        cat8chat4cy = request.POST['cat8chat4cy']
+        cat8chat5cy = request.POST['cat8chat5cy']
+        cat8chat6cy = request.POST['cat8chat6cy']
+
+        cat9chat1cs = request.POST['cat9chat1cs']
+        cat9chat2cs = request.POST['cat9chat2cs']
+        cat9chat3cs = request.POST['cat9chat3cs']
+        cat9chat4cs = request.POST['cat9chat4cs']
+        cat9chat5cs = request.POST['cat9chat5cs']
+        cat9chat6cs = request.POST['cat9chat6cs']
+
+        cat9chat1cy = request.POST['cat9chat1cy']
+        cat9chat2cy = request.POST['cat9chat2cy']
+        cat9chat3cy = request.POST['cat9chat3cy']
+        cat9chat4cy = request.POST['cat9chat4cy']
+        cat9chat5cy = request.POST['cat9chat5cy']
+        cat9chat6cy = request.POST['cat9chat6cy']
+
+        cat10chat1cs = request.POST['cat10chat1cs']
+        cat10chat2cs = request.POST['cat10chat2cs']
+        cat10chat3cs = request.POST['cat10chat3cs']
+        cat10chat4cs = request.POST['cat10chat4cs']
+        cat10chat5cs = request.POST['cat10chat5cs']
+        cat10chat6cs = request.POST['cat10chat6cs']
+
+        cat10chat1cy = request.POST['cat10chat1cy']
+        cat10chat2cy = request.POST['cat10chat2cy']
+        cat10chat3cy = request.POST['cat10chat3cy']
+        cat10chat4cy = request.POST['cat10chat4cy']
+        cat10chat5cy = request.POST['cat10chat5cy']
+        cat10chat6cy = request.POST['cat10chat6cy']
+
+        cat11chat1cs = request.POST['cat11chat1cs']
+        cat11chat2cs = request.POST['cat11chat2cs']
+        cat11chat3cs = request.POST['cat11chat3cs']
+        cat11chat4cs = request.POST['cat11chat4cs']
+        cat11chat5cs = request.POST['cat11chat5cs']
+        cat11chat6cs = request.POST['cat11chat6cs']
+
+        cat11chat1cy = request.POST['cat11chat1cy']
+        cat11chat2cy = request.POST['cat11chat2cy']
+        cat11chat3cy = request.POST['cat11chat3cy']
+        cat11chat4cy = request.POST['cat11chat4cy']
+        cat11chat5cy = request.POST['cat11chat5cy']
+        cat11chat6cy = request.POST['cat11chat6cy']
+
+        cat12chat1cs = request.POST['cat12chat1cs']
+        cat12chat2cs = request.POST['cat12chat2cs']
+        cat12chat3cs = request.POST['cat12chat3cs']
+        cat12chat4cs = request.POST['cat12chat4cs']
+        cat12chat5cs = request.POST['cat12chat5cs']
+        cat12chat6cs = request.POST['cat12chat6cs']
+
+        cat12chat1cy = request.POST['cat12chat1cy']
+        cat12chat2cy = request.POST['cat12chat2cy']
+        cat12chat3cy = request.POST['cat12chat3cy']
+        cat12chat4cy = request.POST['cat12chat4cy']
+        cat12chat5cy = request.POST['cat12chat5cy']
+        cat12chat6cy = request.POST['cat12chat6cy']
+
+        cat13chat1cs = request.POST['cat13chat1cs']
+        cat13chat2cs = request.POST['cat13chat2cs']
+        cat13chat3cs = request.POST['cat13chat3cs']
+        cat13chat4cs = request.POST['cat13chat4cs']
+        cat13chat5cs = request.POST['cat13chat5cs']
+        cat13chat6cs = request.POST['cat13chat6cs']
+
+        cat13chat1cy = request.POST['cat13chat1cy']
+        cat13chat2cy = request.POST['cat13chat2cy']
+        cat13chat3cy = request.POST['cat13chat3cy']
+        cat13chat4cy = request.POST['cat13chat4cy']
+        cat13chat5cy = request.POST['cat13chat5cy']
+        cat13chat6cy = request.POST['cat13chat6cy']
+
+        cat14chat1cs = request.POST['cat14chat1cs']
+        cat14chat2cs = request.POST['cat14chat2cs']
+        cat14chat3cs = request.POST['cat14chat3cs']
+        cat14chat4cs = request.POST['cat14chat4cs']
+        cat14chat5cs = request.POST['cat14chat5cs']
+        cat14chat6cs = request.POST['cat14chat6cs']
+
+        cat14chat1cy = request.POST['cat14chat1cy']
+        cat14chat2cy = request.POST['cat14chat2cy']
+        cat14chat3cy = request.POST['cat14chat3cy']
+        cat14chat4cy = request.POST['cat14chat4cy']
+        cat14chat5cy = request.POST['cat14chat5cy']
+        cat14chat6cy = request.POST['cat14chat6cy']
+
+        cat15chat1cs = request.POST['cat15chat1cs']
+        cat15chat2cs = request.POST['cat15chat2cs']
+        cat15chat3cs = request.POST['cat15chat3cs']
+        cat15chat4cs = request.POST['cat15chat4cs']
+        cat15chat5cs = request.POST['cat15chat5cs']
+        cat15chat6cs = request.POST['cat15chat6cs']
+
+        cat15chat1cy = request.POST['cat15chat1cy']
+        cat15chat2cy = request.POST['cat15chat2cy']
+        cat15chat3cy = request.POST['cat15chat3cy']
+        cat15chat4cy = request.POST['cat15chat4cy']
+        cat15chat5cy = request.POST['cat15chat5cy']
+        cat15chat6cy = request.POST['cat15chat6cy']
+
+        cat16chat1cs = request.POST['cat16chat1cs']
+        cat16chat2cs = request.POST['cat16chat2cs']
+        cat16chat3cs = request.POST['cat16chat3cs']
+        cat16chat4cs = request.POST['cat16chat4cs']
+        cat16chat5cs = request.POST['cat16chat5cs']
+        cat16chat6cs = request.POST['cat16chat6cs']
+
+        cat16chat1cy = request.POST['cat16chat1cy']
+        cat16chat2cy = request.POST['cat16chat2cy']
+        cat16chat3cy = request.POST['cat16chat3cy']
+        cat16chat4cy = request.POST['cat16chat4cy']
+        cat16chat5cy = request.POST['cat16chat5cy']
+        cat16chat6cy = request.POST['cat16chat6cy']
 
 
 
@@ -5980,16 +6260,9 @@ def gubaGooNew(request):
             pcount = lst.count('p')
             fcount = lst.count('n')
             nacount = lst.count('NA')
-            cat1score = (ycount + pcount)/5 * 100
+            cat1score = (ycount + pcount)/6 * 100
             
-            if fcount ==3 or fcount ==4 or fcount ==5:
-                fscore = 0.025
-            elif fcount == 6:
-                fscore = 0.05
-            elif fcount <=2:
-                fscore = 0        
-            
-            return cat1score,fscore
+            return cat1score
 
         def autoFailCalculation(a,b,lst):
 
@@ -6024,6 +6297,10 @@ def gubaGooNew(request):
         cat14fscore = autoFailCalculation(0.025,0.05,cat14)
         cat15fscore = autoFailCalculation(0.025,0.05,cat15)
 
+        total_failing_score = cat1fscore + cat2fscore + cat3fscore + cat4fscore + cat5fscore + cat6fscore + \
+                              cat7fscore + cat8fscore + cat9fscore + cat10fscore + \
+                              cat11fscore + cat13fscore + \
+                              cat14fscore + cat15fscore
 
         cat1score = scoreCalc(cat1)
         cat2score = scoreCalc(cat2)
@@ -6041,33 +6318,8 @@ def gubaGooNew(request):
         cat14score = scoreCalc(cat14)
         cat15score= scoreCalc(cat15)
 
-        '''print(cat1fscore)
-        print(cat2fscore)
-        print(cat3fscore)
-        print(cat4fscore)
-        print(cat5fscore)
-        print(cat6fscore)
-        print(cat7fscore)
-        print(cat8fscore)
-        print(cat9fscore)
-        print(cat10fscore)
-        print(cat11fscore)
-        print(cat13fscore)
-        print(cat14fscore)
-        print(cat15fscore)'''
-
-
-
-        total_failing_score = cat1fscore + cat2fscore + cat3fscore + cat4fscore + cat5fscore + cat6fscore + \
-                                cat7fscore + cat8fscore + cat9fscore + cat10fscore + \
-                                cat11fscore + cat13fscore + \
-                                cat14fscore + cat15fscore
-
-
         ######### chat 1 calculation  ##############
-
         total_score = 293
-        ####### Greeting ###########################
 
         def catAndTotalScore(c,tot,score):
 
@@ -6337,23 +6589,453 @@ def gubaGooNew(request):
         # print(total_chat_score,'Total CHat Score')
 
         total_failing_perc = total_failing_score * 100
-
         total_audit_score = total_chat_score - total_failing_perc
         total_audit_score = round(total_audit_score)
 
-        # print(total_audit_score,'Total Audit Score')      
+        # print(total_audit_score,'Total Audit Score')
+        category = 'Gubagoo'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        trans_date = request.POST['trans_date']
+        audit_date = request.POST['auditdate']
+        campaign = request.POST['campaign']
+        concept = request.POST['concept']
+        zone = request.POST['zone']
 
-        data = {
-                'chat1':chat1_total_score,'chat2':chat2_total_score,
-                'chat3':chat3_total_score,'chat4':chat4_total_score,
-                'chat5':chat5_total_score,'chat6':chat6_total_score,
-                'failing':total_failing_perc,
-                'overall':total_audit_score,
-                'chat1_id':chat1_id,'chat2_id':chat2_id,'chat3_id':chat3_id,
-                'chat4_id': chat4_id,'chat5_id':chat5_id,'chat6_id':chat6_id,
-        }
 
-        return render(request,'mon-forms/gubagoo-result.html',data)
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
+        try:
+            manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+            manager_emp_id = manager_emp_id_obj.emp_id
+            manager_name = manager
+
+        except Profile.DoesNotExist:
+            manager_emp_id = 0
+            manager_name = manager
+
+        added_by = request.user.profile.emp_name
+        week = request.POST['week']
+        am = request.POST['am']
+
+        fatal_list = [cat16chat1, cat16chat2, cat16chat3, cat16chat4, cat16chat5, cat16chat6]
+
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 'y':
+                fatal_list_count.append(i)
+
+        no_of_fatals = len(fatal_list_count)
+        ####################################################
+        if cat16chat1 == 'y' or cat16chat2 == 'y' or cat16chat3=='y' or cat16chat4 == 'y' or cat16chat5 == 'y' or cat16chat6 =='y':
+            fatal = True
+        else:
+            fatal = False
+
+        gubagoo = GubagooAuditForm(
+
+            chat1_id=chat1_id,
+            chat2_id=chat2_id,
+            chat3_id=chat3_id,
+            chat4_id=chat4_id,
+            chat5_id=chat5_id,
+            chat6_id=chat6_id,
+
+        cat1chat1 = cat1chat1,
+        cat1chat2 = cat1chat2,
+        cat1chat3 = cat1chat3,
+        cat1chat4 = cat1chat4,
+        cat1chat5 = cat1chat5,
+        cat1chat6 = cat1chat6,
+
+        cat2chat1 = cat2chat1,
+        cat2chat2 = cat2chat2,
+        cat2chat3 = cat2chat3,
+        cat2chat4 = cat2chat4,
+        cat2chat5 = cat2chat5,
+        cat2chat6 = cat2chat6,
+
+        cat3chat1 = cat3chat1,
+        cat3chat2 = cat3chat2,
+        cat3chat3 = cat3chat3,
+        cat3chat4 = cat3chat4,
+        cat3chat5 = cat3chat5,
+        cat3chat6 = cat3chat6,
+
+        cat4chat1 = cat4chat1,
+        cat4chat2 = cat4chat2,
+        cat4chat3 = cat4chat3,
+        cat4chat4 = cat4chat4,
+        cat4chat5 = cat4chat5,
+        cat4chat6 = cat4chat6,
+
+        cat5chat1 = cat5chat1,
+        cat5chat2 = cat5chat2,
+        cat5chat3 = cat5chat3,
+        cat5chat4 = cat5chat4,
+        cat5chat5 = cat5chat5,
+        cat5chat6 = cat5chat6,
+
+        cat6chat1 = cat6chat1,
+        cat6chat2 = cat6chat2,
+        cat6chat3 = cat6chat3,
+        cat6chat4 = cat6chat4,
+        cat6chat5 = cat6chat5,
+        cat6chat6 = cat6chat6,
+
+        cat7chat1 = cat7chat1,
+        cat7chat2 = cat7chat2,
+        cat7chat3 = cat7chat3,
+        cat7chat4 = cat7chat4,
+        cat7chat5 = cat7chat5,
+        cat7chat6 = cat7chat6,
+
+        cat8chat1 = cat8chat1,
+        cat8chat2 = cat8chat2,
+        cat8chat3 = cat8chat3,
+        cat8chat4 = cat8chat4,
+        cat8chat5 = cat8chat5,
+        cat8chat6 = cat8chat6,
+
+        cat9chat1 = cat9chat1,
+        cat9chat2 = cat9chat2,
+        cat9chat3 = cat9chat3,
+        cat9chat4 = cat9chat4,
+        cat9chat5 = cat9chat5,
+        cat9chat6 = cat9chat6,
+
+        cat10chat1 = cat10chat1,
+        cat10chat2 = cat10chat2,
+        cat10chat3 = cat10chat3,
+        cat10chat4 = cat10chat4,
+        cat10chat5 = cat10chat5,
+        cat10chat6 = cat10chat6,
+
+        cat11chat1 = cat11chat1,
+        cat11chat2 = cat11chat2,
+        cat11chat3 = cat11chat3,
+        cat11chat4 = cat11chat4,
+        cat11chat5 = cat11chat5,
+        cat11chat6 = cat11chat6,
+
+        cat12chat1 = cat12chat1,
+        cat12chat2 = cat12chat2,
+        cat12chat3 = cat12chat3,
+        cat12chat4 = cat12chat4,
+        cat12chat5 = cat12chat5,
+        cat12chat6 = cat12chat6,
+
+        cat13chat1 = cat13chat1,
+        cat13chat2 = cat13chat2,
+        cat13chat3 = cat13chat3,
+        cat13chat4 = cat13chat4,
+        cat13chat5 = cat13chat5,
+        cat13chat6 = cat13chat6,
+
+        cat14chat1 = cat14chat1,
+        cat14chat2 = cat14chat2,
+        cat14chat3 = cat14chat3,
+        cat14chat4 = cat14chat4,
+        cat14chat5 = cat14chat5,
+        cat14chat6 = cat14chat6,
+
+        cat15chat1 = cat15chat1,
+        cat15chat2 = cat15chat2,
+        cat15chat3 = cat15chat3,
+        cat15chat4 = cat15chat4,
+        cat15chat5 = cat15chat5,
+        cat15chat6 = cat15chat6,
+
+        cat16chat1 = cat16chat1,
+        cat16chat2 = cat16chat2,
+        cat16chat3 = cat16chat3,
+        cat16chat4 = cat16chat4,
+        cat16chat5 = cat16chat5,
+        cat16chat6 = cat16chat6,
+
+        cat1chat1cs = cat1chat1cs,
+        cat1chat2cs = cat1chat2cs,
+        cat1chat3cs = cat1chat3cs,
+        cat1chat4cs = cat1chat4cs,
+        cat1chat5cs = cat1chat5cs,
+        cat1chat6cs = cat1chat6cs,
+
+        cat1chat1cy = cat1chat1cy,
+        cat1chat2cy = cat1chat2cy,
+        cat1chat3cy = cat1chat3cy,
+        cat1chat4cy = cat1chat4cy,
+        cat1chat5cy = cat1chat5cy,
+        cat1chat6cy = cat1chat6cy,
+
+        cat2chat1cs = cat2chat1cs,
+        cat2chat2cs = cat2chat2cs,
+        cat2chat3cs = cat2chat3cs,
+        cat2chat4cs = cat2chat4cs,
+        cat2chat5cs = cat2chat5cs,
+        cat2chat6cs = cat2chat6cs,
+
+        cat2chat1cy = cat2chat1cy,
+        cat2chat2cy = cat2chat2cy,
+        cat2chat3cy = cat2chat3cy,
+        cat2chat4cy = cat2chat4cy,
+        cat2chat5cy = cat2chat5cy,
+        cat2chat6cy = cat2chat6cy,
+
+        cat3chat1cs = cat3chat1cs,
+        cat3chat2cs = cat3chat2cs,
+        cat3chat3cs = cat3chat3cs,
+        cat3chat4cs = cat3chat4cs,
+        cat3chat5cs = cat3chat5cs,
+        cat3chat6cs = cat3chat6cs,
+
+        cat3chat1cy = cat3chat1cy,
+        cat3chat2cy = cat3chat2cy,
+        cat3chat3cy = cat3chat3cy,
+        cat3chat4cy = cat3chat4cy,
+        cat3chat5cy = cat3chat5cy,
+        cat3chat6cy = cat3chat6cy,
+
+        cat4chat1cs = cat4chat1cs,
+        cat4chat2cs = cat4chat2cs,
+        cat4chat3cs = cat4chat3cs,
+        cat4chat4cs = cat4chat4cs,
+        cat4chat5cs = cat4chat5cs,
+        cat4chat6cs = cat4chat6cs,
+
+        cat4chat1cy = cat4chat1cy,
+        cat4chat2cy = cat4chat2cy,
+        cat4chat3cy = cat4chat3cy,
+        cat4chat4cy = cat4chat4cy,
+        cat4chat5cy = cat4chat5cy,
+        cat4chat6cy = cat4chat6cy,
+
+        cat5chat1cs = cat5chat1cs,
+        cat5chat2cs = cat5chat2cs,
+        cat5chat3cs = cat5chat3cs,
+        cat5chat4cs = cat5chat4cs,
+        cat5chat5cs = cat5chat5cs,
+        cat5chat6cs = cat5chat6cs,
+
+        cat5chat1cy = cat5chat1cy,
+        cat5chat2cy = cat5chat2cy,
+        cat5chat3cy = cat5chat3cy,
+        cat5chat4cy = cat5chat4cy,
+        cat5chat5cy = cat5chat5cy,
+        cat5chat6cy = cat5chat6cy,
+
+        cat6chat1cs = cat6chat1cs,
+        cat6chat2cs = cat6chat2cs,
+        cat6chat3cs = cat6chat3cs,
+        cat6chat4cs = cat6chat4cs,
+        cat6chat5cs = cat6chat5cs,
+        cat6chat6cs = cat6chat6cs,
+
+        cat6chat1cy = cat6chat1cy,
+        cat6chat2cy = cat6chat2cy,
+        cat6chat3cy = cat6chat3cy,
+        cat6chat4cy = cat6chat4cy,
+        cat6chat5cy = cat6chat5cy,
+        cat6chat6cy = cat6chat6cy,
+
+        cat7chat1cs = cat7chat1cs,
+        cat7chat2cs = cat7chat2cs,
+        cat7chat3cs = cat7chat3cs,
+        cat7chat4cs = cat7chat4cs,
+        cat7chat5cs = cat7chat5cs,
+        cat7chat6cs = cat7chat6cs,
+
+        cat7chat1cy = cat7chat1cy,
+        cat7chat2cy = cat7chat2cy,
+        cat7chat3cy = cat7chat3cy,
+        cat7chat4cy = cat7chat4cy,
+        cat7chat5cy = cat7chat5cy,
+        cat7chat6cy = cat7chat6cy,
+
+        cat8chat1cs = cat8chat1cs,
+        cat8chat2cs = cat8chat2cs,
+        cat8chat3cs = cat8chat3cs,
+        cat8chat4cs = cat8chat4cs,
+        cat8chat5cs = cat8chat5cs,
+        cat8chat6cs = cat8chat6cs,
+
+        cat8chat1cy = cat8chat1cy,
+        cat8chat2cy = cat8chat2cy,
+        cat8chat3cy = cat8chat3cy,
+        cat8chat4cy = cat8chat4cy,
+        cat8chat5cy = cat8chat5cy,
+        cat8chat6cy = cat8chat6cy,
+
+        cat9chat1cs = cat9chat1cs,
+        cat9chat2cs = cat9chat2cs,
+        cat9chat3cs = cat9chat3cs,
+        cat9chat4cs = cat9chat4cs,
+        cat9chat5cs = cat9chat5cs,
+        cat9chat6cs = cat9chat6cs,
+
+        cat9chat1cy = cat9chat1cy,
+        cat9chat2cy = cat9chat2cy,
+        cat9chat3cy = cat9chat3cy,
+        cat9chat4cy = cat9chat4cy,
+        cat9chat5cy = cat9chat5cy,
+        cat9chat6cy = cat9chat6cy,
+
+        cat10chat1cs = cat10chat1cs,
+        cat10chat2cs = cat10chat2cs,
+        cat10chat3cs = cat10chat3cs,
+        cat10chat4cs = cat10chat4cs,
+        cat10chat5cs = cat10chat5cs,
+        cat10chat6cs = cat10chat6cs,
+
+        cat10chat1cy = cat10chat1cy,
+        cat10chat2cy = cat10chat2cy,
+        cat10chat3cy = cat10chat3cy,
+        cat10chat4cy = cat10chat4cy,
+        cat10chat5cy = cat10chat5cy,
+        cat10chat6cy = cat10chat6cy,
+
+        cat11chat1cs = cat11chat1cs,
+        cat11chat2cs = cat11chat2cs,
+        cat11chat3cs = cat11chat3cs,
+        cat11chat4cs = cat11chat4cs,
+        cat11chat5cs = cat11chat5cs,
+        cat11chat6cs = cat11chat6cs,
+
+        cat11chat1cy = cat11chat1cy,
+        cat11chat2cy = cat11chat2cy,
+        cat11chat3cy = cat11chat3cy,
+        cat11chat4cy = cat11chat4cy,
+        cat11chat5cy = cat11chat5cy,
+        cat11chat6cy = cat11chat6cy,
+
+        cat12chat1cs = cat12chat1cs,
+        cat12chat2cs = cat12chat2cs,
+        cat12chat3cs = cat12chat3cs,
+        cat12chat4cs = cat12chat4cs,
+        cat12chat5cs = cat12chat5cs,
+        cat12chat6cs = cat12chat6cs,
+
+        cat12chat1cy = cat12chat1cy,
+        cat12chat2cy = cat12chat2cy,
+        cat12chat3cy = cat12chat3cy,
+        cat12chat4cy = cat12chat4cy,
+        cat12chat5cy = cat12chat5cy,
+        cat12chat6cy = cat12chat6cy,
+
+        cat13chat1cs = cat13chat1cs,
+        cat13chat2cs = cat13chat2cs,
+        cat13chat3cs = cat13chat3cs,
+        cat13chat4cs = cat13chat4cs,
+        cat13chat5cs = cat13chat5cs,
+        cat13chat6cs = cat13chat6cs,
+
+        cat13chat1cy = cat13chat1cy,
+        cat13chat2cy = cat13chat2cy,
+        cat13chat3cy = cat13chat3cy,
+        cat13chat4cy = cat13chat4cy,
+        cat13chat5cy = cat13chat5cy,
+        cat13chat6cy = cat13chat6cy,
+
+        cat14chat1cs = cat14chat1cs,
+        cat14chat2cs = cat14chat2cs,
+        cat14chat3cs = cat14chat3cs,
+        cat14chat4cs = cat14chat4cs,
+        cat14chat5cs = cat14chat5cs,
+        cat14chat6cs = cat14chat6cs,
+
+        cat14chat1cy = cat14chat1cy,
+        cat14chat2cy = cat14chat2cy,
+        cat14chat3cy = cat14chat3cy,
+        cat14chat4cy = cat14chat4cy,
+        cat14chat5cy = cat14chat5cy,
+        cat14chat6cy = cat14chat6cy,
+
+        cat15chat1cs = cat15chat1cs,
+        cat15chat2cs = cat15chat2cs,
+        cat15chat3cs = cat15chat3cs,
+        cat15chat4cs = cat15chat4cs,
+        cat15chat5cs = cat15chat5cs,
+        cat15chat6cs = cat15chat6cs,
+
+        cat15chat1cy = cat15chat1cy,
+        cat15chat2cy = cat15chat2cy,
+        cat15chat3cy = cat15chat3cy,
+        cat15chat4cy = cat15chat4cy,
+        cat15chat5cy = cat15chat5cy,
+        cat15chat6cy = cat15chat6cy,
+
+        cat16chat1cs = cat16chat1cs,
+        cat16chat2cs = cat16chat2cs,
+        cat16chat3cs = cat16chat3cs,
+        cat16chat4cs = cat16chat4cs,
+        cat16chat5cs = cat16chat5cs,
+        cat16chat6cs = cat16chat6cs,
+
+        cat16chat1cy = cat16chat1cy,
+        cat16chat2cy = cat16chat2cy,
+        cat16chat3cy = cat16chat3cy,
+        cat16chat4cy = cat16chat4cy,
+        cat16chat5cy = cat16chat5cy,
+        cat16chat6cy = cat16chat6cy,
+
+        cat1fscore = cat1fscore,
+        cat2fscore=cat2fscore,
+        cat3fscore=cat3fscore,
+        cat4fscore=cat4fscore,
+        cat5fscore=cat5fscore,
+            cat6fscore=cat6fscore,
+            cat7fscore=cat7fscore,
+            cat8fscore=cat8fscore,
+            cat9fscore=cat9fscore,
+            cat10fscore=cat10fscore,
+            cat11fscore=cat11fscore,
+
+            cat13fscore=cat13fscore,
+            cat14fscore=cat14fscore,
+            cat15fscore=cat15fscore,
+
+            total_failing_score = total_failing_score,
+
+            cat1score = cat1score,
+            cat2score=cat2score,
+            cat3score=cat3score,
+            cat4score=cat4score,
+            cat5score=cat5score,
+            cat6score=cat6score,
+            cat7score=cat7score,
+            cat8score=cat8score,
+            cat9score=cat9score,
+            cat10score=cat10score,
+            cat11score=cat11score,
+            cat12score=cat12score,
+            cat13score=cat13score,
+            cat14score=cat14score,
+            cat15score=cat15score,
+
+            chat1_total_score = chat1_total_score,
+            chat2_total_score=chat2_total_score,
+            chat3_total_score=chat3_total_score,
+            chat4_total_score=chat4_total_score,
+            chat5_total_score=chat5_total_score,
+            chat6_total_score=chat6_total_score,
+
+            total_failing_perc = total_failing_perc,
+
+
+        associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                                    manager=manager_name, manager_id=manager_emp_id,
+                                    trans_date=trans_date, audit_date=audit_date,
+                                    campaign=campaign, concept=concept, zone=zone,
+                                   added_by=added_by,
+                                   overall_score=total_audit_score, category=category,
+                                   week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+                                   )
+
+        gubagoo.save()
+        return redirect('/employees/qahome')
+
+
 
 def practoNewVersion(request):
 

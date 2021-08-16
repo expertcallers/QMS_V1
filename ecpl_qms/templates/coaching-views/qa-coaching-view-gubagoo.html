@@ -1,0 +1,644 @@
+{% extends 'base.html' %}
+{% block main %}
+
+
+    <div class="container" style="margin-top:100px;">
+        <div>
+            <h2 class="text-center">Audit Details</h2>
+            <br>
+            <p>campaign - {{coaching.campaign}}</p>
+            <table class="table table-bordered">
+                <tr>
+                    <td><b>Emp Name</b></td>
+                    <td>{{coaching.associate_name}}</td>
+                    <td><b>Emp ID</b></td>
+                    <td>{{coaching.emp_id}}</td>
+                </tr>
+                <tr>
+                  <td><b>QA</b></td>
+                  <td>{{coaching.qa}}</td>
+                  <td><b>Team Lead</b></td>
+                  <td>{{coaching.team_lead}}</td>
+                </tr>
+                <tr>
+                  <td><b>Transaction Date</b></td>
+                  <td>{{coaching.trans_date}}</td>
+                  <td><b>Week</b></td>
+                  <td>{{coaching.week}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <section id="outboundform-gubagoo" class="gb-view">
+        <div class="container-lg">
+                <div class="basic">
+                    <div class="row">
+                        <div>
+                            <table class="table">
+                                <tr>
+                                    <td><h4>GREETING</h4></td>
+                                    <td><b style="font-size: 14px">Chat 1</b><input type="text" name="chat1_id" style="width: 102px;font-size: 12px" value="{{coaching.chat1_id}}"></td>
+                                    <td><b style="font-size: 14px">Chat 2</b><input type="text" name="chat2_id" style="width: 102px;font-size: 12px" value="{{coaching.chat2_id}}"></td>
+                                    <td><b style="font-size: 14px">Chat 3</b><input type="text" name="chat3_id" style="width: 102px;font-size: 12px" value="{{coaching.chat3_id}}"></td>
+                                    <td><b style="font-size: 14px">Chat 4</b><input type="text" name="chat4_id" style="width: 102px;font-size: 12px" value="{{coaching.chat4_id}}"></td>
+                                    <td><b style="font-size: 14px">Chat 5</b><input type="text" name="chat5_id" style="width: 102px;font-size: 12px" value="{{coaching.chat5_id}}"></td>
+                                    <td><b style="font-size: 14px">Chat 6</b><input type="text" name="chat6_id" style="width: 102px;font-size: 12px" value="{{coaching.chat6_id}}"></td>
+                                </tr>
+                                <tr>
+                                    <td class="qn">Was there a greeting?</td>
+                                    <td>
+                                        <p>{{coaching.cat1chat1}}</p>
+                                        <small>{{coaching.cat1chat1cs}}</small><br>
+                                        <small>{{coaching.cat1chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat1chat2}}</p>
+                                        <small>{{coaching.cat1chat2cs}}</small><br>
+                                        <small>{{coaching.cat1chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat1chat3}}</p>
+                                        <small>{{coaching.cat1chat3cs}}</small><br>
+                                        <small>{{coaching.cat1chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat1chat4}}</p>
+                                        <small>{{coaching.cat1chat4cs}}</small><br>
+                                        <small>{{coaching.cat1chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat1chat5}}</p>
+                                        <small>{{coaching.cat1chat5cs}}</small><br>
+                                        <small>{{coaching.cat1chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat1chat6}}</p>
+                                        <small>{{coaching.cat1chat6cs}}</small><br>
+                                        <small>{{coaching.cat1chat6cy}}</small>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="qn">Proper greeting?</td>
+                                    <td>
+                                        <p>{{coaching.cat2chat1}}</p>
+                                        <small>{{coaching.cat2chat1cs}}</small><br>
+                                        <small>{{coaching.cat2chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat2chat2}}</p>
+                                        <small>{{coaching.cat2chat2cs}}</small><br>
+                                        <small>{{coaching.cat2chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat2chat3}}</p>
+                                        <small>{{coaching.cat2chat3cs}}</small><br>
+                                        <small>{{coaching.cat2chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat2chat4}}</p>
+                                        <small>{{coaching.cat2chat4cs}}</small><br>
+                                        <small>{{coaching.cat2chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat2chat5}}</p>
+                                        <small>{{coaching.cat2chat5cs}}</small><br>
+                                        <small>{{coaching.cat2chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat2chat6}}</p>
+                                        <small>{{coaching.cat2chat6cs}}</small><br>
+                                        <small>{{coaching.cat2chat6cy}}</small>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <h4>QUESTIONS</h4>
+                            <table class="table">
+                                <tr>
+                                    <td class="qn">Did you ask all relevant questions?</td>
+                                    <td>
+                                        <p>{{coaching.cat3chat1}}</p>
+                                        <small>{{coaching.cat3chat1cs}}</small><br>
+                                        <small>{{coaching.cat3chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat3chat2}}</p>
+                                        <small>{{coaching.cat3chat2cs}}</small><br>
+                                        <small>{{coaching.cat3chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat3chat3}}</p>
+                                        <small>{{coaching.cat3chat3cs}}</small><br>
+                                        <small>{{coaching.cat3chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat3chat4}}</p>
+                                        <small>{{coaching.cat3chat4cs}}</small><br>
+                                        <small>{{coaching.cat3chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat3chat5}}</p>
+                                        <small>{{coaching.cat3chat5cs}}</small><br>
+                                        <small>{{coaching.cat3chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat3chat6}}</p>
+                                        <small>{{coaching.cat3chat6cs}}</small><br>
+                                        <small>{{coaching.cat3chat6cy}}</small>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="qn">Were questions answered and/or <br> relevant information/inventory pushed?</td>
+                                    <td>
+                                        <p>{{coaching.cat4chat1}}</p>
+                                        <small>{{coaching.cat4chat1cs}}</small><br>
+                                        <small>{{coaching.cat4chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat4chat2}}</p>
+                                        <small>{{coaching.cat4chat2cs}}</small><br>
+                                        <small>{{coaching.cat4chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat4chat3}}</p>
+                                        <small>{{coaching.cat4chat3cs}}</small><br>
+                                        <small>{{coaching.cat4chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat4chat4}}</p>
+                                        <small>{{coaching.cat4chat4cs}}</small><br>
+                                        <small>{{coaching.cat4chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat4chat5}}</p>
+                                        <small>{{coaching.cat4chat5cs}}</small><br>
+                                        <small>{{coaching.cat4chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat4chat6}}</p>
+                                        <small>{{coaching.cat4chat6cs}}</small><br>
+                                        <small>{{coaching.cat4chat6cy}}</small>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <h4>LEAD</h4>
+                            <table class="table">
+                                <tr>
+                                    <td class="qn">Was the appropriate lead generation used, and at the right time?</td>
+                                    <td>
+                                        <p>{{coaching.cat5chat1}}</p>
+                                        <small>{{coaching.cat5chat1cs}}</small><br>
+                                        <small>{{coaching.cat5chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat5chat2}}</p>
+                                        <small>{{coaching.cat5chat2cs}}</small><br>
+                                        <small>{{coaching.cat5chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat5chat3}}</p>
+                                        <small>{{coaching.cat5chat3cs}}</small><br>
+                                        <small>{{coaching.cat5chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat5chat4}}</p>
+                                        <small>{{coaching.cat5chat4cs}}</small><br>
+                                        <small>{{coaching.cat5chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat5chat5}}</p>
+                                        <small>{{coaching.cat5chat5cs}}</small><br>
+                                        <small>{{coaching.cat5chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat5chat6}}</p>
+                                        <small>{{coaching.cat5chat6cs}}</small><br>
+                                        <small>{{coaching.cat5chat6cy}}</small>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="qn">Did the lead generation encompass all of the guests needs?</td>
+                                    <td>
+                                        <p>{{coaching.cat6chat1}}</p>
+                                        <small>{{coaching.cat6chat1cs}}</small><br>
+                                        <small>{{coaching.cat6chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat6chat2}}</p>
+                                        <small>{{coaching.cat6chat2cs}}</small><br>
+                                        <small>{{coaching.cat6chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat6chat3}}</p>
+                                        <small>{{coaching.cat6chat3cs}}</small><br>
+                                        <small>{{coaching.cat6chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat6chat4}}</p>
+                                        <small>{{coaching.cat6chat4cs}}</small><br>
+                                        <small>{{coaching.cat6chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat6chat5}}</p>
+                                        <small>{{coaching.cat6chat5cs}}</small><br>
+                                        <small>{{coaching.cat6chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat6chat6}}</p>
+                                        <small>{{coaching.cat6chat6cs}}</small><br>
+                                        <small>{{coaching.cat6chat6cy}}</small>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="qn">Did the customer provide all contact information <br> OR was missing information properly gathered?</td>
+                                    <td>
+                                        <p>{{coaching.cat7chat1}}</p>
+                                        <small>{{coaching.cat7chat1cs}}</small><br>
+                                        <small>{{coaching.cat7chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat7chat2}}</p>
+                                        <small>{{coaching.cat7chat2cs}}</small><br>
+                                        <small>{{coaching.cat7chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat7chat3}}</p>
+                                        <small>{{coaching.cat7chat3cs}}</small><br>
+                                        <small>{{coaching.cat7chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat7chat4}}</p>
+                                        <small>{{coaching.cat7chat4cs}}</small><br>
+                                        <small>{{coaching.cat7chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat7chat5}}</p>
+                                        <small>{{coaching.cat7chat5cs}}</small><br>
+                                        <small>{{coaching.cat7chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat7chat6}}</p>
+                                        <small>{{coaching.cat7chat6cs}}</small><br>
+                                        <small>{{coaching.cat7chat6cy}}</small>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="qn">Was the chat properly recapped/ended?</td>
+                                    <td>
+                                        <p>{{coaching.cat8chat1}}</p>
+                                        <small>{{coaching.cat8chat1cs}}</small><br>
+                                        <small>{{coaching.cat8chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat8chat2}}</p>
+                                        <small>{{coaching.cat8chat2cs}}</small><br>
+                                        <small>{{coaching.cat8chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat8chat3}}</p>
+                                        <small>{{coaching.cat8chat3cs}}</small><br>
+                                        <small>{{coaching.cat8chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat8chat4}}</p>
+                                        <small>{{coaching.cat8chat4cs}}</small><br>
+                                        <small>{{coaching.cat8chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat8chat5}}</p>
+                                        <small>{{coaching.cat8chat5cs}}</small><br>
+                                        <small>{{coaching.cat8chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat8chat6}}</p>
+                                        <small>{{coaching.cat8chat6cs}}</small><br>
+                                        <small>{{coaching.cat8chat6cy}}</small>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div>
+                            <h4>LEAD FORM</h4>
+                            <table class="table">
+                                <tr>
+                                    <td class="qn">Was it sent to the correct department? If PSA, was it dispositioned correctly?</td>
+                                    <td>
+                                        <p>{{coaching.cat9chat1}}</p>
+                                        <small>{{coaching.cat9chat1cs}}</small><br>
+                                        <small>{{coaching.cat9chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat9chat2}}</p>
+                                        <small>{{coaching.cat9chat2cs}}</small><br>
+                                        <small>{{coaching.cat9chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat9chat3}}</p>
+                                        <small>{{coaching.cat9chat3cs}}</small><br>
+                                        <small>{{coaching.cat9chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat9chat4}}</p>
+                                        <small>{{coaching.cat9chat4cs}}</small><br>
+                                        <small>{{coaching.cat9chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat9chat5}}</p>
+                                        <small>{{coaching.cat9chat5cs}}</small><br>
+                                        <small>{{coaching.cat9chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat9chat6}}</p>
+                                        <small>{{coaching.cat9chat6cs}}</small><br>
+                                        <small>{{coaching.cat9chat6cy}}</small>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="qn">Was everything within the lead filled out properly?</td>
+                                    <td>
+                                        <p>{{coaching.cat10chat1}}</p>
+                                        <small>{{coaching.cat10chat1cs}}</small><br>
+                                        <small>{{coaching.cat10chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat10chat2}}</p>
+                                        <small>{{coaching.cat10chat2cs}}</small><br>
+                                        <small>{{coaching.cat10chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat10chat3}}</p>
+                                        <small>{{coaching.cat10chat3cs}}</small><br>
+                                        <small>{{coaching.cat10chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat10chat4}}</p>
+                                        <small>{{coaching.cat10chat4cs}}</small><br>
+                                        <small>{{coaching.cat10chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat10chat5}}</p>
+                                        <small>{{coaching.cat10chat5cs}}</small><br>
+                                        <small>{{coaching.cat10chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat10chat6}}</p>
+                                        <small>{{coaching.cat10chat6cs}}</small><br>
+                                        <small>{{coaching.cat10chat6cy}}</small>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <h4>TIMING</h4>
+                            <table class="table">
+                                <tr>
+                                    <td class="qn">Greeting</td>
+                                    <td>
+                                        <p>{{coaching.cat11chat1}}</p>
+                                        <small>{{coaching.cat11chat1cs}}</small><br>
+                                        <small>{{coaching.cat11chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat11chat2}}</p>
+                                        <small>{{coaching.cat11chat2cs}}</small><br>
+                                        <small>{{coaching.cat11chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat11chat3}}</p>
+                                        <small>{{coaching.cat11chat3cs}}</small><br>
+                                        <small>{{coaching.cat11chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat11chat4}}</p>
+                                        <small>{{coaching.cat11chat4cs}}</small><br>
+                                        <small>{{coaching.cat11chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat11chat5}}</p>
+                                        <small>{{coaching.cat11chat5cs}}</small><br>
+                                        <small>{{coaching.cat11chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat11chat6}}</p>
+                                        <small>{{coaching.cat11chat6cs}}</small><br>
+                                        <small>{{coaching.cat11chat6cy}}</small>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="qn">Responses</td>
+                                    <td>
+                                        <p>{{coaching.cat12chat1}}</p>
+                                        <small>{{coaching.cat12chat1cs}}</small><br>
+                                        <small>{{coaching.cat12chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat12chat2}}</p>
+                                        <small>{{coaching.cat12chat2cs}}</small><br>
+                                        <small>{{coaching.cat12chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat12chat3}}</p>
+                                        <small>{{coaching.cat12chat3cs}}</small><br>
+                                        <small>{{coaching.cat12chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat12chat4}}</p>
+                                        <small>{{coaching.cat12chat4cs}}</small><br>
+                                        <small>{{coaching.cat12chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat12chat5}}</p>
+                                        <small>{{coaching.cat12chat5cs}}</small><br>
+                                        <small>{{coaching.cat12chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat12chat6}}</p>
+                                        <small>{{coaching.cat12chat6cs}}</small><br>
+                                        <small>{{coaching.cat12chat6cy}}</small>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="qn">Sit Time</td>
+                                    <td>
+                                        <p>{{coaching.cat13chat1}}</p>
+                                        <small>{{coaching.cat13chat1cs}}</small><br>
+                                        <small>{{coaching.cat13chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat13chat2}}</p>
+                                        <small>{{coaching.cat13chat2cs}}</small><br>
+                                        <small>{{coaching.cat13chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat13chat3}}</p>
+                                        <small>{{coaching.cat13chat3cs}}</small><br>
+                                        <small>{{coaching.cat13chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat13chat4}}</p>
+                                        <small>{{coaching.cat13chat4cs}}</small><br>
+                                        <small>{{coaching.cat13chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat13chat5}}</p>
+                                        <small>{{coaching.cat13chat5cs}}</small><br>
+                                        <small>{{coaching.cat13chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat13chat6}}</p>
+                                        <small>{{coaching.cat13chat6cs}}</small><br>
+                                        <small>{{coaching.cat13chat6cy}}</small>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <h4>CUSTOMER EXPERIENCE</h4>
+                            <table class="table">
+                                <tr>
+                                    <td class="qn">Were there less than 3 grammatical mistakes?</td>
+                                    <td>
+                                        <p>{{coaching.cat14chat1}}</p>
+                                        <small>{{coaching.cat14chat1cs}}</small><br>
+                                        <small>{{coaching.cat14chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat14chat2}}</p>
+                                        <small>{{coaching.cat14chat2cs}}</small><br>
+                                        <small>{{coaching.cat14chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat14chat3}}</p>
+                                        <small>{{coaching.cat14chat3cs}}</small><br>
+                                        <small>{{coaching.cat14chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat14chat4}}</p>
+                                        <small>{{coaching.cat14chat4cs}}</small><br>
+                                        <small>{{coaching.cat14chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat14chat5}}</p>
+                                        <small>{{coaching.cat14chat5cs}}</small><br>
+                                        <small>{{coaching.cat14chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat14chat6}}</p>
+                                        <small>{{coaching.cat14chat6cs}}</small><br>
+                                        <small>{{coaching.cat14chat6cy}}</small>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="qn">Was the guest satisfied with the way the operator handled the chat?</td>
+                                    <td>
+                                        <p>{{coaching.cat15chat1}}</p>
+                                        <small>{{coaching.cat15chat1cs}}</small><br>
+                                        <small>{{coaching.cat15chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat15chat2}}</p>
+                                        <small>{{coaching.cat15chat2cs}}</small><br>
+                                        <small>{{coaching.cat15chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat15chat3}}</p>
+                                        <small>{{coaching.cat15chat3cs}}</small><br>
+                                        <small>{{coaching.cat15chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat15chat4}}</p>
+                                        <small>{{coaching.cat15chat4cs}}</small><br>
+                                        <small>{{coaching.cat15chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat15chat5}}</p>
+                                        <small>{{coaching.cat15chat5cs}}</small><br>
+                                        <small>{{coaching.cat15chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat15chat6}}</p>
+                                        <small>{{coaching.cat15chat6cs}}</small><br>
+                                        <small>{{coaching.cat15chat6cy}}</small>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="qn">Auto-fail</td>
+                                    <td>
+                                        <p>{{coaching.cat16chat1}}</p>
+                                        <small>{{coaching.cat16chat1cs}}</small><br>
+                                        <small>{{coaching.cat16chat1cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat16chat2}}</p>
+                                        <small>{{coaching.cat16chat2cs}}</small><br>
+                                        <small>{{coaching.cat16chat2cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat16chat3}}</p>
+                                        <small>{{coaching.cat16chat3cs}}</small><br>
+                                        <small>{{coaching.cat16chat3cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat16chat4}}</p>
+                                        <small>{{coaching.cat16chat4cs}}</small><br>
+                                        <small>{{coaching.cat16chat4cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat16chat5}}</p>
+                                        <small>{{coaching.cat16chat5cs}}</small><br>
+                                        <small>{{coaching.cat16chat5cy}}</small>
+                                    </td>
+                                    <td>
+                                        <p>{{coaching.cat16chat6}}</p>
+                                        <small>{{coaching.cat16chat6cs}}</small><br>
+                                        <small>{{coaching.cat16chat6cy}}</small>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+        </div>
+    </section>
+    <div class="container-lg" style="padding: 0px 100px">
+        <table class="table">
+            <tr>
+                <th>Overall Score</th>
+                <th>Chat 1 Score</th>
+                <th>Chat 2 Score</th>
+                <th>Chat 3 Score</th>
+                <th>Chat 4 Score</th>
+                <th>Chat 5 Score</th>
+                <th>Chat 6 Score</th>
+            </tr>
+            <tr>
+                <th>{{coaching.overall_score}}</th>
+                <td>{{coaching.chat1_total_score}}</td>
+                <td>{{coaching.chat2_total_score}}</td>
+                <td>{{coaching.chat3_total_score}}</td>
+                <td>{{coaching.chat4_total_score}}</td>
+                <td>{{coaching.chat5_total_score}}</td>
+                <td>{{coaching.chat6_total_score}}</td>
+            </tr>
+        </table>
+    </div>
+
+
+
+{% endblock %}

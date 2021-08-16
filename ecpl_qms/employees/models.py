@@ -4986,6 +4986,129 @@ class UnitedMortgageOutboundMonForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
+class CleanLivingHealthWellnessOutboundMonForm(models.Model):
+    process = models.CharField(default='Clean-Living Health and Wellness', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+class PractoOutboundMonForm(models.Model):
+    process = models.CharField(default='Practo Outbound', max_length=50)
+    type = models.CharField(default='Outbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Opening and Closing
+    oc_1 = models.IntegerField()
+    oc_2 = models.IntegerField()
+    oc_3 = models.IntegerField()
+    # SoftSkills
+    softskill_1 = models.IntegerField()
+    softskill_2 = models.IntegerField()
+    softskill_3 = models.IntegerField()
+    softskill_4 = models.IntegerField()
+    softskill_5 = models.IntegerField()
+    # Business and Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+    compliance_6 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    softskill_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
 
 ####################################
 ##############################################
@@ -7896,122 +8019,7 @@ class FLAMonitoringForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
-class GubagooMonitoringForm(models.Model):
-    process = models.CharField(default='Gubagoo', max_length=50)
-    type = models.CharField(default='Gubagoo', max_length=50)
 
-    cat1chat1 = models.CharField(max_length=10)
-    cat1chat2 = models.CharField(max_length=10)
-    cat1chat3 = models.CharField(max_length=10)
-    cat1chat4 = models.CharField(max_length=10)
-    cat1chat5 = models.CharField(max_length=10)
-
-    cat2chat1 = models.CharField(max_length=10)
-    cat2chat2 = models.CharField(max_length=10)
-    cat2chat3 = models.CharField(max_length=10)
-    cat2chat4 = models.CharField(max_length=10)
-    cat2chat5 = models.CharField(max_length=10)
-
-    cat3chat1 = models.CharField(max_length=10)
-    cat3chat2 = models.CharField(max_length=10)
-    cat3chat3 = models.CharField(max_length=10)
-    cat3chat4 = models.CharField(max_length=10)
-    cat3chat5 = models.CharField(max_length=10)
-
-    cat4chat1 = models.CharField(max_length=10)
-    cat4chat2 = models.CharField(max_length=10)
-    cat4chat3 = models.CharField(max_length=10)
-    cat4chat4 = models.CharField(max_length=10)
-    cat4chat5 = models.CharField(max_length=10)
-
-    cat5chat1 = models.CharField(max_length=10)
-    cat5chat2 = models.CharField(max_length=10)
-    cat5chat3 = models.CharField(max_length=10)
-    cat5chat4 = models.CharField(max_length=10)
-    cat5chat5 = models.CharField(max_length=10)
-
-    cat6chat1 = models.CharField(max_length=10)
-    cat6chat2 = models.CharField(max_length=10)
-    cat6chat3 = models.CharField(max_length=10)
-    cat6chat4 = models.CharField(max_length=10)
-    cat6chat5 = models.CharField(max_length=10)
-
-    cat7chat1 = models.CharField(max_length=10)
-    cat7chat2 = models.CharField(max_length=10)
-    cat7chat3 = models.CharField(max_length=10)
-    cat7chat4 = models.CharField(max_length=10)
-    cat7chat5 = models.CharField(max_length=10)
-
-    cat8chat1 = models.CharField(max_length=10)
-    cat8chat2 = models.CharField(max_length=10)
-    cat8chat3 = models.CharField(max_length=10)
-    cat8chat4 = models.CharField(max_length=10)
-    cat8chat5 = models.CharField(max_length=10)
-
-    cat9chat1 = models.CharField(max_length=10)
-    cat9chat2 = models.CharField(max_length=10)
-    cat9chat3 = models.CharField(max_length=10)
-    cat9chat4 = models.CharField(max_length=10)
-    cat9chat5 = models.CharField(max_length=10)
-
-    cat10chat1 = models.CharField(max_length=10)
-    cat10chat2 = models.CharField(max_length=10)
-    cat10chat3 = models.CharField(max_length=10)
-    cat10chat4 = models.CharField(max_length=10)
-    cat10chat5 = models.CharField(max_length=10)
-
-    cat11chat1 = models.CharField(max_length=10)
-    cat11chat2 = models.CharField(max_length=10)
-    cat11chat3 = models.CharField(max_length=10)
-    cat11chat4 = models.CharField(max_length=10)
-    cat11chat5 = models.CharField(max_length=10)
-
-    cat12chat1 = models.CharField(max_length=10)
-    cat12chat2 = models.CharField(max_length=10)
-    cat12chat3 = models.CharField(max_length=10)
-    cat12chat4 = models.CharField(max_length=10)
-    cat12chat5 = models.CharField(max_length=10)
-
-    cat13chat1 = models.CharField(max_length=10)
-    cat13chat2 = models.CharField(max_length=10)
-    cat13chat3 = models.CharField(max_length=10)
-    cat13chat4 = models.CharField(max_length=10)
-    cat13chat5 = models.CharField(max_length=10)
-
-    cat14chat1 = models.CharField(max_length=10)
-    cat14chat2 = models.CharField(max_length=10)
-    cat14chat3 = models.CharField(max_length=10)
-    cat14chat4 = models.CharField(max_length=10)
-    cat14chat5 = models.CharField(max_length=10)
-
-    cat15chat1 = models.CharField(max_length=10)
-    cat15chat2 = models.CharField(max_length=10)
-    cat15chat3 = models.CharField(max_length=10)
-    cat15chat4 = models.CharField(max_length=10)
-    cat15chat5 = models.CharField(max_length=10)
-
-    cat16chat1 = models.CharField(max_length=10)
-    cat16chat2 = models.CharField(max_length=10)
-    cat16chat3 = models.CharField(max_length=10)
-    cat16chat4 = models.CharField(max_length=10)
-    cat16chat5 = models.CharField(max_length=10)
-
-    cat1score = models.IntegerField()
-    cat2score = models.IntegerField()
-    cat3score = models.IntegerField()
-    cat4score = models.IntegerField()
-    cat5score = models.IntegerField()
-    cat6score = models.IntegerField()
-    cat7score = models.IntegerField()
-    cat8score = models.IntegerField()
-    cat9score = models.IntegerField()
-    cat10score = models.IntegerField()
-    cat11score = models.IntegerField()
-    cat12score = models.IntegerField()
-    cat13score = models.IntegerField()
-    cat14score = models.IntegerField()
-    cat15score = models.IntegerField()
-    cat16score = models.IntegerField()
 
 ############### Practo New Version1.1 #################
 
@@ -8076,6 +8084,441 @@ class PractoNewVersion(models.Model):
 
     def snippet(self):
         return self.comments[:100] + '...'
+
+class GubagooAuditForm(models.Model):
+
+    process = models.CharField(default='Gubagoo', max_length=50)
+    type = models.CharField(default='Gubagoo', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    trans_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone = models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+
+    chat1_id = models.CharField(max_length=50)
+    chat2_id = models.CharField(max_length=50)
+    chat3_id = models.CharField(max_length=50)
+    chat4_id = models.CharField(max_length=50)
+    chat5_id = models.CharField(max_length=50)
+    chat6_id = models.CharField(max_length=50)
+
+    cat1chat1 = models.CharField(max_length=10)
+    cat1chat2 = models.CharField(max_length=10)
+    cat1chat3 = models.CharField(max_length=10)
+    cat1chat4 = models.CharField(max_length=10)
+    cat1chat5 = models.CharField(max_length=10)
+    cat1chat6 = models.CharField(max_length=10)
+
+    cat2chat1 = models.CharField(max_length=10)
+    cat2chat2 = models.CharField(max_length=10)
+    cat2chat3 = models.CharField(max_length=10)
+    cat2chat4 = models.CharField(max_length=10)
+    cat2chat5 = models.CharField(max_length=10)
+    cat2chat6 = models.CharField(max_length=10)
+
+    cat3chat1 = models.CharField(max_length=10)
+    cat3chat2 = models.CharField(max_length=10)
+    cat3chat3 = models.CharField(max_length=10)
+    cat3chat4 = models.CharField(max_length=10)
+    cat3chat5 = models.CharField(max_length=10)
+    cat3chat6 = models.CharField(max_length=10)
+
+    cat4chat1 = models.CharField(max_length=10)
+    cat4chat2 = models.CharField(max_length=10)
+    cat4chat3 = models.CharField(max_length=10)
+    cat4chat4 = models.CharField(max_length=10)
+    cat4chat5 = models.CharField(max_length=10)
+    cat4chat6 = models.CharField(max_length=10)
+
+    cat5chat1 = models.CharField(max_length=10)
+    cat5chat2 = models.CharField(max_length=10)
+    cat5chat3 = models.CharField(max_length=10)
+    cat5chat4 = models.CharField(max_length=10)
+    cat5chat5 = models.CharField(max_length=10)
+    cat5chat6 = models.CharField(max_length=10)
+
+    cat6chat1 = models.CharField(max_length=10)
+    cat6chat2 = models.CharField(max_length=10)
+    cat6chat3 = models.CharField(max_length=10)
+    cat6chat4 = models.CharField(max_length=10)
+    cat6chat5 = models.CharField(max_length=10)
+    cat6chat6 = models.CharField(max_length=10)
+
+    cat7chat1 = models.CharField(max_length=10)
+    cat7chat2 = models.CharField(max_length=10)
+    cat7chat3 = models.CharField(max_length=10)
+    cat7chat4 = models.CharField(max_length=10)
+    cat7chat5 = models.CharField(max_length=10)
+    cat7chat6 = models.CharField(max_length=10)
+
+    cat8chat1 = models.CharField(max_length=10)
+    cat8chat2 = models.CharField(max_length=10)
+    cat8chat3 = models.CharField(max_length=10)
+    cat8chat4 = models.CharField(max_length=10)
+    cat8chat5 = models.CharField(max_length=10)
+    cat8chat6 = models.CharField(max_length=10)
+
+    cat9chat1 = models.CharField(max_length=10)
+    cat9chat2 = models.CharField(max_length=10)
+    cat9chat3 = models.CharField(max_length=10)
+    cat9chat4 = models.CharField(max_length=10)
+    cat9chat5 = models.CharField(max_length=10)
+    cat9chat6 = models.CharField(max_length=10)
+
+    cat10chat1 = models.CharField(max_length=10)
+    cat10chat2 = models.CharField(max_length=10)
+    cat10chat3 = models.CharField(max_length=10)
+    cat10chat4 = models.CharField(max_length=10)
+    cat10chat5 = models.CharField(max_length=10)
+    cat10chat6 = models.CharField(max_length=10)
+
+    cat11chat1 = models.CharField(max_length=10)
+    cat11chat2 = models.CharField(max_length=10)
+    cat11chat3 = models.CharField(max_length=10)
+    cat11chat4 = models.CharField(max_length=10)
+    cat11chat5 = models.CharField(max_length=10)
+    cat11chat6 = models.CharField(max_length=10)
+
+    cat12chat1 = models.CharField(max_length=10)
+    cat12chat2 = models.CharField(max_length=10)
+    cat12chat3 = models.CharField(max_length=10)
+    cat12chat4 = models.CharField(max_length=10)
+    cat12chat5 = models.CharField(max_length=10)
+    cat12chat6 = models.CharField(max_length=10)
+
+    cat13chat1 = models.CharField(max_length=10)
+    cat13chat2 = models.CharField(max_length=10)
+    cat13chat3 = models.CharField(max_length=10)
+    cat13chat4 = models.CharField(max_length=10)
+    cat13chat5 = models.CharField(max_length=10)
+    cat13chat6 = models.CharField(max_length=10)
+
+    cat14chat1 = models.CharField(max_length=10)
+    cat14chat2 = models.CharField(max_length=10)
+    cat14chat3 = models.CharField(max_length=10)
+    cat14chat4 = models.CharField(max_length=10)
+    cat14chat5 = models.CharField(max_length=10)
+    cat14chat6 = models.CharField(max_length=10)
+
+    cat15chat1 = models.CharField(max_length=10)
+    cat15chat2 = models.CharField(max_length=10)
+    cat15chat3 = models.CharField(max_length=10)
+    cat15chat4 = models.CharField(max_length=10)
+    cat15chat5 = models.CharField(max_length=10)
+    cat15chat6 = models.CharField(max_length=10)
+
+    cat16chat1 = models.CharField(max_length=10)
+    cat16chat2 = models.CharField(max_length=10)
+    cat16chat3 = models.CharField(max_length=10)
+    cat16chat4 = models.CharField(max_length=10)
+    cat16chat5 = models.CharField(max_length=10)
+    cat16chat6 = models.CharField(max_length=10)
+
+    cat1fscore = models.FloatField()
+    cat2fscore = models.FloatField()
+    cat3fscore = models.FloatField()
+    cat4fscore = models.FloatField()
+    cat5fscore = models.FloatField()
+    cat6fscore = models.FloatField()
+    cat7fscore = models.FloatField()
+    cat8fscore = models.FloatField()
+    cat9fscore = models.FloatField()
+    cat10fscore = models.FloatField()
+    cat11fscore = models.FloatField()
+    cat13fscore = models.FloatField()
+    cat14fscore = models.FloatField()
+    cat15fscore = models.FloatField()
+
+    total_failing_score = models.FloatField()
+
+    cat1score = models.FloatField()
+    cat2score = models.FloatField()
+    cat3score = models.FloatField()
+    cat4score = models.FloatField()
+    cat5score = models.FloatField()
+    cat6score = models.FloatField()
+    cat7score = models.FloatField()
+    cat8score = models.FloatField()
+    cat9score = models.FloatField()
+    cat10score = models.FloatField()
+    cat11score = models.FloatField()
+    cat12score = models.FloatField()
+    cat13score = models.FloatField()
+    cat14score = models.FloatField()
+    cat15score = models.FloatField()
+
+    cat1chat1cs = models.TextField()
+    cat1chat2cs = models.TextField()
+    cat1chat3cs = models.TextField()
+    cat1chat4cs = models.TextField()
+    cat1chat5cs = models.TextField()
+    cat1chat6cs = models.TextField()
+
+    cat1chat1cy = models.TextField()
+    cat1chat2cy = models.TextField()
+    cat1chat3cy = models.TextField()
+    cat1chat4cy = models.TextField()
+    cat1chat5cy = models.TextField()
+    cat1chat6cy = models.TextField()
+
+    cat2chat1cs = models.TextField()
+    cat2chat2cs = models.TextField()
+    cat2chat3cs = models.TextField()
+    cat2chat4cs = models.TextField()
+    cat2chat5cs = models.TextField()
+    cat2chat6cs = models.TextField()
+
+    cat2chat1cy = models.TextField()
+    cat2chat2cy = models.TextField()
+    cat2chat3cy = models.TextField()
+    cat2chat4cy = models.TextField()
+    cat2chat5cy = models.TextField()
+    cat2chat6cy = models.TextField()
+
+    cat3chat1cs = models.TextField()
+    cat3chat2cs = models.TextField()
+    cat3chat3cs = models.TextField()
+    cat3chat4cs = models.TextField()
+    cat3chat5cs = models.TextField()
+    cat3chat6cs = models.TextField()
+
+    cat3chat1cy = models.TextField()
+    cat3chat2cy = models.TextField()
+    cat3chat3cy = models.TextField()
+    cat3chat4cy = models.TextField()
+    cat3chat5cy = models.TextField()
+    cat3chat6cy = models.TextField()
+
+    cat4chat1cs = models.TextField()
+    cat4chat2cs = models.TextField()
+    cat4chat3cs = models.TextField()
+    cat4chat4cs = models.TextField()
+    cat4chat5cs = models.TextField()
+    cat4chat6cs = models.TextField()
+
+    cat4chat1cy = models.TextField()
+    cat4chat2cy = models.TextField()
+    cat4chat3cy = models.TextField()
+    cat4chat4cy = models.TextField()
+    cat4chat5cy = models.TextField()
+    cat4chat6cy = models.TextField()
+
+    cat5chat1cs = models.TextField()
+    cat5chat2cs = models.TextField()
+    cat5chat3cs = models.TextField()
+    cat5chat4cs = models.TextField()
+    cat5chat5cs = models.TextField()
+    cat5chat6cs = models.TextField()
+
+    cat5chat1cy = models.TextField()
+    cat5chat2cy = models.TextField()
+    cat5chat3cy = models.TextField()
+    cat5chat4cy = models.TextField()
+    cat5chat5cy = models.TextField()
+    cat5chat6cy = models.TextField()
+
+    cat6chat1cs = models.TextField()
+    cat6chat2cs = models.TextField()
+    cat6chat3cs = models.TextField()
+    cat6chat4cs = models.TextField()
+    cat6chat5cs = models.TextField()
+    cat6chat6cs = models.TextField()
+
+    cat6chat1cy = models.TextField()
+    cat6chat2cy = models.TextField()
+    cat6chat3cy = models.TextField()
+    cat6chat4cy = models.TextField()
+    cat6chat5cy = models.TextField()
+    cat6chat6cy = models.TextField()
+
+    cat7chat1cs = models.TextField()
+    cat7chat2cs = models.TextField()
+    cat7chat3cs = models.TextField()
+    cat7chat4cs = models.TextField()
+    cat7chat5cs = models.TextField()
+    cat7chat6cs = models.TextField()
+
+    cat7chat1cy = models.TextField()
+    cat7chat2cy = models.TextField()
+    cat7chat3cy = models.TextField()
+    cat7chat4cy = models.TextField()
+    cat7chat5cy = models.TextField()
+    cat7chat6cy = models.TextField()
+
+    cat8chat1cs = models.TextField()
+    cat8chat2cs = models.TextField()
+    cat8chat3cs = models.TextField()
+    cat8chat4cs = models.TextField()
+    cat8chat5cs = models.TextField()
+    cat8chat6cs = models.TextField()
+
+    cat8chat1cy = models.TextField()
+    cat8chat2cy = models.TextField()
+    cat8chat3cy = models.TextField()
+    cat8chat4cy = models.TextField()
+    cat8chat5cy = models.TextField()
+    cat8chat6cy = models.TextField()
+
+    cat9chat1cs = models.TextField()
+    cat9chat2cs = models.TextField()
+    cat9chat3cs = models.TextField()
+    cat9chat4cs = models.TextField()
+    cat9chat5cs = models.TextField()
+    cat9chat6cs = models.TextField()
+
+    cat9chat1cy = models.TextField()
+    cat9chat2cy = models.TextField()
+    cat9chat3cy = models.TextField()
+    cat9chat4cy = models.TextField()
+    cat9chat5cy = models.TextField()
+    cat9chat6cy = models.TextField()
+
+    cat10chat1cs = models.TextField()
+    cat10chat2cs = models.TextField()
+    cat10chat3cs = models.TextField()
+    cat10chat4cs = models.TextField()
+    cat10chat5cs = models.TextField()
+    cat10chat6cs = models.TextField()
+
+    cat10chat1cy = models.TextField()
+    cat10chat2cy = models.TextField()
+    cat10chat3cy = models.TextField()
+    cat10chat4cy = models.TextField()
+    cat10chat5cy = models.TextField()
+    cat10chat6cy = models.TextField()
+
+    cat11chat1cs = models.TextField()
+    cat11chat2cs = models.TextField()
+    cat11chat3cs = models.TextField()
+    cat11chat4cs = models.TextField()
+    cat11chat5cs = models.TextField()
+    cat11chat6cs = models.TextField()
+
+    cat11chat1cy = models.TextField()
+    cat11chat2cy = models.TextField()
+    cat11chat3cy = models.TextField()
+    cat11chat4cy = models.TextField()
+    cat11chat5cy = models.TextField()
+    cat11chat6cy = models.TextField()
+
+    cat12chat1cs = models.TextField()
+    cat12chat2cs = models.TextField()
+    cat12chat3cs = models.TextField()
+    cat12chat4cs = models.TextField()
+    cat12chat5cs = models.TextField()
+    cat12chat6cs = models.TextField()
+
+    cat12chat1cy = models.TextField()
+    cat12chat2cy = models.TextField()
+    cat12chat3cy = models.TextField()
+    cat12chat4cy = models.TextField()
+    cat12chat5cy = models.TextField()
+    cat12chat6cy = models.TextField()
+
+    cat13chat1cs = models.TextField()
+    cat13chat2cs = models.TextField()
+    cat13chat3cs = models.TextField()
+    cat13chat4cs = models.TextField()
+    cat13chat5cs = models.TextField()
+    cat13chat6cs = models.TextField()
+
+    cat13chat1cy = models.TextField()
+    cat13chat2cy = models.TextField()
+    cat13chat3cy = models.TextField()
+    cat13chat4cy = models.TextField()
+    cat13chat5cy = models.TextField()
+    cat13chat6cy = models.TextField()
+
+    cat14chat1cs = models.TextField()
+    cat14chat2cs = models.TextField()
+    cat14chat3cs = models.TextField()
+    cat14chat4cs = models.TextField()
+    cat14chat5cs = models.TextField()
+    cat14chat6cs = models.TextField()
+
+    cat14chat1cy = models.TextField()
+    cat14chat2cy = models.TextField()
+    cat14chat3cy = models.TextField()
+    cat14chat4cy = models.TextField()
+    cat14chat5cy = models.TextField()
+    cat14chat6cy = models.TextField()
+
+    cat15chat1cs = models.TextField()
+    cat15chat2cs = models.TextField()
+    cat15chat3cs = models.TextField()
+    cat15chat4cs = models.TextField()
+    cat15chat5cs = models.TextField()
+    cat15chat6cs = models.TextField()
+
+    cat15chat1cy = models.TextField()
+    cat15chat2cy = models.TextField()
+    cat15chat3cy = models.TextField()
+    cat15chat4cy = models.TextField()
+    cat15chat5cy = models.TextField()
+    cat15chat6cy = models.TextField()
+
+    cat16chat1cs = models.TextField()
+    cat16chat2cs = models.TextField()
+    cat16chat3cs = models.TextField()
+    cat16chat4cs = models.TextField()
+    cat16chat5cs = models.TextField()
+    cat16chat6cs = models.TextField()
+
+    cat16chat1cy = models.TextField()
+    cat16chat2cy = models.TextField()
+    cat16chat3cy = models.TextField()
+    cat16chat4cy = models.TextField()
+    cat16chat5cy = models.TextField()
+    cat16chat6cy = models.TextField()
+
+    chat1_total_score = models.IntegerField()
+    chat2_total_score = models.IntegerField()
+    chat3_total_score = models.IntegerField()
+    chat4_total_score = models.IntegerField()
+    chat5_total_score = models.IntegerField()
+    chat6_total_score = models.IntegerField()
+
+    total_failing_perc = models.IntegerField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50, null=True)
+    week = models.CharField(max_length=20, null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
