@@ -6634,7 +6634,7 @@ def gubaGooNew(request):
         else:
             fatal = False
 
-        gubagoo = GubagooAuditForm(
+        gubagoo = GubagooAuditForm.objects.create(
 
         cat7chat1cy = cat7chat1cy,
         cat7chat2cy = cat7chat2cy,
@@ -6811,19 +6811,6 @@ def gubaGooNew(request):
             chat6_total_score=chat6_total_score,
 
             total_failing_perc = total_failing_perc,
-
-
-        associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                                    manager=manager_name, manager_id=manager_emp_id,
-                                    trans_date=trans_date, audit_date=audit_date,
-                                    campaign=campaign, concept=concept, zone=zone,
-                                   added_by=added_by,
-                                   overall_score=total_audit_score, category=category,
-                                   week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
-                                   )
-        gubagoo.save()
-
-        gubagoo = GubagooAuditForm(
 
             chat1_id=chat1_id,
             chat2_id=chat2_id,
@@ -7034,6 +7021,13 @@ def gubaGooNew(request):
             cat7chat4cs=cat7chat4cs,
             cat7chat5cs=cat7chat5cs,
             cat7chat6cs=cat7chat6cs,
+            associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+            manager=manager_name, manager_id=manager_emp_id,
+            trans_date=trans_date, audit_date=audit_date,
+            campaign=campaign, concept=concept, zone=zone,
+            added_by=added_by,
+            overall_score=total_audit_score, category=category,
+            week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
         )
 
         gubagoo.save()
