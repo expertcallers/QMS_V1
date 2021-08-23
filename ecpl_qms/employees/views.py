@@ -3493,7 +3493,7 @@ def exportAuditReport(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','conversation_id','customer_contact',
+                       'qa', 'am', 'team_lead', 'manager','conversation_id','customer_contact','training',
 
                         'Chat Opening (Greetings & being attentive) & Closing',
                         'FRTAT',
@@ -3530,7 +3530,7 @@ def exportAuditReport(request):
                 audit_date__range=[start_date, end_date],).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager','conversation_id','customer_contact',
+                'team_lead', 'manager','conversation_id','customer_contact','training',
                  'p_1',
                 'p_2',
                 'p_3',
@@ -4578,7 +4578,7 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','conversation_id','customer_contact',
+                       'qa', 'am', 'team_lead', 'manager','conversation_id','customer_contact','training',
 
                         'Chat Opening (Greetings & being attentive) & Closing',
                         'FRTAT',
@@ -4615,7 +4615,7 @@ def exportAuditReportQA(request):
                 audit_date__range=[start_date, end_date], qa=qa).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager','conversation_id','customer_contact',
+                'team_lead', 'manager','conversation_id','customer_contact','training',
                  'p_1',
                 'p_2',
                 'p_3',
@@ -7037,10 +7037,16 @@ def gubaGooNew(request):
         return redirect('/employees/qahome')
 
 
-
 def practoNewVersion(request):
 
     if request.method == 'POST':
+
+        # Training
+        training_status = request.POST['training']
+        if training_status == 'yes':
+            training = 'Yes'
+        elif training_status == 'no':
+            training = 'No'
 
         p_1 = int(request.POST['p1'])
         p_2 = int(request.POST['p2'])
@@ -7132,12 +7138,16 @@ def practoNewVersion(request):
                             p_8=p_8, p_9=p_9, p_10=p_10, p_11=p_11,p_12=p_12,p_13=p_13,p_14=p_14,
                             p_15=p_15,p_16=p_16,p_17=p_17,p_18=p_18,p_19=p_19,
 
+                           # Training
+                           training=training,
+
                            compliance_1=compliance_1, compliance_2=compliance_2,
                            areas_improvement=areas_improvement,
                            positives=positives, comments=comments,
                            added_by=added_by,
                            overall_score=overall_score, category=category,
-                           week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+                           week=week, am=am, fatal_count=no_of_fatals, fatal=fatal,
+
                            )
         domestic.save()
         return redirect('/employees/qahome')

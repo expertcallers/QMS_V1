@@ -8079,6 +8079,9 @@ class PractoNewVersion(models.Model):
     fatal_count = models.IntegerField(default=0)
     disput_status = models.BooleanField(default=False)
 
+    # Training >> only for practo Now
+    training = models.CharField(max_length=20, default='No')
+
     def __str__(self):
         return self.associate_name
 
