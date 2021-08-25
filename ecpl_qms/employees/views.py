@@ -43,6 +43,7 @@ list_of_monforms = [ # OutBound
                         AKDYInboundMonFormNew,AdityaBirlainboundMonForm,ABHindalcoInboundMonForm,
                         RainbowDiagnosticsInboundMonForm,DecentralizedVisionLTDInboundMonForm,
                         AmerisaveInboundMonForm,IEDHHInboundMonForm,ClearViewInboundMonForms,QuickAutoPartsInboundMonForms,
+                        LJHubInboundMonForms,
 
                         # Email/CHat
                         SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
@@ -1080,6 +1081,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'LJ Hub Inbound':
+        coaching = LJHubInboundMonForms.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -1700,6 +1706,10 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'LJ Hub Inbound':
+        coaching = LJHubInboundMonForms.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
     ############# Email/Chat ##############################
 
@@ -3024,6 +3034,10 @@ def exportAuditReport(request):
             response = exportinbound(QuickAutoPartsInboundMonForms)
             return response
 
+        elif campaign == 'LJ Hub Inbound':
+            response = exportinbound(LJHubInboundMonForms)
+            return response
+
         #########    Email/CHat ##########################
 
         def exportEmailChat(monform):
@@ -3516,8 +3530,6 @@ def exportAuditReport(request):
                        'Attitude(linked parameter Assurance(overall), Polite Interaction, Grammar)',
                        'Expectations: Setting correct expectations about issue resolution',
                        'ZTP(Zero Tolerance Policy)',
-
-
                        'status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
@@ -4105,6 +4117,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Quick Auto Parts Inbound':
             response = exportinbound(QuickAutoPartsInboundMonForms)
+            return response
+
+        elif campaign == 'LJ Hub Inbound':
+            response = exportinbound(LJHubInboundMonForms)
             return response
 
         #########    Email/CHat ##########################
@@ -5254,6 +5270,9 @@ def newSeriesInboundForms(request):
             inboundAddCoaching(QuickAutoPartsInboundMonForms)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'LJ Hub Inbound':
+            inboundAddCoaching(LJHubInboundMonForms)
+            return redirect('/employees/qahome')
 
     else:
         pass
