@@ -200,7 +200,6 @@ class MonitoringFormLeadsAadhyaSolution(models.Model):
 
 
 
-
 class AccutimeMonForm(models.Model):
     process = models.CharField(default='Accutime', max_length=50)
     type = models.CharField(default='Outbound', max_length=50)
@@ -8122,8 +8121,8 @@ class PractoNewVersion(models.Model):
     p_15 = models.IntegerField()
     p_16 = models.IntegerField()
     p_17 = models.IntegerField()
-    p_18 = models.IntegerField()
-    p_19 = models.IntegerField()
+    p_18 = models.IntegerField(null=True)
+    p_19 = models.IntegerField(null=True)
 
     compliance_1 = models.CharField(max_length=30)
     compliance_2 = models.CharField(max_length=30)

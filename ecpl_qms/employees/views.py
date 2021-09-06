@@ -3526,8 +3526,6 @@ def exportAuditReport(request):
                        'Curation',
                        'Average speed of answer',
                        'Chat Hold Procedure &: Taking Perrmission before putting the chat on hold',
-                       'Ownership(Linked parameter - Coherence, process followed, explanation skills, probing /being attentive)',
-                       'Attitude(linked parameter Assurance(overall), Polite Interaction, Grammar)',
                        'Expectations: Setting correct expectations about issue resolution',
                        'ZTP(Zero Tolerance Policy)',
                        'status',
@@ -3560,8 +3558,7 @@ def exportAuditReport(request):
                 'p_15',
                 'p_16',
                 'p_17',
-                'p_18',
-                'p_19',
+
                 'compliance_1',
                 'compliance_2',
 
@@ -4613,8 +4610,6 @@ def exportAuditReportQA(request):
                        'Curation',
                        'Average speed of answer',
                        'Chat Hold Procedure &: Taking Perrmission before putting the chat on hold',
-                       'Ownership(Linked parameter - Coherence, process followed, explanation skills, probing /being attentive)',
-                       'Attitude(linked parameter Assurance(overall), Polite Interaction, Grammar)',
                        'Expectations: Setting correct expectations about issue resolution',
                        'ZTP(Zero Tolerance Policy)',
 
@@ -4649,8 +4644,6 @@ def exportAuditReportQA(request):
                 'p_15',
                 'p_16',
                 'p_17',
-                'p_18',
-                'p_19',
                 'compliance_1',
                 'compliance_2',
 
@@ -7084,14 +7077,13 @@ def practoNewVersion(request):
         p_15 = int(request.POST['p15'])
         p_16 = int(request.POST['p16'])
         p_17 = int(request.POST['p17'])
-        p_18 = int(request.POST['p18'])
-        p_19 = int(request.POST['p19'])
+
 
         # Compliance
         compliance_1 = request.POST['fatal1']
         compliance_2 = request.POST['fatal2']
 
-        lst = [p_1,p_2,p_3,p_4,p_5,p_6,p_7,p_8,p_9,p_10,p_11,p_12,p_13,p_14,p_15,p_16,p_17,p_18,p_19]
+        lst = [p_1,p_2,p_3,p_4,p_5,p_6,p_7,p_8,p_9,p_10,p_11,p_12,p_13,p_14,p_15,p_16,p_17,]
 
         total_score = sum(lst)
 
@@ -7155,7 +7147,7 @@ def practoNewVersion(request):
 
                             p_1=p_1, p_2=p_2, p_3=p_3, p_4=p_4, p_5=p_5, p_6=p_6, p_7=p_7,
                             p_8=p_8, p_9=p_9, p_10=p_10, p_11=p_11,p_12=p_12,p_13=p_13,p_14=p_14,
-                            p_15=p_15,p_16=p_16,p_17=p_17,p_18=p_18,p_19=p_19,
+                            p_15=p_15,p_16=p_16,p_17=p_17,
 
                            # Training
                            training=training,
