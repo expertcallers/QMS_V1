@@ -3198,113 +3198,198 @@ def exportAuditReport(request):
 
             ########## other campaigns ##############
 
+
         elif campaign == 'Fame House':
 
             response = HttpResponse(content_type='application/ms-excel')
+
             response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+
             wb = xlwt.Workbook(encoding='utf-8')
+
             ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+
             # Sheet header, first row
+
             row_num = 0
+
             font_style = xlwt.XFStyle()
+
             font_style.font.bold = True
+
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+
                        'Fatal Count', 'qa', 'am', 'team_lead', 'manager', 'ticket_no', 'ticket_type',
 
-                       'Shipping product incorrectly-wrong item, no exchange just shipping product',
-                       'Responding to an escalated ticket/any ticket outside of agents skills/assignments',
-                       'Overly rude to customer',
-                       'Uses deragatory language or curse words',
-                       'Not escalating a situation/Not following proper escalation proceedure',
-                       'Double response-w/o addressing and apologizing, Sending same macro as last agent w/o edits',
+                       'Shipping product incorrectly',
 
-                       'Agent sent response as public reply:',
-                       'Agent greets customer by correct name',
-                       'Agent thanked the customer for emailing our team',
+                       'Incorrect grammar and spelling being used/illegible responses/Does not make sense.',
 
-                       'Agent addressed all questions asked:',
-                       'Agent did not deflect/Avoid any questions/Policy unnecessarily:',
-                       'Agent conveyed correct policy information to the customer:',
-                       'Agent conveyed correct product information to the customer:',
-                       'Agent established correct timeline to resolution :',
+                       'Blatantly incorrect or made up information provided to the customer',
 
-                       'Agent chose correct macro:',
-                       "Agent tailored macro to fit the customer's question:",
+                       'Sending internal notes as Public response',
 
-                       'Agent composed email with logical flow/Does the information contained make sense?',
-                       'Agent presented information with clear formatting: correct spelling and grammar throughout response',
-                       'All company processes and policies were followed',
+                       'Responding to any ticket outside of representatives skills/assignments',
 
-                       'Agent Correctly submitted ticket: Pending/On-Hold/Open/Solved',
-                       'Agent filled out left hand side of ticket Correctly:',
-                       'Agent merged tickets properly:',
-                       'Agent completed all SH process correctly:',
+                       'Unprofessional- tone,language or content. Uses derogatory language or curse words.',
 
-                       'The agent was not rude, insulting, or discouraging:',
-                       "Agent validated the customer's concern / questions / reason for contacting us:",
-                       'Agent offered genuine, sympathetic statement for all loss or perceived loss of service at the first opportunity:',
-                       'Agent did not accuse or place blame on the customer:',
+                       'Not escalating a situation/Not following proper escalation procedure/Responding to an escalated ticket',
 
-                       'Agent asked the customer if they could be of additional help:',
-                       'Agent used an appropriate closing:',
+                       'Responding to Spam',
+
+                       'Double response-w/o addressing and apologizing',
+
+                       'Responding with personal opinions outside of company policy',
+
+                       'Sending same macro as last agent w/o edits.',
+
+                       'Agent sent response as public reply',
+
+                       'Agent greeted customer by correct name',
+
+                       'Agent used correct appreciation/acknowledgement statement',
+
+                       'Agent composed email with logical flow that makes sense',
+
+                       'Agent presented information with clear formatting, correct spelling and grammar',
+
+                       'Agent chose correct macro(s).',
+
+                       "Agent tailored macro(s) to fit the customer's question or issue",
+
+                       'Agent asked the customer if he/she could be of additional help',
+
+                       'Agent used appropriate closing & signature',
+
+                       'Agent correctly identified and understood customer issue and responded accordingly (Issue Identification)',
+
+                       'Agent fully resolved inquiry/issue upon first contact when possible, or clearly communicated additional information/next steps for full resolution. (Issue Resolution)',
+
+                       'Agent did not deflect any questions/avoid policy communications unnecessarily. (Non-avoidance)',
+
+                       'Agent conveyed correct policy information to the customer',
+
+                       'Agent conveyed correct product information to the customer',
+
+                       'Agent established correct timeline to resolution/ CSR did not delay resolution. (Resolution Timeline)',
+
+                       'Rep fully and accurately helped the customer within their empowerments or escalated appropriately. (Agent Empowerments)',
+
+                       "Agent validated the customer's concern / questions / reason for contacting us",
+
+                       "Agent offered genuine acknowledgement and empathy for customer's concern",
+
+                       'Agent used positive tone and impartial language in all communications',
+
+                       "Representative answered in a tone consistent with UMG's core values and culture",
+
+                       'Agent accurately completed all necessary field on the ticket',
+
+                       'Agent merged tickets properly',
+
+                       'Agent performed all needed Shopify processes and accurately relayed all needed information and screenshots to customer.',
+
+                       'Agent completed all system processes correctly',
 
                        'status',
+
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
                 ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
 
             # Sheet body, remaining rows
+
             font_style = xlwt.XFStyle()
-            rows = FameHouseNewMonForm.objects.filter(audit_date__range=[start_date, end_date],  ).values_list(
+
+            rows = FameHouseNewMonForm.objects.filter(audit_date__range=[start_date, end_date],).values_list(
+
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+
                 'am', 'team_lead', 'manager', 'ticket_no', 'ticket_type',
 
                 'compliance_1',
+
                 'compliance_2',
+
                 'compliance_3',
+
                 'compliance_4',
+
                 'compliance_5',
+
                 'compliance_6',
 
-                'opening_1',
-                'opening_2',
-                'opening_3',
+                'compliance_7',
 
-                'cir_1',
-                'cir_2',
-                'cir_3',
-                'cir_4',
-                'cir_5',
+                'compliance_8',
+
+                'compliance_9',
+
+                'compliance_10',
+
+                'compliance_11',
+
+                'cr_1',
+
+                'opening_1',
+
+                'opening_2',
+
+                'comp_1',
+
+                'comp_2',
 
                 'macro_1',
+
                 'macro_2',
 
-                'formatting_1',
-                'formatting_2',
-                'formatting_3',
+                'closing_1',
 
-                'doc_1',
-                'doc_2',
-                'doc_3',
-                'doc_4',
+                'closing_2',
+
+                'cir_1',
+
+                'cir_2',
+
+                'cir_3',
+
+                'cir_4',
+
+                'cir_5',
+
+                'cir_6',
+
+                'cir_7',
 
                 'et_1',
+
                 'et_2',
+
                 'et_3',
+
                 'et_4',
 
-                'closing_1',
-                'closing_2',
+                'doc_1',
+
+                'doc_2',
+
+                'doc_3',
+
+                'doc_4',
 
                 'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
+
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+
                     rows]
 
             for row in rows:
+
                 row_num += 1
+
                 for col_num in range(len(row)):
                     ws.write(row_num, col_num, row[col_num], font_style)
 
@@ -4293,44 +4378,49 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count', 'qa', 'am', 'team_lead', 'manager', 'ticket_no', 'ticket_type',
+                        'Shipping product incorrectly',
+                       'Incorrect grammar and spelling being used/illegible responses/Does not make sense.',
+                       'Blatantly incorrect or made up information provided to the customer',
+                       'Sending internal notes as Public response',
+                       'Responding to any ticket outside of representatives skills/assignments',
+                       'Unprofessional- tone,language or content. Uses derogatory language or curse words.',
+                       'Not escalating a situation/Not following proper escalation procedure/Responding to an escalated ticket',
+                       'Responding to Spam',
+                       'Double response-w/o addressing and apologizing',
+                       'Responding with personal opinions outside of company policy',
+                       'Sending same macro as last agent w/o edits.',
 
-                       'Shipping product incorrectly-wrong item, no exchange just shipping product',
-                       'Responding to an escalated ticket/any ticket outside of agents skills/assignments',
-                       'Overly rude to customer',
-                       'Uses deragatory language or curse words',
-                       'Not escalating a situation/Not following proper escalation proceedure',
-                       'Double response-w/o addressing and apologizing, Sending same macro as last agent w/o edits',
+                       'Agent sent response as public reply',
 
-                       'Agent sent response as public reply:',
-                       'Agent greets customer by correct name',
-                       'Agent thanked the customer for emailing our team',
+                       'Agent greeted customer by correct name',
+                       'Agent used correct appreciation/acknowledgement statement',
 
-                       'Agent addressed all questions asked:',
-                       'Agent did not deflect/Avoid any questions/Policy unnecessarily:',
-                       'Agent conveyed correct policy information to the customer:',
-                       'Agent conveyed correct product information to the customer:',
-                       'Agent established correct timeline to resolution :',
+                       'Agent composed email with logical flow that makes sense',
+                       'Agent presented information with clear formatting, correct spelling and grammar',
 
-                       'Agent chose correct macro:',
-                       "Agent tailored macro to fit the customer's question:",
+                       'Agent chose correct macro(s).',
+                       "Agent tailored macro(s) to fit the customer's question or issue",
 
-                       'Agent composed email with logical flow/Does the information contained make sense?',
-                       'Agent presented information with clear formatting: correct spelling and grammar throughout response',
-                       'All company processes and policies were followed',
+                       'Agent asked the customer if he/she could be of additional help',
+                       'Agent used appropriate closing & signature',
 
-                       'Agent Correctly submitted ticket: Pending/On-Hold/Open/Solved',
-                       'Agent filled out left hand side of ticket Correctly:',
-                       'Agent merged tickets properly:',
-                       'Agent completed all SH process correctly:',
+                       'Agent correctly identified and understood customer issue and responded accordingly (Issue Identification)',
+                       'Agent fully resolved inquiry/issue upon first contact when possible, or clearly communicated additional information/next steps for full resolution. (Issue Resolution)',
+                       'Agent did not deflect any questions/avoid policy communications unnecessarily. (Non-avoidance)',
+                       'Agent conveyed correct policy information to the customer',
+                       'Agent conveyed correct product information to the customer',
+                       'Agent established correct timeline to resolution/ CSR did not delay resolution. (Resolution Timeline)',
+                       'Rep fully and accurately helped the customer within their empowerments or escalated appropriately. (Agent Empowerments)',
 
-                       'The agent was not rude, insulting, or discouraging:',
-                       "Agent validated the customer's concern / questions / reason for contacting us:",
-                       'Agent offered genuine, sympathetic statement for all loss or perceived loss of service at the first opportunity:',
-                       'Agent did not accuse or place blame on the customer:',
+                       "Agent validated the customer's concern / questions / reason for contacting us",
+                       "Agent offered genuine acknowledgement and empathy for customer's concern",
+                       'Agent used positive tone and impartial language in all communications',
+                       "Representative answered in a tone consistent with UMG's core values and culture",
 
-                       'Agent asked the customer if they could be of additional help:',
-                       'Agent used an appropriate closing:',
-
+                       'Agent accurately completed all necessary field on the ticket',
+                       'Agent merged tickets properly',
+                       'Agent performed all needed Shopify processes and accurately relayed all needed information and screenshots to customer.',
+                       'Agent completed all system processes correctly',
                        'status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
@@ -4349,36 +4439,42 @@ def exportAuditReportQA(request):
                 'compliance_4',
                 'compliance_5',
                 'compliance_6',
+                'compliance_7',
+                'compliance_8',
+                'compliance_9',
+                'compliance_10',
+                'compliance_11',
+
+                'cr_1',
 
                 'opening_1',
                 'opening_2',
-                'opening_3',
+
+                'comp_1',
+                'comp_2',
+
+                'macro_1',
+                'macro_2',
+
+                'closing_1',
+                'closing_2',
 
                 'cir_1',
                 'cir_2',
                 'cir_3',
                 'cir_4',
                 'cir_5',
-
-                'macro_1',
-                'macro_2',
-
-                'formatting_1',
-                'formatting_2',
-                'formatting_3',
-
-                'doc_1',
-                'doc_2',
-                'doc_3',
-                'doc_4',
+                'cir_6',
+                'cir_7',
 
                 'et_1',
                 'et_2',
                 'et_3',
                 'et_4',
-
-                'closing_1',
-                'closing_2',
+                'doc_1',
+                'doc_2',
+                'doc_3',
+                'doc_4',
 
                 'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
@@ -5715,7 +5811,14 @@ def fameHouseNew(request):
         compliance_4 = int(request.POST['compliance_4'])
         compliance_5 = int(request.POST['compliance_5'])
         compliance_6 = int(request.POST['compliance_6'])
-        compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4 + compliance_5 + compliance_6
+        compliance_7 = int(request.POST['compliance_7'])
+        compliance_8 = int(request.POST['compliance_8'])
+        compliance_9 = int(request.POST['compliance_9'])
+        compliance_10 = int(request.POST['compliance_10'])
+        compliance_11 = int(request.POST['compliance_11'])
+
+        compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4 + compliance_5 + compliance_6 + \
+                            compliance_7 + compliance_8 + compliance_9 + compliance_10 +compliance_11
 
         na_list = []
         sum_list = []
@@ -5728,37 +5831,39 @@ def fameHouseNew(request):
                 sum_list.append(int(pk))
                 return int(pk)
 
+        #Customer Response
+        cr_1 = scoreCalc(request.POST["cr_1"])
 
         # Opening
-
         opening_1 = scoreCalc(request.POST['opening_1'])
         opening_2 = scoreCalc(request.POST['opening_2'])
-        opening_3 = scoreCalc(request.POST['opening_3'])
 
-        #opening_total = opening_1+opening_2+opening_3
+        # Composition
+        comp_1 = scoreCalc(request.POST['comp_1'])
+        comp_2 = scoreCalc(request.POST['comp_2'])
+
+        #Macro
+        macro_1 = scoreCalc(request.POST['macro_1'])
+        macro_2 = scoreCalc(request.POST['macro_2'])
+
+        #Closing
+        closing_1 = scoreCalc(request.POST['closing_1'])
+        closing_2 = scoreCalc(request.POST['closing_2'])
 
         # Customer Issue Resolution
-
         cir_1 = scoreCalc(request.POST['cir_1'])
         cir_2 = scoreCalc(request.POST['cir_2'])
         cir_3 = scoreCalc(request.POST['cir_3'])
         cir_4 = scoreCalc(request.POST['cir_4'])
         cir_5 = scoreCalc(request.POST['cir_5'])
+        cir_6 = scoreCalc(request.POST['cir_6'])
+        cir_7 = scoreCalc(request.POST['cir_7'])
 
-        #cir_total = cir_1+cir_2+cir_3+cir_4+cir_5
-
-        # Macro Usage
-        macro_1 = scoreCalc(request.POST['macro_1'])
-        macro_2 = scoreCalc(request.POST['macro_2'])
-
-        #macro_total = macro_1 + macro_2
-
-        # Formatting
-        formatting_1 = scoreCalc(request.POST['formatting_1'])
-        formatting_2 = scoreCalc(request.POST['formatting_2'])
-        formatting_3 = scoreCalc(request.POST['formatting_3'])
-
-       # formatting_total = formatting_1 + formatting_2 + formatting_3
+        # Ettiqt
+        et_1 = scoreCalc(request.POST['et_1'])
+        et_2 = scoreCalc(request.POST['et_2'])
+        et_3 = scoreCalc(request.POST['et_3'])
+        et_4 = scoreCalc(request.POST['et_4'])
 
         # Documentation
         doc_1 = scoreCalc(request.POST['doc_1'])
@@ -5766,24 +5871,9 @@ def fameHouseNew(request):
         doc_3 = scoreCalc(request.POST['doc_3'])
         doc_4 = scoreCalc(request.POST['doc_4'])
 
-       # doc_total= doc_1 + doc_2 + doc_3 + doc_4
 
-        # Etiquette
-        et_1 = scoreCalc(request.POST['et_1'])
-        et_2 = scoreCalc(request.POST['et_2'])
-        et_3 = scoreCalc(request.POST['et_3'])
-        et_4 = scoreCalc(request.POST['et_4'])
-
-       # et_total = et_1 + et_2 + et_3 + et_4
-
-        # Closing
-        closing_1 = scoreCalc(request.POST['closing_1'])
-        closing_2 = scoreCalc(request.POST['closing_2'])
-
-       # closing_total = closing_1 + closing_2
-
-
-        fatal_list=[compliance_1,compliance_2,compliance_3,compliance_4,compliance_5,compliance_6]
+        fatal_list=[compliance_1,compliance_2,compliance_3,compliance_4,compliance_5,compliance_6,
+                    compliance_7,compliance_8,compliance_9,compliance_10,compliance_11]
 
         fatal_list_count=[]
         for i in fatal_list:
@@ -5792,7 +5882,7 @@ def fameHouseNew(request):
         no_of_fatals=len(fatal_list_count)
 
 
-        if compliance_1 == 0 or compliance_2 ==0 or compliance_3==0 or compliance_4==0 or compliance_5==0 or compliance_6==0:
+        if compliance_1 == 0 or compliance_2 ==0 or compliance_3==0 or compliance_4==0 or compliance_5==0 or compliance_6==0 or compliance_7==0 or compliance_8==0 or compliance_9==0 or compliance_10==0 or compliance_11==0:
             overall_score=0
             fatal=True
         else:
@@ -5810,24 +5900,24 @@ def fameHouseNew(request):
 
         famehouse = FameHouseNewMonForm(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
                                      manager=manager_name,manager_id=manager_emp_id,am=am,
-
                                      trans_date=trans_date, audit_date=audit_date,ticket_no=ticket_no,
                                      campaign=campaign,
-                                     compliance_1=compliance_1,compliance_2=compliance_2,compliance_3=compliance_3,compliance_4=compliance_4,compliance_5=compliance_5,compliance_6=compliance_6,compliance_total=compliance_total,
-                                     opening_1=opening_1,opening_2=opening_2,opening_3=opening_3,
-                                     cir_1=cir_1,cir_2=cir_2,cir_3=cir_3,cir_4=cir_4,cir_5=cir_5,
+                                     compliance_1=compliance_1,compliance_2=compliance_2,compliance_3=compliance_3,compliance_4=compliance_4,
+                                     compliance_5=compliance_5,compliance_6=compliance_6,compliance_7=compliance_7,compliance_8=compliance_8,
+                                     compliance_9=compliance_9,compliance_10=compliance_10,compliance_11=compliance_11,compliance_total=compliance_total,
+                                     cr_1 = cr_1,
+                                     opening_1=opening_1,opening_2=opening_2,
+                                     comp_1=comp_1,comp_2=comp_2,
+                                     cir_1=cir_1,cir_2=cir_2,cir_3=cir_3,cir_4=cir_4,cir_5=cir_5,cir_6=cir_6,cir_7=cir_7,
                                      macro_1=macro_1,macro_2=macro_2,
-                                     formatting_1=formatting_1,formatting_2=formatting_2,formatting_3=formatting_3,
                                      doc_1=doc_1,doc_2=doc_2,doc_3=doc_3,doc_4=doc_4,
                                      et_1=et_1,et_2=et_2,et_3=et_3,et_4=et_4,
                                      closing_1=closing_1,closing_2=closing_2,
-
                                      areas_improvement=areas_improvement,
                                      positives=positives, comments=comments,
                                      added_by=added_by,ticket_type=ticket_type,
-
                                      category=category,overall_score=overall_score,
-                                            week=week,fatal=fatal,fatal_count=no_of_fatals
+                                     week=week,fatal=fatal,fatal_count=no_of_fatals
                                      )
 
         famehouse.save()

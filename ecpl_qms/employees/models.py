@@ -7937,15 +7937,12 @@ class FameHouseNewMonForm(models.Model):
     team_lead = models.CharField(max_length=50)
     ticket_no = models.CharField(max_length=50)
     ticket_type = models.CharField(max_length=50)
-
     trans_date = models.DateField()
     audit_date = models.DateField()
     campaign = models.CharField(max_length=100)
-
     # Mgt
     manager = models.CharField(max_length=50)
     manager_id = models.IntegerField()
-
     category = models.CharField(max_length=20)
 
     # Immediate fails:
@@ -7955,41 +7952,41 @@ class FameHouseNewMonForm(models.Model):
     compliance_4 = models.IntegerField(null=True)
     compliance_5 = models.IntegerField(null=True)
     compliance_6 = models.IntegerField(null=True)
+    compliance_7 = models.IntegerField(null=True)
+    compliance_8 = models.IntegerField(null=True)
+    compliance_9 = models.IntegerField(null=True)
+    compliance_10 = models.IntegerField(null=True)
+    compliance_11 = models.IntegerField(null=True)
 
+    #customer Response
+    cr_1 = models.CharField(max_length=10,null=True)
     #Opening
     opening_1 = models.CharField(max_length=10,null=True)
     opening_2 = models.CharField(max_length=10,null=True)
-    opening_3 = models.CharField(max_length=10,null=True)
-
+   #Composition
+    comp_1 = models.CharField(max_length=10, null=True)
+    comp_2 = models.CharField(max_length=10, null=True)
     #Customer Issue Resolution
-
     cir_1 = models.CharField(max_length=10,null=True)
     cir_2 = models.CharField(max_length=10,null=True)
     cir_3 = models.CharField(max_length=10,null=True)
     cir_4 = models.CharField(max_length=10,null=True)
     cir_5 = models.CharField(max_length=10,null=True)
-
+    cir_6 = models.CharField(max_length=10, null=True)
+    cir_7 = models.CharField(max_length=10, null=True)
     #Macro Usage
     macro_1 = models.CharField(max_length=10,null=True)
     macro_2 = models.CharField(max_length=10,null=True)
-
-    #Formatting
-    formatting_1 = models.CharField(max_length=10,null=True)
-    formatting_2 = models.CharField(max_length=10,null=True)
-    formatting_3 = models.CharField(max_length=10,null=True)
-
     #Documentation
     doc_1 = models.CharField(max_length=10,null=True)
     doc_2 = models.CharField(max_length=10,null=True)
     doc_3 = models.CharField(max_length=10,null=True)
     doc_4 = models.CharField(max_length=10,null=True)
-
     #Etiquette
     et_1 = models.CharField(max_length=10,null=True)
     et_2 = models.CharField(max_length=10,null=True)
     et_3 = models.CharField(max_length=10,null=True)
     et_4 = models.CharField(max_length=10,null=True)
-
     #Closing
     closing_1 = models.CharField(max_length=10,null=True)
     closing_2 = models.CharField(max_length=10,null=True)
@@ -8019,7 +8016,6 @@ class FameHouseNewMonForm(models.Model):
     ##############
     fatal=models.BooleanField(default=False)
     fatal_count=models.IntegerField(default=0)
-
     disput_status=models.BooleanField(default=False)
 
 
