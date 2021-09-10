@@ -35,6 +35,7 @@ list_of_monforms = [ # OutBound
                         ApexCommunicationsOutboundMonForm,LawOfficesOutboundMonForm,WokeUpEnergyOutboundMonForm,
                         FinnesseMortgageOutboundMonForm,
                         UnitedMortgageOutboundMonForm,CleanLivingHealthWellnessOutboundMonForm,PractoOutboundMonForm,
+                        ImaginariumOutboundMonForm,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -44,6 +45,7 @@ list_of_monforms = [ # OutBound
                         RainbowDiagnosticsInboundMonForm,DecentralizedVisionLTDInboundMonForm,
                         AmerisaveInboundMonForm,IEDHHInboundMonForm,ClearViewInboundMonForms,QuickAutoPartsInboundMonForms,
                         LJHubInboundMonForms,
+                        ObtheraIncInboundMonForms,
 
                         # Email/CHat
                         SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
@@ -979,6 +981,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Imaginarium Outbound':
+        coaching = ImaginariumOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1083,6 +1090,11 @@ def coachingViewAgents(request,process,pk):
 
     elif process_name == 'LJ Hub Inbound':
         coaching = LJHubInboundMonForms.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Obthera Inc':
+        coaching = ObtheraIncInboundMonForms.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
@@ -1604,6 +1616,11 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Imaginarium Outbound':
+        coaching = ImaginariumOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1710,6 +1727,12 @@ def coachingViewQaDetailed(request,process,pk):
         coaching = LJHubInboundMonForms.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Obthera Inc':
+        coaching = ObtheraIncInboundMonForms.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
 
     ############# Email/Chat ##############################
 
@@ -2880,6 +2903,10 @@ def exportAuditReport(request):
             response = exportAadyaseries(PractoOutboundMonForm)
             return response
 
+        elif campaign == 'Imaginarium Outbound':
+            response = exportAadyaseries(ImaginariumOutboundMonForm)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -3036,6 +3063,10 @@ def exportAuditReport(request):
 
         elif campaign == 'LJ Hub Inbound':
             response = exportinbound(LJHubInboundMonForms)
+            return response
+
+        elif campaign == 'Obthera Inc':
+            response = exportinbound(ObtheraIncInboundMonForms)
             return response
 
         #########    Email/CHat ##########################
@@ -3280,6 +3311,7 @@ def exportAuditReport(request):
                        "Agent offered genuine acknowledgement and empathy for customer's concern",
 
                        'Agent used positive tone and impartial language in all communications',
+                       'Agent was professional and courteous',
 
                        "Representative answered in a tone consistent with UMG's core values and culture",
 
@@ -3369,6 +3401,7 @@ def exportAuditReport(request):
                 'et_3',
 
                 'et_4',
+                'et_5',
 
                 'doc_1',
 
@@ -4046,6 +4079,10 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(PractoOutboundMonForm)
             return response
 
+        elif campaign == 'Imaginarium Outbound':
+            response = exportAadyaseries(ImaginariumOutboundMonForm)
+            return response
+
 
         ######## Inbound ###############################
 
@@ -4203,6 +4240,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'LJ Hub Inbound':
             response = exportinbound(LJHubInboundMonForms)
+            return response
+
+        elif campaign == 'Obthera Inc':
+            response = exportinbound(ObtheraIncInboundMonForms)
             return response
 
         #########    Email/CHat ##########################
@@ -4415,6 +4456,7 @@ def exportAuditReportQA(request):
                        "Agent validated the customer's concern / questions / reason for contacting us",
                        "Agent offered genuine acknowledgement and empathy for customer's concern",
                        'Agent used positive tone and impartial language in all communications',
+                       'Agent was professional and courteous',
                        "Representative answered in a tone consistent with UMG's core values and culture",
 
                        'Agent accurately completed all necessary field on the ticket',
@@ -4471,6 +4513,8 @@ def exportAuditReportQA(request):
                 'et_2',
                 'et_3',
                 'et_4',
+                'et_5',
+
                 'doc_1',
                 'doc_2',
                 'doc_3',
@@ -5161,6 +5205,10 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(PractoOutboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Imaginarium Outbound':
+            newseriesAddCoaching(ImaginariumOutboundMonForm)
+            return redirect('/employees/qahome')
+
 
         else:
             pass
@@ -5361,6 +5409,10 @@ def newSeriesInboundForms(request):
 
         elif campaign_name == 'LJ Hub Inbound':
             inboundAddCoaching(LJHubInboundMonForms)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Obthera Inc':
+            inboundAddCoaching(ObtheraIncInboundMonForms)
             return redirect('/employees/qahome')
 
     else:
@@ -5864,6 +5916,7 @@ def fameHouseNew(request):
         et_2 = scoreCalc(request.POST['et_2'])
         et_3 = scoreCalc(request.POST['et_3'])
         et_4 = scoreCalc(request.POST['et_4'])
+        et_5 = scoreCalc(request.POST['et_5'])
 
         # Documentation
         doc_1 = scoreCalc(request.POST['doc_1'])
@@ -5911,7 +5964,7 @@ def fameHouseNew(request):
                                      cir_1=cir_1,cir_2=cir_2,cir_3=cir_3,cir_4=cir_4,cir_5=cir_5,cir_6=cir_6,cir_7=cir_7,
                                      macro_1=macro_1,macro_2=macro_2,
                                      doc_1=doc_1,doc_2=doc_2,doc_3=doc_3,doc_4=doc_4,
-                                     et_1=et_1,et_2=et_2,et_3=et_3,et_4=et_4,
+                                     et_1=et_1,et_2=et_2,et_3=et_3,et_4=et_4,et_5=et_5,
                                      closing_1=closing_1,closing_2=closing_2,
                                      areas_improvement=areas_improvement,
                                      positives=positives, comments=comments,
