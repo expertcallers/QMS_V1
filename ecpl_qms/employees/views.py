@@ -37,6 +37,7 @@ list_of_monforms = [ # OutBound
                         UnitedMortgageOutboundMonForm,CleanLivingHealthWellnessOutboundMonForm,PractoOutboundMonForm,
                         ImaginariumOutboundMonForm,
                         USJacleanOutboundForm,GlobalGalaxyOutboundForm,CommunityHealthProjectIncOutbound,EducatedAnalyticsLLCOutbound,
+                        NewDimensionPharmacyOutbound,StayNChargeOutbound,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -1007,6 +1008,17 @@ def coachingViewAgents(request,process,pk):
         coaching = EducatedAnalyticsLLCOutbound.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'New Dimension Pharmacy':
+        coaching = NewDimensionPharmacyOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Stay-N-Charge':
+        coaching = StayNChargeOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1666,6 +1678,18 @@ def coachingViewQaDetailed(request,process,pk):
         coaching = EducatedAnalyticsLLCOutbound.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'New Dimension Pharmacy':
+        coaching = NewDimensionPharmacyOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Stay-N-Charge':
+        coaching = StayNChargeOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+
 
     ########### Inbound ########################
 
@@ -2974,6 +2998,15 @@ def exportAuditReport(request):
             response = exportAadyaseries(EducatedAnalyticsLLCOutbound)
             return response
 
+        elif campaign == 'New Dimension Pharmacy':
+            response = exportAadyaseries(NewDimensionPharmacyOutbound)
+            return response
+
+        elif campaign == 'Stay-N-Charge':
+            response = exportAadyaseries(StayNChargeOutbound)
+            return response
+
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -4168,6 +4201,14 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Educated Analytics LLC':
             response = exportAadyaseries(EducatedAnalyticsLLCOutbound)
+            return response
+
+        elif campaign == 'New Dimension Pharmacy':
+            response = exportAadyaseries(NewDimensionPharmacyOutbound)
+            return response
+
+        elif campaign == 'Stay-N-Charge':
+            response = exportAadyaseries(StayNChargeOutbound)
             return response
 
 
@@ -5582,6 +5623,14 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'Educated Analytics LLC':
             newseriesAddCoaching(EducatedAnalyticsLLCOutbound)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'New Dimension Pharmacy':
+            newseriesAddCoaching(NewDimensionPharmacyOutbound)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Stay-N-Charge':
+            newseriesAddCoaching(StayNChargeOutbound)
             return redirect('/employees/qahome')
 
 
