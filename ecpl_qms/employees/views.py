@@ -3799,6 +3799,276 @@ def exportAuditReport(request):
 
             return response
 
+        elif campaign == 'Gubagoo':
+
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count','qa', 'am', 'team_lead', 'manager',
+                       'chat1_id', 'chat2_id', 'chat3_id', 'chat4_id', 'chat5_id', 'chat6_id',
+                       'chat 1 score','chat 2 score','chat 3 score','chat 4 score','chat 5 score','chat 6 score',
+
+                       'Was there a greeting? - chat1',
+                       'Was there a greeting? - chat2',
+                       'Was there a greeting? - chat3',
+                       'Was there a greeting? - chat4',
+                       'Was there a greeting? - chat5',
+                       'Was there a greeting? - chat6',
+
+                       'Proper greeting? - chat1',
+                       'Proper greeting? - chat2',
+                       'Proper greeting? - chat3',
+                       'Proper greeting? - chat4',
+                       'Proper greeting? - chat5',
+                       'Proper greeting? - chat6',
+
+                       'Did you ask all relevant questions? - chat1',
+                       'Did you ask all relevant questions? - chat2',
+                       'Did you ask all relevant questions? - chat3',
+                       'Did you ask all relevant questions? - chat4',
+                       'Did you ask all relevant questions? - chat5',
+                       'Did you ask all relevant questions? - chat6',
+
+                       'Were questions answered and/or relevant information/inventory pushed? - chat1',
+                       'Were questions answered and/or relevant information/inventory pushed? - chat2',
+                       'Were questions answered and/or relevant information/inventory pushed? - chat3',
+                       'Were questions answered and/or relevant information/inventory pushed? - chat4',
+                       'Were questions answered and/or relevant information/inventory pushed? - chat5',
+                       'Were questions answered and/or relevant information/inventory pushed? - chat6',
+
+                       'Was the appropriate lead generation used, and at the right time? - chat1',
+                       'Was the appropriate lead generation used, and at the right time? - chat2',
+                       'Was the appropriate lead generation used, and at the right time? - chat3',
+                       'Was the appropriate lead generation used, and at the right time? - chat4',
+                       'Was the appropriate lead generation used, and at the right time? - chat5',
+                       'Was the appropriate lead generation used, and at the right time? - chat6',
+
+                       'Did the lead generation encompass all of the guests needs? - chat1',
+                       'Did the lead generation encompass all of the guests needs? - chat2',
+                       'Did the lead generation encompass all of the guests needs? - chat3',
+                       'Did the lead generation encompass all of the guests needs? - chat4',
+                       'Did the lead generation encompass all of the guests needs? - chat5',
+                       'Did the lead generation encompass all of the guests needs? - chat6',
+
+                       'Did the customer provide all contact information OR was missing information properly gathered? - chat1',
+                       'Did the customer provide all contact information OR was missing information properly gathered? - chat2',
+                       'Did the customer provide all contact information OR was missing information properly gathered? - chat3',
+                       'Did the customer provide all contact information OR was missing information properly gathered? - chat4',
+                       'Did the customer provide all contact information OR was missing information properly gathered? - chat5',
+                       'Did the customer provide all contact information OR was missing information properly gathered? - chat6',
+
+                       'Was the chat properly recapped/ended? - chat1',
+                       'Was the chat properly recapped/ended? - chat2',
+                       'Was the chat properly recapped/ended? - chat3',
+                       'Was the chat properly recapped/ended? - chat4',
+                       'Was the chat properly recapped/ended? - chat5',
+                       'Was the chat properly recapped/ended? - chat6',
+
+                       'Was it sent to the correct department? If PSA, was it dispositioned correctly? - chat1',
+                       'Was it sent to the correct department? If PSA, was it dispositioned correctly? - chat2',
+                       'Was it sent to the correct department? If PSA, was it dispositioned correctly? - chat3',
+                       'Was it sent to the correct department? If PSA, was it dispositioned correctly? - chat4',
+                       'Was it sent to the correct department? If PSA, was it dispositioned correctly? - chat5',
+                       'Was it sent to the correct department? If PSA, was it dispositioned correctly? - chat6',
+
+                       'Was everything within the lead filled out properly? - chat1',
+                       'Was everything within the lead filled out properly? - chat2',
+                       'Was everything within the lead filled out properly? - chat3',
+                       'Was everything within the lead filled out properly? - chat4',
+                       'Was everything within the lead filled out properly? - chat5',
+                       'Was everything within the lead filled out properly? - chat6',
+
+                       'Greeting - chat1',
+                       'Greeting - chat2',
+                       'Greeting - chat3',
+                       'Greeting - chat4',
+                       'Greeting - chat5',
+                       'Greeting - chat6',
+
+                       'Responses - chat1',
+                       'Responses - chat2',
+                       'Responses - chat3',
+                       'Responses - chat4',
+                       'Responses - chat5',
+                       'Responses - chat6',
+
+                       'Sit Time - chat1',
+                       'Sit Time - chat2',
+                       'Sit Time - chat3',
+                       'Sit Time - chat4',
+                       'Sit Time - chat5',
+                       'Sit Time - chat6',
+
+                       'Were there less than 3 grammatical mistakes? - chat1',
+                       'Were there less than 3 grammatical mistakes? - chat2',
+                       'Were there less than 3 grammatical mistakes? - chat3',
+                       'Were there less than 3 grammatical mistakes? - chat4',
+                       'Were there less than 3 grammatical mistakes? - chat5',
+                       'Were there less than 3 grammatical mistakes? - chat6',
+
+                       'Was the guest satisfied with the way the operator handled the chat? - chat1',
+                       'Was the guest satisfied with the way the operator handled the chat? - chat2',
+                       'Was the guest satisfied with the way the operator handled the chat? - chat3',
+                       'Was the guest satisfied with the way the operator handled the chat? - chat4',
+                       'Was the guest satisfied with the way the operator handled the chat? - chat5',
+                       'Was the guest satisfied with the way the operator handled the chat? - chat6',
+
+                       'Auto-fail - chat1',
+                       'Auto-fail - chat2',
+                       'Auto-fail - chat3',
+                       'Auto-fail - chat4',
+                       'Auto-fail - chat5',
+                       'Auto-fail - chat6',
+
+                       'status',
+                       'closed_date', 'fatal',]
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = GubagooAuditForm.objects.filter(
+                audit_date__range=[start_date, end_date],).values_list(
+                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count',
+                'qa','am','team_lead', 'manager',
+                'chat1_id','chat2_id','chat3_id','chat4_id','chat5_id','chat6_id',
+                'chat1_total_score','chat2_total_score','chat3_total_score','chat4_total_score','chat5_total_score', 'chat6_total_score',
+
+                'cat1chat1',
+                'cat1chat2',
+                'cat1chat3',
+                'cat1chat4',
+                'cat1chat5',
+                'cat1chat6',
+
+                'cat2chat1',
+                'cat2chat2',
+                'cat2chat3',
+                'cat2chat4',
+                'cat2chat5',
+                'cat2chat6',
+
+                'cat3chat1',
+                'cat3chat2',
+                'cat3chat3',
+                'cat3chat4',
+                'cat3chat5',
+                'cat3chat6',
+
+                'cat4chat1',
+                'cat4chat2',
+                'cat4chat3',
+                'cat4chat4',
+                'cat4chat5',
+                'cat4chat6',
+
+                'cat5chat1',
+                'cat5chat2',
+                'cat5chat3',
+                'cat5chat4',
+                'cat5chat5',
+                'cat5chat6',
+
+                'cat6chat1',
+                'cat6chat2',
+                'cat6chat3',
+                'cat6chat4',
+                'cat6chat5',
+                'cat6chat6',
+
+                'cat7chat1',
+                'cat7chat2',
+                'cat7chat3',
+                'cat7chat4',
+                'cat7chat5',
+                'cat7chat6',
+
+                'cat8chat1',
+                'cat8chat2',
+                'cat8chat3',
+                'cat8chat4',
+                'cat8chat5',
+                'cat8chat6',
+
+                'cat9chat1',
+                'cat9chat2',
+                'cat9chat3',
+                'cat9chat4',
+                'cat9chat5',
+                'cat9chat6',
+
+                'cat10chat1',
+                'cat10chat2',
+                'cat10chat3',
+                'cat10chat4',
+                'cat10chat5',
+                'cat10chat6',
+
+                'cat11chat1',
+                'cat11chat2',
+                'cat11chat3',
+                'cat11chat4',
+                'cat11chat5',
+                'cat11chat6',
+
+                'cat12chat1',
+                'cat12chat2',
+                'cat12chat3',
+                'cat12chat4',
+                'cat12chat5',
+                'cat12chat6',
+
+                'cat13chat1',
+                'cat13chat2',
+                'cat13chat3',
+                'cat13chat4',
+                'cat13chat5',
+                'cat13chat6',
+
+                'cat14chat1',
+                'cat14chat2',
+                'cat14chat3',
+                'cat14chat4',
+                'cat14chat5',
+                'cat14chat6',
+
+                'cat15chat1',
+                'cat15chat2',
+                'cat15chat3',
+                'cat15chat4',
+                'cat15chat5',
+                'cat15chat6',
+
+                'cat16chat1',
+                'cat16chat2',
+                'cat16chat3',
+                'cat16chat4',
+                'cat16chat5',
+                'cat16chat6',
+
+                'status', 'closed_date', 'fatal')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
+
         else:
             return redirect(request, 'error-pages/export-error.html')
     else:
