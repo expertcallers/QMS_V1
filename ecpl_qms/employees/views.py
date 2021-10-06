@@ -38,6 +38,7 @@ list_of_monforms = [ # OutBound
                         ImaginariumOutboundMonForm,
                         USJacleanOutboundForm,GlobalGalaxyOutboundForm,CommunityHealthProjectIncOutbound,EducatedAnalyticsLLCOutbound,
                         NewDimensionPharmacyOutbound,StayNChargeOutbound,
+                        JHEnergyConsultantOutbound,MDRGroupLLCOutbound,CoreySmallInsuranceAgencyOutbound,EduvocateOutbound,CrossTowerOutbound,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -48,6 +49,7 @@ list_of_monforms = [ # OutBound
                         AmerisaveInboundMonForm,IEDHHInboundMonForm,ClearViewInboundMonForms,QuickAutoPartsInboundMonForms,
                         LJHubInboundMonForms,
                         ObtheraIncInboundMonForms,
+                        EduvocateInboundMonForms,CrossTowerInboundMonForms,
 
                         # Email/CHat
                         SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
@@ -57,6 +59,7 @@ list_of_monforms = [ # OutBound
                         Ri8BrainEmailMonForm,ScalaEmailMonForm,KalkiFashionEmailMonForm,MaxwellEmailMonForm,
                         TanaorJewelryEmailMonForm,DecentralizedVisionEmailChatMonForm,
                         USJacleanEmailChatForm,
+                        CrossTowerEmailChatForm,
 
                         #FLA
                         FLAMonitoringForm,
@@ -1019,6 +1022,31 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'J & H Energy Consultant':
+        coaching = JHEnergyConsultantOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'MDR Group LLC':
+        coaching = MDRGroupLLCOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Corey Small Insurance Agency Inc':
+        coaching = CoreySmallInsuranceAgencyOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Eduvocate Outbound':
+        coaching = EduvocateOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Cross Tower Outbound':
+        coaching = CrossTowerOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1131,6 +1159,16 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'Eduvocate Inbound':
+        coaching = EduvocateInboundMonForms.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Cross Tower Inbound':
+        coaching = CrossTowerInboundMonForms.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -1237,6 +1275,12 @@ def coachingViewAgents(request,process,pk):
         coaching = USJacleanEmailChatForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Cross Tower Email-Chat':
+        coaching = CrossTowerEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
 
     ################ Others ##########################################################
 
@@ -1689,6 +1733,30 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'J & H Energy Consultant':
+        coaching = JHEnergyConsultantOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'MDR Group LLC':
+        coaching = MDRGroupLLCOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Corey Small Insurance Agency Inc':
+        coaching = CoreySmallInsuranceAgencyOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Eduvocate Outbound':
+        coaching = EduvocateOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Cross Tower Outbound':
+        coaching = CrossTowerOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
 
     ########### Inbound ########################
@@ -1803,6 +1871,16 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'Eduvocate Inbound':
+        coaching = EduvocateInboundMonForms.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Cross Tower Inbound':
+        coaching = CrossTowerInboundMonForms.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
 
     ############# Email/Chat ##############################
 
@@ -1909,6 +1987,11 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'US Jaclean Email Chat':
         coaching = USJacleanEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Cross Tower Email-Chat':
+        coaching = CrossTowerEmailChatForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
@@ -3006,6 +3089,26 @@ def exportAuditReport(request):
             response = exportAadyaseries(StayNChargeOutbound)
             return response
 
+        elif campaign == 'J & H Energy Consultant':
+            response = exportAadyaseries(JHEnergyConsultantOutbound)
+            return response
+
+        elif campaign == 'MDR Group LLC':
+            response = exportAadyaseries(MDRGroupLLCOutbound)
+            return response
+
+        elif campaign == 'Corey Small Insurance Agency Inc':
+            response = exportAadyaseries(CoreySmallInsuranceAgencyOutbound)
+            return response
+
+        elif campaign == 'Eduvocate Outbound':
+            response = exportAadyaseries(EduvocateOutbound)
+            return response
+
+        elif campaign == 'Cross Tower Outbound':
+            response = exportAadyaseries(CrossTowerOutbound)
+            return response
+
 
         ######## Inbound ###############################
 
@@ -3169,6 +3272,14 @@ def exportAuditReport(request):
             response = exportinbound(ObtheraIncInboundMonForms)
             return response
 
+        elif campaign == 'Eduvocate Inbound':
+            response = exportinbound(EduvocateInboundMonForms)
+            return response
+
+        elif campaign == 'Cross Tower Inbound':
+            response = exportinbound(CrossTowerInboundMonForms)
+            return response
+
         #########    Email/CHat ##########################
 
         def exportEmailChat(monform):
@@ -3329,6 +3440,10 @@ def exportAuditReport(request):
 
         elif campaign == 'US Jaclean Email Chat':
             response = exportEmailChat(USJacleanEmailChatForm)
+            return response
+
+        elif campaign == 'Cross Tower Email-Chat':
+            response = exportEmailChat(CrossTowerEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -4481,6 +4596,27 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(StayNChargeOutbound)
             return response
 
+        elif campaign == 'J & H Energy Consultant':
+            response = exportAadyaseries(JHEnergyConsultantOutbound)
+            return response
+
+        elif campaign == 'MDR Group LLC':
+            response = exportAadyaseries(MDRGroupLLCOutbound)
+            return response
+
+        elif campaign == 'Corey Small Insurance Agency Inc':
+            response = exportAadyaseries(CoreySmallInsuranceAgencyOutbound)
+            return response
+
+        elif campaign == 'Eduvocate Outbound':
+            response = exportAadyaseries(EduvocateOutbound)
+            return response
+
+        elif campaign == 'Cross Tower Outbound':
+            response = exportAadyaseries(CrossTowerOutbound)
+            return response
+
+
 
         ######## Inbound ###############################
 
@@ -4644,6 +4780,14 @@ def exportAuditReportQA(request):
             response = exportinbound(ObtheraIncInboundMonForms)
             return response
 
+        elif campaign == 'Eduvocate Inbound':
+            response = exportinbound(EduvocateInboundMonForms)
+            return response
+
+        elif campaign == 'Cross Tower Inbound':
+            response = exportinbound(CrossTowerInboundMonForms)
+            return response
+
         #########    Email/CHat ##########################
 
         def exportEmailChat(monform):
@@ -4804,6 +4948,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'US Jaclean Email Chat':
             response = exportEmailChat(USJacleanEmailChatForm)
+            return response
+
+        elif campaign == 'Cross Tower Email-Chat':
+            response = exportEmailChat(CrossTowerEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -5903,6 +6051,26 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(StayNChargeOutbound)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'J & H Energy Consultant':
+            newseriesAddCoaching(JHEnergyConsultantOutbound)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'MDR Group LLC':
+            newseriesAddCoaching(MDRGroupLLCOutbound)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Corey Small Insurance Agency Inc':
+            newseriesAddCoaching(CoreySmallInsuranceAgencyOutbound)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Eduvocate Outbound':
+            newseriesAddCoaching(EduvocateOutbound)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Cross Tower Outbound':
+            newseriesAddCoaching(CrossTowerOutbound)
+            return redirect('/employees/qahome')
+
 
         else:
             pass
@@ -6107,6 +6275,14 @@ def newSeriesInboundForms(request):
 
         elif campaign_name == 'Obthera Inc':
             inboundAddCoaching(ObtheraIncInboundMonForms)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Eduvocate Inbound':
+            inboundAddCoaching(EduvocateInboundMonForms)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Cross Tower Inbound':
+            inboundAddCoaching(CrossTowerInboundMonForms)
             return redirect('/employees/qahome')
 
     else:
@@ -6316,6 +6492,10 @@ def domesticChatEmail(request):
 
         elif campaign_name == 'US Jaclean Email Chat':
             domesticEmailChatAddCoaching(USJacleanEmailChatForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Cross Tower Email-Chat':
+            domesticEmailChatAddCoaching(CrossTowerEmailChatForm)
             return redirect('/employees/qahome')
 
 
