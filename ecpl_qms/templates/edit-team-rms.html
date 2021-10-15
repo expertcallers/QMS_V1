@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block main %}
+{% load static %}
+
+<div class="container-lg">
+    <div class="row">
+        <div class="col-md-6">
+            <div>
+                <table>
+                    {% for c in campaigns %}
+                        <tr>
+                            <td>{{c.name}}</td>
+
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div>
+                <table>
+                    {% for c in profile %}
+                        <tr>
+                            <td>{{c.emp_name}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

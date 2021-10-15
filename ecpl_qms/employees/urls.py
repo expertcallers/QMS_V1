@@ -16,14 +16,12 @@ urlpatterns = [
 
     path('fame-house-new',fameHouseNew),
     path('gubagoo-audit-submit',gubaGooNew),
-
     path('ECPL-FLA-MONITORING_FORM',flaMonForm),
-
-
     path('Monitoring-Form-new-series-common',newSeriesMonForms),
     path('new-series-inbound',newSeriesInboundForms),
     path('email-chat-mon-form',domesticChatEmail),
     path('practo-new-version',practoNewVersion),
+    path('ilm-email-chat',ilmEMailChat),
 
 
 #### Credentials
@@ -98,6 +96,10 @@ urlpatterns = [
     path('campaigns',campaignDetails),
 
     path('allprofileupdate',AllProfileUpdate),
+
+
+    # Edit RMS
+    path('edit-team-rms',editTeamRMS),
 
 
 ]

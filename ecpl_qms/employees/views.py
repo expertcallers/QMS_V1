@@ -73,7 +73,8 @@ list_of_monforms = [ # OutBound
                         PractoNewVersion,
                         #Gubagoo
                         GubagooAuditForm,
-
+                        #ILM
+                        ILMakiageEmailChatForm,
                         ]
 
 
@@ -177,6 +178,7 @@ def logout_view(request):
 #Okay
 
 # Password Reset
+
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -1313,6 +1315,11 @@ def coachingViewAgents(request,process,pk):
         coaching = GubagooAuditForm.objects.get(id=pk)
         data = {'coaching':coaching}
         return render(request,'coaching-views/emp-coaching-view-gubagoo.html',data)
+
+    if process_name == 'IL Makiage':
+        coaching = ILMakiageEmailChatForm.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/emp-coaching-view-ILM.html',data)
     else:
         pass
 
@@ -2022,10 +2029,18 @@ def coachingViewQaDetailed(request,process,pk):
         coaching = PractoNewVersion.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-practo.html', data)
+
     if process_name == 'Gubagoo':
         coaching = GubagooAuditForm.objects.get(id=pk)
         data = {'coaching':coaching}
         return render(request,'coaching-views/qa-coaching-view-gubagoo.html',data)
+
+    if process_name == 'IL Makiage':
+        coaching = ILMakiageEmailChatForm.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/qa-coaching-view-ILM.html',data)
+
+
 
 
     else:
@@ -2670,6 +2685,9 @@ def selectCoachingForm(request):
             data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
             return render(request, 'mon-forms/practo.html', data)
 
+        elif campaign_type =='ILM':
+            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+            return render(request, 'mon-forms/ILM.html', data)
 
 
     else:
@@ -3448,6 +3466,69 @@ def exportAuditReport(request):
 
             ########## other campaigns ##############
 
+        elif campaign == 'IL Makiage':
+
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'Email/chat date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'ticket_id', 'Query Type',
+
+                       "Understanding and Solved Customer's Issue",
+                       'Gave alternatives when required/applicable & Displayed expert product knowledge',
+                       'Coupon code added/Edited Name/Values & Date//Personalised when applicable',
+                       'Answered all question effectively',
+                       'Resolved issue in a timely manner',
+                       'Categorized case properly/Check other Tickets &Previous communition Merged',
+                       'Appropriate use of macros',
+                       'Magento was utilized correctly',
+                       'Identified correct order type',
+
+                       'status',
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = ILMakiageEmailChatForm.objects.filter(
+                audit_date__range=[start_date, end_date]).values_list(
+                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager', 'customer_name', 'ticket_id', 'query_type',
+
+                's_1',
+                's_2',
+                's_3',
+                's_4',
+
+                'e_1',
+                'e_2',
+
+                'compliance_1',
+                'compliance_2',
+                'compliance_3',
+
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+            return response
 
         elif campaign == 'Fame House':
 
@@ -4955,6 +5036,70 @@ def exportAuditReportQA(request):
             return response
 
             ########## other campaigns ##############
+
+        elif campaign == 'IL Makiage':
+
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'Email/chat date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'ticket_id','Query Type',
+                       
+                       "Understanding and Solved Customer's Issue",
+                       'Gave alternatives when required/applicable & Displayed expert product knowledge',
+                       'Coupon code added/Edited Name/Values & Date//Personalised when applicable',
+                       'Answered all question effectively',
+                       'Resolved issue in a timely manner',
+                       'Categorized case properly/Check other Tickets &Previous communition Merged',
+                       'Appropriate use of macros',
+                       'Magento was utilized correctly',
+                       'Identified correct order type',
+                       
+                       'status',
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = ILMakiageEmailChatForm.objects.filter(
+                audit_date__range=[start_date, end_date], qa=qa).values_list(
+                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager', 'customer_name', 'ticket_id','query_type',
+
+                's_1',
+                's_2',
+                's_3',
+                's_4',
+        
+                'e_1',
+                'e_2',
+
+                'compliance_1',
+                'compliance_2',
+                'compliance_3',
+
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+            return response
 
         elif campaign == 'Fame House':
 
@@ -6506,6 +6651,101 @@ def domesticChatEmail(request):
         return redirect('/employees/qahome')
 
 # Other Forms
+
+def ilmEMailChat(request):
+    if request.method == 'POST':
+        category = 'ILM'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        customer_name = request.POST['customer']
+        ticket_id = request.POST['ticket_id']
+        trans_date = request.POST['trans_date']
+        audit_date = request.POST['auditdate']
+        campaign = request.POST['campaign']
+        concept = request.POST['concept']
+        zone = request.POST['zone']
+        query_type = request.POST['query_type']
+
+        #######################################
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
+        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+        manager_emp_id = manager_emp_id_obj.emp_id
+        manager_name = manager
+        #########################################
+
+        # Solution
+        s_1 = int(request.POST['s_1'])
+        s_2 = int(request.POST['s_2'])
+        s_3 = int(request.POST['s_3'])
+        s_4 = int(request.POST['s_4'])
+        s_total = s_1 + s_2 + s_3 +s_4
+
+        # Efficiency
+        e_1 = int(request.POST['e_1'])
+        e_2 = int(request.POST['e_2'])
+        e_total = e_1 + e_2
+
+        # Compliance
+        compliance_1 = int(request.POST['compliance_1'])
+        compliance_2 = int(request.POST['compliance_2'])
+        compliance_3 = int(request.POST['compliance_3'])
+        compliance_total = compliance_1 + compliance_2 + compliance_3
+        #################################################
+
+        fatal_list = [compliance_1, compliance_2, compliance_3]
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 0:
+                fatal_list_count.append(i)
+
+        no_of_fatals = len(fatal_list_count)
+
+        ####################################################
+
+        if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0:
+            overall_score = 0
+            fatal = True
+        else:
+            overall_score = s_total + e_total + compliance_total
+            fatal = False
+
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+        added_by = request.user.profile.emp_name
+
+        week = request.POST['week']
+        am = request.POST['am']
+
+        ilm = ILMakiageEmailChatForm(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                           manager=manager_name, manager_id=manager_emp_id,
+
+                           trans_date=trans_date, audit_date=audit_date, customer_name=customer_name,
+                           ticket_id=ticket_id,
+                           campaign=campaign, concept=concept, zone=zone,
+                           query_type = query_type,
+
+                           s_1=s_1, s_2=s_2, s_3=s_3,s_4=s_4,s_total=s_total,
+                           e_1=e_1, e_2=e_2, e_total=e_total,
+
+                           compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
+                           compliance_total=compliance_total,
+
+                           areas_improvement=areas_improvement,
+                           positives=positives, comments=comments,
+                           added_by=added_by,
+
+                           overall_score=overall_score, category=category,
+                           week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+                           )
+        ilm.save()
+        return redirect('/employees/qahome')
+    else:
+        pass
+
 
 def chatCoachingformEva(request):
     if request.method == 'POST':
@@ -8411,7 +8651,17 @@ def createUserAndProfile(request):
         return render(request,'create-user-profile.html',data)
 
 
+# EDit Team RM
+from django.db.models import Q
 
+
+
+def editTeamRMS(request):
+    campaigns = Campaigns.objects.all()
+    profile = Profile.objects.filter(Q(emp_desi = 'Team Leader') | Q(emp_desi = 'AM') | Q(emp_desi = 'Manager'))
+
+    data = {'campaigns':campaigns,'profile':profile}
+    return render(request,'edit-team-rms.html',data)
 
 
 
