@@ -46,19 +46,24 @@
                             {% for tl in tls %}
                             <option value="{{tl.emp_name}}" class="form-control">{{tl.emp_name}}</option>
                             {% endfor %}
+                            <option value="NA" class="form-control">NA</option>
                         </select>
 
                         <label for="">AM *</label>
                         <select name="am" id="" class="form-control" required>
                             {% for am in ams %}
                             <option value="{{am.emp_name}}" class="form-control">{{am.emp_name}}</option>
-                            {% endfor %} </select>
+                            {% endfor %}
+                            <option value="NA" class="form-control">NA</option>
+                        </select>
+
 
                         <label for="">Manager *</label>
                         <select name="manager" id="" class="form-control" required>
                             {% for m in managers %}
                             <option value="{{m.emp_name}}" class="form-control">{{m.emp_name}}</option>
                             {% endfor %}
+                            <option value="NA" class="form-control">NA</option>
                         </select>
                         <br>
                         <p style="color: #006c17;text-align: center;letter-spacing: 3px;font-weight: bold;">Please Authorise</p>
