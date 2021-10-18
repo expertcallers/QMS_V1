@@ -39,6 +39,7 @@ list_of_monforms = [ # OutBound
                         USJacleanOutboundForm,GlobalGalaxyOutboundForm,CommunityHealthProjectIncOutbound,EducatedAnalyticsLLCOutbound,
                         NewDimensionPharmacyOutbound,StayNChargeOutbound,
                         JHEnergyConsultantOutbound,MDRGroupLLCOutbound,CoreySmallInsuranceAgencyOutbound,EduvocateOutbound,CrossTowerOutbound,
+                        DawnFinancialOutbound,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -50,6 +51,7 @@ list_of_monforms = [ # OutBound
                         LJHubInboundMonForms,
                         ObtheraIncInboundMonForms,
                         EduvocateInboundMonForms,CrossTowerInboundMonForms,
+                        SanaLifeScienceInbound,
 
                         # Email/CHat
                         SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
@@ -59,7 +61,7 @@ list_of_monforms = [ # OutBound
                         Ri8BrainEmailMonForm,ScalaEmailMonForm,KalkiFashionEmailMonForm,MaxwellEmailMonForm,
                         TanaorJewelryEmailMonForm,DecentralizedVisionEmailChatMonForm,
                         USJacleanEmailChatForm,
-                        CrossTowerEmailChatForm,
+                        CrossTowerEmailChatForm,SanaLifeScienceEmailChatForm,
 
                         #FLA
                         FLAMonitoringForm,
@@ -1049,6 +1051,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Dawn Financial Outbound':
+        coaching = DawnFinancialOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1171,6 +1178,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'Sana Life Science Inbound':
+        coaching = SanaLifeScienceInbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -1276,6 +1288,11 @@ def coachingViewAgents(request,process,pk):
 
     elif process_name == 'Cross Tower Email-Chat':
         coaching = CrossTowerEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Sana Life Science Email-Chat':
+        coaching = SanaLifeScienceEmailChatForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
@@ -1766,6 +1783,11 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Dawn Financial Outbound':
+        coaching = DawnFinancialOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
 
     ########### Inbound ########################
 
@@ -1889,6 +1911,10 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'Sana Life Science Inbound':
+        coaching = SanaLifeScienceInbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
     ############# Email/Chat ##############################
 
@@ -1997,6 +2023,11 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Cross Tower Email-Chat':
         coaching = CrossTowerEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Sana Life Science Email-Chat':
+        coaching = SanaLifeScienceEmailChatForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
@@ -3132,6 +3163,10 @@ def exportAuditReport(request):
             response = exportAadyaseries(CrossTowerOutbound)
             return response
 
+        elif campaign == 'Dawn Financial Outbound':
+            response = exportAadyaseries(DawnFinancialOutbound)
+            return response
+
 
         ######## Inbound ###############################
 
@@ -3303,6 +3338,10 @@ def exportAuditReport(request):
             response = exportinbound(CrossTowerInboundMonForms)
             return response
 
+        elif campaign == 'Sana Life Science Inbound':
+            response = exportinbound(SanaLifeScienceInbound)
+            return response
+
         #########    Email/CHat ##########################
 
         def exportEmailChat(monform):
@@ -3465,6 +3504,12 @@ def exportAuditReport(request):
         elif campaign == 'Cross Tower Email-Chat':
             response = exportEmailChat(CrossTowerEmailChatForm)
             return response
+
+        elif campaign == 'Sana Life Science Email-Chat':
+            response = exportEmailChat(SanaLifeScienceEmailChatForm)
+            return response
+
+
 
             ########## other campaigns ##############
 
@@ -4783,6 +4828,10 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(CrossTowerOutbound)
             return response
 
+        elif campaign == 'Dawn Financial Outbound':
+            response = exportAadyaseries(DawnFinancialOutbound)
+            return response
+
 
 
         ######## Inbound ###############################
@@ -4955,6 +5004,12 @@ def exportAuditReportQA(request):
             response = exportinbound(CrossTowerInboundMonForms)
             return response
 
+        elif campaign == 'Sana Life Science Inbound':
+            response = exportinbound(SanaLifeScienceInbound)
+            return response
+
+
+
         #########    Email/CHat ##########################
 
         def exportEmailChat(monform):
@@ -5117,6 +5172,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Cross Tower Email-Chat':
             response = exportEmailChat(CrossTowerEmailChatForm)
+            return response
+
+        elif campaign == 'Sana Life Science Email-Chat':
+            response = exportEmailChat(SanaLifeScienceEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -6384,6 +6443,10 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(CrossTowerOutbound)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Dawn Financial Outbound':
+            newseriesAddCoaching(DawnFinancialOutbound)
+            return redirect('/employees/qahome')
+
 
         else:
             pass
@@ -6598,6 +6661,10 @@ def newSeriesInboundForms(request):
             inboundAddCoaching(CrossTowerInboundMonForms)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Sana Life Science Inbound':
+            inboundAddCoaching(SanaLifeScienceInbound)
+            return redirect('/employees/qahome')
+
     else:
         pass
 
@@ -6809,6 +6876,10 @@ def domesticChatEmail(request):
 
         elif campaign_name == 'Cross Tower Email-Chat':
             domesticEmailChatAddCoaching(CrossTowerEmailChatForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Sana Life Science Email-Chat':
+            domesticEmailChatAddCoaching(SanaLifeScienceEmailChatForm)
             return redirect('/employees/qahome')
 
 
