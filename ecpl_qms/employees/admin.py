@@ -81,6 +81,7 @@ admin.site.register(CleanLivingHealthWellnessOutboundMonForm)
 admin.site.register(PractoOutboundMonForm)
 admin.site.register(LJHubInboundMonForms)
 admin.site.register(ILMakiageEmailChatForm)
+admin.site.register(DigitalSwissGoldEmailChatMonForm)
 
 
 

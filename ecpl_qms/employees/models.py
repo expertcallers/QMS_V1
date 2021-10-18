@@ -9689,6 +9689,7 @@ class ILMakiageEmailChatForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
+
 ############# End of Forms ##############################
 
 class Empdata(models.Model):

@@ -4,8 +4,8 @@
 
 <section id="coachingview" style="padding:100px 50px">
     <div class="container-lg" style="background: white;padding: 30px 30px;">
-
-            <p>campaign - <span style="font-weight: bold;font-size: 20px;margin-left: 20px;">{{coaching.process}}</span></p>
+            <h2>Audit Details</h2>
+             <p>campaign - <span style="font-weight: bold;font-size: 20px;margin-left: 20px;">{{coaching.process}}</span></p>
             {% if coaching.overall_score == 100 %}
             <p>Result - <span style="font-weight: bold;font-size: 20px;margin-left: 20px;color:Green">Pass</span></p>
             {% else %}
@@ -44,7 +44,7 @@
                     <td>{{coaching.ce_2}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 55%;">Ownership on Emails / Chat</td>
+                    <td style="width: 55%;">Ownership on Emails / Chat Answered within 30 Seconds</td>
                     <td>{{coaching.ce_3}}</td>
                 </tr>
                 <tr>
@@ -94,8 +94,6 @@
 
             </table>
 
-
-
             <p><b>Compliance</b></p>
             <table class="table">
                 <tr>
@@ -103,11 +101,11 @@
                     <td>{{coaching.compliance_1}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 55%;">Verification process followed</td>
+                    <td style="width: 55%;">Follow up done on the Pending Tickets (Chats & Email)</td>
                     <td>{{coaching.compliance_2}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 55%;">Case Study</td>
+                    <td style="width: 55%;">Refund / Retruns / Escalation Updated in the google sheet</td>
                     <td>{{coaching.compliance_3}}</td>
                 </tr>
                 <tr>
@@ -146,7 +144,6 @@
                   <td>{{coaching.compliance_total}}</td>
                 </tr>
             </table>
-
         <div>
             <form class="login-form" action="/employees/coaching/signcoaching/{{coaching.id}}" method="post">
                           {% csrf_token %}
@@ -166,6 +163,7 @@
             </form>
 
         </div>
+
     </div>
 </section>
 {% endblock %}

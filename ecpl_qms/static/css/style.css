@@ -419,6 +419,11 @@ background: gold;
     font-size: 12px;
 }
 
+.practo_ans input[type="radio"] {
+
+    margin-right:30px;
+}
+
 .gb-view td {
     min-width:150px;
 

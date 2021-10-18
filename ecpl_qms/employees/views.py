@@ -1193,10 +1193,6 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
-    elif process_name == 'Digital Swiss Gold Email - Chat':
-        coaching = DigitalSwissGoldEmailChatMonForm.objects.get(id=pk)
-        data = {'coaching': coaching}
-        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
     elif process_name == 'Finesse Mortgage Email':
         coaching = FinesseMortgageEmailMonForm.objects.get(id=pk)
@@ -1320,6 +1316,11 @@ def coachingViewAgents(request,process,pk):
         coaching = ILMakiageEmailChatForm.objects.get(id=pk)
         data = {'coaching':coaching}
         return render(request,'coaching-views/emp-coaching-view-ILM.html',data)
+
+    if process_name == 'Digital Swiss Gold Email - Chat':
+        coaching = DigitalSwissGoldEmailChatMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-dsg-email-chat.html', data)
     else:
         pass
 
@@ -1911,10 +1912,7 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
-    elif process_name == 'Digital Swiss Gold Email - Chat':
-        coaching = DigitalSwissGoldEmailChatMonForm.objects.get(id=pk)
-        data = {'coaching': coaching}
-        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
 
     elif process_name == 'Finesse Mortgage Email':
         coaching = FinesseMortgageEmailMonForm.objects.get(id=pk)
@@ -2040,7 +2038,10 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching':coaching}
         return render(request,'coaching-views/qa-coaching-view-ILM.html',data)
 
-
+    if process_name == 'Digital Swiss Gold Email - Chat':
+        coaching = DigitalSwissGoldEmailChatMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-dsg-email-chat.html', data)
 
 
     else:
@@ -2688,6 +2689,10 @@ def selectCoachingForm(request):
         elif campaign_type =='ILM':
             data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
             return render(request, 'mon-forms/ILM.html', data)
+
+        elif campaign_type =='DSG':
+            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+            return render(request,'mon-forms/digital-swiss-gold-email-chat.html', data)
 
 
     else:
@@ -3400,9 +3405,6 @@ def exportAuditReport(request):
         elif campaign == 'Daniel Wellington - Chat - Email':
             response = exportEmailChat(DanielWellinChatEmailMonForm)
             return response
-        elif campaign == 'Digital Swiss Gold Email - Chat':
-            response = exportEmailChat(DigitalSwissGoldEmailChatMonForm)
-            return response
         elif campaign == 'Finesse Mortgage Email':
             response = exportEmailChat(FinesseMortgageEmailMonForm)
             return response
@@ -3465,6 +3467,90 @@ def exportAuditReport(request):
             return response
 
             ########## other campaigns ##############
+
+        elif campaign == 'Digital Swiss Gold Email - Chat':
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact',
+
+                       'Associate used the standard greeting format',
+                       'Appropriate responses ( acknowledging at the right time)',
+                       'Ownership on Emails / Chat Answered within 30 Seconds',
+                       'Personalization ( building a Raport, Addressing by name)',
+                       'Empathy/Sympathy',
+                       'Sentence structure',
+                       'Punctuation (full stop, comma, and brackets, used in writing to separate sentences)',
+                       'Grammar (Tense, Noun, etc.)',
+                       'Probing done whenever necessary',
+                       'Recap (Summarization of the conversation)',
+                       'Associate used the standard closing format',
+
+                       'Accurate Resolution/Information is provided as per the process',
+                       'Worked on the Ticket Assigned / Chat Responded within 5 mins',
+
+                       'Professional / Courtesy',
+                       'Follow up done on the Pending Tickets (Chats & Email)',
+                       'Refund / Retruns / Escalation Updated in the google sheet',
+                       'Process & Procedure Followed',
+                       'First Chat / Email Resolution',
+
+                       'status',
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = DigitalSwissGoldEmailChatMonForm.objects.filter(
+                audit_date__range=[start_date, end_date]).values_list(
+                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager', 'customer_name', 'customer_contact',
+
+                'ce_1',
+                'ce_2',
+                'ce_3',
+                'ce_4',
+                'ce_5',
+                'ce_6',
+                'ce_7',
+                'ce_8',
+                'ce_9',
+                'ce_10',
+                'ce_11',
+
+                'business_1',
+                'business_2',
+
+                'compliance_1',
+                'compliance_2',
+                'compliance_3',
+                'compliance_4',
+                'compliance_5',
+
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
 
         elif campaign == 'IL Makiage':
 
@@ -4971,9 +5057,7 @@ def exportAuditReportQA(request):
         elif campaign == 'Daniel Wellington - Chat - Email':
             response = exportEmailChat(DanielWellinChatEmailMonForm)
             return response
-        elif campaign == 'Digital Swiss Gold Email - Chat':
-            response = exportEmailChat(DigitalSwissGoldEmailChatMonForm)
-            return response
+
         elif campaign == 'Finesse Mortgage Email':
             response = exportEmailChat(FinesseMortgageEmailMonForm)
             return response
@@ -5036,6 +5120,90 @@ def exportAuditReportQA(request):
             return response
 
             ########## other campaigns ##############
+
+        elif campaign == 'Digital Swiss Gold Email - Chat':
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact',
+
+                       'Associate used the standard greeting format',
+                       'Appropriate responses ( acknowledging at the right time)',
+                       'Ownership on Emails / Chat Answered within 30 Seconds',
+                       'Personalization ( building a Raport, Addressing by name)',
+                       'Empathy/Sympathy',
+                       'Sentence structure',
+                       'Punctuation (full stop, comma, and brackets, used in writing to separate sentences)',
+                       'Grammar (Tense, Noun, etc.)',
+                       'Probing done whenever necessary',
+                       'Recap (Summarization of the conversation)',
+                       'Associate used the standard closing format',
+
+                       'Accurate Resolution/Information is provided as per the process',
+                       'Worked on the Ticket Assigned / Chat Responded within 5 mins',
+
+                       'Professional / Courtesy',
+                       'Follow up done on the Pending Tickets (Chats & Email)',
+                       'Refund / Retruns / Escalation Updated in the google sheet',
+                       'Process & Procedure Followed',
+                       'First Chat / Email Resolution',
+
+                       'status',
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = DigitalSwissGoldEmailChatMonForm.objects.filter(
+                audit_date__range=[start_date, end_date], qa=qa).values_list(
+                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager', 'customer_name', 'customer_contact',
+
+                'ce_1',
+                'ce_2',
+                'ce_3',
+                'ce_4',
+                'ce_5',
+                'ce_6',
+                'ce_7',
+                'ce_8',
+                'ce_9',
+                'ce_10',
+                'ce_11',
+
+                'business_1',
+                'business_2',
+
+                'compliance_1',
+                'compliance_2',
+                'compliance_3',
+                'compliance_4',
+                'compliance_5',
+
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
 
         elif campaign == 'IL Makiage':
 

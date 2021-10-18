@@ -4,13 +4,8 @@
 
 <section id="coachingview" style="padding:100px 50px">
     <div class="container-lg" style="background: white;padding: 30px 30px;">
-
-            <p>campaign - <span style="font-weight: bold;font-size: 20px;margin-left: 20px;">{{coaching.process}}</span></p>
-            {% if coaching.overall_score == 100 %}
-            <p>Result - <span style="font-weight: bold;font-size: 20px;margin-left: 20px;color:Green">Pass</span></p>
-            {% else %}
-            <p>Result - <span style="font-weight: bold;font-size: 20px;margin-left: 20px;color:Red">Fail</span></p>
-            {% endif %}
+            <h2>Audit Details</h2>
+            <p>campaign - {{coaching.campaign}}</p>
             <table class="table table-bordered">
                 <tr>
                     <td><b>Emp Name</b></td>
@@ -44,7 +39,7 @@
                     <td>{{coaching.ce_2}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 55%;">Ownership on Emails / Chat</td>
+                    <td style="width: 55%;">Ownership on Emails / Chat Answered within 30 Seconds</td>
                     <td>{{coaching.ce_3}}</td>
                 </tr>
                 <tr>
@@ -94,8 +89,6 @@
 
             </table>
 
-
-
             <p><b>Compliance</b></p>
             <table class="table">
                 <tr>
@@ -103,11 +96,11 @@
                     <td>{{coaching.compliance_1}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 55%;">Verification process followed</td>
+                    <td style="width: 55%;">Follow up done on the Pending Tickets (Chats & Email)</td>
                     <td>{{coaching.compliance_2}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 55%;">Case Study</td>
+                    <td style="width: 55%;">Refund / Retruns / Escalation Updated in the google sheet</td>
                     <td>{{coaching.compliance_3}}</td>
                 </tr>
                 <tr>
@@ -147,25 +140,6 @@
                 </tr>
             </table>
 
-        <div>
-            <form class="login-form" action="/employees/coaching/signcoaching/{{coaching.id}}" method="post">
-                          {% csrf_token %}
-                <label for="emp_comments">Employee Comments *</label><br>
-                <textarea name="emp_comments" id="emp_comments" cols="30" rows="5" required class="form-control"></textarea>
-                <input type="hidden" value="{{coaching.process}}" name="category">
-                <br>
-                <input class="btn btn-success" type="submit" value="Accept & Sign" style="width: 150px">
-            </form>
-            <br>
-            <form action="/employees/coaching-dispute/{{coaching.id}}" method="POST">
-                {% csrf_token %}
-                <label for="emp_comments_d">Employee Comments *</label><br>
-                <textarea name="emp_comments_dispute" id="emp_comments_d" cols="30" rows="5" required class="form-control"></textarea>
-                <input type="hidden" name="campaign" id="" value="{{coaching.process}}">
-                <br><button class="btn btn-danger" style="width: 150px">Reject & Dispute</button>
-            </form>
-
-        </div>
     </div>
 </section>
 {% endblock %}
