@@ -100,6 +100,10 @@ urlpatterns = [
 
     # Edit RMS
     path('edit-team-rms',editTeamRMS),
+    # All Coaching Forms
+    path('coaching-status-overall',coachingStatusReportAll),
+    path('coaching-status-overall/<str:campaign>',coachingStatusCampaignwise),
+    path('dispute-status-overall/<str:campaign>',disputeStatusAgents),
 
 
 ]

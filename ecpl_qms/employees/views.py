@@ -8904,4 +8904,77 @@ def editTeamRMS(request):
 
 
 
+def coachingStatusReportAll(request):
 
+    lst = []
+    lst_dispute = []
+    for i in list_of_monforms:
+
+        status = i.objects.filter(status=False).values(
+            'process').annotate(dcount=Count('status'))
+        lst.append(status)
+
+        dispute = i.objects.filter(disput_status=True).values(
+            'process').annotate(dcount=Count('disput_status'))
+        lst_dispute.append(dispute)
+
+
+    data = {'status':lst,'dispute':lst_dispute}
+
+    return render(request,'coaching-summary-view.html',data)
+
+
+def coachingStatusCampaignwise(request,campaign):
+
+    def campaignWise(monform):
+
+        emp_wise = monform.objects.filter(status=False).values(
+            'associate_name').annotate(dcount=Count('status'))
+        data = {'emp_wise':emp_wise,'campaign':campaign}
+        return data
+
+
+    monform = None
+    for i in list_of_monforms:
+        obj = i.objects.all()
+        if obj.count() > 0:
+            if obj[0].process == campaign:
+                monform = i
+            else:
+                pass
+        else:
+            pass
+    if monform == None:
+        data = {'no_data': 'No Audit Data Available'}
+        return render(request, 'coaching-summary-view-agents.html', data)
+    else:
+        data = campaignWise(monform)
+    return render(request, 'coaching-summary-view-agents.html', data)
+
+
+def disputeStatusAgents(request,campaign):
+
+    def campaignWise(monform):
+
+        emp_wise = monform.objects.filter(disput_status=True).values(
+            'associate_name').annotate(dcount=Count('status'))
+        data = {'emp_wise':emp_wise,'campaign':campaign}
+        return data
+
+
+    monform = None
+    for i in list_of_monforms:
+        obj = i.objects.all()
+        if obj.count() > 0:
+            if obj[0].process == campaign:
+                monform = i
+            else:
+                pass
+        else:
+            pass
+    if monform == None:
+        data = {'no_data': 'No Audit Data Available'}
+        return render(request, 'dispute-summary-view-agents.html', data)
+    else:
+        data = campaignWise(monform)
+    return render(request, 'dispute-summary-view-agents.html', data)
