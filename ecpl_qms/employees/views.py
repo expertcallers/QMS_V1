@@ -2778,7 +2778,7 @@ def exportAuditReport(request):
                        'Inaccurate Information',
                        'Advisor Sounding Rude / Proafinity Usage',
 
-                       'status',
+                       'status', 'dispute_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -2809,7 +2809,8 @@ def exportAuditReport(request):
                 'compliance_5',
                 'compliance_6',
 
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+                'status','disput_status',
+                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -3205,7 +3206,7 @@ def exportAuditReport(request):
                        'Process & Procedure Followed',
                        'First Call Resolution',
 
-                       'status',
+                       'status','dispute_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -3240,7 +3241,8 @@ def exportAuditReport(request):
                 'compliance_4',
                 'compliance_5',
 
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+                'status','disput_status',
+                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -3379,7 +3381,7 @@ def exportAuditReport(request):
                        'Process & Procedure Followed',
                        'First Chat / Email Resolution',
 
-                       'status',
+                       'status','disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -3414,7 +3416,8 @@ def exportAuditReport(request):
                 'compliance_4',
                 'compliance_5',
 
-                'status', 'closed_date', 'fatal','areas_improvement', 'positives', 'comments')
+                'status','disput_status',
+                'closed_date', 'fatal','areas_improvement', 'positives', 'comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -3547,7 +3550,7 @@ def exportAuditReport(request):
                        'Process & Procedure Followed',
                        'First Chat / Email Resolution',
 
-                       'status',
+                       'status','disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -3582,7 +3585,8 @@ def exportAuditReport(request):
                 'compliance_4',
                 'compliance_5',
 
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+                'status', 'disput_status',
+                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -3621,7 +3625,7 @@ def exportAuditReport(request):
                        'Magento was utilized correctly',
                        'Identified correct order type',
 
-                       'status',
+                       'status','disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -3647,7 +3651,8 @@ def exportAuditReport(request):
                 'compliance_2',
                 'compliance_3',
 
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+                'status', 'disput_status',
+                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -3754,7 +3759,7 @@ def exportAuditReport(request):
 
                        'Agent completed all system processes correctly',
 
-                       'status',
+                       'status','disput_status',
 
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
@@ -3842,7 +3847,8 @@ def exportAuditReport(request):
 
                 'doc_4',
 
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+                'status','disput_status',
+                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
 
@@ -3887,7 +3893,7 @@ def exportAuditReport(request):
                        'If the user is missed to send the survey response and assigned directly. If the survey messages are swapped.',
                        'If the user has a question or information about Covid, that needs to addressed to coaches or Seek a help from the slack channels and then respond to it',
 
-                       'status',
+                       'status','disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -3913,7 +3919,8 @@ def exportAuditReport(request):
                 'compliance_5',
                 'compliance_6',
 
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+                'status','disput_status',
+                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -3954,7 +3961,7 @@ def exportAuditReport(request):
                        'If the user is missed to send the survey response and assigned directly. If the survey messages are swapped.',
                        'If the user has a question or information about Covid, that needs to addressed to coaches or Seek a help from the slack channels and then respond to it',
 
-                       'status',
+                       'status','disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -3979,7 +3986,8 @@ def exportAuditReport(request):
                 'compliance_5',
                 'compliance_6',
 
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+                'status', 'disput_status',
+                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -4012,7 +4020,7 @@ def exportAuditReport(request):
                        'Check List Used Correctly',
                        'Reason for failure',
 
-                       'status',
+                       'status','disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -4029,7 +4037,8 @@ def exportAuditReport(request):
                 'checklist_1',
                 'reason_for_failure',
 
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+                'status', 'disput_status',
+                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -4077,7 +4086,7 @@ def exportAuditReport(request):
                        'Chat Hold Procedure &: Taking Perrmission before putting the chat on hold',
                        'Expectations: Setting correct expectations about issue resolution',
                        'ZTP(Zero Tolerance Policy)',
-                       'status',
+                       'status','disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -4111,7 +4120,8 @@ def exportAuditReport(request):
                 'compliance_1',
                 'compliance_2',
 
-                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+                'status','disput_status',
+                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -4253,7 +4263,7 @@ def exportAuditReport(request):
                        'Auto-fail - chat5',
                        'Auto-fail - chat6',
 
-                       'status',
+                       'status','disput_status',
                        'closed_date', 'fatal',]
 
             for col_num in range(len(columns)):
@@ -4380,7 +4390,8 @@ def exportAuditReport(request):
                 'cat16chat5',
                 'cat16chat6',
 
-                'status', 'closed_date', 'fatal')
+                'status', 'disput_status',
+                'closed_date', 'fatal')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
