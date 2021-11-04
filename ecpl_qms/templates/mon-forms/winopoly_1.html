@@ -1,0 +1,343 @@
+{% extends 'base.html' %}
+{% block main %}
+
+    <section id="outboundform">
+        <div class="container-lg">
+            <form action="#/employees/winopoly-1-add-coaching" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2 class="text-center">{{campaign.name}}</h2>
+                <div class="basic">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="empname">Associate Name</label>
+                            <select class="form-control" id="empname" required="required" name="empname">
+                                <option value="{{agent.emp_name}}">{{agent.emp_name}}</option>
+                            </select>
+                            <label for="empid">Employee ID</label>
+                            <input type="number" class="form-control" id="empid" name="empid" required value="{{agent.emp_id}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="qa">Quality Analyst</label>
+                            <input type="text" class="form-control" id="qa" name="qa" value="{{user.profile.emp_name}}" required readonly>
+                            <label for="tl">Team Lead</label>
+                            <input type="text" class="form-control" id="tl" name="tl" required value="{{agent.team_lead}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="customer">Customer Name</label>
+                            <input type="text" class="form-control" id="customer" name="customer" required>
+                            <label for="customercontact">Customer Contact</label>
+                            <input type="text" class="form-control" id="customercontact" name="customercontact" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="calldate">Call Date</label>
+                            <input type="date" class="form-control" id="calldate" name="calldate" required>
+                            <label for="auditdate">Audit Date</label>
+                            <input type="date" class="form-control" id="auditdate" name="auditdate" readonly value="{{date}}">
+                        </div>
+                         <div class="col-md-4">
+                            <label for="zone">Zone</label>
+                            <input type="text" class="form-control" id="zone" name="zone" required>
+                             <label for="concept">Concept</label>
+                            <input type="text" class="form-control" id="concept" name="concept" required>
+                        </div>
+                         <div class="col-md-4">
+                            <label>Call Duration</label><br>
+                            <input type="number" placeholder="hh" name="durationh" required style="width:60px;">
+                            <input type="number" placeholder="mm" name="durationm" required style="width:60px;">
+                            <input type="number" placeholder="ss" name="durations" required style="width:60px;">
+                             <br><br>
+                            <label for="dispo">Disposition</label>
+                            <input type="text" class="form-control" id="dispo" name="disposition" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="am">AM</label>
+                            <input type="text" class="form-control" id="am" name="am" value="{{agent.am}}" required>
+                        </div>
+                        <div class="col-md-4">
+                                    <label for="week">Week</label>
+                                     <select class="form-control" name="week" id="week" required>
+                                         <option value="week1">Week1</option>
+                                         <option value="week2">Week2</option>
+                                         <option value="week3">Week3</option>
+                                         <option value="week4">Week4</option>
+                                         <option value="week5">Week5</option>
+                                     </select>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="customerexperience">
+                    <div>
+                        <h4>OPENING STATEMENT</h4>
+                        <br>
+                        <p><b>Recording Disclosure</b></p>
+                        <label class="qn"><i style="color: #e70202;font-weight: bold;">Agent must disclose the call is recorded</i></label>
+                        <input type="radio" name="comp_1" value="1" id="yes4" required>
+                        <label for="yes4">Yes</label>
+                        <input type="radio" name="comp_1" value="0" id="no4">
+                        <label for="no4">No</label>
+                        <input type="radio" name="comp_1" value="1" id="na44">
+                        <label for="na44">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Rep Name</b></p>
+                        <label class="qn"><i>Did agent introduce her/himself during opening?</i></label>
+                        <input type="radio" name="op_2" value="3" id="yes5" required>
+                        <label for="yes5">Yes</label>
+                        <input type="radio" name="op_2" value="0" id="no5">
+                        <label for="no5">No</label>
+                        <input type="radio" name="op_2" value="0" id="na5">
+                        <label for="na5">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Branding/Site Name</b></p>
+                        <label class="qn"><i>Did the agent state the site name name in the opening?</i></label>
+                        <input type="radio" name="op_3" value="3" id="yes6" required>
+                        <label for="yes6">Yes</label>
+                        <input type="radio" name="op_3" value="0" id="no6">
+                        <label for="no6">No</label>
+                        <input type="radio" name="op_3" value="0" id="na6">
+                        <label for="na6">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Call Reason</b></p>
+                        <label class="qn"><i>Did the agent state the reason for the call? (confirmation call)</i></label>
+                        <input type="radio" name="op_4" value="5" id="yes7" required>
+                        <label for="yes7">Yes</label>
+                        <input type="radio" name="op_4" value="0" id="no7">
+                        <label for="no7">No</label>
+                        <input type="radio" name="op_4" value="0" id="na7">
+                        <label for="na7">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Contact Information</b></p>
+                        <label class="qn"><i>Did the agent verify the contact info?</i></label>
+                        <input type="radio" name="op_5" value="3" id="yes71" required>
+                        <label for="yes71">Yes</label>
+                        <input type="radio" name="op_5" value="0" id="no71">
+                        <label for="no71">No</label>
+                        <input type="radio" name="op_5" value="0" id="na71">
+                        <label for="na71">Na</label>
+                    </div>
+                </div>
+                <div class="customerexperience">
+                    <div>
+                        <h4>MATCHING PROCESS</h4>
+                        <br>
+                        <p><b>Targeted Spotlight offer</b></p>
+                        <label class="qn"><i>Did the agent attempt the Targeted spotlight offer?</i></label>
+                        <input type="radio" name="mp_1" value="10" id="yes72" required>
+                        <label for="yes72">Yes</label>
+                        <input type="radio" name="mp_1" value="0" id="no72">
+                        <label for="no72">No</label>
+                        <input type="radio" name="mp_1" value="0" id="na72">
+                        <label for="na72">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Lead offer</b></p>
+                        <label class="qn"><i>Did the agent attempt the lead offer?</i></label>
+                        <input type="radio" name="mp_2" value="5" id="yes73" required>
+                        <label for="yes73">Yes</label>
+                        <input type="radio" name="mp_2" value="0" id="no73">
+                        <label for="no73">No</label>
+                        <input type="radio" name="mp_2" value="0" id="na73">
+                        <label for="na73">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Verification</b></p>
+                        <label class="qn"><i>Did the agent ask all verification questions were applicaple?</i></label>
+                        <input type="radio" name="mp_3" value="8" id="yes74" required>
+                        <label for="yes74">Yes</label>
+                        <input type="radio" name="mp_3" value="0" id="no74">
+                        <label for="no74">No</label>
+                        <input type="radio" name="mp_3" value="0" id="na74">
+                        <label for="na74">Na</label>
+                    </div>
+                    <br>
+                </div>
+                <div class="customerexperience">
+                    <div>
+                        <h4>CALL HANDLING PROCESS</h4>
+                        <br>
+                        <p><b>Excessisive off topic conversations</b></p>
+                        <label class="qn"><i>Did the agent avoid unnessesary off topic conversations</i></label>
+                        <input type="radio" name="cp_1" value="3" id="yes75" required>
+                        <label for="yes75">Yes</label>
+                        <input type="radio" name="cp_1" value="0" id="no75">
+                        <label for="no75">No</label>
+                        <input type="radio" name="cp_1" value="0" id="na75">
+                        <label for="na75">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Polite</b></p>
+                        <label class="qn"><i>Did the agent have a polite tone and use polite verbiage</i></label>
+                        <input type="radio" name="cp_2" value="5" id="yes76" required>
+                        <label for="yes76">Yes</label>
+                        <input type="radio" name="cp_2" value="0" id="no76">
+                        <label for="no76">No</label>
+                        <input type="radio" name="cp_2" value="0" id="na76">
+                        <label for="na76">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Positive and Upbeat</b></p>
+                        <label class="qn"><i>Did the agent have a positive and upbeat tone</i></label>
+                        <input type="radio" name="cp_3" value="5" id="yes77" required>
+                        <label for="yes77">Yes</label>
+                        <input type="radio" name="cp_3" value="0" id="no77">
+                        <label for="no77">No</label>
+                        <input type="radio" name="cp_3" value="0" id="na77">
+                        <label for="na77">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Ethics</b></p>
+                        <label class="qn"><i>Did the agent advoid misleading information about offers</i></label>
+                        <input type="radio" name="cp_4" value="5" id="yes67" required>
+                        <label for="yes67">Yes</label>
+                        <input type="radio" name="cp_4" value="0" id="no67">
+                        <label for="no67">No</label>
+                        <input type="radio" name="cp_4" value="0" id="na67">
+                        <label for="na67">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Call control</b></p>
+                        <label class="qn"><i>Did the agent take control of the call</i></label>
+                        <input type="radio" name="cp_5" value="5" id="yes68" required>
+                        <label for="yes68">Yes</label>
+                        <input type="radio" name="cp_5" value="0" id="no68">
+                        <label for="no68">No</label>
+                        <input type="radio" name="cp_5" value="0" id="na68">
+                        <label for="na68">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Program of Interest</b></p>
+                        <label class="qn"><i>Did the agent match the lead to a program that they stated interest in, without having to push the lead into agreeing to the program?</i></label>
+                        <input type="radio" name="cp_6" value="10" id="yes69" required>
+                        <label for="yes69">Yes</label>
+                        <input type="radio" name="cp_6" value="0" id="no69">
+                        <label for="no69">No</label>
+                        <input type="radio" name="cp_6" value="0" id="na69">
+                        <label for="na69">Na</label>
+                    </div>
+                    <br>
+                </div>
+                <hr>
+                <div class="business">
+                    <div>
+                        <h4>TCPA CLOSE/ VIOLATION</h4>
+                        <br>
+                        <p><b>TCPA Close</b></p>
+                        <label class="qn"><i style="color: #e70202;font-weight: bold;">Did the rep read a TCPA statement and receive an affirmative response from the lead (Yes or Yeah)?</i></label>
+                        <input type="radio" name="comp_2" value="1" id="b1" required>
+                        <label for="b1">Yes</label>
+                        <input type="radio" name="comp_2" value="0" id="b2">
+                        <label for="b2">No</label>
+                        <input type="radio" name="comp_2" value="1" id="n2">
+                        <label for="n2">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>TCPA Close</b></p>
+                        <label class="qn"><i style="color: #e70202;font-weight: bold;">If interrupted did the agent reread the TCPA and get an affimative response</i></label>
+                        <input type="radio" name="comp_3" value="1" id="b3" required>
+                        <label for="b3">Yes</label>
+                        <input type="radio" name="comp_3" value="0" id="b4">
+                        <label for="b4">No</label>
+                        <input type="radio" name="comp_3" value="1" id="n4">
+                        <label for="n4">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Do Not Call Request</b></p>
+                        <label class="qn"><i style="color: #e70202;font-weight: bold;">Agent followed DNC Request Policy</i></label>
+                        <input type="radio" name="comp_4" value="1" id="b5" required>
+                        <label for="b5">Yes</label>
+                        <input type="radio" name="comp_4" value="0" id="b6">
+                        <label for="b6">No</label>
+                        <input type="radio" name="comp_4" value="1" id="na4">
+                        <label for="na4">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>California Privacy Policy</b></p>
+                        <label class="qn"><i style="color: #e70202;font-weight: bold;">Agent followed CA Policy Privacy by reading the written statement for CA residents</i></label>
+                        <input type="radio" name="comp_5" value="1" id="b7" required>
+                        <label for="b7">Yes</label>
+                        <input type="radio" name="comp_5" value="0" id="b8">
+                        <label for="b8">No</label>
+                        <input type="radio" name="comp_5" value="1" id="na8">
+                        <label for="na8">Na</label>
+                    </div>
+                </div>
+                <div class="compliance">
+                    <div>
+                        <h4>TRANSFER PVL</h4>
+                        <br>
+                        <p><b>Transfering the call</b></p>
+                        <label class="qn">Did the agent conduct the intro on the transfer correctly?</label>
+                        <input type="radio" name="tp_1" value="10" id="yes1" required>
+                        <label for="yes1">Yes</label>
+                        <input type="radio" name="tp_1" value="0" id="no1">
+                        <label for="no1">No</label>
+                        <input type="radio" name="tp_1" value="0" id="na1">
+                        <label for="na1">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Transfer Only</b></p>
+                        <label class="qn"><i>Did the agent conduct the intro on the transfer correctly</i></label>
+                        <input type="radio" name="tp_2" value="10" id="yes21" required>
+                        <label for="yes21">Yes</label>
+                        <input type="radio" name="tp_2" value="0" id="no21">
+                        <label for="no21">No</label>
+                        <input type="radio" name="tp_2" value="0" id="na21">
+                        <label for="na21">Na</label>
+                    </div>
+                    <br>
+                    <div>
+                        <p><b>Disposition</b></p>
+                        <label class="qn"><i>Did the agent used the correct disposition?</i></label>
+                        <input type="radio" name="tp_3" value="10" id="yes222" required>
+                        <label for="yes222">Yes</label>
+                        <input type="radio" name="tp_3" value="0" id="no222">
+                        <label for="no222">No</label>
+                        <input type="radio" name="tp_3" value="0" id="na222">
+                        <label for="na222">Na</label>
+                    </div>
+                    <br>
+
+                </div>
+                <hr>
+                <div class="other">
+                    <p><b>Auto Fail</b></p>
+                    <h4>ZERO TOLERANCE POLICY</h4>
+                    <textarea name="areaimprovement" id="areaimp" cols="30" rows="5" class="form-control" required></textarea>
+                    <br>
+                    <h4>EVALUATORS COMMENT</h4>
+                    <textarea name="positives" id="positives" cols="30" rows="5" class="form-control" required></textarea>
+                    <br>
+                    <h4>COACHING COMMENTS</h4>
+                    <textarea name="comments" id="cfeedback" cols="30" rows="5" class="form-control" required></textarea>
+                </div>
+                <div style="padding: 30px 30px">
+                    <input type="hidden" class="form-control" name="campaign" value="{{campaign.name}}">
+                    <button class="btn btn-info"> Submit </button>
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+
+{% endblock %}

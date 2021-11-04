@@ -2725,7 +2725,9 @@ def selectCoachingForm(request):
             data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
             return render(request,'mon-forms/digital-swiss-gold-email-chat.html', data)
 
-
+        elif campaign_type == 'wp1':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
+            return render(request, 'mon-forms/winopoly_1.html', data)
     else:
         return redirect('/employees/qahome')
 
@@ -6469,6 +6471,40 @@ def newSeriesMonForms(request):
         data = {'teams': teams, 'users': users}
         return render(request, 'mon-forms/new-series-comon.html', data)
 
+def winopolyAddCoaching(request):
+
+    if request.method == 'POST':
+        campaign_name = request.POST['campaign']
+        category = 'Outbound'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        customer_name = request.POST['customer']
+        customer_contact = request.POST['customercontact']
+        call_date = request.POST['calldate']
+        audit_date = request.POST['auditdate']
+        campaign = request.POST['campaign']
+        concept = request.POST['concept']
+        zone = request.POST['zone']
+        disposition = request.POST['disposition']
+        call_duration = (int(request.POST['durationh']) * 3600) + (int(request.POST['durationm']) * 60) + int(
+            request.POST['durations'])
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
+        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+        manager_emp_id = manager_emp_id_obj.emp_id
+        manager_name = manager
+
+        # Opening
+        comp_1 = int(request.POST['comp_1'])
+        op_2 = int(request.POST['op_2'])
+        op_3 = int(request.POST['op_3'])
+        op_4 = int(request.POST['op_4'])
+
+
+
+
 
 def newSeriesInboundForms(request):
     if request.method == 'POST':
@@ -6494,6 +6530,7 @@ def newSeriesInboundForms(request):
             manager_emp_id_obj = Profile.objects.get(emp_name=manager)
             manager_emp_id = manager_emp_id_obj.emp_id
             manager_name = manager
+
             # Customer Experience
             ce_1 = int(request.POST['ce_1'])
             ce_2 = int(request.POST['ce_2'])

@@ -83,6 +83,7 @@ admin.site.register(LJHubInboundMonForms)
 admin.site.register(ILMakiageEmailChatForm)
 admin.site.register(DigitalSwissGoldEmailChatMonForm)
 admin.site.register(DawnFinancialOutbound)
+admin.site.register(WinopolyOutbound)
 
 
 
