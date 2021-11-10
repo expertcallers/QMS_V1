@@ -3,7 +3,7 @@
 
     <section id="outboundform">
         <div class="container-lg">
-            <form action="#/employees/winopoly-1-add-coaching" method="POST" enctype="multipart/form-data">
+            <form action="/employees/winopoly-1-add-coaching" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <h2 class="text-center">{{campaign.name}}</h2>
                 <div class="basic">
@@ -74,11 +74,9 @@
                         <p><b>Recording Disclosure</b></p>
                         <label class="qn"><i style="color: #e70202;font-weight: bold;">Agent must disclose the call is recorded</i></label>
                         <input type="radio" name="comp_1" value="1" id="yes4" required>
-                        <label for="yes4">Yes</label>
+                        <label for="yes4">Pass</label>
                         <input type="radio" name="comp_1" value="0" id="no4">
-                        <label for="no4">No</label>
-                        <input type="radio" name="comp_1" value="1" id="na44">
-                        <label for="na44">Na</label>
+                        <label for="no4">Fail</label>
                     </div>
                     <br>
                     <div>
@@ -240,44 +238,37 @@
                         <p><b>TCPA Close</b></p>
                         <label class="qn"><i style="color: #e70202;font-weight: bold;">Did the rep read a TCPA statement and receive an affirmative response from the lead (Yes or Yeah)?</i></label>
                         <input type="radio" name="comp_2" value="1" id="b1" required>
-                        <label for="b1">Yes</label>
+                        <label for="b1">Pass</label>
                         <input type="radio" name="comp_2" value="0" id="b2">
-                        <label for="b2">No</label>
-                        <input type="radio" name="comp_2" value="1" id="n2">
-                        <label for="n2">Na</label>
+                        <label for="b2">Fail</label>
+
                     </div>
                     <br>
                     <div>
                         <p><b>TCPA Close</b></p>
                         <label class="qn"><i style="color: #e70202;font-weight: bold;">If interrupted did the agent reread the TCPA and get an affimative response</i></label>
                         <input type="radio" name="comp_3" value="1" id="b3" required>
-                        <label for="b3">Yes</label>
+                        <label for="b3">Pass</label>
                         <input type="radio" name="comp_3" value="0" id="b4">
-                        <label for="b4">No</label>
-                        <input type="radio" name="comp_3" value="1" id="n4">
-                        <label for="n4">Na</label>
+                        <label for="b4">Fail</label>
                     </div>
                     <br>
                     <div>
                         <p><b>Do Not Call Request</b></p>
                         <label class="qn"><i style="color: #e70202;font-weight: bold;">Agent followed DNC Request Policy</i></label>
                         <input type="radio" name="comp_4" value="1" id="b5" required>
-                        <label for="b5">Yes</label>
+                        <label for="b5">Pass</label>
                         <input type="radio" name="comp_4" value="0" id="b6">
-                        <label for="b6">No</label>
-                        <input type="radio" name="comp_4" value="1" id="na4">
-                        <label for="na4">Na</label>
+                        <label for="b6">Fail</label>
                     </div>
                     <br>
                     <div>
                         <p><b>California Privacy Policy</b></p>
                         <label class="qn"><i style="color: #e70202;font-weight: bold;">Agent followed CA Policy Privacy by reading the written statement for CA residents</i></label>
                         <input type="radio" name="comp_5" value="1" id="b7" required>
-                        <label for="b7">Yes</label>
+                        <label for="b7">Pass</label>
                         <input type="radio" name="comp_5" value="0" id="b8">
-                        <label for="b8">No</label>
-                        <input type="radio" name="comp_5" value="1" id="na8">
-                        <label for="na8">Na</label>
+                        <label for="b8">Fail</label>
                     </div>
                 </div>
                 <div class="compliance">
@@ -316,19 +307,25 @@
                         <label for="na222">Na</label>
                     </div>
                     <br>
+                    <div>
+                        <p><b>Auto Fail</b></p>
+                        <label class="qn"><i style="color: #e70202;font-weight: bold;">ZERO TOLERANCE POLICY</i></label>
+                        <input type="radio" name="comp_6" value="1" id="yes42" required>
+                        <label for="yes42">Pass</label>
+                        <input type="radio" name="comp_6" value="0" id="no42">
+                        <label for="no42">Fail</label>
+
+                    </div>
+                    <br>
 
                 </div>
                 <hr>
                 <div class="other">
-                    <p><b>Auto Fail</b></p>
-                    <h4>ZERO TOLERANCE POLICY</h4>
-                    <textarea name="areaimprovement" id="areaimp" cols="30" rows="5" class="form-control" required></textarea>
-                    <br>
                     <h4>EVALUATORS COMMENT</h4>
-                    <textarea name="positives" id="positives" cols="30" rows="5" class="form-control" required></textarea>
+                    <textarea name="evaluator_comment" id="positives" cols="30" rows="5" class="form-control" required></textarea>
                     <br>
                     <h4>COACHING COMMENTS</h4>
-                    <textarea name="comments" id="cfeedback" cols="30" rows="5" class="form-control" required></textarea>
+                    <textarea name="coaching_comments" id="cfeedback" cols="30" rows="5" class="form-control" required></textarea>
                 </div>
                 <div style="padding: 30px 30px">
                     <input type="hidden" class="form-control" name="campaign" value="{{campaign.name}}">

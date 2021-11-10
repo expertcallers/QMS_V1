@@ -77,6 +77,9 @@ list_of_monforms = [ # OutBound
                         GubagooAuditForm,
                         #ILM
                         ILMakiageEmailChatForm,
+                        #wino
+                        WinopolyOutbound,
+
                         ]
 
 
@@ -1338,6 +1341,12 @@ def coachingViewAgents(request,process,pk):
         coaching = DigitalSwissGoldEmailChatMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-dsg-email-chat.html', data)
+
+    if process_name == 'Winopoly Outbound':
+        coaching = WinopolyOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-winopoly.html', data)
+
     else:
         pass
 
@@ -2074,6 +2083,10 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-dsg-email-chat.html', data)
 
+    if process_name == 'Winopoly Outbound':
+        coaching = WinopolyOutbound.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/qa-coaching-view-winopoly.html',data)
 
     else:
         pass
@@ -3517,6 +3530,103 @@ def exportAuditReport(request):
 
 
             ########## other campaigns ##############
+
+        elif campaign == 'Winopoly Outbound':
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact',
+
+                       'Recording Disclosure - (Agent must disclose the call is recorded)',
+                       'Rep Name - (Did agent introduce her/himself during opening?)',
+                       'Branding/Site Name - (Did the agent state the site name name in the opening?)',
+                       'Call Reason - (Did the agent state the reason for the call? (confirmation call))',
+                        'Contact Information - (Did the agent verify the contact info?)',
+
+                       'Targeted Spotlight offer - (Did the agent attempt the Targeted spotlight offer?)',
+                       'Lead offer - (Did the agent attempt the lead offer?)',
+                       'Verification - (Did the agent ask all verification questions were applicaple?)',
+
+                       'Excessisive off topic conversations - (Did the agent avoid unnessesary off topic conversations)',
+                       'Polite - (Follow up done on the Pending Tickets (Chats & Email))',
+                       'Positive and Upbeat - (Did the agent have a positive and upbeat tone)',
+                       'Ethics - (Did the agent advoid misleading information about offers)',
+                       'Call control - (Did the agent take control of the call)',
+                       'Program of Interest - (Did the agent match the lead to a program that they stated interest in, without having to push the lead into agreeing to the program?)',
+
+                        'TCPA Close - (Did the rep read a TCPA statement and receive an affirmative response from the lead (Yes or Yeah)?)',
+                        'TCPA Close - (If interrupted did the agent reread the TCPA and get an affimative response)',
+                       'Do Not Call Request - (Agent followed DNC Request Policy)',
+                       'California Privacy Policy - (Agent followed CA Policy Privacy by reading the written statement for CA residents)',
+                       'Transfering the call - (Did the agent conduct the intro on the transfer correctly?)',
+                       'Transfer Only - (Did the agent conduct the intro on the transfer correctly)',
+                       'Disposition - (Did the agent used the correct disposition?)',
+                       'Auto Fail - (ZERO TOLERANCE POLICY)',
+
+
+
+                       'status','disput_status',
+                       'closed_date', 'fatal', 'coaching_comments', 'evaluator_comment']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = WinopolyOutbound.objects.filter(
+                audit_date__range=[start_date, end_date]).values_list(
+                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager', 'customer_name', 'customer_contact',
+
+                'comp_1',
+                'op_2',
+                'op_3',
+                'op_4',
+                'op_5',
+
+                'mp_1',
+                'mp_2',
+                'mp_3',
+
+                'cp_1',
+                'cp_2',
+                'cp_3',
+                'cp_4',
+                'cp_5',
+                'cp_6',
+
+                'comp_2',
+                'comp_3',
+                'comp_4',
+                'comp_5',
+
+                'tp_1',
+                'tp_2',
+                'tp_3',
+                'comp_6',
+
+                'status','disput_status', 'closed_date', 'fatal', 'evaluator_comment', 'coaching_comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
 
         elif campaign == 'Digital Swiss Gold Email - Chat':
             response = HttpResponse(content_type='application/ms-excel')
@@ -5193,6 +5303,103 @@ def exportAuditReportQA(request):
 
             ########## other campaigns ##############
 
+        elif campaign == 'Winopoly Outbound':
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact',
+
+                       'Recording Disclosure - (Agent must disclose the call is recorded)',
+                       'Rep Name - (Did agent introduce her/himself during opening?)',
+                       'Branding/Site Name - (Did the agent state the site name name in the opening?)',
+                       'Call Reason - (Did the agent state the reason for the call? (confirmation call))',
+                        'Contact Information - (Did the agent verify the contact info?)',
+
+                       'Targeted Spotlight offer - (Did the agent attempt the Targeted spotlight offer?)',
+                       'Lead offer - (Did the agent attempt the lead offer?)',
+                       'Verification - (Did the agent ask all verification questions were applicaple?)',
+
+                       'Excessisive off topic conversations - (Did the agent avoid unnessesary off topic conversations)',
+                       'Polite - (Follow up done on the Pending Tickets (Chats & Email))',
+                       'Positive and Upbeat - (Did the agent have a positive and upbeat tone)',
+                       'Ethics - (Did the agent advoid misleading information about offers)',
+                       'Call control - (Did the agent take control of the call)',
+                       'Program of Interest - (Did the agent match the lead to a program that they stated interest in, without having to push the lead into agreeing to the program?)',
+
+                        'TCPA Close - (Did the rep read a TCPA statement and receive an affirmative response from the lead (Yes or Yeah)?)',
+                        'TCPA Close - (If interrupted did the agent reread the TCPA and get an affimative response)',
+                       'Do Not Call Request - (Agent followed DNC Request Policy)',
+                       'California Privacy Policy - (Agent followed CA Policy Privacy by reading the written statement for CA residents)',
+                       'Transfering the call - (Did the agent conduct the intro on the transfer correctly?)',
+                       'Transfer Only - (Did the agent conduct the intro on the transfer correctly)',
+                       'Disposition - (Did the agent used the correct disposition?)',
+                       'Auto Fail - (ZERO TOLERANCE POLICY)',
+
+
+
+                       'status','disput_status',
+                       'closed_date', 'fatal', 'coaching_comments', 'evaluator_comment']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = WinopolyOutbound.objects.filter(
+                audit_date__range=[start_date, end_date], qa=qa).values_list(
+                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager', 'customer_name', 'customer_contact',
+
+                'comp_1',
+                'op_2',
+                'op_3',
+                'op_4',
+                'op_5',
+
+                'mp_1',
+                'mp_2',
+                'mp_3',
+
+                'cp_1',
+                'cp_2',
+                'cp_3',
+                'cp_4',
+                'cp_5',
+                'cp_6',
+
+                'comp_2',
+                'comp_3',
+                'comp_4',
+                'comp_5',
+
+                'tp_1',
+                'tp_2',
+                'tp_3',
+                'comp_6',
+
+                'status','disput_status', 'closed_date', 'fatal', 'evaluator_comment', 'coaching_comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
         elif campaign == 'Digital Swiss Gold Email - Chat':
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
@@ -6501,9 +6708,97 @@ def winopolyAddCoaching(request):
         op_2 = int(request.POST['op_2'])
         op_3 = int(request.POST['op_3'])
         op_4 = int(request.POST['op_4'])
+        op_5 = int(request.POST['op_5'])
+        op_total = op_2 + op_3 + op_4 + op_5
 
+        # MATCHING PROCESS
+        mp_1 = int(request.POST['mp_1'])
+        mp_2 = int(request.POST['mp_2'])
+        mp_3 = int(request.POST['mp_3'])
+        mp_total = mp_1 + mp_2 + mp_3
 
+        # CALL HANDLING PROCESS
+        cp_1 = int(request.POST['cp_1'])
+        cp_2 = int(request.POST['cp_2'])
+        cp_3 = int(request.POST['cp_3'])
+        cp_4 = int(request.POST['cp_4'])
+        cp_5 = int(request.POST['cp_5'])
+        cp_6 = int(request.POST['cp_6'])
+        cp_total = cp_1 + cp_2 + cp_3 + cp_4 + cp_5 + cp_6
 
+        #  Compliance
+        comp_2 = int(request.POST['comp_2'])
+        comp_3 = int(request.POST['comp_3'])
+        comp_4 = int(request.POST['comp_4'])
+        comp_5 = int(request.POST['comp_5'])
+
+        # TP
+        tp_1 = int(request.POST['tp_1'])
+        tp_2 = int(request.POST['tp_2'])
+        tp_3 = int(request.POST['tp_3'])
+        comp_6 = int(request.POST['comp_6'])
+        tp_total = tp_1 + tp_2 + tp_3
+
+        evaluator_comment = request.POST['evaluator_comment']
+        coaching_comments = request.POST['coaching_comments']
+
+        compliance_total = comp_1 + comp_2 + comp_3 + comp_4 + comp_5 + comp_6
+
+        fatal_list = [comp_1, comp_2, comp_3, comp_4, comp_5,comp_6]
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 0:
+                fatal_list_count.append(i)
+
+        no_of_fatals = len(fatal_list_count)
+
+        if comp_1 == 0 or comp_2 == 0 or comp_3 == 0 or comp_4 == 0 or comp_5 == 0 or comp_6 == 0:
+            overall_score = 0
+            fatal = True
+        else:
+            overall_score = op_total + mp_total + cp_total + tp_total
+            fatal = False
+
+        added_by = request.user.profile.emp_name
+        week = request.POST['week']
+        am = request.POST['am']
+
+        wino = WinopolyOutbound(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                          manager=manager_name, manager_id=manager_emp_id,
+
+                          trans_date=call_date, audit_date=audit_date,
+                          customer_name=customer_name,
+                          customer_contact=customer_contact,
+                          campaign=campaign, concept=concept, zone=zone,
+                          call_duration=call_duration,
+                            disposition=disposition,
+                          #opening
+                          comp_1 = comp_1,op_2 = op_2,op_3 = op_3,op_4 = op_4,op_5 = op_5,
+                                op_total=op_total,
+
+                          mp_1 = mp_1, mp_2=mp_2,mp_3=mp_3, mp_total=mp_total,
+
+                          cp_1 = cp_1, cp_2 = cp_2, cp_3 = cp_3,cp_4 = cp_4, cp_5 = cp_5,
+                          cp_6 = cp_6, cp_total = cp_total,
+
+                          comp_2=comp_2,comp_3=comp_3,comp_4=comp_4,comp_5=comp_5,
+
+                          tp_1 = tp_1,tp_2 = tp_2, tp_3=tp_3,
+                          comp_6=comp_6,tp_total=tp_total,
+
+                          evaluator_comment = evaluator_comment,coaching_comments=coaching_comments,
+
+                          compliance_total=compliance_total,
+
+                          added_by=added_by,
+
+                          overall_score=overall_score, category=category,
+                          week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+                          )
+        wino.save()
+        return redirect('/employees/qahome')
+    else:
+        pass
 
 
 def newSeriesInboundForms(request):
@@ -6715,8 +7010,6 @@ def newSeriesInboundForms(request):
 
     else:
         pass
-
-
 
 ############### Doestic Chat Email #################
 

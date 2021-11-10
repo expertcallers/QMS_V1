@@ -9887,7 +9887,7 @@ class WinopolyOutbound(models.Model):
     qa = models.CharField(max_length=50)
     team_lead = models.CharField(max_length=50)
     customer_name = models.CharField(max_length=50)
-    Customer_contact = models.CharField(max_length=100)
+    customer_contact = models.CharField(max_length=100)
     trans_date = models.DateField()
     audit_date = models.DateField()
     campaign = models.CharField(max_length=100)
@@ -9897,12 +9897,18 @@ class WinopolyOutbound(models.Model):
     manager = models.CharField(max_length=50)
     manager_id = models.IntegerField()
     category = models.CharField(max_length=20)
+    call_duration = models.IntegerField(null=True)
+    op_total = models.IntegerField(null=True)
+    mp_total = models.IntegerField(null=True)
+    cp_total = models.IntegerField(null=True)
+    tp_total = models.IntegerField(null=True)
 
     #Opening Statement
     comp_1 = models.IntegerField()
     op_2 = models.IntegerField()
     op_3 = models.IntegerField()
     op_4 = models.IntegerField()
+    op_5 = models.IntegerField(null=True)
 
     # MATCHING PROCESS
     mp_1 = models.IntegerField()
@@ -9927,17 +9933,14 @@ class WinopolyOutbound(models.Model):
     tp_1 = models.IntegerField()
     tp_2 = models.IntegerField()
     tp_3 = models.IntegerField()
+    comp_6 = models.IntegerField()
 
-
-    zero_tolerance = models.TextField()
     evaluator_comment = models.TextField()
-    Coaching_comments = models.TextField()
+    coaching_comments = models.TextField()
     added_by = models.CharField(max_length=30)
     status = models.BooleanField(default=False)
     closed_date = models.DateTimeField(null=True)
     emp_comments = models.TextField(null=True)
-    s_total = models.IntegerField(null=True)
-    e_total = models.IntegerField(null=True)
     compliance_total = models.IntegerField(null=True)
     overall_score = models.IntegerField(null=True)
 
