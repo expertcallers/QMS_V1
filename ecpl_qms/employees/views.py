@@ -39,7 +39,7 @@ list_of_monforms = [ # OutBound
                         USJacleanOutboundForm,GlobalGalaxyOutboundForm,CommunityHealthProjectIncOutbound,EducatedAnalyticsLLCOutbound,
                         NewDimensionPharmacyOutbound,StayNChargeOutbound,
                         JHEnergyConsultantOutbound,MDRGroupLLCOutbound,CoreySmallInsuranceAgencyOutbound,EduvocateOutbound,CrossTowerOutbound,
-                        DawnFinancialOutbound,
+                        DawnFinancialOutbound,XportDigitalOutbound,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -51,7 +51,7 @@ list_of_monforms = [ # OutBound
                         LJHubInboundMonForms,
                         ObtheraIncInboundMonForms,
                         EduvocateInboundMonForms,CrossTowerInboundMonForms,
-                        SanaLifeScienceInbound,
+                        SanaLifeScienceInbound,MonitoringFormMobile22InboundCalls,XportDigitalInboundMonForm,
 
                         # Email/CHat
                         SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
@@ -1059,6 +1059,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Xport Digital Outbound':
+        coaching = XportDigitalOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1183,6 +1188,16 @@ def coachingViewAgents(request,process,pk):
 
     elif process_name == 'Sana Life Science Inbound':
         coaching = SanaLifeScienceInbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Mobile 22 Inbound':
+        coaching = MonitoringFormMobile22InboundCalls.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Xport Digital Inbound':
+        coaching = XportDigitalInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
@@ -1797,6 +1812,11 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Xport Digital Outbound':
+        coaching = XportDigitalOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
 
     ########### Inbound ########################
 
@@ -1922,6 +1942,16 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Sana Life Science Inbound':
         coaching = SanaLifeScienceInbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Mobile 22 Inbound':
+        coaching = MonitoringFormMobile22InboundCalls.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Xport Digital Inbound':
+        coaching = XportDigitalInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
@@ -3183,6 +3213,10 @@ def exportAuditReport(request):
             response = exportAadyaseries(DawnFinancialOutbound)
             return response
 
+        elif campaign == 'Xport Digital Outbound':
+            response = exportAadyaseries(XportDigitalOutbound)
+            return response
+
 
         ######## Inbound ###############################
 
@@ -3359,6 +3393,14 @@ def exportAuditReport(request):
             response = exportinbound(SanaLifeScienceInbound)
             return response
 
+        elif campaign == 'Mobile 22 Inbound':
+            response = exportinbound(MonitoringFormMobile22InboundCalls)
+            return response
+
+        elif campaign == 'Xport Digital Inbound':
+            response = exportinbound(XportDigitalInboundMonForm)
+            return response
+
         #########    Email/CHat ##########################
 
         def exportEmailChat(monform):
@@ -3526,8 +3568,6 @@ def exportAuditReport(request):
         elif campaign == 'Sana Life Science Email-Chat':
             response = exportEmailChat(SanaLifeScienceEmailChatForm)
             return response
-
-
 
             ########## other campaigns ##############
 
@@ -4955,6 +4995,10 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(DawnFinancialOutbound)
             return response
 
+        elif campaign == 'Xport Digital Outbound':
+            response = exportAadyaseries(XportDigitalOutbound)
+            return response
+
 
 
         ######## Inbound ###############################
@@ -5129,6 +5173,14 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Sana Life Science Inbound':
             response = exportinbound(SanaLifeScienceInbound)
+            return response
+
+        elif campaign == 'Mobile 22 Inbound':
+            response = exportinbound(MonitoringFormMobile22InboundCalls)
+            return response
+
+        elif campaign == 'Xport Digital Inbound':
+            response = exportinbound(XportDigitalInboundMonForm)
             return response
 
 
@@ -6667,6 +6719,9 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(DawnFinancialOutbound)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Xport Digital Outbound':
+            newseriesAddCoaching(XportDigitalOutbound)
+            return redirect('/employees/qahome')
 
         else:
             pass
@@ -7006,6 +7061,14 @@ def newSeriesInboundForms(request):
 
         elif campaign_name == 'Sana Life Science Inbound':
             inboundAddCoaching(SanaLifeScienceInbound)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Mobile 22 Inbound':
+            inboundAddCoaching(MonitoringFormMobile22InboundCalls)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Xport Digital Inbound':
+            inboundAddCoaching(XportDigitalInboundMonForm)
             return redirect('/employees/qahome')
 
     else:

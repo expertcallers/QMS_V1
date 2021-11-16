@@ -84,6 +84,10 @@ admin.site.register(ILMakiageEmailChatForm)
 admin.site.register(DigitalSwissGoldEmailChatMonForm)
 admin.site.register(DawnFinancialOutbound)
 admin.site.register(WinopolyOutbound)
+admin.site.register(MonitoringFormMobile22InboundCalls)
+admin.site.register(XportDigitalOutbound)
+admin.site.register(XportDigitalInboundMonForm)
+
 
 
 
