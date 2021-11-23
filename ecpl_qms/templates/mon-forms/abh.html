@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/4a95aa7adc.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link rel="stylesheet" type="text/css" href="http://qms.ecpl.com/static/css/style.css">
+	<style type="text/css">
+		.fatal {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+
+	<section id="outboundform">
+        <div class="container-lg">
+            <form action="/employees/abh-form-update" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2 class="text-center">{{campaign.name}}</h2>
+                <div class="basic">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Associate Name</label>
+                            <select class="form-control" id="empname" required="required" name="empname">
+                                <option value="{{agent.emp_name}}">{{agent.emp_name}}</option>
+                            </select>
+                            <label for="empid">Employee ID</label>
+                            <input type="number" class="form-control" id="empid" name="empid" readonly required="" value="{{agent.emp_id}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="qa">Quality Analyst</label>
+                            <input type="text" class="form-control" id="qa" name="qa" value="{{user.profile.emp_name}}" required="" readonly="">
+                            <label for="tl">Team Lead</label>
+                            <input type="text" class="form-control" id="tl" name="tl" required="" readonly value="{{agent.team_lead}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="customer">Customer Name</label>
+                            <input type="text" class="form-control" id="customer" name="customer" required="">
+                            <label for="customercontact">Customer Contact</label>
+                            <input type="text" class="form-control" id="customercontact" name="customercontact" required="">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="calldate">Call Date</label>
+                            <input type="date" class="form-control" id="calldate" name="calldate" required="">
+                            <label for="auditdate">Audit Date</label>
+                            <input type="text" class="form-control" id="auditdate" name="auditdate" value="{{date}}" readonly="">
+                        </div>
+                         <div class="col-md-4">
+                             <input type="hidden" class="form-control" name="campaign1" value="Amerisave">
+                             <label for="zone">Zone</label>
+                            <input type="text" class="form-control" id="zone" name="zone" required="">
+                             <label for="concept">Concept</label>
+                            <input type="text" class="form-control" id="concept" name="concept" required="">
+                        </div>
+                         <div class="col-md-4">
+
+                            <label for="duration">Call Duration</label><br><br>
+                            <input type="number" placeholder="hh" name="durationh" required="" style="width:60px;">
+                            <input type="number" placeholder="mm" name="durationm" required="" style="width:60px;">
+                            <input type="number" placeholder="ss" name="durations" required="" style="width:60px;">
+
+                        </div>
+                        <div class="col-md-4">
+                            <label for="am">AM</label>
+                            <input type="text" class="form-control" id="am" name="am" readonly value="Manjunatha K S" required="">
+                                <label for="week">Week</label>
+                                     <select class="form-control" name="week" id="week" required="">
+                                         <option value="week1">Week1</option>
+                                         <option value="week2">Week2</option>
+                                         <option value="week3">Week3</option>
+                                         <option value="week4">Week4</option>
+                                         <option value="week5">Week5</option>
+                                     </select>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="customerexperience">
+                    <div>
+                        <h4>Opening and Closing</h4>
+                        <br>
+                        <label class="qn">Used Standard Opening Protocol </label>
+                        <input type="radio" name="oc_1" value="5" id="yes4" required="">
+                        <label for="yes4">Yes</label>
+                        <input type="radio" name="oc_1" value="0" id="no4">
+                        <label for="no4">No</label>
+                    </div>
+                    <br>
+                    <div class="fatal">
+                        <label class="qn">Introduction of Product / Branding - 4 USP of eternia - WiWA, Warranty, Duranium, Eternia care Mentioning Hindalco, Aditya birla group</label>
+                        <input type="radio" name="oc_2" value="20" id="yes5" required="">
+                        <label for="yes5">Yes</label>
+                        <input type="radio" name="oc_2" value="0" id="no5">
+                        <label for="no5">Fatal</label>
+                    </div>
+                    <br>
+                    <div>
+                        <label class="qn">Call Closing as per the Protocol</label>
+                        <input type="radio" name="oc_3" value="5" id="yes6" required="">
+                        <label for="yes6">Yes</label>
+                        <input type="radio" name="oc_3" value="0" id="no6">
+                        <label for="no6">No</label>
+                    </div>
+                    <br>
+                </div>
+                <hr>
+                <div class="business">
+                    <div>
+                        <h4>Softskills</h4>
+                        <br>
+                        <label class="qn">Used Empathetic Statements whenever required</label>
+                        <input type="radio" name="softskill_1" value="10" id="b1" required="">
+                        <label for="b1">Yes</label>
+                        <input type="radio" name="softskill_1" value="0" id="b2">
+                        <label for="b2">No</label>
+                    </div>
+                    <br>
+                    <div>
+                        <label class="qn">Making the conversation 2 ways, giving chance to the customer to ask question</label>
+                        <input type="radio" name="softskill_2" value="15" id="s3" required="">
+                        <label for="s3">Yes</label>
+                        <input type="radio" name="softskill_2" value="0" id="s4">
+                        <label for="s4">No</label>
+                    </div>
+                    <br>
+                    <div>
+                        <label class="qn">Active Listening without Interruption</label>
+                        <input type="radio" name="softskill_3" value="15" id="s5" required="">
+                        <label for="s5">Yes</label>
+                        <input type="radio" name="softskill_3" value="0" id="s6">
+                        <label for="s6">No</label>
+                    </div>
+                    <br>
+                </div>
+                <hr>
+                <div class="compliance">
+                    <div>
+                        <h4>Business &amp; Compliance</h4>
+                        <br>
+                        <label class="qn">Followed Policy & Procedure (Script)</label>
+                        <input type="radio" name="compliance_1" value="5" id="yes1" required="">
+                        <label for="yes1">Yes</label>
+                        <input type="radio" name="compliance_1" value="0" id="no1">
+                        <label for="no1">No</label>
+                    </div>
+                    <br>
+                    <div class="fatal">
+                        <label class="qn">Accurate Documentation with full details in ZOHO</label>
+                        <input type="radio" name="compliance_2" value="10" id="yes2" required="">
+                        <label for="yes2">Yes</label>
+                        <input type="radio" name="compliance_2" value="0" id="no2">
+                        <label for="no2">Fatal</label>
+                    </div>
+                    <br>
+                    <div class="fatal">
+                        <label class="qn">Inaccurate Information : Identifying the right lead to opportunity</label>
+                        <input type="radio" name="compliance_3" value="10" id="yes3" required="">
+                        <label for="yes3">Yes</label>
+                        <input type="radio" name="compliance_3" value="0" id="no3">
+                        <label for="no3">Fatal</label>
+                    </div>
+                    <br>
+                    <div class="fatal">
+                        <label class="qn">Advisor Sounding Rude / Proafinity Usage</label>
+                        <input type="radio" name="compliance_4" value="5" id="c4" required="">
+                        <label for="c4">Yes</label>
+                        <input type="radio" name="compliance_4" value="0" id="c5">
+                        <label for="c5">Fatal</label>
+                    </div>
+                    <br>
+                </div>
+                <hr>
+                <div class="other">
+
+                    <h4>Areas of improvement</h4>
+                    <textarea name="areaimprovement" id="areaimp" cols="30" rows="5" class="form-control" required=""></textarea>
+                    <br>
+                    <h4>Positives</h4>
+                    <textarea name="positives" id="positives" cols="30" rows="5" class="form-control" required=""></textarea>
+                    <br>
+                    <h4>Comments</h4>
+                    <textarea name="comments" id="cfeedback" cols="30" rows="5" class="form-control" required=""></textarea>
+                    <input type="hidden" name="campaign" value="AAdya">
+                </div>
+                <div style="padding: 30px 30px">
+                    <button class="btn btn-info"> Submit </button>
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+</body>
+</html>

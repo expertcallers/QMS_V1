@@ -22,6 +22,7 @@ urlpatterns = [
     path('email-chat-mon-form',domesticChatEmail),
     path('practo-new-version',practoNewVersion),
     path('ilm-email-chat',ilmEMailChat),
+    path('abh-form-update',abhFormSAve),
 
 
 #### Credentials

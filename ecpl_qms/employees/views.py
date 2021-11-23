@@ -79,6 +79,8 @@ list_of_monforms = [ # OutBound
                         ILMakiageEmailChatForm,
                         #wino
                         WinopolyOutbound,
+                        #ABH
+                        ABHindalcoMonForm,
 
                         ]
 
@@ -1362,6 +1364,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-winopoly.html', data)
 
+    if process_name == 'AB Hindalco':
+        coaching = ABHindalcoMonForm.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/emp-coaching-view-abh.html',data)
+
     else:
         pass
 
@@ -2118,6 +2125,11 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching':coaching}
         return render(request,'coaching-views/qa-coaching-view-winopoly.html',data)
 
+    if process_name == 'AB Hindalco':
+        coaching = ABHindalcoMonForm.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/qa-coaching-view-abh.html',data)
+
     else:
         pass
 
@@ -2771,6 +2783,11 @@ def selectCoachingForm(request):
         elif campaign_type == 'wp1':
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/winopoly_1.html', data)
+
+        elif campaign_type == 'ABH':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
+            return render(request, 'mon-forms/abh.html', data)
+
     else:
         return redirect('/employees/qahome')
 
@@ -7295,6 +7312,97 @@ def domesticChatEmail(request):
 
 # Other Forms
 
+def abhFormSAve(request):
+    if request.method =='POST':
+        category = 'Outbound'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        customer_name = request.POST['customer']
+        customer_contact = request.POST['customercontact']
+        call_date = request.POST['calldate']
+        audit_date = request.POST['auditdate']
+        campaign = request.POST['campaign']
+        concept = request.POST['concept']
+        zone = request.POST['zone']
+        call_duration = (int(request.POST['durationh']) * 3600) + (int(request.POST['durationm']) * 60) + int(
+            request.POST['durations'])
+
+        #######################################
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
+
+        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+
+        manager_emp_id = manager_emp_id_obj.emp_id
+        manager_name = manager
+        # Opening and Closing
+        oc_1 = int(request.POST['oc_1'])
+        oc_2 = int(request.POST['oc_2'])
+        oc_3 = int(request.POST['oc_3'])
+
+        oc_total = oc_1 + oc_2 + oc_3
+        # Softskills
+        softskill_1 = int(request.POST['softskill_1'])
+        softskill_2 = int(request.POST['softskill_2'])
+        softskill_3 = int(request.POST['softskill_3'])
+
+
+        softskill_total = softskill_1 + softskill_2 + softskill_3
+        # Compliance
+        compliance_1 = int(request.POST['compliance_1'])
+        compliance_2 = int(request.POST['compliance_2'])
+        compliance_3 = int(request.POST['compliance_3'])
+        compliance_4 = int(request.POST['compliance_4'])
+
+
+        compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4
+
+        fatal_list = [oc_2, compliance_2, compliance_3, compliance_4]
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 0:
+                fatal_list_count.append(i)
+        no_of_fatals = len(fatal_list_count)
+
+        if oc_1 == 0 or compliance_2 == 0 or compliance_3 == 0 or compliance_4 == 0:
+            overall_score = 0
+            fatal = True
+        else:
+            overall_score = oc_total + softskill_total + compliance_total
+            fatal = False
+
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+        added_by = request.user.profile.emp_name
+        week = request.POST['week']
+        am = request.POST['am']
+
+        leadsales = ABHindalcoMonForm(
+            associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+            manager=manager_name, manager_id=manager_emp_id,
+            call_date=call_date, audit_date=audit_date, customer_name=customer_name, customer_contact=customer_contact,
+            campaign=campaign, concept=concept, zone=zone, call_duration=call_duration,
+
+            oc_1=oc_1, oc_2=oc_2, oc_3=oc_3,
+
+            softskill_1=softskill_1, softskill_2=softskill_2, softskill_3=softskill_3, softskill_total=softskill_total,
+
+            compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3, compliance_4=compliance_4,
+
+            compliance_total=compliance_total,
+
+            areas_improvement=areas_improvement,
+            positives=positives, comments=comments,
+            added_by=added_by,
+            overall_score=overall_score, category=category,
+            week=week, am=am, fatal_count=no_of_fatals, fatal=fatal, oc_total=oc_total,
+        )
+        leadsales.save()
+        return redirect('/employees/qahome')
+
 def ilmEMailChat(request):
     if request.method == 'POST':
         category = 'ILM'
@@ -9382,3 +9490,5 @@ def disputeStatusAgents(request,campaign):
     else:
         data = campaignWise(monform)
     return render(request, 'dispute-summary-view-agents.html', data)
+
+
