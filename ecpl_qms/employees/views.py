@@ -3588,6 +3588,73 @@ def exportAuditReport(request):
 
             ########## other campaigns ##############
 
+        elif campaign == 'AB Hindalco':
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
+
+                       'Used Standard Opening Protocol',
+                       'Introduction of Product / Branding - 4 USP of eternia - WiWA, Warranty, Duranium, Eternia care Mentioning Hindalco, Aditya birla group',
+                       'Call Closing as per the Protocol',
+
+                       'Used Empathetic Statements whenever required',
+                       'Making the conversation 2 ways, giving chance to the customer to ask question',
+                       'Active Listening without Interruption',
+
+                       'Followed Policy & Procedure (Script)',
+                       'Accurate Documentation with full details in ZOHO',
+                       'Inaccurate Information : Identifying the right lead to opportunity',
+                       'Advisor Sounding Rude / Proafinity Usage',
+
+                       'status',
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = ABHindalcoMonForm.objects.filter(audit_date__range=[start_date, end_date]).values_list(
+                'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
+
+                'oc_1',
+                'oc_2',
+                'oc_3',
+
+                'softskill_1',
+                'softskill_2',
+                'softskill_3',
+
+                'compliance_1',
+                'compliance_2',
+                'compliance_3',
+                'compliance_4',
+
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
         elif campaign == 'Winopoly Outbound':
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
@@ -5372,6 +5439,76 @@ def exportAuditReportQA(request):
 
             ########## other campaigns ##############
 
+        elif campaign == 'AB Hindalco':
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
+
+                       'Used Standard Opening Protocol',
+                       'Introduction of Product / Branding - 4 USP of eternia - WiWA, Warranty, Duranium, Eternia care Mentioning Hindalco, Aditya birla group',
+                       'Call Closing as per the Protocol',
+
+                       'Used Empathetic Statements whenever required',
+                       'Making the conversation 2 ways, giving chance to the customer to ask question',
+                       'Active Listening without Interruption',
+
+                       'Followed Policy & Procedure (Script)',
+                       'Accurate Documentation with full details in ZOHO',
+                       'Inaccurate Information : Identifying the right lead to opportunity',
+                       'Advisor Sounding Rude / Proafinity Usage',
+
+                       'status',
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = ABHindalcoMonForm.objects.filter(audit_date__range=[start_date, end_date], qa=qa
+                                          ).values_list(
+                'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
+
+                'oc_1',
+                'oc_2',
+                'oc_3',
+
+                'softskill_1',
+                'softskill_2',
+                'softskill_3',
+
+
+                'compliance_1',
+                'compliance_2',
+                'compliance_3',
+                'compliance_4',
+
+
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
         elif campaign == 'Winopoly Outbound':
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
@@ -5410,9 +5547,6 @@ def exportAuditReportQA(request):
                        'Transfer Only - (Did the agent conduct the intro on the transfer correctly)',
                        'Disposition - (Did the agent used the correct disposition?)',
                        'Auto Fail - (ZERO TOLERANCE POLICY)',
-
-
-
                        'status','disput_status',
                        'closed_date', 'fatal', 'coaching_comments', 'evaluator_comment']
 
