@@ -88,7 +88,15 @@ admin.site.register(MonitoringFormMobile22InboundCalls)
 admin.site.register(XportDigitalOutbound)
 admin.site.register(XportDigitalInboundMonForm)
 admin.site.register(ABHindalcoMonForm)
-
+admin.site.register(CalistaOutboundMonForm)
+admin.site.register(GlobalArkOutboundMonform)
+admin.site.register(DIDevelopOutbound)
+admin.site.register(FreeholdOutboundMonForm)
+admin.site.register(ZeamoOutboundMonForm)
+admin.site.register(SapphireMedicalsOutboundMonForm)
+admin.site.register(EehhaaaOutboundMonForm)
+admin.site.register(CalistaInboundMonForm)
+admin.site.register(GlobalArkInboundMonForm)
 
 
 
