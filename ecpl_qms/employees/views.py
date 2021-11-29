@@ -1066,6 +1066,41 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Calista Outbound':
+        coaching = CalistaOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Global Ark Outbound':
+        coaching = GlobalArkOutboundMonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'DI Develop Outbound':
+        coaching = DIDevelopOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Freehold Outbound':
+        coaching = FreeholdOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Zeamo Outbound':
+        coaching = ZeamoOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Sapphire Medicals Outbound':
+        coaching = SapphireMedicalsOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Eehhaaa Outbound':
+        coaching = EehhaaaOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1200,6 +1235,16 @@ def coachingViewAgents(request,process,pk):
 
     elif process_name == 'Xport Digital Inbound':
         coaching = XportDigitalInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Calista Inbound':
+        coaching = CalistaInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Global Ark Inbound':
+        coaching = GlobalArkInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
@@ -1824,6 +1869,40 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Calista Outbound':
+        coaching = CalistaOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Global Ark Outbound':
+        coaching = GlobalArkOutboundMonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'DI Develop Outbound':
+        coaching = DIDevelopOutbound.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Freehold Outbound':
+        coaching = FreeholdOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Zeamo Outbound':
+        coaching = ZeamoOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Sapphire Medicals Outbound':
+        coaching = SapphireMedicalsOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Eehhaaa Outbound':
+        coaching = EehhaaaOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
     ########### Inbound ########################
 
@@ -1959,6 +2038,16 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Xport Digital Inbound':
         coaching = XportDigitalInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Calista Inbound':
+        coaching = CalistaInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Global Ark Inbound':
+        coaching = GlobalArkInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
@@ -3234,6 +3323,34 @@ def exportAuditReport(request):
             response = exportAadyaseries(XportDigitalOutbound)
             return response
 
+        elif campaign == 'Calista Outbound':
+            response = exportAadyaseries(CalistaOutboundMonForm)
+            return response
+
+        elif campaign == 'Global Ark Outbound':
+            response = exportAadyaseries(GlobalArkOutboundMonform)
+            return response
+
+        elif campaign == 'DI Develop Outbound':
+            response = exportAadyaseries(DIDevelopOutbound)
+            return response
+
+        elif campaign == 'Freehold Outbound':
+            response = exportAadyaseries(FreeholdOutboundMonForm)
+            return response
+
+        elif campaign == 'Zeamo Outbound':
+            response = exportAadyaseries(ZeamoOutboundMonForm)
+            return response
+
+        elif campaign == 'Sapphire Medicals Outbound':
+            response = exportAadyaseries(SapphireMedicalsOutboundMonForm)
+            return response
+
+        elif campaign == 'Eehhaaa Outbound':
+            response = exportAadyaseries(EehhaaaOutboundMonForm)
+            return response
+
 
         ######## Inbound ###############################
 
@@ -3416,6 +3533,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Xport Digital Inbound':
             response = exportinbound(XportDigitalInboundMonForm)
+            return response
+
+        elif campaign == 'Calista Inbound':
+            response = exportinbound(CalistaInboundMonForm)
+            return response
+
+        elif campaign == 'Global Ark Inbound':
+            response = exportinbound(GlobalArkInboundMonForm)
             return response
 
         #########    Email/CHat ##########################
@@ -5083,6 +5208,34 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(XportDigitalOutbound)
             return response
 
+        elif campaign == 'Calista Outbound':
+            response = exportAadyaseries(CalistaOutboundMonForm)
+            return response
+
+        elif campaign == 'Global Ark Outbound':
+            response = exportAadyaseries(GlobalArkOutboundMonform)
+            return response
+
+        elif campaign == 'DI Develop Outbound':
+            response = exportAadyaseries(DIDevelopOutbound)
+            return response
+
+        elif campaign == 'Freehold Outbound':
+            response = exportAadyaseries(FreeholdOutboundMonForm)
+            return response
+
+        elif campaign == 'Zeamo Outbound':
+            response = exportAadyaseries(ZeamoOutboundMonForm)
+            return response
+
+        elif campaign == 'Sapphire Medicals Outbound':
+            response = exportAadyaseries(SapphireMedicalsOutboundMonForm)
+            return response
+
+        elif campaign == 'Eehhaaa Outbound':
+            response = exportAadyaseries(EehhaaaOutboundMonForm)
+            return response
+
 
 
         ######## Inbound ###############################
@@ -5265,6 +5418,14 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Xport Digital Inbound':
             response = exportinbound(XportDigitalInboundMonForm)
+            return response
+
+        elif campaign == 'Calista Inbound':
+            response = exportinbound(CalistaInboundMonForm)
+            return response
+
+        elif campaign == 'Global Ark Inbound':
+            response = exportinbound(GlobalArkInboundMonForm)
             return response
 
 
@@ -6874,6 +7035,34 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(XportDigitalOutbound)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Calista Outbound':
+            newseriesAddCoaching(CalistaOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Global Ark Outbound':
+            newseriesAddCoaching(GlobalArkOutboundMonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'DI Develop Outbound':
+            newseriesAddCoaching(DIDevelopOutbound)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Freehold Outbound':
+            newseriesAddCoaching(FreeholdOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Zeamo Outbound':
+            newseriesAddCoaching(ZeamoOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Sapphire Medicals Outbound':
+            newseriesAddCoaching(SapphireMedicalsOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Eehhaaa Outbound':
+            newseriesAddCoaching(EehhaaaOutboundMonForm)
+            return redirect('/employees/qahome')
+
         else:
             pass
 
@@ -7221,6 +7410,17 @@ def newSeriesInboundForms(request):
         elif campaign_name == 'Xport Digital Inbound':
             inboundAddCoaching(XportDigitalInboundMonForm)
             return redirect('/employees/qahome')
+
+        elif campaign_name == 'Calista Inbound':
+            inboundAddCoaching(CalistaInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Global Ark Inbound':
+            inboundAddCoaching(GlobalArkInboundMonForm)
+            return redirect('/employees/qahome')
+
+
+
 
     else:
         pass
