@@ -107,6 +107,7 @@ urlpatterns = [
     path('coaching-status-overall',coachingStatusReportAll),
     path('coaching-status-overall/<str:campaign>',coachingStatusCampaignwise),
     path('dispute-status-overall/<str:campaign>',disputeStatusAgents),
+    path('list-chat-monitoring',ListChatMonitoring.as_view(),name="to_list_the_chat")
 
 
 ]

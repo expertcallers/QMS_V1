@@ -15,6 +15,9 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from .models import *
 from . import forms
+from .serializers import *
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 list_of_monforms = [ # OutBound
                         MonitoringFormLeadsAadhyaSolution,AccutimeMonForm,MonitoringFormLeadsAdvanceConsultants,
@@ -7671,7 +7674,9 @@ def abhFormSAve(request):
 
         manager_emp_id = manager_emp_id_obj.emp_id
         manager_name = manager
+
         # Opening and Closing
+
         oc_1 = int(request.POST['oc_1'])
         oc_2 = int(request.POST['oc_2'])
         oc_3 = int(request.POST['oc_3'])
@@ -7761,23 +7766,47 @@ def ilmEMailChat(request):
         manager_name = manager
         #########################################
 
+        lst = []
+        lst_tot = []
+        def addtoScore(score,tot):
+            if score == 'na':
+                pass
+            else:
+                lst.append(int(score))
+                lst_tot.append(tot)
+
         # Solution
-        s_1 = int(request.POST['s_1'])
-        s_2 = int(request.POST['s_2'])
-        s_3 = int(request.POST['s_3'])
-        s_4 = int(request.POST['s_4'])
-        s_total = s_1 + s_2 + s_3 +s_4
+        s_1 = request.POST['s_1']
+        addtoScore(s_1,10)
+
+        s_2 = request.POST['s_2']
+        addtoScore(s_2, 10)
+
+        s_3 = request.POST['s_3']
+        addtoScore(s_3, 10)
+
+        s_4 = request.POST['s_4']
+        addtoScore(s_4, 10)
+
 
         # Efficiency
-        e_1 = int(request.POST['e_1'])
-        e_2 = int(request.POST['e_2'])
-        e_total = e_1 + e_2
+        e_1 = request.POST['e_1']
+        addtoScore(e_1, 10)
+
+        e_2 = request.POST['e_2']
+        addtoScore(e_2, 10)
+
 
         # Compliance
         compliance_1 = int(request.POST['compliance_1'])
+        addtoScore(compliance_1,10)
+
         compliance_2 = int(request.POST['compliance_2'])
+        addtoScore(compliance_2, 10)
+
         compliance_3 = int(request.POST['compliance_3'])
-        compliance_total = compliance_1 + compliance_2 + compliance_3
+        addtoScore(compliance_3, 10)
+
         #################################################
 
         fatal_list = [compliance_1, compliance_2, compliance_3]
@@ -7794,8 +7823,10 @@ def ilmEMailChat(request):
             overall_score = 0
             fatal = True
         else:
-            overall_score = s_total + e_total + compliance_total
+            overall_score = sum(lst)/sum(lst_tot)
             fatal = False
+
+        print(overall_score)
 
         areas_improvement = request.POST['areaimprovement']
         positives = request.POST['positives']
@@ -7813,11 +7844,11 @@ def ilmEMailChat(request):
                            campaign=campaign, concept=concept, zone=zone,
                            query_type = query_type,
 
-                           s_1=s_1, s_2=s_2, s_3=s_3,s_4=s_4,s_total=s_total,
-                           e_1=e_1, e_2=e_2, e_total=e_total,
+                           s_1=s_1, s_2=s_2, s_3=s_3,s_4=s_4,
+                           e_1=e_1, e_2=e_2,
 
                            compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
-                           compliance_total=compliance_total,
+
 
                            areas_improvement=areas_improvement,
                            positives=positives, comments=comments,
@@ -9668,6 +9699,8 @@ def AllProfileUpdate(request):
                 j.team_lead = i.tl
                 j.save()
 
+# EDit Team RM
+from django.db.models import Q
 
 def createUserAndProfile(request):
     if request.method == 'POST':
@@ -9728,16 +9761,15 @@ def createUserAndProfile(request):
 
     else:
 
-        managers = Profile.objects.filter(emp_desi='Manager')
-        ams = Profile.objects.filter(emp_desi='AM')
-        tls = Profile.objects.filter(emp_desi='Team Leader')
+        managers = Profile.objects.filter(Q(emp_desi = 'Team Leader') | Q(emp_desi = 'AM') | Q(emp_desi = 'Manager') | Q(emp_desi = 'SME'))
+        ams = Profile.objects.filter(Q(emp_desi = 'Team Leader') | Q(emp_desi = 'AM') | Q(emp_desi = 'Manager') | Q(emp_desi = 'SME'))
+        tls = Profile.objects.filter(Q(emp_desi = 'Team Leader') | Q(emp_desi = 'AM') | Q(emp_desi = 'Manager')| Q(emp_desi = 'SME'))
 
         data = {'managers':managers,'ams':ams,'tls':tls}
         return render(request,'create-user-profile.html',data)
 
 
-# EDit Team RM
-from django.db.models import Q
+
 
 
 
@@ -9824,5 +9856,12 @@ def disputeStatusAgents(request,campaign):
     else:
         data = campaignWise(monform)
     return render(request, 'dispute-summary-view-agents.html', data)
+
+class ListChatMonitoring(APIView):
+    def get(self,request):
+        obj = MonitoringFormLeadsAadhyaSolution.objects.all()
+        serializer = ChatMonitoringSerializer(obj,many=True)
+        data = serializer.data
+        return Response(data)
 
 
