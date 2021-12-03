@@ -1364,6 +1364,16 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
+    elif process_name == 'Bhagyalaxmi Chat':
+        coaching = BhagyalaxmiChatMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Sapphire Medicals Chat':
+        coaching = SapphireMedicalsChatMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
 
     ################ Others ##########################################################
 
@@ -2166,6 +2176,16 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Sana Life Science Email-Chat':
         coaching = SanaLifeScienceEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Bhagyalaxmi Chat':
+        coaching = BhagyalaxmiChatMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Sapphire Medicals Chat':
+        coaching = SapphireMedicalsChatMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
@@ -3712,6 +3732,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Sana Life Science Email-Chat':
             response = exportEmailChat(SanaLifeScienceEmailChatForm)
+            return response
+
+        elif campaign == 'Bhagyalaxmi Chat':
+            response = exportEmailChat(BhagyalaxmiChatMonForm)
+            return response
+
+        elif campaign == 'Sapphire Medicals Chat':
+            response = exportEmailChat(SapphireMedicalsChatMonForm)
             return response
 
             ########## other campaigns ##############
@@ -5599,6 +5627,14 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Sana Life Science Email-Chat':
             response = exportEmailChat(SanaLifeScienceEmailChatForm)
+            return response
+
+        elif campaign == 'Bhagyalaxmi Chat':
+            response = exportEmailChat(BhagyalaxmiChatMonForm)
+            return response
+
+        elif campaign == 'Sapphire Medicals Chat':
+            response = exportEmailChat(SapphireMedicalsChatMonForm)
             return response
 
             ########## other campaigns ##############
@@ -7638,6 +7674,14 @@ def domesticChatEmail(request):
 
         elif campaign_name == 'Sana Life Science Email-Chat':
             domesticEmailChatAddCoaching(SanaLifeScienceEmailChatForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Bhagyalaxmi Chat':
+            domesticEmailChatAddCoaching(BhagyalaxmiChatMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Sapphire Medicals Chat':
+            domesticEmailChatAddCoaching(SapphireMedicalsChatMonForm)
             return redirect('/employees/qahome')
 
 
@@ -9857,11 +9901,191 @@ def disputeStatusAgents(request,campaign):
         data = campaignWise(monform)
     return render(request, 'dispute-summary-view-agents.html', data)
 
-class ListChatMonitoring(APIView):
-    def get(self,request):
-        obj = MonitoringFormLeadsAadhyaSolution.objects.all()
-        serializer = ChatMonitoringSerializer(obj,many=True)
-        data = serializer.data
-        return Response(data)
+
+from drf_multiple_model.views import ObjectMultipleModelAPIView
+from drf_multiple_model.views import FlatMultipleModelAPIView
 
 
+class TotalList(FlatMultipleModelAPIView):
+
+    querylist = [
+        {'queryset': ChatMonitoringFormPodFather.objects.all(),
+         'serializer_class': ChatMonitoringSerializer},
+
+        {'queryset': MonitoringFormLeadsAadhyaSolution.objects.all(),
+         'serializer_class': adhyaSerializer},
+
+        {'queryset': AccutimeMonForm.objects.all(),
+         'serializer_class': AccutimeMonFormSerializer},
+
+        {'queryset': MonitoringFormLeadsAdvanceConsultants.objects.all(),
+         'serializer_class': MonitoringFormLeadsAdvanceConsultantsSerializer},
+
+        {'queryset': MonitoringFormLeadsAllenConsulting.objects.all(),
+        'serializer_class': MonitoringFormLeadsAllenConsultingSerializer},
+
+        {'queryset': CamIndustrialMonForm.objects.all(),
+         'serializer_class': CamIndustrialMonFormSerializer},
+
+        {'queryset': CitizenCapitalMonForm.objects.all(),
+         'serializer_class': CitizenCapitalMonFormSerializer},
+
+        {'queryset': MonitoringFormLeadsCitySecurity.objects.all(),
+         'serializer_class': MonitoringFormLeadsCitySecuritySerializer},
+
+        {'queryset': MonitoringFormLeadsCTS.objects.all(),
+         'serializer_class': MonitoringFormLeadsCTSSerializer},
+
+        {'queryset': EmbassyLuxuryMonForm.objects.all(),
+         'serializer_class': EmbassyLuxuryMonFormSerializer},
+
+        {'queryset': MonitoringFormLeadsGetARates.objects.all(),
+         'serializer_class': MonitoringFormLeadsGetARatesSerializer},
+
+        {'queryset': GlydeAppMonForm.objects.all(),
+         'serializer_class': GlydeAppMonFormSerializer},
+
+        {'queryset': GoldenEastMonForm.objects.all(),
+         'serializer_class': GoldenEastMonFormSerializer},
+
+        {'queryset': IbizMonForm.objects.all(),
+         'serializer_class': IbizMonFormSerializer},
+
+        {'queryset': IIBMonForm.objects.all(),
+         'serializer_class': IIBMonFormSerializer},
+
+        {'queryset': MonitoringFormLeadsInfothinkLLC.objects.all(),
+         'serializer_class': MonitoringFormLeadsInfothinkLLCSerializer},
+
+        {'queryset': MonitoringFormLeadsInsalvage.objects.all(),
+         'serializer_class': MonitoringFormLeadsInsalvageSerializer},
+
+        {'queryset': JJStudioMonForm.objects.all(),
+         'serializer_class': JJStudioMonFormSerializer},
+
+        {'queryset': KalkiFashions.objects.all(),
+         'serializer_class': KalkiFashionsSerializer},
+
+        {'queryset': MonitoringFormLeadsLouisville.objects.all(),
+         'serializer_class': MonitoringFormLeadsLouisvilleSerializer},
+
+        {'queryset': MonitoringFormLeadsMedicare.objects.all(),
+         'serializer_class': MonitoringFormLeadsMedicareSerializer},
+
+        {'queryset': MicroDistributingMonForm.objects.all(),
+         'serializer_class': MicroDistributingMonFormSerializer},
+
+        {'queryset': MillenniumScientificMonForm.objects.all(),
+         'serializer_class': MillenniumScientificMonFormSerializer},
+
+        {'queryset': MTCosmeticsMonForm.objects.all(),
+         'serializer_class': MTCosmeticsMonFormSerializer},
+
+        {'queryset': NavigatorBioMonForm.objects.all(),
+         'serializer_class': NavigatorBioMonFormSerializer},
+
+        {'queryset': OptimalStudentLoanMonForm.objects.all(),
+         'serializer_class': OptimalStudentLoanMonFormSerializer},
+
+        {'queryset': ProtostarMonForm.objects.all(),
+         'serializer_class': ProtostarMonFormSerializer},
+
+        {'queryset': MonitoringFormLeadsPSECU.objects.all(),
+         'serializer_class': MonitoringFormLeadsPSECUSerializer},
+
+        {'queryset': QBIQMonForm.objects.all(),
+         'serializer_class': QBIQMonFormSerializer},
+
+        {'queryset': RestaurentSolMonForm.objects.all(),
+         'serializer_class': RestaurentSolMonFormSerializer},
+
+        {'queryset': RitBrainMonForm.objects.all(),
+         'serializer_class': RitBrainMonFormSerializer},
+
+        {'queryset': RoofWellMonForm.objects.all(),
+         'serializer_class': RoofWellMonFormSerializer},
+
+        {'queryset': ScalaMonForm.objects.all(),
+         'serializer_class': ScalaMonFormSerializer},
+
+        {'queryset': SolarCampaignMonForm.objects.all(),
+         'serializer_class': SolarCampaignMonFormSerializer},
+
+        {'queryset': StandSpotMonForm.objects.all(),
+         'serializer_class': StandSpotMonFormSerializer},
+
+        {'queryset': MonitoringFormLeadsSystem4.objects.all(),
+         'serializer_class': MonitoringFormLeadsSystem4Serializer},
+
+        {'queryset': MonitoringFormLeadsTentamusFood.objects.all(),
+         'serializer_class': MonitoringFormLeadsTentamusFoodSerializer},
+
+        {'queryset': MonitoringFormLeadsTentamusPet.objects.all(),
+         'serializer_class': MonitoringFormLeadsTentamusPetSerializer},
+
+        {'queryset': TerraceoLeadMonForm.objects.all(),
+         'serializer_class': TerraceoLeadMonFormSerializer},
+
+        {'queryset': UpfrontOnlineLLCMonform.objects.all(),
+         'serializer_class': UpfrontOnlineLLCMonformSerializer},
+
+        {'queryset': WTUMonForm.objects.all(),
+         'serializer_class': WTUMonFormSerializer},
+
+        {'queryset': YesHealthMolinaMonForm.objects.all(),
+         'serializer_class': YesHealthMolinaMonFormSerializer},
+
+        {'queryset': ZeroStressMarketingMonForm.objects.all(),
+         'serializer_class': ZeroStressMarketingMonFormSerializer},
+
+        {'queryset': ABHindalcoOutboundMonForm.objects.all(),
+         'serializer_class': ABHindalcoOutboundMonFormSerializer},
+
+        {'queryset': AdityaBirlaOutboundMonForm.objects.all(),
+         'serializer_class': AdityaBirlaOutboundMonFormSerializer},
+
+        {'queryset': AmerisaveoutboundMonForm.objects.all(),
+         'serializer_class': AmerisaveoutboundMonFormSerializer},
+
+        {'queryset': BhagyaLakshmiOutbound.objects.all(),
+         'serializer_class': BhagyaLakshmiOutboundSerializer},
+
+        {'queryset': ClearViewOutboundMonForm.objects.all(),
+         'serializer_class': ClearViewOutboundMonFormSerializer},
+
+        {'queryset': DanielWellingtonOutboundMonForm.objects.all(),
+         'serializer_class': DanielWellingtonOutboundMonFormSerializer},
+
+        {'queryset': DigitalSwissGoldOutboundMonForm.objects.all(),
+         'serializer_class': DigitalSwissGoldOutboundMonFormSerializer},
+
+        {'queryset': HealthyplusOutboundMonForm.objects.all(),
+         'serializer_class': HealthyplusOutboundMonFormSerializer},
+
+        {'queryset': MaxwellPropertiesOutboundMonForm.objects.all(),
+         'serializer_class': MaxwellPropertiesOutboundMonFormSerializer},
+
+        {'queryset': MovementofInsuranceOutboundMonForm.objects.all(),
+         'serializer_class': MovementofInsuranceOutboundMonFormSerializer},
+
+        {'queryset': SterlingStrategiesOutboundMonForm.objects.all(),
+         'serializer_class': SterlingStrategiesOutboundMonFormSerializer},
+
+        {'queryset': TonnCoaOutboundMonForm.objects.all(),
+         'serializer_class': TonnCoaOutboundMonFormSerializer},
+
+        {'queryset': WitDigitalOutboundMonForm.objects.all(),
+         'serializer_class': WitDigitalOutboundMonFormSerializer},
+
+        {'queryset': PosTechOutboundMonForm.objects.all(),
+         'serializer_class': PosTechOutboundMonFormSerializer},
+
+        {'queryset': SchindlerMediaOutboundMonForm.objects.all(),
+         'serializer_class': SchindlerMediaOutboundMonFormSerializer},
+
+        {'queryset': UPSOutboundMonForm.objects.all(),
+         'serializer_class': UPSOutboundMonFormSerializer},
+
+        {'queryset': PickPackDeliveriesMonForm.objects.all(),
+         'serializer_class': PickPackDeliveriesMonFormSerializer},
+]
