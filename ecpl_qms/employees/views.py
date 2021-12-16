@@ -43,6 +43,7 @@ list_of_monforms = [ # OutBound
                         NewDimensionPharmacyOutbound,StayNChargeOutbound,
                         JHEnergyConsultantOutbound,MDRGroupLLCOutbound,CoreySmallInsuranceAgencyOutbound,EduvocateOutbound,CrossTowerOutbound,
                         DawnFinancialOutbound,XportDigitalOutbound,
+                        AllCarePhysicalTherapyMonform,ExecutiveCapitalResourcesmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -1104,6 +1105,16 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'All Care Physical Therapy':
+        coaching = AllCarePhysicalTherapyMonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Executive Capital Resources':
+        coaching = ExecutiveCapitalResourcesmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1914,6 +1925,16 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Eehhaaa Outbound':
         coaching = EehhaaaOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'All Care Physical Therapy':
+        coaching = AllCarePhysicalTherapyMonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Executive Capital Resources':
+        coaching = ExecutiveCapitalResourcesmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -2898,7 +2919,7 @@ def selectCoachingForm(request):
 
         elif campaign_type == 'ABH':
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
-            return render(request, 'mon-forms/abh.html', data)
+            return render(request, 'mon-forms/abh_new.html', data)
 
     else:
         return redirect('/employees/qahome')
@@ -2999,7 +3020,7 @@ def exportAuditReport(request):
 
             return response
 
-        #######  campaigns  adya series ###########
+        #######  OUTBOUND ###########
 
         if campaign == 'AAdya':
             response = exportAadyaseries(MonitoringFormLeadsAadhyaSolution)
@@ -3372,6 +3393,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Eehhaaa Outbound':
             response = exportAadyaseries(EehhaaaOutboundMonForm)
+            return response
+
+        elif campaign == 'All Care Physical Therapy':
+            response = exportAadyaseries(AllCarePhysicalTherapyMonform)
+            return response
+
+        elif campaign == 'Executive Capital Resources':
+            response = exportAadyaseries(ExecutiveCapitalResourcesmonform)
             return response
 
 
@@ -4892,7 +4921,7 @@ def exportAuditReportQA(request):
 
             return response
 
-        #######  campaigns  adya series ###########
+        #######  OUTBOUND  ###########
 
         if campaign == 'AAdya':
             response = exportAadyaseries(MonitoringFormLeadsAadhyaSolution)
@@ -5265,6 +5294,14 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Eehhaaa Outbound':
             response = exportAadyaseries(EehhaaaOutboundMonForm)
+            return response
+
+        elif campaign == 'All Care Physical Therapy':
+            response = exportAadyaseries(AllCarePhysicalTherapyMonform)
+            return response
+
+        elif campaign == 'Executive Capital Resources':
+            response = exportAadyaseries(ExecutiveCapitalResourcesmonform)
             return response
 
 
@@ -7102,6 +7139,14 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(EehhaaaOutboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'All Care Physical Therapy':
+            newseriesAddCoaching(AllCarePhysicalTherapyMonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Executive Capital Resources':
+            newseriesAddCoaching(ExecutiveCapitalResourcesmonform)
+            return redirect('/employees/qahome')
+
         else:
             pass
 
@@ -7730,6 +7775,7 @@ def abhFormSAve(request):
         softskill_1 = int(request.POST['softskill_1'])
         softskill_2 = int(request.POST['softskill_2'])
         softskill_3 = int(request.POST['softskill_3'])
+        softskill_4 = int(request.POST['softskill_4'])
 
 
         softskill_total = softskill_1 + softskill_2 + softskill_3
@@ -7771,7 +7817,7 @@ def abhFormSAve(request):
 
             oc_1=oc_1, oc_2=oc_2, oc_3=oc_3,
 
-            softskill_1=softskill_1, softskill_2=softskill_2, softskill_3=softskill_3, softskill_total=softskill_total,
+            softskill_1=softskill_1, softskill_2=softskill_2, softskill_3=softskill_3, softskill_4=softskill_4,softskill_total=softskill_total,
 
             compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3, compliance_4=compliance_4,
 
@@ -9904,8 +9950,6 @@ def disputeStatusAgents(request,campaign):
 
 from drf_multiple_model.views import ObjectMultipleModelAPIView
 from drf_multiple_model.views import FlatMultipleModelAPIView
-
-
 class TotalList(FlatMultipleModelAPIView):
 
     querylist = [

@@ -97,6 +97,8 @@ admin.site.register(SapphireMedicalsOutboundMonForm)
 admin.site.register(EehhaaaOutboundMonForm)
 admin.site.register(CalistaInboundMonForm)
 admin.site.register(GlobalArkInboundMonForm)
+admin.site.register(AllCarePhysicalTherapyMonform)
+admin.site.register(ExecutiveCapitalResourcesmonform)
 
 
 

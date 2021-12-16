@@ -1,126 +1,471 @@
-{% extends 'base.html' %}
-{% block main %}
-	<style type="text/css">
-		.fatal {
-			color: red;
-		}
-	</style>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 
-
-	<section id="coachingview" style="padding:100px 50px">
-        <div class="container-lg" style="background: white;padding: 30px 30px;">
-
-                <h2>Audit Details</h2>
-                <p>campaign - {{coaching.process}}</p>
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <td><b>Emp Name</b></td>
-                            <td>{{coaching.associate_name}}</td>
-                            <td><b>Emp ID</b></td>
-                            <td>{{coaching.emp_id}}</td>
-                        </tr>
-                        <tr>
-                          <td><b>QA</b></td>
-                          <td>{{coaching.qa}}</td>
-                          <td><b>Team Lead</b></td>
-                          <td>{{coaching.team_lead}}</td>
-                        </tr>
-                        <tr>
-                          <td><b>Call Date</b></td>
-                          <td>{{coaching.call_date}}</td>
-                          <td><b>Customer Name</b></td>
-                          <td>{{coaching.customer_name}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h2>Parameter Scores</h2>
-                <p><b>Opening & Closing</b></p>
-                <table class="table">
-                    <tbody><tr>
-                        <td style="width: 55%;">Used Standard Opening Protocol</td>
-                        <td>{{coaching.oc_1}}</td>
-                    </tr>
-                    <tr class="fatal">
-                        <td style="width: 55%;">Introduction of Product / Branding - 4 USP of eternia - WiWA, Warranty, Duranium, Eternia care Mentioning Hindalco, Aditya birla group</td>
-                        <td>{{coaching.oc_2}}</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 55%;">Call Closing as per the Protocol</td>
-                        <td>{{coaching.oc_3}}</td>
-                    </tr>
-                </tbody></table>
-
-
-                <p><b>Soft Skills</b></p>
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <td style="width: 55%;">Used Empathetic Statements whenever required</td>
-                            <td>{{coaching.softskill_1}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 55%;">Making the conversation 2 ways, giving chance to the customer to ask question</td>
-                            <td>{{coaching.softskill_2}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 55%;">Active Listening without Interruption</td>
-                            <td>{{coaching.softskill_3}}</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-
-
-                <p><b>Business & Compliance</b></p>
-                <table class="table">
-                    <tbody><tr>
-                        <td style="width: 55%;">Followed Policy & Procedure (Script)</td>
-                        <td>{{coaching.compliance_1}}</td>
-                    </tr>
-                    <tr class="fatal">
-                        <td style="width: 55%;">Accurate Documentation with full details in ZOHO</td>
-                        <td>{{coaching.compliance_2}}</td>
-                    </tr>
-                    <tr class="fatal">
-                        <td style="width: 55%;">Inaccurate Information : Identifying the right lead to opportunity</td>
-                        <td>{{coaching.compliance_3}}</td>
-                    </tr>
-                    <tr class="fatal">
-                        <td style="width: 55%;">Advisor Sounding Rude / Proafinity Usage</td>
-                        <td>{{coaching.compliance_4}}</td>
-                    </tr>
-
-                </tbody></table>
-
-
-                <h2>Auditor Comments</h2>
-                <table class="table table-bordered">
-                    <tr style="height:110px">
-                      <td><b>Areas of Improvement</b></td>
-                      <td>{{coaching.areas_improvement}}</td>
-                    </tr>
-                    <tr style="height:110px">
-                      <td><b>Positives</b></td>
-                      <td>{{coaching.positives}}</td>
-                    </tr>
-                    <tr style="height:110px">
-                      <td><b>Comments</b></td>
-                      <td>{{coaching.comments}}</td>
-                    </tr>
-                </table>
-                <h2>Audit Score</h2>
-                <table class="table table-bordered">
-                    <tbody><tr>
-                      <td><b>Total</b></td>
-                      <td>{{coaching.overall_score}}</td>
-                      <td><b>Compliance</b></td>
-                      <td>{{coaching.compliance_total}}</td>
-                    </tr>
-                </tbody></table>
-
+    <script src="https://kit.fontawesome.com/4a95aa7adc.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://qms.ecpl.com/static/css/style.css">
+    <style type="text/css">
+        .fatal {
+            color: red;
+        }
+        #sec1_score {
+            border: none;
+            background: #ECECF3;
+            padding: 0 10px;
+        }
+        label {
+            margin-right: 30px;
+        }
+        .score {
+            font-size: 18px;
+            color: green;
+            font-weight: 600;
+        }
+        h4 {
+            color: #010162;
+            font-weight: 800;
+        }
+        .container-fluid, .container {
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(0,0,0,.1);
+        }
+        .less {
+            background: red !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        .perfect{
+            background: green !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        #myscore{
+            color: green;
+            font-weight: 800;
+        }
+        input[type="radio"] {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            transform: scale(1.5);
+        }
+        input[type="text"].scoree {
+            font-size: 12px;
+        }
+        .btn-success {
+            color: white;
+            background-color: green !important;
+            border-color: green !important;
+            padding: 3px 30px;
+        }
+        @media (min-width:768px) {
+            body {
+                margin: 0 80px;
+            }
+        }
+        @media (max-width:768px) {
+            body {
+                margin: 0 20px;
+            }
+        }
+        #last .row .col-md-6{
+            border: 1px solid #e5e5e5;
+            padding-top: 15px;
+        } 
+        #last .noborder .col-md-6 {
+            padding-top: 10px;
+            text-align: center;
+        } 
+        #last .noborder .col-md-6{
+            border-right: 1px solid #e5e5e5;
+            margin-top: -10px;
+            padding-top: 10px;
+            text-align: center;
+        } 
+        #last .noborder .col-md-6 h4 {
+            font-size: 24px !important;
+        } 
+        #last .row .col-md-6 h4{
+            font-size: 18px;
+        } 
+        .fields .row .col-md-3{
+            padding: 5px 25px;
+        }
+        .fields .row .col-md-3 .row .col-md-6{
+            border: 1px solid #e5e5e5;
+        }
+        .fields .row .col-md-3 .row .col-md-6 h4{
+            color: #000;
+            padding-top: 8px;
+            font-size: 18px;
+        }
+        .fields .row .col-md-3 .row .col-md-6 p{
+            padding-top: 6px;
+            margin-bottom: 0px;
+        }
+    </style>
+</head>
+<body> 
+    <div class="container pt-5 mt-5">
+        <div class="row">
+            <div class="col-md-12" align="center">
+                <h2>Audit Report - AB Hindalco</h2>
+            </div>
         </div>
-    </section>
+    </div>
 
-{% endblock %}
+    <div class="container-fluid fields">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Associate Name</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Associate Name</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Employee ID</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Associate Name</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Zone</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Associate Name</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Concept</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Associate Name</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Customer Name</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Customer Name</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Customer Contact</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Customer Contact</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Call Date</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Call Date</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Call Duration</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Call Duration</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Audit Date</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Audit Date</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Quality Analyst</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Quality Analyst</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Team Lead</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Team Lead</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Manager</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Manager</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>AM</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>AM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Week</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Week</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Opening and Closing</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Used Standard Opening Protocol
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="oc_1">10</h5>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+                Introduction of Product / Branding - 4 USP of eternia - WiWA, Warranty, Duranium, Eternia care Mentioning Hindalco, Aditya birla group
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="oc_2">5</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Call Closing as per the Protocol
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="oc_3">5</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score" align="center">
+                Opening and Closing Score
+            </div>
+            <div class="col-md-4">
+                <h5 id="oc_score">5</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Softskills</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Used Empathetic Statements whenever required
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="softskill_1">5</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Making the conversation 2 ways, giving chance to the customer to ask question
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="softskill_2">5</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+               Active Listening without Interruption
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="softskill_3">5</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+               Clear Grammar & Communication
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="softskill_4">5</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score" align="center">
+                Softskills Score
+            </div>
+            <div class="col-md-4">
+                <h5 id="softskill_score">5</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Business &amp; Compliance</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Followed Policy & Procedure (Script)
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="b_1">5</h5>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+                Accurate Documentation with full details in ZOHO
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="b_2">5</h5>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+                Inaccurate Information : Identifying the right lead to opportunity
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="b_3">5</h5>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+               Advisor Sounding Rude / Proafinity Usage
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="b_4">5</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score" align="center">
+                Business &amp; Compliance Score
+            </div>
+            <div class="col-md-4">
+                <h5 id="b_score">5</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="last">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Areas of improvement</h4>
+            </div>
+            <div class="col-md-6">
+                <p>sjklajkls</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Positives</h4>
+            </div>
+            <div class="col-md-6">
+                <p>sjklajkls</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Comments</h4>
+            </div>
+            <div class="col-md-6">
+                <p>sjklajkls</p>
+            </div>
+        </div>
+        <div class="row mt-5 noborder">
+            <div class="col-md-6">
+                <h5>Total Score</h5>
+            </div>
+            <div class="col-md-6">
+                <h4 id="tot_score">sjklajkls</h4>
+            </div>
+            <div class="col-md-12 mt-3" align="center">
+                <a href="#" class="btn btn-info btn-lg">Back</a>
+                <a href="#" class="printMe btn btn-info btn-lg">Print</a>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        var oc_1 = parseInt($('#oc_1').html());
+        var oc_2 = parseInt($('#oc_1').html());
+        var oc_3 = parseInt($('#oc_1').html());
+        $('#oc_score').html(oc_1+oc_2+oc_3);
+        var softskill_1 = parseInt($('#softskill_1').html());
+        var softskill_2 = parseInt($('#softskill_2').html());
+        var softskill_3 = parseInt($('#softskill_3').html());
+        var softskill_4 = parseInt($('#softskill_4').html());
+        $('#softskill_score').html(softskill_1+softskill_2+softskill_3+softskill_4);
+        var b_1 = parseInt($('#b_1').html());
+        var b_2 = parseInt($('#b_2').html());
+        var b_3 = parseInt($('#b_3').html());
+        var b_4 = parseInt($('#b_4').html());
+        $('#b_score').html(b_1+b_2+b_3+b_4);
+        $('.printMe').click(function(){
+             window.print();
+        });
+    </script>
+
+</body>
+</html>
