@@ -7299,11 +7299,19 @@ def newSeriesInboundForms(request):
             zone = request.POST['zone']
             call_duration = (int(request.POST['durationh']) * 3600) + (int(request.POST['durationm']) * 60) + int(request.POST['durations'])
 
-            prof_obj = Profile.objects.get(emp_id=emp_id)
-            manager = prof_obj.manager
-            manager_emp_id_obj = Profile.objects.get(emp_name=manager)
-            manager_emp_id = manager_emp_id_obj.emp_id
-            manager_name = manager
+            try:
+                prof_obj = Profile.objects.get(emp_id=emp_id)
+                manager = prof_obj.manager
+            except Profile.DoesNotExist:
+                manager = 'NA'
+
+            try:
+                manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+                manager_emp_id = manager_emp_id_obj.emp_id
+                manager_name = manager
+            except Profile.DoesNotExist:
+                manager_emp_id = 0
+                manager_name = 'NA'
 
             # Customer Experience
             ce_1 = int(request.POST['ce_1'])
