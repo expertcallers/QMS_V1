@@ -99,6 +99,8 @@ admin.site.register(CalistaInboundMonForm)
 admin.site.register(GlobalArkInboundMonForm)
 admin.site.register(AllCarePhysicalTherapyMonform)
 admin.site.register(ExecutiveCapitalResourcesmonform)
+admin.site.register(BrightWayOutboundmonform)
+admin.site.register(BuildinglabLLCOutboundmonform)
 
 
 

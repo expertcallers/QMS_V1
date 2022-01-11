@@ -43,7 +43,8 @@ list_of_monforms = [ # OutBound
                         NewDimensionPharmacyOutbound,StayNChargeOutbound,
                         JHEnergyConsultantOutbound,MDRGroupLLCOutbound,CoreySmallInsuranceAgencyOutbound,EduvocateOutbound,CrossTowerOutbound,
                         DawnFinancialOutbound,XportDigitalOutbound,
-                        AllCarePhysicalTherapyMonform,ExecutiveCapitalResourcesmonform,
+                        AllCarePhysicalTherapyMonform,ExecutiveCapitalResourcesmonform,CalistaOutboundMonForm,
+                        BrightWayOutboundmonform,BuildinglabLLCOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -55,7 +56,7 @@ list_of_monforms = [ # OutBound
                         LJHubInboundMonForms,
                         ObtheraIncInboundMonForms,
                         EduvocateInboundMonForms,CrossTowerInboundMonForms,
-                        SanaLifeScienceInbound,MonitoringFormMobile22InboundCalls,XportDigitalInboundMonForm,
+                        SanaLifeScienceInbound,MonitoringFormMobile22InboundCalls,XportDigitalInboundMonForm,CalistaInboundMonForm,
 
                         # Email/CHat
                         SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
@@ -1115,6 +1116,16 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Bright Way Outbound':
+        coaching = BrightWayOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Building lab LLC Outbound':
+        coaching = BuildinglabLLCOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1935,6 +1946,16 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Executive Capital Resources':
         coaching = ExecutiveCapitalResourcesmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Bright Way Outbound':
+        coaching = BrightWayOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Building lab LLC Outbound':
+        coaching = BuildinglabLLCOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -3401,6 +3422,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Executive Capital Resources':
             response = exportAadyaseries(ExecutiveCapitalResourcesmonform)
+            return response
+
+        elif campaign == 'Bright Way Outbound':
+            response = exportAadyaseries(BrightWayOutboundmonform)
+            return response
+
+        elif campaign == 'Building lab LLC Outbound':
+            response = exportAadyaseries(BuildinglabLLCOutboundmonform)
             return response
 
 
@@ -5304,6 +5333,14 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(ExecutiveCapitalResourcesmonform)
             return response
 
+        elif campaign == 'Bright Way Outbound':
+            response = exportAadyaseries(BrightWayOutboundmonform)
+            return response
+
+        elif campaign == 'Building lab LLC Outbound':
+            response = exportAadyaseries(BuildinglabLLCOutboundmonform)
+            return response
+
 
 
         ######## Inbound ###############################
@@ -7145,6 +7182,14 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'Executive Capital Resources':
             newseriesAddCoaching(ExecutiveCapitalResourcesmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Bright Way Outbound':
+            newseriesAddCoaching(BrightWayOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Building lab LLC Outbound':
+            newseriesAddCoaching(BuildinglabLLCOutboundmonform)
             return redirect('/employees/qahome')
 
         else:
