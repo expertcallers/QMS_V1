@@ -101,6 +101,7 @@ admin.site.register(AllCarePhysicalTherapyMonform)
 admin.site.register(ExecutiveCapitalResourcesmonform)
 admin.site.register(BrightWayOutboundmonform)
 admin.site.register(BuildinglabLLCOutboundmonform)
+admin.site.register(BlazingHogEmailChatmonform)
 
 
 

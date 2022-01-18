@@ -61,6 +61,7 @@ urlpatterns = [
     path('coaching-dispute-submit/<int:pk>',coachingDisputeFinal),
 
     path('winopoly-1-add-coaching',winopolyAddCoaching),
+    path('blazing-hog-audit-form',blazinghogauditform),
 
     # Summary
 

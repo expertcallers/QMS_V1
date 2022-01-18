@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -14,7 +14,7 @@
 
     <script src="https://kit.fontawesome.com/4a95aa7adc.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" type="text/css" href="http://qms.ecpl.com/static/css/style.css">
+	<link rel="stylesheet" type="text/css" href="http://qms.ecpl.com/static/css/style.css">
     <style type="text/css">
         .fatal {
             color: red;
@@ -121,7 +121,11 @@
     <div class="container pt-5 mt-5">
         <div class="row">
             <div class="col-md-12" align="center">
-                <h2>Audit Report - AB Hindalco</h2>
+                <h2>Audit Report - Blazing Hog</h2>
+            </div>
+            <div class="col-md-12" style="display: inline-flex;">
+                <h2>Result: </h2>
+                <h2 id="result"></h2>
             </div>
         </div>
     </div>
@@ -181,17 +185,7 @@
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-md-6">
-                        <h4>Customer Contact</h4>
-                    </div>
-                    <div class="col-md-6">
-                        <p>{{coaching.customer_contact}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h4>Call Date</h4>
+                        <h4>Email/Chat Date</h4>
                     </div>
                     <div class="col-md-6">
                         <p>{{coaching.call_date}}</p>
@@ -201,10 +195,20 @@
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-md-6">
-                        <h4>Call Duration</h4>
+                        <h4>Ticket Id</h4>
                     </div>
                     <div class="col-md-6">
-                        <p>{{coaching.call_duration}}</p>
+                        <p>{{coaching.ticket_id}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Query Type</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.query_type}}</p>
                     </div>
                 </div>
             </div>
@@ -271,42 +275,85 @@
         </div>
     </div>
 
+
     <div class="container mt-3">
         <div class="row">
             <div class="col-md-12">
-                <h4>Opening and Closing</h4>
+                <h4>Solution</h4>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-8">
-                Used Standard Opening Protocol
+                Understanding and Solved Customer's Issue
             </div>
             <div class="col-md-4 form-group">
-                <h5 id="oc_1">{{coaching.oc_1}}</h5>
-            </div>
-        </div>
-        <div class="row mt-3 fatal">
-            <div class="col-md-8">
-                Introduction of Product / Branding - 4 USP of eternia - WiWA, Warranty, Duranium, Eternia care Mentioning Hindalco, Aditya birla group
-            </div>
-            <div class="col-md-4 form-group">
-                <h5 id="oc_2">{{coaching.oc_1}}</h5>
+                <h5 id="o_1">{{coaching.solution_1}}</h5>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-8">
-                Call Closing as per the Protocol
+                Displayed process knowledge
             </div>
             <div class="col-md-4 form-group">
-                <h5 id="oc_3">{{coaching.oc_3}}</h5>
+                <h5 id="o_2">{{coaching.solution_2}}</h5>
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-8 score" align="center">
-                Opening and Closing Score
+            <div class="col-md-8">
+                Documentation - Full information captured in internal spreadsheet
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="o_3">{{coaching.solution_3}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Did the agent mention correct and adequate notes if necessary
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="o_4">{{coaching.solution_4}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score">
+                Solution Score
             </div>
             <div class="col-md-4">
-                <h5 id="oc_score"></h5>
+                <h5 id="o_score">{{coaching.solution_total}}</h5>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Efficiency</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Resolved/Assigned Ticket issue in a timely manner
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="c_1">{{coaching.efficiency_1}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Categorized case properly/Check other Tickets & Previous communition Merged
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="c_2">{{coaching.efficiency_2}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score">
+                Efficiency Score
+            </div>
+            <div class="col-md-4">
+                <h5 id="c_score">{{coaching.efficiency_total}}</h5>
             </div>
         </div>
     </div>
@@ -314,95 +361,39 @@
     <div class="container mt-3">
         <div class="row">
             <div class="col-md-12">
-                <h4>Softskills</h4>
+                <h4>Compliance</h4>
             </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-3 fatal">
             <div class="col-md-8">
-                Used Empathetic Statements whenever required
+                Assigned to the correct department
             </div>
             <div class="col-md-4 form-group">
-                <h5 id="softskill_1">{{coaching.softskill_1}}</h5>
+                <h5 id="t_1">{{coaching.compliance_1}}</h5>
             </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-3 fatal">
             <div class="col-md-8">
-                Making the conversation 2 ways, giving chance to the customer to ask question
+                Tool usage
             </div>
             <div class="col-md-4 form-group">
-                <h5 id="softskill_2">{{coaching.softskill_2}}</h5>
+                <h5 id="t_2">{{coaching.compliance_2}}</h5>
             </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-3 fatal">
             <div class="col-md-8">
-               Active Listening without Interruption
+                Edited Customer profile/Check customer profile
             </div>
             <div class="col-md-4 form-group">
-                <h5 id="softskill_3">{{coaching.softskill_3}}</h5>
+                <h5 id="t_3">{{coaching.compliance_3}}</h5>
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-8">
-               Clear Grammar & Communication
-            </div>
-            <div class="col-md-4 form-group">
-                <h5 id="softskill_4">{{coaching.softskill_4}}</h5>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-8 score" align="center">
-                Softskills Score
+            <div class="col-md-8 score">
+                Compliance Score
             </div>
             <div class="col-md-4">
-                <h5 id="softskill_score"></h5>
-            </div>
-        </div>
-    </div>
-
-    <div class="container mt-3">
-        <div class="row">
-            <div class="col-md-12">
-                <h4>Business &amp; Compliance</h4>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-8">
-                Followed Policy & Procedure (Script)
-            </div>
-            <div class="col-md-4 form-group">
-                <h5 id="b_1">{{coaching.compliance_1}}</h5>
-            </div>
-        </div>
-        <div class="row mt-3 fatal">
-            <div class="col-md-8">
-                Accurate Documentation with full details in ZOHO
-            </div>
-            <div class="col-md-4 form-group">
-                <h5 id="b_2">{{coaching.compliance_2}}</h5>
-            </div>
-        </div>
-        <div class="row mt-3 fatal">
-            <div class="col-md-8">
-                Inaccurate Information : Identifying the right lead to opportunity
-            </div>
-            <div class="col-md-4 form-group">
-                <h5 id="b_3">{{coaching.compliance_3}}</h5>
-            </div>
-        </div>
-        <div class="row mt-3 fatal">
-            <div class="col-md-8">
-               Advisor Sounding Rude / Proafinity Usage
-            </div>
-            <div class="col-md-4 form-group">
-                <h5 id="b_4">{{coaching.compliance_4}}</h5>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-8 score" align="center">
-                Business &amp; Compliance Score
-            </div>
-            <div class="col-md-4">
-                <h5 id="b_score">5</h5>
+                <h5 id="t_score">{{coaching.compliance_total}}</h5>
             </div>
         </div>
     </div>
@@ -444,28 +435,58 @@
                 <a href="#" class="printMe btn btn-info btn-lg">Print</a>
             </div>
         </div>
+        <div class="row mt-5 noborder">
+            <div class="col-md-12 mt-3">
+                <form class="login-form" action="/employees/coaching/signcoaching/{{coaching.id}}" method="post">
+                          {% csrf_token %}
+                    <label for="emp_com_acc">Employee Comments *</label>
+                    <input type="hidden" value="{{coaching.process}}" name="category">
+                    <textarea class="form-control" id="emp_com_acc" required rows="4" name="emp_comments"></textarea>
+                    <button class="btn btn-lg btn-success mt-2"><i class="fa fa-check"></i> Accept & Sign</button>
+                </form>
+            </div>
+            <div class="col-md-12 mt-3">
+                <form action="/employees/coaching-dispute/{{coaching.id}}" method="POST">
+                {% csrf_token %}
+                    <label for="emp_com_rej">Employee Comments *</label>
+                    <input type="hidden" value="{{coaching.process}}" name="category">
+                     <input type="hidden" name="campaign" id="" value="{{coaching.process}}">
+                    <textarea class="form-control" id="emp_com_rej" required rows="4" name="emp_comments_dispute"></textarea>
+                    <button class="btn btn-lg btn-danger mt-2"><i class="fa fa-close"></i> Reject & Dispute</button>
+                </form>
+            </div>
+            <div class="col-md-12 mt-3" align="center">
+                <a href="#" class="btn btn-info btn-lg">Back</a>
+                <a href="#" class="printMe btn btn-info btn-lg">Print</a>
+            </div>
+        </div>
     </div>
 
 
-    <script type="text/javascript">
-        var oc_1 = parseInt($('#oc_1').html());
-        var oc_2 = parseInt($('#oc_1').html());
-        var oc_3 = parseInt($('#oc_1').html());
-        $('#oc_score').html(oc_1+oc_2+oc_3);
-        var softskill_1 = parseInt($('#softskill_1').html());
-        var softskill_2 = parseInt($('#softskill_2').html());
-        var softskill_3 = parseInt($('#softskill_3').html());
-        var softskill_4 = parseInt($('#softskill_4').html());
-        $('#softskill_score').html(softskill_1+softskill_2+softskill_3+softskill_4);
-        var b_1 = parseInt($('#b_1').html());
-        var b_2 = parseInt($('#b_2').html());
-        var b_3 = parseInt($('#b_3').html());
-        var b_4 = parseInt($('#b_4').html());
-        $('#b_score').html(b_1+b_2+b_3+b_4);
+<script type="text/javascript">
+        var o_1 = parseInt($('#o_1').html());
+        var o_2 = parseInt($('#o_2').html());
+        var o_3 = parseInt($('#o_3').html());
+        var o_4 = parseInt($('#o_4').html());
+        $('#o_score').html(o_1+o_2+o_3+o_4);
+        var c_1 = parseInt($('#c_1').html());
+        var c_2 = parseInt($('#c_2').html());
+        $('#c_score').html(c_1+c_2);
+        var t_1 = parseInt($('#t_1').html());
+        var t_2 = parseInt($('#t_2').html());
+        var t_3 = parseInt($('#t_3').html());
+        $('#t_score').html(t_1+t_2+t_3);
         $('.printMe').click(function(){
              window.print();
         });
-    </script>
-
+        var total = parseInt($('#tot_score').html());
+        if (total <= 99) {
+            $('#result').html("Fail");
+            $('#result').css("color","red");
+        } else {
+            $('#result').html("Pass");
+            $('#result').css("color","green");
+        }
+</script>
 </body>
 </html>

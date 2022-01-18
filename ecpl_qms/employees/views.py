@@ -87,6 +87,9 @@ list_of_monforms = [ # OutBound
                         #ABH
                         ABHindalcoMonForm,
 
+                        #blazhog
+                        BlazingHogEmailChatmonform,
+
                         ]
 
 
@@ -1449,6 +1452,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching':coaching}
         return render(request,'coaching-views/emp-coaching-view-abh.html',data)
 
+    if process_name == 'Blazing Hog':
+        coaching = BlazingHogEmailChatmonform.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/emp-coaching-view-blazing.html',data)
+
     else:
         pass
 
@@ -2284,6 +2292,11 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching':coaching}
         return render(request,'coaching-views/qa-coaching-view-abh.html',data)
 
+    if process_name == 'Blazing Hog':
+        coaching = BlazingHogEmailChatmonform.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/qa-coaching-view-blazing.html',data)
+
     else:
         pass
 
@@ -2941,6 +2954,10 @@ def selectCoachingForm(request):
         elif campaign_type == 'ABH':
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/abh_new.html', data)
+
+        elif campaign_type == 'Blazing Hog':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
+            return render(request, 'mon-forms/Blazing-Hog.html', data)
 
     else:
         return redirect('/employees/qahome')
@@ -3801,6 +3818,73 @@ def exportAuditReport(request):
             return response
 
             ########## other campaigns ##############
+
+        elif campaign == 'Blazing Hog':
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'ticket_id', 'zone', 'concept',
+                       'query_type',
+
+                       "Understanding and Solved Customer's Issue",
+                       "Displayed process knowledge",
+                       'Documentation - Full information captured in internal spreadsheet',
+                       'Did the agent mention correct and adequate notes if necessary',
+
+                       'Resolved/Assigned Ticket issue in a timely manner',
+                       'Categorized case properly/Check other Tickets & Previous communition Merged',
+
+                       'Assigned to the correct department',
+                       'Tool usage',
+                       'Edited Customer profile/Check customer profile',
+
+                       'status',
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = BlazingHogEmailChatmonform.objects.filter(audit_date__range=[start_date, end_date]).values_list(
+                'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager', 'customer_name', 'ticket_id', 'zone', 'concept', 'query_type',
+
+                'solution_1',
+                'solution_2',
+                'solution_3',
+                'solution_4',
+
+                'efficiency_1',
+                'efficiency_2',
+
+                'compliance_1',
+                'compliance_2',
+                'compliance_3',
+
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
 
         elif campaign == 'AB Hindalco':
             response = HttpResponse(content_type='application/ms-excel')
@@ -5712,6 +5796,72 @@ def exportAuditReportQA(request):
             return response
 
             ########## other campaigns ##############
+
+        elif campaign == 'Blazing Hog':
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'ticket_id', 'zone', 'concept','query_type',
+
+                       "Understanding and Solved Customer's Issue",
+                       "Displayed process knowledge",
+                       'Documentation - Full information captured in internal spreadsheet',
+                       'Did the agent mention correct and adequate notes if necessary',
+
+                       'Resolved/Assigned Ticket issue in a timely manner',
+                       'Categorized case properly/Check other Tickets & Previous communition Merged',
+
+                       'Assigned to the correct department',
+                       'Tool usage',
+                       'Edited Customer profile/Check customer profile',
+
+                       'status',
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = BlazingHogEmailChatmonform.objects.filter(audit_date__range=[start_date, end_date], qa=qa
+                                          ).values_list(
+                'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager', 'customer_name', 'ticket_id', 'zone', 'concept','query_type',
+                
+                 'solution_1',
+                 'solution_2',
+                 'solution_3',
+                 'solution_4',
+                
+                    'efficiency_1',
+                    'efficiency_2',
+                
+                'compliance_1',
+                'compliance_2',
+                'compliance_3',
+
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
 
         elif campaign == 'AB Hindalco':
             response = HttpResponse(content_type='application/ms-excel')
@@ -7790,6 +7940,99 @@ def domesticChatEmail(request):
         return redirect('/employees/qahome')
 
 # Other Forms
+
+def blazinghogauditform(request):
+
+    if request.method =='POST':
+
+        category = 'Email - Chat'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        customer_name = request.POST['customer']
+        ticket_id = request.POST['ticket_id']
+        call_date = request.POST['calldate']
+        audit_date = request.POST['auditdate']
+        campaign = request.POST['campaign']
+        concept = request.POST['concept']
+        zone = request.POST['zone']
+        query_type = request.POST['query_type']
+
+        #######################################
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
+
+        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+
+        manager_emp_id = manager_emp_id_obj.emp_id
+        manager_name = manager
+
+        # Opening and Closing
+
+        solution_1 = int(request.POST['solution_1'])
+        solution_2 = int(request.POST['solution_2'])
+        solution_3 = int(request.POST['solution_3'])
+        solution_4 = int(request.POST['solution_4'])
+        solution_total = solution_1 + solution_2 + solution_3 + solution_4
+
+        # Softskills
+        efficiency_1 = int(request.POST['efficiency_1'])
+        efficiency_2 = int(request.POST['efficiency_2'])
+        efficiency_total = efficiency_1 + efficiency_2
+
+        # Compliance
+        compliance_1 = int(request.POST['compliance_1'])
+        compliance_2 = int(request.POST['compliance_2'])
+        compliance_3 = int(request.POST['compliance_3'])
+
+        compliance_total = compliance_1 + compliance_2 + compliance_3
+
+        fatal_list = [compliance_1, compliance_2, compliance_3]
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 0:
+                fatal_list_count.append(i)
+        no_of_fatals = len(fatal_list_count)
+
+        if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0:
+            overall_score = 0
+            fatal = True
+        else:
+            overall_score = solution_total + efficiency_total + compliance_total
+            fatal = False
+
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+        added_by = request.user.profile.emp_name
+        week = request.POST['week']
+        am = request.POST['am']
+
+        blaz = BlazingHogEmailChatmonform(
+            associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+            manager=manager_name, manager_id=manager_emp_id,
+            call_date=call_date, audit_date=audit_date, customer_name=customer_name, ticket_id=ticket_id,
+            campaign=campaign, concept=concept, zone=zone, query_type=query_type,
+
+            solution_1=solution_1, solution_2=solution_2, solution_3=solution_3,solution_4=solution_4,
+
+            efficiency_1=efficiency_1, efficiency_2=efficiency_2,
+
+            compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
+
+            solution_total=solution_total,efficiency_total=efficiency_total,
+            compliance_total=compliance_total,
+
+            areas_improvement=areas_improvement,
+            positives=positives, comments=comments,
+            added_by=added_by,
+            overall_score=overall_score, category=category,
+            week=week, am=am, fatal_count=no_of_fatals, fatal=fatal,
+        )
+        blaz.save()
+        return redirect('/employees/qahome')
+
 
 def abhFormSAve(request):
     if request.method =='POST':
