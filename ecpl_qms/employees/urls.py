@@ -21,8 +21,10 @@ urlpatterns = [
     path('new-series-inbound',newSeriesInboundForms),
     path('email-chat-mon-form',domesticChatEmail),
     path('practo-new-version',practoNewVersion),
+    path('practo-chat',PractoWithSubCategoryFunc),
     path('ilm-email-chat',ilmEMailChat),
     path('abh-form-update',abhFormSAve),
+
 
 
 #### Credentials
@@ -109,6 +111,7 @@ urlpatterns = [
     path('coaching-status-overall/<str:campaign>',coachingStatusCampaignwise),
     path('dispute-status-overall/<str:campaign>',disputeStatusAgents),
     path("total-list",TotalList.as_view(),name="to_show_the_total_list_of_tables"),
+
 
 
 ]

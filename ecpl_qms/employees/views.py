@@ -78,6 +78,8 @@ list_of_monforms = [ # OutBound
                         FameHouseNewMonForm,
                         #Practo
                         PractoNewVersion,
+                        #Practo WIth Sub Category
+                        PractoWithSubCategory,
                         #Gubagoo
                         GubagooAuditForm,
                         #ILM
@@ -1457,6 +1459,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching':coaching}
         return render(request,'coaching-views/emp-coaching-view-blazing.html',data)
 
+    if process_name == 'Practo Chat':
+
+        coaching = PractoWithSubCategory.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/emp-coaching-view-practo-chat.html',data)
     else:
         pass
 
@@ -2297,6 +2304,11 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching':coaching}
         return render(request,'coaching-views/qa-coaching-view-blazing.html',data)
 
+    if process_name == 'Practo Chat':
+        coaching = PractoWithSubCategory.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/qa-coaching-view-practo-chat.html',data)
+
     else:
         pass
 
@@ -2645,7 +2657,6 @@ def signCoaching(request,pk):
                 pass
         else:
             pass
-
     coaching = campaign.objects.get(id=pk)
     coaching.status = True
     coaching.closed_date = now
@@ -2938,6 +2949,10 @@ def selectCoachingForm(request):
         elif campaign_type =='Practo':
             data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
             return render(request, 'mon-forms/practo.html', data)
+
+        elif campaign_type =='PractoNew':
+            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+            return render(request, 'mon-forms/practo_chat.html', data)
 
         elif campaign_type =='ILM':
             data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
@@ -4587,7 +4602,151 @@ def exportAuditReport(request):
 
             return response
 
+
         elif campaign == 'Practo':
+
+            response = HttpResponse(content_type='application/ms-excel')
+
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+
+            wb = xlwt.Workbook(encoding='utf-8')
+
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+
+            # Sheet header, first row
+
+            row_num = 0
+
+            font_style = xlwt.XFStyle()
+
+            font_style.font.bold = True
+
+            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+
+                       'Fatal Count',
+
+                       'qa', 'am', 'team_lead', 'manager', 'conversation_id', 'customer_contact', 'training',
+
+                       'Chat Opening (Greetings & being attentive) & Closing',
+
+                       'FRTAT',
+
+                       'Addressing the user/Personalisation of chat',
+
+                       'Assurance & Acknowledgement',
+
+                       'Coherence (understanding the issue) being attentive on chat.',
+
+                       'Probing',
+
+                       'Interaction: Empathy , Profressional, care',
+
+                       'Grammar:',
+
+                       'Relavant responses',
+
+                       'Being courteous & using plesantries',
+
+                       'Process followed',
+
+                       'Explanation skills (Reasoning) & Rebuttal Handling',
+
+                       'Sharing the information in a sequential manner',
+
+                       'Case Documentation',
+
+                       'Curation',
+
+                       'Average speed of answer',
+
+                       'Chat Hold Procedure &: Taking Perrmission before putting the chat on hold',
+
+                       'Expectations: Setting correct expectations about issue resolution',
+
+                       'ZTP(Zero Tolerance Policy)',
+
+                       'status', 'disput_status',
+
+                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+
+            font_style = xlwt.XFStyle()
+
+            rows = PractoNewVersion.objects.filter(
+
+                audit_date__range=[start_date, end_date], ).values_list(
+
+                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+
+                'am',
+
+                'team_lead', 'manager', 'conversation_id', 'customer_contact', 'training',
+
+                'p_1',
+
+                'p_2',
+
+                'p_3',
+
+                'p_4',
+
+                'p_5',
+
+                'p_6',
+
+                'p_7',
+
+                'p_8',
+
+                'p_9',
+
+                'p_10',
+
+                'p_11',
+
+                'p_12',
+
+                'p_13',
+
+                'p_14',
+
+                'p_15',
+
+                'p_16',
+
+                'p_17',
+
+                'compliance_1',
+
+                'compliance_2',
+
+                'status', 'disput_status',
+
+                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+
+                    rows]
+
+            for row in rows:
+
+                row_num += 1
+
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
+        #practo chat
+        elif campaign == 'Practo Chat':
 
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
@@ -4597,64 +4756,161 @@ def exportAuditReport(request):
             row_num = 0
             font_style = xlwt.XFStyle()
             font_style.font.bold = True
-            columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
+            columns = ['process', 'empID', 'Associate Name', 'Chat date',
+                        'Case Number',
+                        'Query Type',
+                        'Sub Query Type',
+                        'CSAT',
+                        'Product',
+                       'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','conversation_id','customer_contact','training',
+                       'qa', 'am', 'team_lead', 'manager',
 
-                        'Chat Opening (Greetings & being attentive) & Closing',
-                        'FRTAT',
+                       'Chat Opening (Greetings & being attentive) & Closing',
+                       "Standard script Opening",
+                       "Greeting",
+                       "Standard script Closing",
+                       "Being Attentive",
+                       "Offering further assistance",
+                       'FRTAT',
                        'Addressing the user/Personalisation of chat',
+                       "No Attempt",
+                       "First Name",
+                       "No. of Times",
+                       "Didn't Probe for name",
                        'Assurance & Acknowledgement',
+                       "Acknowledgement Missing",
+                       "Assurance Missing",
+                       "Wasn't Done Throughout Chat",
                        'Coherence (understanding the issue) being attentive on chat.',
                        'Probing',
+                       "Irrelevant Probing",
+                       "Incomplete Probing",
+                       "Didn't Attempt to Probe",
                        'Interaction: Empathy , Profressional, care',
+                       "No Empathy",
+                       "Lack of Professionalism",
+                       "Lack of Care",
+                       "Lack of Empathy",
+                       "Inappropriate empathy",
                        'Grammar:',
+                       "Punctuation",
+                       "Capitalization",
+                       "Typing Error",
+                       "Sentence Formation",
                        'Relavant responses',
+                       "Incorrect Window",
+                       "Not related to query",
                        'Being courteous & using plesantries',
                        'Process followed',
+                       "Dashboard/Slack",
+                       "Trackers",
+                       "SOP/Process doc/SME",
+                       "Verification Process",
+                       "Email Format",
+                       "Links (webpage)",
+                       "Ticket creation",
+                       "Assignment of chat",
                        'Explanation skills (Reasoning) & Rebuttal Handling',
                        'Sharing the information in a sequential manner',
                        'Case Documentation',
                        'Curation',
+                       "Incomplete",
+                       "Inappropriate",
                        'Average speed of answer',
                        'Chat Hold Procedure &: Taking Perrmission before putting the chat on hold',
+                       "Script",
+                       "Duration",
+                       "Didn't thank the user",
                        'Expectations: Setting correct expectations about issue resolution',
+                       "Incomplete Resolution",
+                       "Incorrect Resolution",
+                       "Process breach",
                        'ZTP(Zero Tolerance Policy)',
-                       'status','disput_status',
-                       'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
+                       'status', 'disput_status',
+                       'closed_date', 'fatal',
+                       'areas_improvement', 'Specific Reason for FATAL with Labels and Sub Label', 'comments']
 
             for col_num in range(len(columns)):
                 ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
 
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
-            rows = PractoNewVersion.objects.filter(
-                audit_date__range=[start_date, end_date],).values_list(
-                'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
+            rows = PractoWithSubCategory.objects.filter(
+                audit_date__range=[start_date, end_date], ).values_list(
+                'process', 'emp_id', 'associate_name', 'chat_date',
+                'case_no',
+                'query_type',
+                'sub_query_type',
+                'csat',
+                'product',
+                'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager','conversation_id','customer_contact','training',
-                 'p_1',
+                'team_lead', 'manager',
+                'p_1',
+                "p1_s1",
+                "p1_s2",
+                "p1_s3",
+                "p1_s4",
+                "p1_s5",
                 'p_2',
                 'p_3',
+                "p3_s1",
+                'p3_s2',
+                'p3_s3',
+                'p3_s4',
                 'p_4',
+                "p4_s1",
+                "p4_s2",
+                "p4_s3",
                 'p_5',
                 'p_6',
+                "p6_s1",
+                "p6_s2",
+                "p6_s3",
                 'p_7',
+                "p7_s1",
+                "p7_s2",
+                'p7_s3',
+                'p7_s4',
+                'p7_s5',
                 'p_8',
+                'p8_s1',
+                'p8_s2',
+                'p8_s3',
+                'p8_s4',
                 'p_9',
+                'p9_s1',
+                'p9_s2',
                 'p_10',
                 'p_11',
+                'p11_s1',
+                'p11_s2',
+                'p11_s3',
+                'p11_s4',
+                'p11_s5',
+                'p11_s6',
+                'p11_s7',
+                'p11_s8',
                 'p_12',
                 'p_13',
                 'p_14',
                 'p_15',
+                'p15_s1',
+                'p15_s2',
                 'p_16',
                 'p_17',
+                'p17_s1',
+                'p17_s2',
+                'p17_s3',
 
                 'compliance_1',
+                'compliance1_s1',
+                'compliance1_s2',
+                'compliance1_s3',
                 'compliance_2',
 
-                'status','disput_status',
+                'status', 'disput_status',
                 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
@@ -6556,6 +6812,186 @@ def exportAuditReportQA(request):
                 'compliance_2',
 
                 'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
+            # practo chat
+        elif campaign == 'Practo Chat':
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['process', 'empID', 'Associate Name', 'Chat date',
+                       'Case Number',
+                       'Query Type',
+                       'Sub Query Type',
+                       'CSAT',
+                       'Product',
+                       'Audit Date', 'overall_score',
+                       'Fatal Count',
+                       'qa', 'am', 'team_lead', 'manager',
+
+                       'Chat Opening (Greetings & being attentive) & Closing',
+                       "Standard script Opening",
+                       "Greeting",
+                       "Standard script Closing",
+                       "Being Attentive",
+                       "Offering further assistance",
+                       'FRTAT',
+                       'Addressing the user/Personalisation of chat',
+                       "No Attempt",
+                       "First Name",
+                       "No. of Times",
+                       "Didn't Probe for name",
+                       'Assurance & Acknowledgement',
+                       "Acknowledgement Missing",
+                       "Assurance Missing",
+                       "Wasn't Done Throughout Chat",
+                       'Coherence (understanding the issue) being attentive on chat.',
+                       'Probing',
+                       "Irrelevant Probing",
+                       "Incomplete Probing",
+                       "Didn't Attempt to Probe",
+                       'Interaction: Empathy , Profressional, care',
+                       "No Empathy",
+                       "Lack of Professionalism",
+                       "Lack of Care",
+                       "Lack of Empathy",
+                       "Inappropriate empathy",
+                       'Grammar:',
+                       "Punctuation",
+                       "Capitalization",
+                       "Typing Error",
+                       "Sentence Formation",
+                       'Relavant responses',
+                       "Incorrect Window",
+                       "Not related to query",
+                       'Being courteous & using plesantries',
+                       'Process followed',
+                       "Dashboard/Slack",
+                       "Trackers",
+                       "SOP/Process doc/SME",
+                       "Verification Process",
+                       "Email Format",
+                       "Links (webpage)",
+                       "Ticket creation",
+                       "Assignment of chat",
+                       'Explanation skills (Reasoning) & Rebuttal Handling',
+                       'Sharing the information in a sequential manner',
+                       'Case Documentation',
+                       'Curation',
+                       "Incomplete",
+                       "Inappropriate",
+                       'Average speed of answer',
+                       'Chat Hold Procedure &: Taking Perrmission before putting the chat on hold',
+                       "Script",
+                       "Duration",
+                       "Didn't thank the user",
+                       'Expectations: Setting correct expectations about issue resolution',
+                       "Incomplete Resolution",
+                       "Incorrect Resolution",
+                       "Process breach",
+                       'ZTP(Zero Tolerance Policy)',
+                       'status', 'disput_status',
+                       'closed_date', 'fatal',
+                       'areas_improvement', 'Specific Reason for FATAL with Labels and Sub Label', 'comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = PractoWithSubCategory.objects.filter(
+                audit_date__range=[start_date, end_date],qa=qa ).values_list(
+                'process', 'emp_id', 'associate_name', 'chat_date',
+                'case_no',
+                'query_type',
+                'sub_query_type',
+                'csat',
+                'product',
+                'audit_date', 'overall_score', 'fatal_count', 'qa',
+                'am',
+                'team_lead', 'manager',
+                'p_1',
+                "p1_s1",
+                "p1_s2",
+                "p1_s3",
+                "p1_s4",
+                "p1_s5",
+                'p_2',
+                'p_3',
+                "p3_s1",
+                'p3_s2',
+                'p3_s3',
+                'p3_s4',
+                'p_4',
+                "p4_s1",
+                "p4_s2",
+                "p4_s3",
+                'p_5',
+                'p_6',
+                "p6_s1",
+                "p6_s2",
+                "p6_s3",
+                'p_7',
+                "p7_s1",
+                "p7_s2",
+                'p7_s3',
+                'p7_s4',
+                'p7_s5',
+                'p_8',
+                'p8_s1',
+                'p8_s2',
+                'p8_s3',
+                'p8_s4',
+                'p_9',
+                'p9_s1',
+                'p9_s2',
+                'p_10',
+                'p_11',
+                'p11_s1',
+                'p11_s2',
+                'p11_s3',
+                'p11_s4',
+                'p11_s5',
+                'p11_s6',
+                'p11_s7',
+                'p11_s8',
+                'p_12',
+                'p_13',
+                'p_14',
+                'p_15',
+                'p15_s1',
+                'p15_s2',
+                'p_16',
+                'p_17',
+                'p17_s1',
+                'p17_s2',
+                'p17_s3',
+
+                'compliance_1',
+                'compliance1_s1',
+                'compliance1_s2',
+                'compliance1_s3',
+                'compliance_2',
+
+                'status', 'disput_status',
+                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -9927,6 +10363,166 @@ def practoNewVersion(request):
         return redirect('/employees/qahome')
 
 
+
+def PractoWithSubCategoryFunc(request):
+    if request.method == 'POST':
+        p_1 = int(request.POST['p1'])
+        p1_s1 = request.POST.get("chat_1")
+        p1_s2 = request.POST.get("chat_2")
+        p1_s3 = request.POST.get("chat_3")
+        p1_s4 = request.POST.get("chat_4")
+        p1_s5 = request.POST.get("chat_5")
+        p_2 = int(request.POST['p2'])
+        p_3 = int(request.POST['p3'])
+        p3_s1 = request.POST.get("pers_1")
+        p3_s2 = request.POST.get("pers_2")
+        p3_s3 = request.POST.get("pers_3")
+        p3_s4 = request.POST.get("pers_4")
+        p_4 = int(request.POST['p4'])
+        p4_s1 = request.POST.get("assu_1")
+        p4_s2 = request.POST.get("assu_2")
+        p4_s3 = request.POST.get("assu_3")
+        p_5 = int(request.POST['p5'])
+        p_6 = int(request.POST['p6'])
+        p6_s1 = request.POST.get("prob_1")
+        p6_s2 = request.POST.get("prob_2")
+        p6_s3 = request.POST.get("prob_3")
+        p_7 = int(request.POST['p7'])
+        p7_s1 = request.POST.get("inte_1")
+        p7_s2 = request.POST.get("inte_2")
+        p7_s3 = request.POST.get("inte_3")
+        p7_s4 = request.POST.get("inte_4")
+        p7_s5 = request.POST.get("inte_5")
+        p_8 = int(request.POST['p8'])
+        p8_s1 = request.POST.get("gram_1")
+        p8_s2 = request.POST.get("gram_2")
+        p8_s3 = request.POST.get("gram_3")
+        p8_s4 = request.POST.get("gram_4")
+        p_9 = int(request.POST['p9'])
+        p9_s1 = request.POST.get("rela_1")
+        p9_s2 = request.POST.get("rela_2")
+        p_10 = int(request.POST['p10'])
+        p_11 = int(request.POST['p11'])
+        p11_s1 = request.POST.get("proc_1")
+        p11_s2 = request.POST.get("proc_2")
+        p11_s3 = request.POST.get("proc_3")
+        p11_s4 = request.POST.get("proc_4")
+        p11_s5 = request.POST.get("proc_5")
+        p11_s6 = request.POST.get("proc_6")
+        p11_s7 = request.POST.get("proc_7")
+        p11_s8 = request.POST.get("proc_8")
+        p_12 = int(request.POST['p12'])
+        p_13 = int(request.POST['p13'])
+        p_14 = int(request.POST['p14'])
+        p_15 = int(request.POST['p15'])
+        p15_s1 = request.POST.get("cura_1")
+        p15_s2 = request.POST.get("cura_2")
+        p_16 = int(request.POST['p16'])
+        p_17 = int(request.POST['p17'])
+        p17_s1 = request.POST.get("hold_1")
+        p17_s2 = request.POST.get("hold_3")
+        p17_s3 = request.POST.get("hold_3")
+
+
+        # Compliance
+        compliance_1 = request.POST['fatal1']
+        p18_s1 = request.POST.get("expe_1")
+        p18_s2 = request.POST.get("expe_2")
+        p18_s3 = request.POST.get("expe_3")
+        compliance_2 = request.POST['fatal2']
+
+        lst = [p_1,p_2,p_3,p_4,p_5,p_6,p_7,p_8,p_9,p_10,p_11,p_12,p_13,p_14,p_15,p_16,p_17,]
+
+        total_score = sum(lst)
+
+        category = 'PractoNew'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        case_no = request.POST["case_no"]
+        query_type = request.POST["query_type"]
+        sub_query_type = request.POST["sub_query_type"]
+        chat_date = request.POST["chat_date"]
+        csat = request.POST['csat']
+        product = request.POST['product']
+        audit_date = request.POST['auditdate']
+        concept = request.POST['concept']
+        zone = request.POST['zone']
+        campaign = request.POST['campaign']
+        #######################################
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
+
+        try:
+            manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+            manager_emp_id = manager_emp_id_obj.emp_id
+            manager_name = manager
+
+        except Profile.DoesNotExist:
+            manager_emp_id = 0
+            manager_name = manager
+
+        #################################################
+        fatal_list = [compliance_1, compliance_2]
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 'fatal':
+                fatal_list_count.append(i)
+
+        no_of_fatals = len(fatal_list_count)
+        ####################################################
+        if compliance_1 == 'fatal' or compliance_2 == 'fatal':
+            overall_score = 0
+            fatal = True
+        else:
+            overall_score = total_score
+            fatal = False
+
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+        added_by = request.user.profile.emp_name
+
+        week = request.POST['week']
+        am = request.POST['am']
+
+        domestic = PractoWithSubCategory(associate_name = associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                           manager=manager_name, manager_id=manager_emp_id, audit_date=audit_date, concept=concept,
+                            zone=zone, case_no = case_no, query_type = query_type, sub_query_type = sub_query_type,
+                            chat_date = chat_date, csat = csat, product = product,campaign=campaign,
+
+                            p_1=p_1, p_2=p_2, p_3=p_3, p_4=p_4, p_5=p_5, p_6=p_6, p_7=p_7,
+                            p_8=p_8, p_9=p_9, p_10=p_10, p_11=p_11,p_12=p_12,p_13=p_13,p_14=p_14,
+                            p_15=p_15,p_16=p_16,p_17=p_17,
+
+                            p1_s1=p1_s1, p1_s2 = p1_s2, p1_s3 = p1_s3, p1_s4 = p1_s4, p1_s5 = p1_s5,
+                            p3_s1=p3_s1, p3_s2 = p3_s2, p3_s3 = p3_s3, p3_s4=p3_s4,
+                            p4_s1=p4_s1, p4_s2 = p4_s2, p4_s3 =p4_s3,
+                            p6_s1 = p6_s1, p6_s2 = p6_s2, p6_s3 = p6_s3,
+                            p7_s1=p7_s1, p7_s2 = p7_s2, p7_s3 = p7_s3, p7_s4 = p7_s4, p7_s5 = p7_s5,
+                            p8_s1 = p8_s1, p8_s2 = p8_s2, p8_s3 = p8_s3, p8_s4 = p8_s4,
+                            p9_s1 = p9_s1, p9_s2 = p9_s2,
+                            p11_s1=p11_s1, p11_s2 = p11_s2, p11_s3 =p11_s3, p11_s4 = p11_s4, p11_s5 = p11_s5,
+                                    p11_s6 = p11_s6, p11_s7 = p11_s7, p11_s8 =p11_s8,
+                            p15_s1 = p15_s1, p15_s2 = p15_s2,
+                            p17_s1 = p17_s1, p17_s2 = p17_s2, p17_s3 = p17_s3,
+                            compliance1_s1=p18_s1, compliance1_s2 = p18_s2, compliance1_s3 = p18_s3,
+
+
+                           compliance_1=compliance_1, compliance_2=compliance_2,
+                           areas_improvement=areas_improvement,
+                           positives=positives, comments=comments,
+                           added_by=added_by,
+                           overall_score=overall_score, category=category,
+                           week=week, am=am, fatal_count=no_of_fatals, fatal=fatal,
+
+                           )
+        domestic.save()
+        return redirect('/employees/qahome')
+    else:
+        return render(request,'mon-forms/practo_chat.html')
+
 ############## End Mon Forms ##############################
 
 
@@ -10429,3 +11025,7 @@ class TotalList(FlatMultipleModelAPIView):
         {'queryset': PickPackDeliveriesMonForm.objects.all(),
          'serializer_class': PickPackDeliveriesMonFormSerializer},
 ]
+
+
+def Testing(request):
+    return render(request, "coaching-views/emp-coaching-view-practo-chat.html")
