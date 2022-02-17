@@ -45,6 +45,8 @@ list_of_monforms = [ # OutBound
                         DawnFinancialOutbound,XportDigitalOutbound,
                         AllCarePhysicalTherapyMonform,ExecutiveCapitalResourcesmonform,CalistaOutboundMonForm,
                         BrightWayOutboundmonform,BuildinglabLLCOutboundmonform,
+                        GlobalPharmaOutboundmonform, ThirdWaveOutboundmonform,
+                        HardHatTechnologiesOutboundmonform, RedefinePlasticsOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -57,6 +59,7 @@ list_of_monforms = [ # OutBound
                         ObtheraIncInboundMonForms,
                         EduvocateInboundMonForms,CrossTowerInboundMonForms,
                         SanaLifeScienceInbound,MonitoringFormMobile22InboundCalls,XportDigitalInboundMonForm,CalistaInboundMonForm,
+                        ThirdWaveInboundMonForm, HardHatTechnologiesInboundMonForm,
 
                         # Email/CHat
                         SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
@@ -1131,6 +1134,26 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Global Pharma Outbound':
+        coaching = GlobalPharmaOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Redefine Plastics Outbound':
+        coaching = RedefinePlasticsOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Hard Hat Technologies Outbound':
+        coaching = HardHatTechnologiesOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == '3rd Wave Outbound':
+        coaching = ThirdWaveOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1277,6 +1300,16 @@ def coachingViewAgents(request,process,pk):
         coaching = GlobalArkInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Hard Hat Technologies Inbound':
+        coaching = HardHatTechnologiesInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
+    elif process_name == '3rd Wave Inbound':
+        coaching = ThirdWaveInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
     ############# Email/Chat ##############################
 
@@ -1974,6 +2007,26 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Global Pharma Outbound':
+        coaching = GlobalPharmaOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Redefine Plastics Outbound':
+        coaching = RedefinePlasticsOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Hard Hat Technologies Outbound':
+        coaching = HardHatTechnologiesOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == '3rd Wave Outbound':
+        coaching = ThirdWaveOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2243,6 +2296,16 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Sapphire Medicals Chat':
         coaching = SapphireMedicalsChatMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Hard Hat Technologies Inbound':
+        coaching = HardHatTechnologiesInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == '3rd Wave Inbound':
+        coaching = ThirdWaveInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
@@ -3464,6 +3527,22 @@ def exportAuditReport(request):
             response = exportAadyaseries(BuildinglabLLCOutboundmonform)
             return response
 
+        elif campaign == 'Global Pharma Outbound':
+            response = exportAadyaseries(GlobalPharmaOutboundmonform)
+            return response
+
+        elif campaign == 'Redefine Plastics Outbound':
+            response = exportAadyaseries(RedefinePlasticsOutboundmonform)
+            return response
+
+        elif campaign == 'Hard Hat Technologies Outbound':
+            response = exportAadyaseries(HardHatTechnologiesOutboundmonform)
+            return response
+
+        elif campaign == '3rd Wave Outbound':
+            response = exportAadyaseries(ThirdWaveOutboundmonform)
+            return response
+
 
         ######## Inbound ###############################
 
@@ -3654,6 +3733,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Global Ark Inbound':
             response = exportinbound(GlobalArkInboundMonForm)
+            return response
+
+        elif campaign == '3rd Wave Inbound':
+            response = exportinbound(ThirdWaveInboundMonForm)
+            return response
+
+        elif campaign == 'Hard Hat Technologies Inbound':
+            response = exportinbound(HardHatTechnologiesInboundMonForm)
             return response
 
         #########    Email/CHat ##########################
@@ -5681,6 +5768,22 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(BuildinglabLLCOutboundmonform)
             return response
 
+        elif campaign == 'Global Pharma Outbound':
+            response = exportAadyaseries(GlobalPharmaOutboundmonform)
+            return response
+
+        elif campaign == 'Redefine Plastics Outbound':
+            response = exportAadyaseries(RedefinePlasticsOutboundmonform)
+            return response
+
+        elif campaign == 'Hard Hat Technologies Outbound':
+            response = exportAadyaseries(HardHatTechnologiesOutboundmonform)
+            return response
+
+        elif campaign == '3rd Wave Outbound':
+            response = exportAadyaseries(ThirdWaveOutboundmonform)
+            return response
+
 
 
         ######## Inbound ###############################
@@ -5871,6 +5974,14 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Global Ark Inbound':
             response = exportinbound(GlobalArkInboundMonForm)
+            return response
+
+        elif campaign == '3rd Wave Inbound':
+            response = exportinbound(ThirdWaveInboundMonForm)
+            return response
+
+        elif campaign == 'Hard Hat Technologies Inbound':
+            response = exportinbound(HardHatTechnologiesInboundMonForm)
             return response
 
 
@@ -7778,6 +7889,24 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(BuildinglabLLCOutboundmonform)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Global Pharma Outbound':
+            newseriesAddCoaching(GlobalPharmaOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Redefine Plastics Outbound':
+            newseriesAddCoaching(RedefinePlasticsOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Hard Hat Technologies Outbound':
+            newseriesAddCoaching(HardHatTechnologiesOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == '3rd Wave Outbound':
+            newseriesAddCoaching(ThirdWaveOutboundmonform)
+            return redirect('/employees/qahome')
+
+
+
         else:
             pass
 
@@ -8142,7 +8271,13 @@ def newSeriesInboundForms(request):
             inboundAddCoaching(GlobalArkInboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == '3rd Wave Inbound':
+            inboundAddCoaching(ThirdWaveInboundMonForm)
+            return redirect('/employees/qahome')
 
+        elif campaign_name == 'Hard Hat Technologies Inbound':
+            inboundAddCoaching(HardHatTechnologiesInboundMonForm)
+            return redirect('/employees/qahome')
 
 
     else:

@@ -2,11 +2,16 @@ from django.contrib import admin
 
 from .models import *
 
+
+class CampaignSearch(admin.ModelAdmin):
+    search_fields = ('name','type')
+    list_display = ('name','type')
+
 admin.site.register(Team)
 admin.site.register(Profile)
 admin.site.register(Process)
 admin.site.register(Empdata)
-admin.site.register(Campaigns)
+admin.site.register(Campaigns,CampaignSearch)
 admin.site.register(ProfileCreatedByManagers)
 admin.site.register(PractoWithSubCategory)
 
@@ -103,6 +108,12 @@ admin.site.register(ExecutiveCapitalResourcesmonform)
 admin.site.register(BrightWayOutboundmonform)
 admin.site.register(BuildinglabLLCOutboundmonform)
 admin.site.register(BlazingHogEmailChatmonform)
+admin.site.register(HardHatTechnologiesInboundMonForm)
+admin.site.register(ThirdWaveInboundMonForm)
+admin.site.register(HardHatTechnologiesOutboundmonform)
+admin.site.register(ThirdWaveOutboundmonform)
+admin.site.register(GlobalPharmaOutboundmonform)
+admin.site.register(RedefinePlasticsOutboundmonform)
 
 
 
