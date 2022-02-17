@@ -921,88 +921,188 @@
 
     fatal1.addEventListener('click', function(){
         document.getElementById('expectations').classList.remove("d-none");
+        document.querySelector('input[name="expe_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="expe_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="expe_3"]').setAttribute("required", "required");
     });
     pass1.addEventListener('click', function(){
         document.getElementById('expectations').classList.add("d-none");
+        document.querySelector('input[name="expe_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="expe_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="expe_3"]').removeAttribute("required", "required");
     });
     p15no.addEventListener('click', function(){
         document.getElementById('curation').classList.remove("d-none");
+        document.querySelector('input[name="cura_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="cura_2"]').setAttribute("required", "required");
     });
     p15yes.addEventListener('click', function(){
         document.getElementById('curation').classList.add("d-none");
+        document.querySelector('input[name="cura_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="cura_2"]').removeAttribute("required", "required");
     });
     p11no.addEventListener('click', function(){
         document.getElementById('process').classList.remove("d-none");
+        document.querySelector('input[name="proc_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_4"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_5"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_6"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_7"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_8"]').setAttribute("required", "required");
     });
     p11yes.addEventListener('click', function(){
         document.getElementById('process').classList.add("d-none");
+        document.querySelector('input[name="proc_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_4"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_5"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_6"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_7"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_8"]').removeAttribute("required", "required");
     });
     p9no.addEventListener('click', function(){
         document.getElementById('relavant').classList.remove("d-none");
+        document.querySelector('input[name="rela_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="rela_2"]').setAttribute("required", "required");
     });
     p9yes.addEventListener('click', function(){
         document.getElementById('relavant').classList.add("d-none");
+        document.querySelector('input[name="rela_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="rela_2"]').removeAttribute("required", "required");
     });
     p8no.addEventListener('click', function(){
         document.getElementById('grammer').classList.remove("d-none");
+        document.querySelector('input[name="gram_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="gram_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="gram_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="gram_4"]').setAttribute("required", "required");
     });
     p8yes.addEventListener('click', function(){
         document.getElementById('grammer').classList.add("d-none");
+        document.querySelector('input[name="gram_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="gram_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="gram_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="gram_4"]').removeAttribute("required", "required");
     });
     p1no.addEventListener('click', function(){
         document.getElementById('chat').classList.remove("d-none");
+        document.querySelector('input[name="chat_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="chat_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="chat_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="chat_4"]').setAttribute("required", "required");
+        document.querySelector('input[name="chat_5"]').setAttribute("required", "required");
     });
     p1yes.addEventListener('click', function(){
         document.getElementById('chat').classList.add("d-none");
+        document.querySelector('input[name="chat_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_4"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_5"]').removeAttribute("required", "required");
     });
     p3no.addEventListener('click', function(){
         document.getElementById('personalisation').classList.remove("d-none");
+        document.querySelector('input[name="pers_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="pers_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="pers_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="pers_4"]').setAttribute("required", "required");
     });
     p3yes.addEventListener('click', function(){
         document.getElementById('personalisation').classList.add("d-none");
+        document.querySelector('input[name="pers_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pers_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pers_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pers_4"]').removeAttribute("required", "required");
     });
     
     p4no.addEventListener('click', function(){
         document.getElementById('assurance').classList.remove("d-none");
+        document.querySelector('input[name="assu_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="assu_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="assu_3"]').setAttribute("required", "required");
     });
     p4yes.addEventListener('click', function(){
         document.getElementById('assurance').classList.add("d-none");
+        document.querySelector('input[name="assu_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="assu_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="assu_3"]').removeAttribute("required", "required");
     });
     
     p6no.addEventListener('click', function(){
         document.getElementById('probing').classList.remove("d-none");
+        document.querySelector('input[name="prob_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="prob_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="prob_3"]').setAttribute("required", "required");
     });
     p6yes.addEventListener('click', function(){
         document.getElementById('probing').classList.add("d-none");
+        document.querySelector('input[name="prob_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="prob_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="prob_3"]').removeAttribute("required", "required");
     });
     p6na.addEventListener('click', function(){
         document.getElementById('probing').classList.add("d-none");
+        document.querySelector('input[name="prob_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="prob_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="prob_3"]').removeAttribute("required", "required");
     });
     
     p7no.addEventListener('click', function(){
         document.getElementById('interaction').classList.remove("d-none");
+        document.querySelector('input[name="inte_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="inte_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="inte_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="inte_4"]').setAttribute("required", "required");
+        document.querySelector('input[name="inte_5"]').setAttribute("required", "required");
     });
     p7yes.addEventListener('click', function(){
         document.getElementById('interaction').classList.add("d-none");
+        document.querySelector('input[name="inte_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_4"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_5"]').removeAttribute("required", "required");
     });
     p7na.addEventListener('click', function(){
         document.getElementById('interaction').classList.add("d-none");
+        document.querySelector('input[name="inte_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_4"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_5"]').removeAttribute("required", "required");
     });
     
     p17no.addEventListener('click', function(){
         document.getElementById('chathold').classList.remove("d-none");
+        document.querySelector('input[name="hold_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="hold_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="hold_3"]').setAttribute("required", "required");
     });
     p17yes.addEventListener('click', function(){
         document.getElementById('chathold').classList.add("d-none");
+        document.querySelector('input[name="hold_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="hold_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="hold_3"]').removeAttribute("required", "required");
     });
     p17na.addEventListener('click', function(){
         document.getElementById('chathold').classList.add("d-none");
+        document.querySelector('input[name="hold_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="hold_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="hold_3"]').removeAttribute("required", "required");
     });
         
     function score(e) {
         n=n+1;
         var ce_score = document.querySelector('input[name="my_score"]');
         var p1 = parseInt(document.querySelector('input[name="p1"]:checked').value);
+        var p2;
+        if (document.querySelector('input[name="p2"]:checked').value) {
+            alert("sd");
+
+        }
         var p2 = parseInt(document.querySelector('input[name="p2"]:checked').value);
         var p3 = parseInt(document.querySelector('input[name="p3"]:checked').value);
         var p4 = parseInt(document.querySelector('input[name="p4"]:checked').value);

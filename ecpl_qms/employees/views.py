@@ -10843,7 +10843,6 @@ def disputeStatusAgents(request,campaign):
 from drf_multiple_model.views import ObjectMultipleModelAPIView
 from drf_multiple_model.views import FlatMultipleModelAPIView
 class TotalList(FlatMultipleModelAPIView):
-
     querylist = [
         {'queryset': ChatMonitoringFormPodFather.objects.all(),
          'serializer_class': ChatMonitoringSerializer},
@@ -10858,7 +10857,7 @@ class TotalList(FlatMultipleModelAPIView):
          'serializer_class': MonitoringFormLeadsAdvanceConsultantsSerializer},
 
         {'queryset': MonitoringFormLeadsAllenConsulting.objects.all(),
-        'serializer_class': MonitoringFormLeadsAllenConsultingSerializer},
+         'serializer_class': MonitoringFormLeadsAllenConsultingSerializer},
 
         {'queryset': CamIndustrialMonForm.objects.all(),
          'serializer_class': CamIndustrialMonFormSerializer},
@@ -11024,8 +11023,326 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': PickPackDeliveriesMonForm.objects.all(),
          'serializer_class': PickPackDeliveriesMonFormSerializer},
-]
 
+        {'queryset': MarceloPerezMonForm.objects.all(),
+         'serializer_class': MarceloPerezMonFormSerializer},
 
-def Testing(request):
-    return render(request, "coaching-views/emp-coaching-view-practo-chat.html")
+        {'queryset': MedTechGroupOutboundMonForm.objects.all(),
+         'serializer_class': MedTechGroupOutboundMonFormSerializer},
+
+        {'queryset': DigitalSignageOutboundMonForm.objects.all(),
+         'serializer_class': DigitalSignageOutboundMonFormSerializer},
+
+        {'queryset': HiveIncubatorsOutboundMonForm.objects.all(),
+         'serializer_class': HiveIncubatorsOutboundMonFormSerializer},
+
+        {'queryset': KaapiMachinesOutboundMonForm.objects.all(),
+         'serializer_class': KaapiMachinesOutboundMonFormSerializer},
+
+        {'queryset': SomethingsBrewingOutboundMonForm.objects.all(),
+         'serializer_class': SomethingsBrewingOutboundMonFormSerializer},
+
+        {'queryset': NaffaOutboundMonForm.objects.all(),
+         'serializer_class': NaffaOutboundMonFormSerializer},
+
+        {'queryset': JBNOutboundMonForm.objects.all(),
+         'serializer_class': JBNOutboundMonFormSerializer},
+
+        {'queryset': QuickAutoPartsOutboundMonForm.objects.all(),
+         'serializer_class': QuickAutoPartsOutboundMonFormSerializer},
+
+        {'queryset': ApexCommunicationsOutboundMonForm.objects.all(),
+         'serializer_class': ApexCommunicationsOutboundMonFormSerializer},
+
+        {'queryset': LawOfficesOutboundMonForm.objects.all(),
+         'serializer_class': LawOfficesOutboundMonFormSerializer},
+
+        {'queryset': WokeUpEnergyOutboundMonForm.objects.all(),
+         'serializer_class': WokeUpEnergyOutboundMonFormSerializer},
+
+        {'queryset': FinnesseMortgageOutboundMonForm.objects.all(),
+         'serializer_class': FinnesseMortgageOutboundMonFormSerializer},
+
+        {'queryset': UnitedMortgageOutboundMonForm.objects.all(),
+         'serializer_class': UnitedMortgageOutboundMonFormSerializer},
+
+        {'queryset': CleanLivingHealthWellnessOutboundMonForm.objects.all(),
+         'serializer_class': CleanLivingHealthWellnessOutboundMonFormSerializer},
+
+        {'queryset': PractoOutboundMonForm.objects.all(),
+         'serializer_class': PractoOutboundMonFormSerializer},
+
+        {'queryset': ImaginariumOutboundMonForm.objects.all(),
+         'serializer_class': ImaginariumOutboundMonFormSerializer},
+
+        {'queryset': USJacleanOutboundForm.objects.all(),
+         'serializer_class': USJacleanOutboundFormSerializer},
+
+        {'queryset': GlobalGalaxyOutboundForm.objects.all(),
+         'serializer_class': GlobalGalaxyOutboundFormSerializer},
+
+        {'queryset': CommunityHealthProjectIncOutbound.objects.all(),
+         'serializer_class': CommunityHealthProjectIncOutboundSerializer},
+
+        {'queryset': EducatedAnalyticsLLCOutbound.objects.all(),
+         'serializer_class': EducatedAnalyticsLLCOutboundSerializer},
+
+        {'queryset': NewDimensionPharmacyOutbound.objects.all(),
+         'serializer_class': NewDimensionPharmacyOutboundSerializer},
+
+        {'queryset': StayNChargeOutbound.objects.all(),
+         'serializer_class': StayNChargeOutboundSerializer},
+
+        {'queryset': JHEnergyConsultantOutbound.objects.all(),
+         'serializer_class': JHEnergyConsultantOutboundSerializer},
+
+        {'queryset': MDRGroupLLCOutbound.objects.all(),
+         'serializer_class': MDRGroupLLCOutboundSerializer},
+
+        {'queryset': CoreySmallInsuranceAgencyOutbound.objects.all(),
+         'serializer_class': CoreySmallInsuranceAgencyOutboundSerializer},
+
+        {'queryset': EduvocateOutbound.objects.all(),
+         'serializer_class': EduvocateOutboundSerializer},
+
+        {'queryset': CrossTowerOutbound.objects.all(),
+         'serializer_class': CrossTowerOutboundSerializer},
+
+        {'queryset': DawnFinancialOutbound.objects.all(),
+         'serializer_class': DawnFinancialOutboundSerializer},
+
+        {'queryset': XportDigitalOutbound.objects.all(),
+         'serializer_class': XportDigitalOutboundSerializer},
+
+        {'queryset': CalistaOutboundMonForm.objects.all(),
+         'serializer_class': CalistaOutboundMonFormSerializer},
+
+        {'queryset': GlobalArkOutboundMonform.objects.all(),
+         'serializer_class': GlobalArkOutboundMonformSerializer},
+
+        {'queryset': DIDevelopOutbound.objects.all(),
+         'serializer_class': DIDevelopOutboundSerializer},
+
+        {'queryset': FreeholdOutboundMonForm.objects.all(),
+         'serializer_class': FreeholdOutboundMonFormSerializer},
+
+        {'queryset': ZeamoOutboundMonForm.objects.all(),
+         'serializer_class': ZeamoOutboundMonFormSerializer},
+
+        {'queryset': SapphireMedicalsOutboundMonForm.objects.all(),
+         'serializer_class': SapphireMedicalsOutboundMonFormSerializer},
+
+        {'queryset': EehhaaaOutboundMonForm.objects.all(),
+         'serializer_class': EehhaaaOutboundMonFormSerializer},
+
+        {'queryset': MasterMonitoringFormTonnCoaInboundCalls.objects.all(),
+         'serializer_class': MasterMonitoringFormTonnCoaInboundCallsSerializer},
+
+        {'queryset': SomethingsBrewingInbound.objects.all(),
+         'serializer_class': SomethingsBrewingInboundSerializer},
+
+        {'queryset': PrinterPixMasterMonitoringFormInboundCalls.objects.all(),
+         'serializer_class': PrinterPixMasterMonitoringFormInboundCallsSerializer},
+
+        {'queryset': NuclusInboundCalls.objects.all(),
+         'serializer_class': NuclusInboundCallsSerializer},
+
+        {'queryset': NaffaInnovationsInboundCalls.objects.all(),
+         'serializer_class': NaffaInnovationsInboundCallsSerializer},
+
+        {'queryset': KappimachineInboundCalls.objects.all(),
+         'serializer_class': KappimachineInboundCallsSerializer},
+
+        {'queryset': HealthyplusInboundMonForm.objects.all(),
+         'serializer_class': HealthyplusInboundMonFormSerializer},
+
+        {'queryset': FinesseMortgageInboundMonForm.objects.all(),
+         'serializer_class': FinesseMortgageInboundMonFormSerializer},
+
+        {'queryset': DigitalSwissGoldInboundMonForm.objects.all(),
+         'serializer_class': DigitalSwissGoldInboundMonFormSerializer},
+
+        {'queryset': DanielwellingtoInboundMonForm.objects.all(),
+         'serializer_class': DanielwellingtoInboundMonFormSerializer},
+
+        {'queryset': BhagyaLakshmiInboundMonForm.objects.all(),
+         'serializer_class': BhagyaLakshmiInboundMonFormSerializer},
+
+        {'queryset': AKDYInboundMonFormNew.objects.all(),
+         'serializer_class': AKDYInboundMonFormNewSerializer},
+
+        {'queryset': AdityaBirlainboundMonForm.objects.all(),
+         'serializer_class': AdityaBirlainboundMonFormSerializer},
+
+        {'queryset': ABHindalcoInboundMonForm.objects.all(),
+         'serializer_class': ABHindalcoInboundMonFormSerializer},
+
+        {'queryset': RainbowDiagnosticsInboundMonForm.objects.all(),
+         'serializer_class': RainbowDiagnosticsInboundMonFormSerializer},
+
+        {'queryset': DecentralizedVisionLTDInboundMonForm.objects.all(),
+         'serializer_class': DecentralizedVisionLTDInboundMonFormSerializer},
+        # completed
+        {'queryset': IEDHHInboundMonForm.objects.all(),
+         'serializer_class': IEDHHInboundMonFormSerializer},
+
+        {'queryset': AmerisaveInboundMonForm.objects.all(),
+         'serializer_class': AmerisaveInboundMonFormSerializer},
+
+        {'queryset': ClearViewInboundMonForms.objects.all(),
+         'serializer_class': ClearViewInboundMonFormsSerializer},
+
+        {'queryset': QuickAutoPartsInboundMonForms.objects.all(),
+         'serializer_class': QuickAutoPartsInboundMonFormsSerializer},
+
+        {'queryset': LJHubInboundMonForms.objects.all(),
+         'serializer_class': LJHubInboundMonFormsSerializer},
+
+        {'queryset': ObtheraIncInboundMonForms.objects.all(),
+         'serializer_class': ObtheraIncInboundMonFormsSerializer},
+
+        {'queryset': EduvocateInboundMonForms.objects.all(),
+         'serializer_class': EduvocateInboundMonFormsSerializer},
+
+        {'queryset': CrossTowerInboundMonForms.objects.all(),
+         'serializer_class': CrossTowerInboundMonFormsSerializer},
+
+        {'queryset': SanaLifeScienceInbound.objects.all(),
+         'serializer_class': SanaLifeScienceInboundSerializer},
+
+        {'queryset': MonitoringFormMobile22InboundCalls.objects.all(),
+         'serializer_class': MonitoringFormMobile22InboundCallsSerializer},
+
+        {'queryset': XportDigitalInboundMonForm.objects.all(),
+         'serializer_class': XportDigitalInboundMonFormSerializer},
+
+        {'queryset': CalistaInboundMonForm.objects.all(),
+         'serializer_class': CalistaInboundMonFormSerializer},
+
+        {'queryset': GlobalArkInboundMonForm.objects.all(),
+         'serializer_class': GlobalArkInboundMonFormSerializer},
+
+        {'queryset': SuperPlayMonForm.objects.all(),
+         'serializer_class': SuperPlayMonFormSerializer},
+
+        {'queryset': DanielWellinChatEmailMonForm.objects.all(),
+         'serializer_class': DanielWellinChatEmailMonFormSerializer},
+
+        {'queryset': TerraceoChatEmailMonForm.objects.all(),
+         'serializer_class': TerraceoChatEmailMonFormSerializer},
+
+        {'queryset': TonnChatsEmailNewMonForm.objects.all(),
+         'serializer_class': TonnChatsEmailNewMonFormSerializer},
+
+        {'queryset': PrinterPixMasterMonitoringFormChatsEmail.objects.all(),
+         'serializer_class': PrinterPixMasterMonitoringFormChatsEmailSerializer},
+
+        {'queryset': PractoMonForm.objects.all(),
+         'serializer_class': PractoMonFormSerializer},
+
+        {'queryset': FurBabyMonForm.objects.all(),
+         'serializer_class': FurBabyMonFormSerializer},
+
+        {'queryset': AKDYEmailMonForm.objects.all(),
+         'serializer_class': AKDYEmailMonFormSerializer},
+
+        {'queryset': AmerisaveEmailMonForm.objects.all(),
+         'serializer_class': AmerisaveEmailMonFormSerializer},
+
+        {'queryset': ClearViewEmailMonForm.objects.all(),
+         'serializer_class': ClearViewEmailMonFormSerializer},
+
+        {'queryset': FinesseMortgageEmailMonForm.objects.all(),
+         'serializer_class': FinesseMortgageEmailMonFormSerializer},
+
+        {'queryset': DigitalSwissGoldEmailChatMonForm.objects.all(),
+         'serializer_class': DigitalSwissGoldEmailChatMonFormSerializer},
+
+        {'queryset': RainbowDiagnosticsEmailMonForm.objects.all(),
+         'serializer_class': RainbowDiagnosticsEmailMonFormSerializer},
+
+        {'queryset': HiveIncubatorEmailMonForm.objects.all(),
+         'serializer_class': HiveIncubatorEmailMonFormSerializer},
+
+        {'queryset': MedTechGroupEmailMonForm.objects.all(),
+         'serializer_class': MedTechGroupEmailMonFormSerializer},
+
+        {'queryset': Ri8BrainEmailMonForm.objects.all(),
+         'serializer_class': Ri8BrainEmailMonFormSerializer},
+
+        {'queryset': ScalaEmailMonForm.objects.all(),
+         'serializer_class': ScalaEmailMonFormSerializer},
+
+        {'queryset': KalkiFashionEmailMonForm.objects.all(),
+         'serializer_class': KalkiFashionEmailMonFormSerializer},
+
+        {'queryset': MaxwellEmailMonForm.objects.all(),
+         'serializer_class': MaxwellEmailMonFormSerializer},
+
+        {'queryset': TanaorJewelryEmailMonForm.objects.all(),
+         'serializer_class': TanaorJewelryEmailMonFormSerializer},
+
+        {'queryset': DecentralizedVisionEmailChatMonForm.objects.all(),
+         'serializer_class': DecentralizedVisionEmailChatMonFormSerializer},
+
+        {'queryset': USJacleanEmailChatForm.objects.all(),
+         'serializer_class': USJacleanEmailChatFormSerializer},
+
+        {'queryset': CrossTowerEmailChatForm.objects.all(),
+         'serializer_class': CrossTowerEmailChatFormSerializer},
+
+        {'queryset': SanaLifeScienceEmailChatForm.objects.all(),
+         'serializer_class': SanaLifeScienceEmailChatFormSerializer},
+
+        {'queryset': ChatMonitoringFormEva.objects.all(),
+         'serializer_class': ChatMonitoringFormEvaSerializer},
+
+        {'queryset': ChatMonitoringFormPodFather.objects.all(),
+         'serializer_class': ChatMonitoringFormPodFatherSerializer},
+
+        {'queryset': FameHouseNewMonForm.objects.all(),
+         'serializer_class': FameHouseNewMonFormSerializer},
+
+        {'queryset': FLAMonitoringForm.objects.all(),
+         'serializer_class': FLAMonitoringFormSerializer},
+
+        {'queryset': PractoNewVersion.objects.all(),
+         'serializer_class': PractoNewVersionSerializer},
+
+        {'queryset': GubagooAuditForm.objects.all(),
+         'serializer_class': GubagooAuditFormSerializer},
+
+        {'queryset': ILMakiageEmailChatForm.objects.all(),
+         'serializer_class': ILMakiageEmailChatFormSerializer},
+
+        {'queryset': WinopolyOutbound.objects.all(),
+         'serializer_class': WinopolyOutboundSerializer},
+
+        {'queryset': ABHindalcoMonForm.objects.all(),
+         'serializer_class': ABHindalcoMonFormSerializer},
+
+        {'queryset': BhagyalaxmiChatMonForm.objects.all(),
+         'serializer_class': BhagyalaxmiChatMonFormSerializer},
+
+        {'queryset': SapphireMedicalsChatMonForm.objects.all(),
+         'serializer_class': SapphireMedicalsChatMonFormSerializer},
+
+        {'queryset': AllCarePhysicalTherapyMonform.objects.all(),
+         'serializer_class': AllCarePhysicalTherapyMonformSerializer},
+
+        {'queryset': ExecutiveCapitalResourcesmonform.objects.all(),
+         'serializer_class': ExecutiveCapitalResourcesmonformSerializer},
+
+        {'queryset': BrightWayOutboundmonform.objects.all(),
+         'serializer_class': BrightWayOutboundmonformSerializer},
+
+        {'queryset': BuildinglabLLCOutboundmonform.objects.all(),
+         'serializer_class': BuildinglabLLCOutboundmonformSerializer},
+
+        {'queryset': BlazingHogEmailChatmonform.objects.all(),
+         'serializer_class': BlazingHogEmailChatmonformSerializer},
+
+        {'queryset': PractoWithSubCategory.objects.all(),
+         'serializer_class': PractoWithSubCategorySerializer},
+
+    ]
