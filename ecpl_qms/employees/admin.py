@@ -114,6 +114,8 @@ admin.site.register(HardHatTechnologiesOutboundmonform)
 admin.site.register(ThirdWaveOutboundmonform)
 admin.site.register(GlobalPharmaOutboundmonform)
 admin.site.register(RedefinePlasticsOutboundmonform)
+admin.site.register(K7Outboundmonform)
+
 
 
 

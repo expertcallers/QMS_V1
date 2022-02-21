@@ -48,6 +48,7 @@ list_of_monforms = [ # OutBound
                         GlobalPharmaOutboundmonform, ThirdWaveOutboundmonform,
                         HardHatTechnologiesOutboundmonform, RedefinePlasticsOutboundmonform,
                         SapphireMedicalsOutboundMonForm,
+                        K7Outboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -1156,6 +1157,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'K7 Outbound':
+        coaching = K7Outboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2026,6 +2032,11 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == '3rd Wave Outbound':
         coaching = ThirdWaveOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'K7 Outbound':
+        coaching = K7Outboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -3543,6 +3554,10 @@ def exportAuditReport(request):
 
         elif campaign == '3rd Wave Outbound':
             response = exportAadyaseries(ThirdWaveOutboundmonform)
+            return response
+
+        elif campaign == 'K7 Outbound':
+            response = exportAadyaseries(K7Outboundmonform)
             return response
 
 
@@ -5786,7 +5801,9 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(ThirdWaveOutboundmonform)
             return response
 
-
+        elif campaign == 'K7 Outbound':
+            response = exportAadyaseries(K7Outboundmonform)
+            return response
 
         ######## Inbound ###############################
 
@@ -7905,6 +7922,10 @@ def newSeriesMonForms(request):
 
         elif campaign_name == '3rd Wave Outbound':
             newseriesAddCoaching(ThirdWaveOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'K7 Outbound':
+            newseriesAddCoaching(K7Outboundmonform)
             return redirect('/employees/qahome')
 
 
