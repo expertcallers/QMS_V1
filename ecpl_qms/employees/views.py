@@ -11480,4 +11480,22 @@ class TotalList(FlatMultipleModelAPIView):
         {'queryset': PractoWithSubCategory.objects.all(),
          'serializer_class': PractoWithSubCategorySerializer},
 
+        {'queryset': GlobalPharmaOutboundmonform.objects.all(),
+         'serializer_class': GlobalPharmaOutboundmonformSerializer},
+
+        {'queryset': ThirdWaveOutboundmonform.objects.all(),
+         'serializer_class': ThirdWaveOutboundmonformSerializer},
+
+        {'queryset': HardHatTechnologiesOutboundmonform.objects.all(),
+         'serializer_class': HardHatTechnologiesOutboundmonformSerializer},
+
+        {'queryset': RedefinePlasticsOutboundmonform.objects.all(),
+         'serializer_class': RedefinePlasticsOutboundmonformSerializer},
+
+        {'queryset': ThirdWaveInboundMonForm.objects.all(),
+         'serializer_class': ThirdWaveInboundMonFormSerializer},
+
+        {'queryset': HardHatTechnologiesInboundMonForm.objects.all(),
+         'serializer_class': HardHatTechnologiesInboundMonFormSerializer},
+
     ]
