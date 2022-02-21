@@ -1043,4 +1043,34 @@ class PractoWithSubCategorySerializer(serializers.ModelSerializer):
         model = PractoWithSubCategory
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
 
+class GlobalPharmaOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GlobalPharmaOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+
+class ThirdWaveOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ThirdWaveOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class HardHatTechnologiesOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HardHatTechnologiesOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class RedefinePlasticsOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RedefinePlasticsOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class ThirdWaveInboundMonFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ThirdWaveInboundMonForm
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class HardHatTechnologiesInboundMonFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HardHatTechnologiesInboundMonForm
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
 
