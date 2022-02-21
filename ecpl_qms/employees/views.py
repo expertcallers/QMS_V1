@@ -47,6 +47,7 @@ list_of_monforms = [ # OutBound
                         BrightWayOutboundmonform,BuildinglabLLCOutboundmonform,
                         GlobalPharmaOutboundmonform, ThirdWaveOutboundmonform,
                         HardHatTechnologiesOutboundmonform, RedefinePlasticsOutboundmonform,
+                        SapphireMedicalsOutboundMonForm,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -61,6 +62,7 @@ list_of_monforms = [ # OutBound
                         SanaLifeScienceInbound,MonitoringFormMobile22InboundCalls,XportDigitalInboundMonForm,CalistaInboundMonForm,
                         ThirdWaveInboundMonForm, HardHatTechnologiesInboundMonForm,
 
+
                         # Email/CHat
                         SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
                         PrinterPixMasterMonitoringFormChatsEmail,FurBabyMonForm,AKDYEmailMonForm,AmerisaveEmailMonForm,
@@ -69,7 +71,7 @@ list_of_monforms = [ # OutBound
                         Ri8BrainEmailMonForm,ScalaEmailMonForm,KalkiFashionEmailMonForm,MaxwellEmailMonForm,
                         TanaorJewelryEmailMonForm,DecentralizedVisionEmailChatMonForm,
                         USJacleanEmailChatForm,
-                        CrossTowerEmailChatForm,SanaLifeScienceEmailChatForm,
+                        CrossTowerEmailChatForm,SanaLifeScienceEmailChatForm,SapphireMedicalsChatMonForm,
 
                         #FLA
                         FLAMonitoringForm,
