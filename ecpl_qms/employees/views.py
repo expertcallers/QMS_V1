@@ -1142,6 +1142,7 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    # New Added
     elif process_name == 'Redefine Plastics Outbound':
         coaching = RedefinePlasticsOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
@@ -1309,15 +1310,16 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
+    # New Added
     elif process_name == 'Hard Hat Technologies Inbound':
         coaching = HardHatTechnologiesInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
-        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
     elif process_name == '3rd Wave Inbound':
         coaching = ThirdWaveInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
-        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
     ############# Email/Chat ##############################
 
@@ -2020,6 +2022,7 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    # New Added
     elif process_name == 'Redefine Plastics Outbound':
         coaching = RedefinePlasticsOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
@@ -2187,6 +2190,17 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+    # New Added
+    elif process_name == 'Hard Hat Technologies Inbound':
+        coaching = HardHatTechnologiesInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == '3rd Wave Inbound':
+        coaching = ThirdWaveInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -2309,16 +2323,6 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Sapphire Medicals Chat':
         coaching = SapphireMedicalsChatMonForm.objects.get(id=pk)
-        data = {'coaching': coaching}
-        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
-
-    elif process_name == 'Hard Hat Technologies Inbound':
-        coaching = HardHatTechnologiesInboundMonForm.objects.get(id=pk)
-        data = {'coaching': coaching}
-        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
-
-    elif process_name == '3rd Wave Inbound':
-        coaching = ThirdWaveInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
