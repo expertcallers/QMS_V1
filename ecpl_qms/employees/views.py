@@ -48,7 +48,7 @@ list_of_monforms = [ # OutBound
                         GlobalPharmaOutboundmonform, ThirdWaveOutboundmonform,
                         HardHatTechnologiesOutboundmonform, RedefinePlasticsOutboundmonform,
                         SapphireMedicalsOutboundMonForm,
-                        K7Outboundmonform,
+                        K7Outboundmonform,GlobalArkOutboundMonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
