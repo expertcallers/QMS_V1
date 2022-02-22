@@ -11522,3 +11522,4 @@ class TotalList(FlatMultipleModelAPIView):
          'serializer_class': HardHatTechnologiesInboundMonFormSerializer},
 
     ]
+
