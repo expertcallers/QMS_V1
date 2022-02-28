@@ -8827,17 +8827,12 @@ def ilmEMailChat(request):
                            ticket_id=ticket_id,
                            campaign=campaign, concept=concept, zone=zone,
                            query_type = query_type,
-
                            s_1=s_1, s_2=s_2, s_3=s_3,s_4=s_4,
                            e_1=e_1, e_2=e_2,
-
                            compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
-
-
                            areas_improvement=areas_improvement,
                            positives=positives, comments=comments,
                            added_by=added_by,
-
                            overall_score=overall_score, category=category,
                            week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
                            )
