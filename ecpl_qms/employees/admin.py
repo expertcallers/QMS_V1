@@ -111,10 +111,13 @@ admin.site.register(BlazingHogEmailChatmonform)
 admin.site.register(HardHatTechnologiesInboundMonForm)
 admin.site.register(ThirdWaveInboundMonForm)
 admin.site.register(HardHatTechnologiesOutboundmonform)
+admin.site.register(GretnaMedicalCenterInboundMonForm)
 admin.site.register(ThirdWaveOutboundmonform)
 admin.site.register(GlobalPharmaOutboundmonform)
 admin.site.register(RedefinePlasticsOutboundmonform)
 admin.site.register(K7Outboundmonform)
+admin.site.register(TrialMappingOutboundmonform)
+admin.site.register(GretnaMedicalCenterEmailChatForm)
 
 
 
