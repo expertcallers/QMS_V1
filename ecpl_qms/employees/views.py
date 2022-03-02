@@ -49,6 +49,7 @@ list_of_monforms = [ # OutBound
                         HardHatTechnologiesOutboundmonform, RedefinePlasticsOutboundmonform,
                         SapphireMedicalsOutboundMonForm,
                         K7Outboundmonform,GlobalArkOutboundMonform,TrialMappingOutboundmonform,
+                            EduClassOutboundmonform,CredAvenueOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -1169,6 +1170,16 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Edu Class Outbound':
+        coaching = EduClassOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Cred Avenue Outbound':
+        coaching = CredAvenueOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2061,6 +2072,16 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Trial Mapping Outbound':
         coaching = TrialMappingOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Edu Class Outbound':
+        coaching = EduClassOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Cred Avenue Outbound':
+        coaching = CredAvenueOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -3598,6 +3619,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Trial Mapping Outbound':
             response = exportAadyaseries(TrialMappingOutboundmonform)
+            return response
+
+        elif campaign == 'Edu Class Outbound':
+            response = exportAadyaseries(EduClassOutboundmonform)
+            return response
+
+        elif campaign == 'Cred Avenue Outbound':
+            response = exportAadyaseries(CredAvenueOutboundmonform)
             return response
 
         ######## Inbound ###############################
@@ -5856,6 +5885,14 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(TrialMappingOutboundmonform)
             return response
 
+        elif campaign == 'Edu Class Outbound':
+            response = exportAadyaseries(EduClassOutboundmonform)
+            return response
+
+        elif campaign == 'Cred Avenue Outbound':
+            response = exportAadyaseries(CredAvenueOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -7991,7 +8028,13 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(TrialMappingOutboundmonform)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Edu Class Outbound':
+            newseriesAddCoaching(EduClassOutboundmonform)
+            return redirect('/employees/qahome')
 
+        elif campaign_name == 'Cred Avenue Outbound':
+            newseriesAddCoaching(CredAvenueOutboundmonform)
+            return redirect('/employees/qahome')
 
         else:
             pass

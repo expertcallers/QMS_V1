@@ -118,6 +118,8 @@ admin.site.register(RedefinePlasticsOutboundmonform)
 admin.site.register(K7Outboundmonform)
 admin.site.register(TrialMappingOutboundmonform)
 admin.site.register(GretnaMedicalCenterEmailChatForm)
+admin.site.register(EduClassOutboundmonform)
+admin.site.register(CredAvenueOutboundmonform)
 
 
 
