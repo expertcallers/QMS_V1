@@ -48,7 +48,7 @@ list_of_monforms = [ # OutBound
                         GlobalPharmaOutboundmonform, ThirdWaveOutboundmonform,
                         HardHatTechnologiesOutboundmonform, RedefinePlasticsOutboundmonform,
                         SapphireMedicalsOutboundMonForm,
-                        K7Outboundmonform,GlobalArkOutboundMonform,
+                        K7Outboundmonform,GlobalArkOutboundMonform,TrialMappingOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -61,7 +61,7 @@ list_of_monforms = [ # OutBound
                         ObtheraIncInboundMonForms,
                         EduvocateInboundMonForms,CrossTowerInboundMonForms,
                         SanaLifeScienceInbound,MonitoringFormMobile22InboundCalls,XportDigitalInboundMonForm,CalistaInboundMonForm,
-                        ThirdWaveInboundMonForm, HardHatTechnologiesInboundMonForm,
+                        ThirdWaveInboundMonForm, HardHatTechnologiesInboundMonForm,GretnaMedicalCenterInboundMonForm,
 
 
                         # Email/CHat
@@ -73,6 +73,7 @@ list_of_monforms = [ # OutBound
                         TanaorJewelryEmailMonForm,DecentralizedVisionEmailChatMonForm,
                         USJacleanEmailChatForm,
                         CrossTowerEmailChatForm,SanaLifeScienceEmailChatForm,SapphireMedicalsChatMonForm,
+                        GretnaMedicalCenterEmailChatForm,
 
                         #FLA
                         FLAMonitoringForm,
@@ -1163,6 +1164,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Trial Mapping Outbound':
+        coaching = TrialMappingOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1321,6 +1327,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'Gretna Medical Center Inbound':
+        coaching = GretnaMedicalCenterInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -1441,6 +1452,11 @@ def coachingViewAgents(request,process,pk):
 
     elif process_name == 'Sapphire Medicals Chat':
         coaching = SapphireMedicalsChatMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Gretna Medical Center Email':
+        coaching = GretnaMedicalCenterEmailChatForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
@@ -2043,6 +2059,11 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Trial Mapping Outbound':
+        coaching = TrialMappingOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2201,6 +2222,12 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+
+    elif process_name == 'Gretna Medical Center Inbound':
+        coaching = GretnaMedicalCenterInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -2323,6 +2350,11 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Sapphire Medicals Chat':
         coaching = SapphireMedicalsChatMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Gretna Medical Center Email':
+        coaching = GretnaMedicalCenterEmailChatForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
@@ -3564,6 +3596,9 @@ def exportAuditReport(request):
             response = exportAadyaseries(K7Outboundmonform)
             return response
 
+        elif campaign == 'Trial Mapping Outbound':
+            response = exportAadyaseries(TrialMappingOutboundmonform)
+            return response
 
         ######## Inbound ###############################
 
@@ -3764,6 +3799,10 @@ def exportAuditReport(request):
             response = exportinbound(HardHatTechnologiesInboundMonForm)
             return response
 
+        elif campaign == 'Gretna Medical Center Inbound':
+            response = exportinbound(GretnaMedicalCenterInboundMonForm)
+            return response
+
         #########    Email/CHat ##########################
 
         def exportEmailChat(monform):
@@ -3938,6 +3977,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Sapphire Medicals Chat':
             response = exportEmailChat(SapphireMedicalsChatMonForm)
+            return response
+
+        elif campaign == 'Gretna Medical Center Email':
+            response = exportEmailChat(GretnaMedicalCenterEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -5809,6 +5852,10 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(K7Outboundmonform)
             return response
 
+        elif campaign == 'Trial Mapping Outbound':
+            response = exportAadyaseries(TrialMappingOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -6007,6 +6054,10 @@ def exportAuditReportQA(request):
             response = exportinbound(HardHatTechnologiesInboundMonForm)
             return response
 
+        elif campaign == 'Gretna Medical Center Inbound':
+            response = exportinbound(GretnaMedicalCenterInboundMonForm)
+            return response
+
 
 
         #########    Email/CHat ##########################
@@ -6183,6 +6234,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Sapphire Medicals Chat':
             response = exportEmailChat(SapphireMedicalsChatMonForm)
+            return response
+
+        elif campaign == 'Gretna Medical Center Email':
+            response = exportEmailChat(GretnaMedicalCenterEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -7932,6 +7987,10 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(K7Outboundmonform)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Trial Mapping Outbound':
+            newseriesAddCoaching(TrialMappingOutboundmonform)
+            return redirect('/employees/qahome')
+
 
 
         else:
@@ -8306,6 +8365,10 @@ def newSeriesInboundForms(request):
             inboundAddCoaching(HardHatTechnologiesInboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Gretna Medical Center Inbound':
+            inboundAddCoaching(GretnaMedicalCenterInboundMonForm)
+            return redirect('/employees/qahome')
+
 
     else:
         pass
@@ -8528,6 +8591,11 @@ def domesticChatEmail(request):
 
         elif campaign_name == 'Sapphire Medicals Chat':
             domesticEmailChatAddCoaching(SapphireMedicalsChatMonForm)
+            return redirect('/employees/qahome')
+
+
+        elif campaign_name == 'Gretna Medical Center Email':
+            domesticEmailChatAddCoaching(GretnaMedicalCenterEmailChatForm)
             return redirect('/employees/qahome')
 
 
@@ -8810,7 +8878,6 @@ def ilmEMailChat(request):
             overall_score = sum(lst)/sum(lst_tot)
             fatal = False
 
-        print(overall_score)
 
         areas_improvement = request.POST['areaimprovement']
         positives = request.POST['positives']
@@ -9784,7 +9851,6 @@ def gubaGooNew(request):
         chat2_total += autofail_chat2
         chat2_total_score = (chat2_total / total_score) * 100
         chat2_total_score = round(chat2_total_score)
-        # print(chat2_total_score)
 
         ############################# chat3 ####################################
         total_score = 293
@@ -9825,7 +9891,6 @@ def gubaGooNew(request):
         chat3_total += autofail_chat3
         chat3_total_score = (chat3_total / total_score) * 100
         chat3_total_score = round(chat3_total_score)
-        # print(chat3_total_score)
 
         ############################# chat4 ####################################
         total_score = 293
@@ -9865,7 +9930,6 @@ def gubaGooNew(request):
         chat4_total += autofail_chat4
         chat4_total_score = (chat4_total / total_score) * 100
         chat4_total_score = round(chat4_total_score)
-        # print(chat4_total_score)
 
         ############################# chat5 ####################################
         total_score = 293
@@ -9905,7 +9969,6 @@ def gubaGooNew(request):
         chat5_total += autofail_chat5
         chat5_total_score = (chat5_total / total_score) * 100
         chat5_total_score = round(chat5_total_score)
-        # print(chat5_total_score)
 
         ############################# chat6 ####################################
         total_score = 293
@@ -9945,22 +10008,17 @@ def gubaGooNew(request):
         chat6_total += autofail_chat6
         chat6_total_score = (chat6_total / total_score) * 100
         chat6_total_score = round(chat6_total_score)
-        # print(chat6_total_score)
-        # print('----------------------------------------------------------')
-        # print('Failing Score',total_failing_score)
 
         total_chat_sum = chat1_total_score + chat2_total_score + chat3_total_score + \
                            chat4_total_score + chat5_total_score + chat6_total_score 
 
         total_chat_score = total_chat_sum/6
 
-        # print(total_chat_score,'Total CHat Score')
 
         total_failing_perc = total_failing_score * 100
         total_audit_score = total_chat_score - total_failing_perc
         total_audit_score = round(total_audit_score)
 
-        # print(total_audit_score,'Total Audit Score')
         category = 'Gubagoo'
         associate_name = request.POST['empname']
         emp_id = request.POST['empid']
@@ -10812,7 +10870,6 @@ def campaignDetails(request):
             else:
                 pass
 
-        print(campaign)
         campaigns = Campaigns.objects.all()
         data = {'campaigns': campaigns}
         return render(request, 'all-campaigns.html', data)
