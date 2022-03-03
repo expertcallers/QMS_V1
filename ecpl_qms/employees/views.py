@@ -49,7 +49,8 @@ list_of_monforms = [ # OutBound
                         HardHatTechnologiesOutboundmonform, RedefinePlasticsOutboundmonform,
                         SapphireMedicalsOutboundMonForm,
                         K7Outboundmonform,GlobalArkOutboundMonform,TrialMappingOutboundmonform,
-                            EduClassOutboundmonform,CredAvenueOutboundmonform,
+                        EduClassOutboundmonform,CredAvenueOutboundmonform,TKAWDIWOutboundmonform,
+                        DreamPickOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -1180,6 +1181,16 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'TKAWDIW Outbound':
+        coaching = TKAWDIWOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Dream Pick Outbound':
+        coaching = DreamPickOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2082,6 +2093,16 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Cred Avenue Outbound':
         coaching = CredAvenueOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'TKAWDIW Outbound':
+        coaching = TKAWDIWOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Dream Pick Outbound':
+        coaching = DreamPickOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -3627,6 +3648,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Cred Avenue Outbound':
             response = exportAadyaseries(CredAvenueOutboundmonform)
+            return response
+
+        elif campaign == 'TKAWDIW Outbound':
+            response = exportAadyaseries(TKAWDIWOutboundmonform)
+            return response
+
+        elif campaign == 'Dream Pick Outbound':
+            response = exportAadyaseries(DreamPickOutboundmonform)
             return response
 
         ######## Inbound ###############################
@@ -5893,6 +5922,14 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(CredAvenueOutboundmonform)
             return response
 
+        elif campaign == 'TKAWDIW Outbound':
+            response = exportAadyaseries(TKAWDIWOutboundmonform)
+            return response
+
+        elif campaign == 'Dream Pick Outbound':
+            response = exportAadyaseries(DreamPickOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -8034,6 +8071,14 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'Cred Avenue Outbound':
             newseriesAddCoaching(CredAvenueOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'TKAWDIW Outbound':
+            newseriesAddCoaching(TKAWDIWOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Dream Pick Outbound':
+            newseriesAddCoaching(DreamPickOutboundmonform)
             return redirect('/employees/qahome')
 
         else:
