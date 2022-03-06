@@ -120,6 +120,8 @@ admin.site.register(TrialMappingOutboundmonform)
 admin.site.register(GretnaMedicalCenterEmailChatForm)
 admin.site.register(EduClassOutboundmonform)
 admin.site.register(CredAvenueOutboundmonform)
+admin.site.register(TKAWDIWOutboundmonform)
+admin.site.register(DreamPickOutboundmonform)
 
 
 
