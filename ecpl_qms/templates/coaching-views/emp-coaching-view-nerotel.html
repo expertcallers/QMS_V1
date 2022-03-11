@@ -1,0 +1,529 @@
+{% extends 'base.html' %}
+{% block main %}
+    <style type="text/css">
+        .fatal {
+            color: red;
+        }
+        #sec1_score {
+            border: none;
+            background: #ECECF3;
+            padding: 0 10px;
+        }
+        label {
+            margin-right: 30px;
+        }
+        .score {
+            font-size: 18px;
+            color: green;
+            font-weight: 600;
+        }
+        h4 {
+            color: #010162;
+            font-weight: 800;
+        }
+        .container-fluid.class, .container.class {
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(0,0,0,.1);
+        }
+        .less {
+            background: red !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        .perfect{
+            background: green !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        #myscore{
+            color: green;
+            font-weight: 800;
+        }
+        input[type="radio"] {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            transform: scale(1.5);
+        }
+        input[type="text"].scoree {
+            font-size: 12px;
+        }
+        .btn-success {
+            color: white;
+            background-color: green !important;
+            border-color: green !important;
+            padding: 3px 30px;
+        }
+        @media (min-width:768px) {
+            body {
+                margin: 0 80px;
+            }
+        }
+        @media (max-width:768px) {
+            body {
+                margin: 0 20px;
+            }
+        }
+        #last .row .col-md-6{
+            border: 1px solid #e5e5e5;
+            padding-top: 15px;
+        }
+        #last .noborder .col-md-6 {
+            padding-top: 10px;
+            text-align: center;
+        }
+        #last .noborder .col-md-6{
+            border-right: 1px solid #e5e5e5;
+            margin-top: -10px;
+            padding-top: 10px;
+            text-align: center;
+        }
+        #last .noborder .col-md-6 h4 {
+            font-size: 24px !important;
+        }
+        #last .row .col-md-6 h4{
+            font-size: 18px;
+        }
+        .fields .row .col-md-3{
+            padding: 5px 25px;
+        }
+        .fields .row .col-md-3 .row .col-md-6{
+            border: 1px solid #e5e5e5;
+        }
+        .fields .row .col-md-3 .row .col-md-6 h4{
+            color: #000;
+            padding-top: 8px;
+            font-size: 18px;
+        }
+        .fields .row .col-md-3 .row .col-md-6 p{
+            padding-top: 6px;
+            margin-bottom: 0px;
+        }
+    </style>
+    <div class="container pt-5 mt-5">
+        <div class="row">
+            <div class="col-md-12" align="center">
+                <h2>{{coaching.process}}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid fields">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Associate Name</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.associate_name}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Employee ID</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.emp_id}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Zone</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.zone}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Concept</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.concept}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Customer Name</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.customer_name}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Customer Contact</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.customer_contact}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Campaign</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.campaign}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Call Date</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.call_date}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Call Duration</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.call_duration}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Audit Date</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.audit_date}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Quality Analyst</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.qa}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Team Lead</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.team_lead}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Manager</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.manager}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>AM</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.am}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Week</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.week}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Engagement</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Greeting?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="eng_1">{{coaching.eng_1}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Value Proposition?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="eng_2">{{coaching.eng_2}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Tone and Pace?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="eng_3">{{coaching.eng_3}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Screening Questions?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="eng_4">{{coaching.eng_4}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                How clear and concise was the rep's vocalization and pronunciation?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="eng_5">{{coaching.eng_5}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Did the rep use the correct hold procedure?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="eng_6">{{coaching.eng_6}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Providing Solutions?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="eng_7">{{coaching.eng_7}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Did the rep display active listening skills?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="eng_8">{{coaching.eng_8}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Call closure phase? Last Checks ?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="eng_9">{{coaching.eng_9}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score">
+                Engagement Section Score
+            </div>
+            <div class="col-md-4">
+                <h5 id="eng_score"></h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Resolution</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Confirmation?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="softskill_1">{{coaching.res_1}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Preparation?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="softskill_2">{{coaching.res_2}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+               Clinic Procedures?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="softskill_3">{{coaching.res_3}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+               Did the rep manage time effectively?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="softskill_4">{{coaching.res_4}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score">
+                Resolution Section Score
+            </div>
+            <div class="col-md-4">
+                <h5 id="softskill_score"></h5>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Business needs</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Documentation?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="b_1">{{coaching.compliance_1}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Patient Details?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="b_2">{{coaching.compliance_2}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Discovery Questions? 
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="b_3">{{coaching.compliance_3}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Was agent rude on the call 
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="b_4">{{coaching.compliance_4}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score">
+                Business Needs 
+            </div>
+            <div class="col-md-4">
+                <h5 id="b_score"></h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="last">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Areas of improvement</h4>
+            </div>
+            <div class="col-md-6">
+                <p>{{coaching.areas_improvement}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Positives</h4>
+            </div>
+            <div class="col-md-6">
+                <p>{{coaching.positives}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Comments</h4>
+            </div>
+            <div class="col-md-6">
+                <p>{{coaching.comments}}</p>
+            </div>
+        </div>
+        <div class="row mt-5 pb-5 noborder">
+            <div class="col-md-6">
+                <h5>Total Score</h5>
+            </div>
+            <div class="col-md-6">
+                <h4 id="tot_score">{{coaching.overall_score}}</h4>
+            </div>
+            <div style="width: 100%;">
+                <form class="login-form" action="/employees/coaching/signcoaching/{{coaching.id}}" method="post">
+                              {% csrf_token %}
+                    <label for="emp_comments">Employee Comments *</label><br>
+                    <textarea name="emp_comments" id="emp_comments" rows="5" required class="form-control"></textarea>
+                    <input type="hidden" value="{{coaching.process}}" name="category">
+                    <br>
+                    <input class="btn btn-success" type="submit" value="Accept & Sign" style="width: 150px">
+                </form>
+                <br>
+                <form action="/employees/coaching-dispute/{{coaching.id}}" method="POST">
+                    {% csrf_token %}
+                    <label for="emp_comments_d">Employee Comments *</label><br>
+                    <textarea name="emp_comments_dispute" id="emp_comments_d" rows="5" required class="form-control"></textarea>
+                    <input type="hidden" name="campaign" id="" value="{{coaching.process}}">
+                    <br><button class="btn btn-danger" style="width: 150px">Reject & Dispute</button>
+                </form>
+            </div>
+            <div class="col-md-12 mt-3" align="center">
+                <a href="#" onclick="history.back();" class="btn btn-info btn-lg">Back</a>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+        var eng_1 = parseInt($('#eng_1').html());
+        var eng_2 = parseInt($('#eng_2').html());
+        var eng_3 = parseInt($('#eng_3').html());
+        var eng_4 = parseInt($('#eng_4').html());
+        var eng_5 = parseInt($('#eng_5').html());
+        var eng_6 = parseInt($('#eng_6').html());
+        var eng_7 = parseInt($('#eng_7').html());
+        var eng_8 = parseInt($('#eng_8').html());
+        var eng_9 = parseInt($('#eng_9').html());
+        $('#eng_score').html(eng_1+eng_2+eng_3+eng_4+eng_5+eng_6+eng_7+eng_8+eng_9);
+        var softskill_1 = parseInt($('#softskill_1').html());
+        var softskill_2 = parseInt($('#softskill_2').html());
+        var softskill_3 = parseInt($('#softskill_3').html());
+        var softskill_4 = parseInt($('#softskill_4').html());
+        $('#softskill_score').html(softskill_1+softskill_2+softskill_3+softskill_4);
+        var b_1 = parseInt($('#b_1').html());
+        var b_2 = parseInt($('#b_2').html());
+        var b_3 = parseInt($('#b_3').html());
+        var b_4 = parseInt($('#b_4').html());
+        $('#b_score').html(b_1+b_2+b_3+b_4);
+</script>
+{% endblock %}

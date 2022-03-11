@@ -12270,6 +12270,70 @@ class BlazingHogEmailChatmonform(models.Model):
         return self.comments[:100] + '...'
 
 
+class NerotelInboundmonform(models.Model):
+    process = models.CharField(default='Nerotel Inbound',max_length=50)
+    type = models.CharField(default='Nerotel Inbound', max_length=50)
+    emp_id = models.CharField(max_length=50)
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.CharField(max_length=20)
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Engagement
+    eng_1 = models.IntegerField()
+    eng_2 = models.IntegerField()
+    eng_3 = models.IntegerField()
+    eng_4 = models.IntegerField()
+    eng_5 = models.IntegerField()
+    eng_6 = models.IntegerField()
+    eng_7 = models.IntegerField()
+    eng_8 = models.IntegerField()
+    eng_9 = models.IntegerField()
+    # Resolution
+    res_1 = models.IntegerField()
+    res_2 = models.IntegerField()
+    res_3 = models.IntegerField()
+    res_4 = models.IntegerField()
+    # Business needs
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    ##############
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
+
+
 ############# End of Forms ##############################
 
 class Empdata(models.Model):

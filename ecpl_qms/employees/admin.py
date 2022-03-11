@@ -122,6 +122,7 @@ admin.site.register(EduClassOutboundmonform)
 admin.site.register(CredAvenueOutboundmonform)
 admin.site.register(TKAWDIWOutboundmonform)
 admin.site.register(DreamPickOutboundmonform)
+admin.site.register(NerotelInboundmonform)
 
 
 

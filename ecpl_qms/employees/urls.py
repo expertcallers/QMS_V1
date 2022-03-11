@@ -24,8 +24,7 @@ urlpatterns = [
     path('practo-chat',PractoWithSubCategoryFunc),
     path('ilm-email-chat',ilmEMailChat),
     path('abh-form-update',abhFormSAve),
-
-
+    path('nerotel-inbound', nerotelInbound),
 
     #### Credentials
     path('accounts/login/',login_view),

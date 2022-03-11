@@ -100,6 +100,8 @@ list_of_monforms = [ # OutBound
 
                         #blazhog
                         BlazingHogEmailChatmonform,
+                        # Nerotel Inbound
+                        NerotelInboundmonform,
 
                         ]
 
@@ -1541,10 +1543,15 @@ def coachingViewAgents(request,process,pk):
         return render(request,'coaching-views/emp-coaching-view-blazing.html',data)
 
     if process_name == 'Practo Chat':
-
         coaching = PractoWithSubCategory.objects.get(id=pk)
         data = {'coaching':coaching}
         return render(request,'coaching-views/emp-coaching-view-practo-chat.html',data)
+
+    if process_name == 'Nerotel Inbound':
+        coaching = NerotelInboundmonform.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/emp-coaching-view-nerotel.html',data)
+
     else:
         pass
 
@@ -2463,6 +2470,11 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching':coaching}
         return render(request,'coaching-views/qa-coaching-view-practo-chat.html',data)
 
+    if process_name == 'Nerotel Inbound':
+        coaching = NerotelInboundmonform.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/qa-coaching-view-nerotel.html',data)
+
     else:
         pass
 
@@ -3127,6 +3139,10 @@ def selectCoachingForm(request):
         elif campaign_type == 'Blazing Hog':
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/Blazing-Hog.html', data)
+
+        elif campaign_type == 'Nerotel Inbound':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
+            return render(request, 'mon-forms/nerotel_inbound.html', data)
 
     else:
         return redirect('/employees/qahome')
@@ -5405,6 +5421,79 @@ def exportAuditReport(request):
 
             return response
 
+        elif campaign == "Nerotel Inbound":
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['Process', 'Employee ID', 'Associate Name',
+                       'Quality Analyst', 'Team Lead', 'Assistant Manager', 'Manager', 'Customer Name',
+                       'Customer Contact', 'Call Date', 'Audit Date', 'Campaign', 'Zone', 'Concept', 'Call Duration',
+                       'Week',
+
+                       'Greeting?',
+                       'Value Proposition? ',
+                       'Tone and Pace?',
+                       'Screening Questions?',
+                       "How clear and concise was the rep's vocalization and pronunciation?",
+                       'Did the rep use the correct hold procedure?',
+                       'Providing Solutions?',
+                       'Did the rep display active listening skills?',
+                       'Call closure phase? Last Checks ?',
+
+                       'Confirmation?',
+                       'Preparation?',
+                       'Clinic Procedures?',
+                       'Did the rep manage time effectively?',
+
+                       'Documentation?',
+                       'Patient Details?',
+                       'Discovery Questions? ',
+                       'Was agent rude on the call',
+
+                       'Status', 'Dispute Status',
+                       'Closed Date', 'Fatal', 'Fatal Count', 'Overall Score', 'Areas of improvement', 'Positives',
+                       'Comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = NerotelInboundmonform.objects.filter(audit_date__range=[start_date, end_date],
+                                          ).values_list(
+                'process', 'emp_id', 'associate_name', 'qa', 'team_lead',
+                'am', 'manager', 'customer_name', 'customer_contact',
+                'call_date',
+                'audit_date', 'campaign', 'zone', 'concept', 'call_duration', 'week',
+
+                'eng_1', 'eng_2', 'eng_3', 'eng_4', 'eng_5', 'eng_6', 'eng_7', 'eng_8', 'eng_9',
+
+                'res_1', 'res_2', 'res_3', 'res_4',
+
+                'compliance_1', 'compliance_2', 'compliance_3', 'compliance_4',
+
+                'status', 'disput_status',
+                'closed_date', 'fatal', 'fatal_count', 'overall_score', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
+
 
         else:
             return redirect(request, 'error-pages/export-error.html')
@@ -7538,6 +7627,79 @@ def exportAuditReportQA(request):
             wb.save(response)
 
             return response
+        elif campaign == "Nerotel Inbound":
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['Process', 'Employee ID', 'Associate Name',
+                       'Quality Analyst', 'Team Lead', 'Assistant Manager', 'Manager', 'Customer Name',
+                       'Customer Contact', 'Call Date', 'Audit Date', 'Campaign', 'Zone', 'Concept', 'Call Duration',
+                       'Week',
+
+                       'Greeting?',
+                       'Value Proposition? ',
+                       'Tone and Pace?',
+                       'Screening Questions?',
+                       "How clear and concise was the rep's vocalization and pronunciation?",
+                       'Did the rep use the correct hold procedure?',
+                       'Providing Solutions?',
+                       'Did the rep display active listening skills?',
+                       'Call closure phase? Last Checks ?',
+
+                       'Confirmation?',
+                       'Preparation?',
+                       'Clinic Procedures?',
+                       'Did the rep manage time effectively?',
+
+                       'Documentation?',
+                       'Patient Details?',
+                       'Discovery Questions? ',
+                       'Was agent rude on the call',
+
+                       'Status', 'Dispute Status',
+                       'Closed Date', 'Fatal', 'Fatal Count', 'Overall Score', 'Areas of improvement', 'Positives',
+                       'Comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = NerotelInboundmonform.objects.filter(audit_date__range=[start_date, end_date], qa=qa
+                                          ).values_list(
+
+                'process', 'emp_id', 'associate_name', 'qa', 'team_lead',
+                'am', 'manager', 'customer_name', 'customer_contact',
+                'call_date',
+                'audit_date', 'campaign', 'zone', 'concept', 'call_duration', 'week',
+
+                'eng_1', 'eng_2', 'eng_3', 'eng_4', 'eng_5', 'eng_6', 'eng_7', 'eng_8', 'eng_9',
+
+                'res_1', 'res_2', 'res_3', 'res_4',
+
+                'compliance_1', 'compliance_2', 'compliance_3', 'compliance_4',
+
+                'status', 'disput_status',
+                'closed_date', 'fatal', 'fatal_count', 'overall_score', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
 
         else:
             return redirect(request, 'error-pages/export-error.html')
@@ -10825,6 +10987,94 @@ def PractoWithSubCategoryFunc(request):
         return redirect('/employees/qahome')
     else:
         return render(request,'mon-forms/practo_chat.html')
+
+def nerotelInbound(request):
+    if request.method == 'POST':
+        category='Nerotel Inbound'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        customer_name=request.POST['customer']
+        customer_contact=request.POST['customercontact']
+        call_date = request.POST['calldate']
+        audit_date = request.POST['auditdate']
+        campaign = request.POST['campaign']
+        concept = request.POST['concept']
+        zone=request.POST['zone']
+        call_duration=(int(request.POST['durationh'])*3600)+(int(request.POST['durationm'])*60)+int(request.POST['durations'])
+
+        #######################################
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
+
+        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+
+        manager_emp_id = manager_emp_id_obj.emp_id
+        manager_name = manager
+        # Engagement
+        eng_1 = int(request.POST['e_1'])
+        eng_2 = int(request.POST['e_2'])
+        eng_3 = int(request.POST['e_3'])
+        eng_4 = int(request.POST['e_4'])
+        eng_5 = int(request.POST['e_5'])
+        eng_6 = int(request.POST['e_6'])
+        eng_7 = int(request.POST['e_7'])
+        eng_8 = int(request.POST['e_8'])
+        eng_9 = int(request.POST['e_9'])
+        eng_total = eng_1+eng_2+eng_3+eng_4+eng_5+eng_6+eng_7+eng_8+eng_9
+        # Resolution
+        res_1 = int(request.POST['res_1'])
+        res_2 = int(request.POST['res_2'])
+        res_3 = int(request.POST['res_3'])
+        res_4 = int(request.POST['res_4'])
+        res_total = res_1+res_2+res_3+res_4
+
+        # Business needs
+        compliance_1 = int(request.POST['busi_1'])
+        compliance_2 = int(request.POST['busi_2'])
+        compliance_3 = int(request.POST['busi_3'])
+        compliance_4 = int(request.POST['busi_4'])
+        com_total = compliance_1+compliance_2+compliance_3+compliance_4
+
+
+        fatal_list = [compliance_1, compliance_2, compliance_3, compliance_4]
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 0:
+                fatal_list_count.append(i)
+        no_of_fatals = len(fatal_list_count)
+
+        if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0 or compliance_4 == 0 :
+            overall_score = 0
+            fatal = True
+        else:
+            overall_score = eng_total + res_total + com_total
+            fatal = False
+
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+        added_by = request.user.profile.emp_name
+        week = request.POST['week']
+        am = request.POST['am']
+
+        leadsales = NerotelInboundmonform(
+                            associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                            manager=manager_name,manager_id=manager_emp_id,
+                            call_date=call_date, audit_date=audit_date, customer_name=customer_name,customer_contact=customer_contact,
+                            campaign=campaign, concept=concept, zone=zone,call_duration=call_duration,
+                            eng_1=eng_1,eng_2=eng_2,eng_3=eng_3,eng_4=eng_4,eng_5=eng_5,eng_6=eng_6,eng_7=eng_7,eng_8=eng_8,eng_9=eng_9,
+                            res_1=res_1, res_2=res_2, res_3=res_3, res_4=res_4,
+                            compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3, compliance_4=compliance_4,
+                            areas_improvement=areas_improvement,
+                            positives=positives, comments=comments,
+                            added_by=added_by,
+                            overall_score=overall_score,category=category,
+                            week=week,am=am,fatal_count=no_of_fatals,fatal=fatal,
+                            )
+        leadsales.save()
+        return redirect('/employees/qahome')
 
 ############## End Mon Forms ##############################
 

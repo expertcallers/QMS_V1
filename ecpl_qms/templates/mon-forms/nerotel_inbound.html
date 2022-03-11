@@ -1,0 +1,535 @@
+{% extends 'base.html' %}
+{% block main %}
+<style>
+    .fatal {
+			color: red;
+		}
+        #sec1_score {
+            border: none;
+            background: #ECECF3;
+            padding: 0 10px;
+        }
+        label {
+            margin-right: 30px;
+        }
+        .score {
+            font-size: 18px;
+            color: green;
+            font-weight: 600;
+        }
+        h4 {
+            color: #010162;
+            font-weight: 800;
+        }
+        .container-fluid.class, .container.class {
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(0,0,0,.1);
+        }
+        .less {
+            background: red !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        .perfect{
+            background: green !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        #myscore{
+            color: green;
+            font-weight: 800;
+        }
+        input[type="radio"] {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            transform: scale(1.5);
+        }
+        input[type="text"].scoree {
+            font-size: 12px;
+        }
+        .btn-success {
+            color: white;
+            background-color: green !important;
+            border-color: green !important;
+            padding: 3px 30px;
+        }
+        @media (min-width:768px) {
+            body {
+                margin: 0 80px;
+            }
+        }
+        @media (max-width:768px) {
+            body {
+                margin: 0 20px;
+            }
+        }
+        .smallp {
+            font-size: 12px;
+        }
+</style>
+    <div class="container pt-5 mt-5">
+        <div class="row">
+            <div class="col-md-12" align="center">
+                <h2>{{campaign.name}}</h2>
+            </div>
+        </div>
+    </div>
+    <form action="/employees/nerotel-inbound" method="POST" enctype="multipart/form-data" class="pb-3">
+        {% csrf_token %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="empname">Associate Name</label>
+                    <input type="text" class="form-control" id="empname" readonly name="empname" value="{{agent.emp_name}}">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="empid">Employee ID</label>
+                    <input type="number" class="form-control" id="empid" name="empid" readonly value="{{agent.emp_id}}">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="zone">Zone</label>
+                    <input type="text" class="form-control" id="zone" name="zone" required>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="concept">Concept</label>
+                    <input type="text" class="form-control" id="concept" name="concept" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="customer">Customer Name</label>
+                    <input type="text" class="form-control" id="customer" name="customer" required>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="customercontact">Customer Contact</label>
+                    <input type="text" class="form-control" id="customercontact" name="customercontact" required>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="calldate">Call Date</label>
+                    <input type="date" class="form-control" id="calldate" name="calldate" required="">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="campaign">Campaign</label>
+                    <input type="text" class="form-control" id="campaign" name="campaign" required="">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="duration">Call Duration</label>
+                    <div style="width:100%; display: inline-flex;">
+                        <input type="number" class="form-control" placeholder="hh" name="durationh" required="">
+                        <input type="number" class="form-control" placeholder="mm" name="durationm" required="">
+                        <input type="number" class="form-control" placeholder="ss" name="durations" required="">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 form-group">
+                    <label for="auditdate">Audit Date</label>
+                    <input type="text" class="form-control" id="auditdate" name="auditdate" value="{{date}}" readonly>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="qa">Quality Analyst</label>
+                    <input type="text" class="form-control" id="qa" name="qa" value="{{user.profile.emp_name}}" readonly>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="tl">Team Lead</label>
+                    <input type="text" class="form-control" id="tl" name="tl" readonly value="{{agent.team_lead}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="manager">Manager</label>
+                    <input type="text" class="form-control" id="manager" name="manager" readonly value="{{agent.manager}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="am">AM</label>
+                    <input type="text" class="form-control" id="am" name="am" readonly value="{{agent.am}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="week">Week</label>
+                    <select class="form-control" name="week" id="week" required="">
+                        <option value="week1">Week1</option>
+                        <option value="week2">Week2</option>
+                        <option value="week3">Week3</option>
+                        <option value="week4">Week4</option>
+                        <option value="week5">Week5</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Engagement</h4>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Greeting?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="e_1" value="3" onchange="eng(this)" id="e_1_yes" required="">
+                    <label for="e_1_yes">Yes</label>
+                    <input type="radio" name="e_1" value="0" onchange="eng(this)" id="e_1_no">
+                    <label for="e_1_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Value Proposition?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="e_2" value="3" onchange="eng(this)" id="e_2_yes" required="">
+                    <label for="e_2_yes">Yes</label>
+                    <input type="radio" name="e_2" value="0" onchange="eng(this)" id="e_2_no">
+                    <label for="e_2_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Tone and Pace?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="e_3" value="4" onchange="eng(this)" id="e_3_yes" required="">
+                    <label for="e_3_yes">Yes</label>
+                    <input type="radio" name="e_3" value="0" onchange="eng(this)" id="e_3_no">
+                    <label for="e_3_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Screening Questions?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="e_4" value="4" onchange="eng(this)" id="e_4_yes" required="">
+                    <label for="e_4_yes">Yes</label>
+                    <input type="radio" name="e_4" value="0" onchange="eng(this)" id="e_4_no">
+                    <label for="e_4_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    How clear and concise was the rep's vocalization and pronunciation?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="e_5" value="4" onchange="eng(this)" id="e_5_yes" required="">
+                    <label for="e_5_yes">Yes</label>
+                    <input type="radio" name="e_5" value="0" onchange="eng(this)" id="e_5_no">
+                    <label for="e_5_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Did the rep use the correct hold procedure?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="e_6" value="5" onchange="eng(this)" id="e_6_yes" required="">
+                    <label for="e_6_yes">Yes</label>
+                    <input type="radio" name="e_6" value="0" onchange="eng(this)" id="e_6_no">
+                    <label for="e_6_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Providing Solutions?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="e_7" value="5" onchange="eng(this)" id="e_7_yes" required="">
+                    <label for="e_7_yes">Yes</label>
+                    <input type="radio" name="e_7" value="0" onchange="eng(this)" id="e_7_no">
+                    <label for="e_7_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Did the rep display active listening skills?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="e_8" value="5" onchange="eng(this)" id="e_8_yes" required="">
+                    <label for="e_8_yes">Yes</label>
+                    <input type="radio" name="e_8" value="0" onchange="eng(this)" id="e_8_no">
+                    <label for="e_8_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Call closure phase? Last Checks ?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="e_9" value="4" onchange="eng(this)" id="e_9_yes" required="">
+                    <label for="e_9_yes">Yes</label>
+                    <input type="radio" name="e_9" value="0" onchange="eng(this)" id="e_9_no">
+                    <label for="e_9_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8 score">
+                    Engagement Section Score
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control scoree" name="eng_score" value="Select appropiate option for ALL to see score" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Resolution</h4>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Confirmation?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="res_1" onchange="resolution(this)" value="5" id="res_1_yes" required="">
+                    <label for="res_1_yes">Yes</label>
+                    <input type="radio" name="res_1" onchange="resolution(this)" value="0" id="res_1_no">
+                    <label for="res_1_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Preparation?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="res_2" onchange="resolution(this)" value="4" id="res_2_yes" required="">
+                    <label for="res_2_yes">Yes</label>
+                    <input type="radio" name="res_2" onchange="resolution(this)" value="0" id="res_2_no">
+                    <label for="res_2_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Clinic Procedures?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="res_3" onchange="resolution(this)" value="4" id="res_3_yes" required="">
+                    <label for="res_3_yes">Yes</label>
+                    <input type="radio" name="res_3" onchange="resolution(this)" value="0" id="res_3_no">
+                    <label for="res_3_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Did the rep manage time effectively?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="res_4" onchange="resolution(this)" value="5" id="res_4_yes" required="">
+                    <label for="res_4_yes">Yes</label>
+                    <input type="radio" name="res_4" onchange="resolution(this)" value="0" id="res_4_no">
+                    <label for="res_4_no">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8 score">
+                    Resolution Section Score
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control scoree" name="resolution_score" value="Select appropiate option for ALL to see score" disabled>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Business needs</h4>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Documentation?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="busi_1" onchange="busi(this)" value="10" id="busi_1_yes" required="">
+                    <label for="busi_1_yes">PASS</label>
+                    <input type="radio" name="busi_1" onchange="busi(this)" value="0" id="busi_1_no">
+                    <label for="busi_1_no">FATAL</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Patient Details?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="busi_2" onchange="busi(this)" value="12" id="busi_2_yes" required="">
+                    <label for="busi_2_yes">PASS</label>
+                    <input type="radio" name="busi_2" onchange="busi(this)" value="0" id="busi_2_no">
+                    <label for="busi_2_no">FATAL</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Discovery Questions? 
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="busi_3" onchange="busi(this)" value="13" id="busi_3_yes" required="">
+                    <label for="busi_3_yes">PASS</label>
+                    <input type="radio" name="busi_3" onchange="busi(this)" value="0" id="busi_3_no">
+                    <label for="busi_3_no">FATAL</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Was agent rude on the call
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="busi_4" onchange="busi(this)" value="10" id="busi_4_yes" required="">
+                    <label for="busi_4_yes">PASS</label>
+                    <input type="radio" name="busi_4" onchange="busi(this)" value="0" id="busi_4_no">
+                    <label for="busi_4_no">FATAL</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8 score">
+                    Business needs Section Score
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control scoree" name="compliance_score" value="Select appropiate option for ALL to see score" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Areas of improvement</h4>
+                    <textarea name="areaimprovement" id="areaimp" cols="30" rows="5" class="form-control" required=""></textarea>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <h4>Positives</h4>
+                    <textarea name="positives" id="positives" cols="30" rows="5" class="form-control" required=""></textarea>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <h4>Comments</h4>
+                    <textarea name="comments" id="cfeedback" cols="30" rows="5" class="form-control" required=""></textarea>
+                </div>
+                <div class="col-md-12 mt-5" align="center">
+                    <button class="btn btn-lg btn-info" type="button" onclick="full_score(this)" data-toggle="modal" data-target="#viewscore">View Score</button>
+                    <button class="btn btn-lg btn-success" type="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="viewscore" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Full Score</h5><p class="mt-2"> (Please select all the options to see score)</p>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div align="center">
+                <h1 id="myscore"></h1>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script type="text/javascript">
+    var n=0;
+    var score1;
+    var score2;
+    var score3;
+    var fatal1;
+    var fatal2;
+    var fatal3;
+    var fatal4;
+    function eng(e) {
+        n=n+1;
+        var eng_score = document.querySelector('input[name="eng_score"]');
+        var e_1 = parseInt(document.querySelector('input[name="e_1"]:checked').value);
+        var e_2 = parseInt(document.querySelector('input[name="e_2"]:checked').value);
+        var e_3 = parseInt(document.querySelector('input[name="e_3"]:checked').value);
+        var e_4 = parseInt(document.querySelector('input[name="e_4"]:checked').value);
+        var e_5 = parseInt(document.querySelector('input[name="e_5"]:checked').value);
+        var e_6 = parseInt(document.querySelector('input[name="e_6"]:checked').value);
+        var e_7 = parseInt(document.querySelector('input[name="e_7"]:checked').value);
+        var e_8 = parseInt(document.querySelector('input[name="e_8"]:checked').value);
+        var e_9 = parseInt(document.querySelector('input[name="e_9"]:checked').value);
+        for (var i = 0; i <= n; i++) {
+            eng_score.value = e_1+e_2+e_3+e_4+e_5+e_6+e_7+e_8+e_9;
+        }
+        if (eng_score.value < 37) {
+            eng_score.classList.add("less");
+            eng_score.classList.remove("perfect");
+        }
+        else {
+            eng_score.classList.remove("less");
+            eng_score.classList.add("perfect");
+        }
+        score1 = parseInt(eng_score.value);
+    }
+    function resolution(e) {
+        n=n+1;
+        var resolution_score = document.querySelector('input[name="resolution_score"]');
+        var res_1 = parseInt(document.querySelector('input[name="res_1"]:checked').value);
+        var res_2 = parseInt(document.querySelector('input[name="res_2"]:checked').value);
+        var res_3 = parseInt(document.querySelector('input[name="res_3"]:checked').value);
+        var res_4 = parseInt(document.querySelector('input[name="res_4"]:checked').value);
+        for (var i = 0; i <= n; i++) {
+            resolution_score.value = res_1+res_2+res_3+res_4;
+        }
+        if (resolution_score.value < 18) {
+            resolution_score.classList.add("less");
+            resolution_score.classList.remove("perfect");
+        }
+        else {
+            resolution_score.classList.remove("less");
+            resolution_score.classList.add("perfect");
+        }
+        score2 = parseInt(resolution_score.value);
+    }
+    function busi(e) {
+        n=n+1;
+        var compliance_score = document.querySelector('input[name="compliance_score"]');
+        var busi_1 = parseInt(document.querySelector('input[name="busi_1"]:checked').value);
+        var busi_2 = parseInt(document.querySelector('input[name="busi_2"]:checked').value);
+        var busi_3 = parseInt(document.querySelector('input[name="busi_3"]:checked').value);
+        var busi_4 = parseInt(document.querySelector('input[name="busi_4"]:checked').value);
+        fatal1 = busi_1;
+        fatal2 = busi_2;
+        fatal3 = busi_3;
+        fatal4 = busi_4;
+        for (var i = 0; i <= n; i++) {
+            if ((busi_1 == 0) || (busi_2 == 0) || (busi_3 == 0) || (busi_4 == 0)) {
+                compliance_score.value = 0
+            } else {
+                compliance_score.value = busi_1+busi_2+busi_3+busi_4;
+            }
+        }
+        if (compliance_score.value < 45) {
+            compliance_score.classList.add("less");
+            compliance_score.classList.remove("perfect");
+        }
+        else {
+            compliance_score.classList.remove("less");
+            compliance_score.classList.add("perfect");
+        }
+        score3 = parseInt(compliance_score.value);
+    }
+    function full_score(e) {
+        n=n+1;
+        var fullscore = document.getElementById('myscore');
+        if ((fatal2 == 0 ) || ( fatal1 == 0 ) || ( fatal3 == 0 ) || ( fatal4 == 0)){
+            fullscore.innerHTML = 0;
+        }
+        else {
+            for (var i = 0; i <= n; i++) {
+                fullscore.innerHTML = score1+score2+score3;
+            }
+        }
+    }
+</script>
+{% endblock %}
