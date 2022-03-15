@@ -1,0 +1,431 @@
+{% extends 'base.html' %}
+{% block main %}
+<style type="text/css">
+		.fatal {
+			color: red;
+		}
+        #sec1_score {
+            border: none;
+            background: #ECECF3;
+            padding: 0 10px;
+        }
+        label {
+            margin-right: 30px;
+        }
+        .score {
+            font-size: 18px;
+            color: green;
+            font-weight: 600;
+        }
+        h4 {
+            color: #010162;
+            font-weight: 800;
+        }
+        .container-fluid, .container {
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(0,0,0,.1);
+        }
+        .less {
+            background: red !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        .perfect{
+            background: green !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        #myscore{
+            color: green;
+            font-weight: 800;
+        }
+        input[type="radio"] {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            transform: scale(1.5);
+        }
+        input[type="text"].scoree {
+            font-size: 12px;
+        }
+        .btn-success {
+            color: white;
+            background-color: green !important;
+            border-color: green !important;
+            padding: 3px 30px;
+        }
+        @media (min-width:768px) {
+            body {
+                margin: 0 80px;
+            }
+        }
+        @media (max-width:768px) {
+            body {
+                margin: 0 20px;
+            }
+        }
+	</style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mt-5 pt-5" align="center">
+                <h2 class="text-center">{{campaign.name}}</h2>
+            </div>
+        </div>
+    </div>
+    <form action="/employees/spoiled-child-email" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="empname">Associate Name</label>
+                    <input type="text" class="form-control" id="empname" readonly name="empname" value="{{agent.emp_name}}">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="empid">Employee ID</label>
+                    <input type="number" class="form-control" id="empid" name="empid" readonly value="{{agent.emp_id}}">
+                </div>
+                <div class="col-md-3 form-group">
+                    <input type="hidden" class="form-control" name="campaign" value="{{campaign.name}}">
+                    <label for="zone">Zone</label>
+                    <input type="text" class="form-control" id="zone" name="zone" required>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="concept">Concept</label>
+                    <input type="text" class="form-control" id="concept" name="concept" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="customer">Customer Name</label>
+                    <input type="text" class="form-control" id="customer" name="customer" required>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="ticketid">Ticket ID</label>
+                    <input type="text" class="form-control" id="ticketid" name="ticketid" required>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="query_type">Query Type</label>
+                    <input type="text" class="form-control" id="query_type" name="query_type" required>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="calldate">Email/Chat date</label>
+                    <input type="date" class="form-control" id="calldate" name="calldate" required="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 form-group">
+                    <label for="auditdate">Audit Date</label>
+                    <input type="text" class="form-control" id="auditdate" name="auditdate" value="{{date}}" readonly>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="qa">Quality Analyst</label>
+                    <input type="text" class="form-control" id="qa" name="qa" value="{{request.user.profile.emp_name}}" readonly>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="tl">Team Lead</label>
+                    <input type="text" class="form-control" id="tl" name="tl" readonly value="{{agent.team_lead}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="manager">Manager</label>
+                    <input type="text" class="form-control" id="manager" name="manager" readonly value="{{agent.manager}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="am">AM</label>
+                    <input type="text" class="form-control" id="am" name="am" readonly value="{{agent.am}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="week">Week</label>
+                    <select class="form-control" name="week" id="week" required="">
+                        <option value="week1">Week1</option>
+                        <option value="week2">Week2</option>
+                        <option value="week3">Week3</option>
+                        <option value="week4">Week4</option>
+                        <option value="week5">Week5</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Solution</h4>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Understanding and Solved Customer's Issue
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="solution_1" onchange="solution(this)" value="2" id="yes4" required="">
+                    <label for="yes4">Yes</label>
+                    <input type="radio" name="solution_1" onchange="solution(this)" value="0" id="no4">
+                    <label for="no4">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Gave alternatives when required/applicable & Displayed expert product knowledge
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="solution_2" onchange="solution(this)" value="3" id="yes5" required="">
+                    <label for="yes5">Yes</label>
+                    <input type="radio" name="solution_2" onchange="solution(this)" value="0" id="no5">
+                    <label for="no5">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Coupon code added/Edited Name/Values & Date//Personalised when applicable
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="solution_3" onchange="solution(this)" value="3" id="yes6" required="">
+                    <label for="yes6">Yes</label>
+                    <input type="radio" name="solution_3" onchange="solution(this)" value="0" id="no6">
+                    <label for="no6">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Answered all question effectively
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="solution_4" onchange="solution(this)" value="3" id="yes7" required="">
+                    <label for="yes7">Yes</label>
+                    <input type="radio" name="solution_4" onchange="solution(this)" value="0" id="no7">
+                    <label for="no7">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8 score">
+                    Solution Section Score
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control scoree" name="solution_score" value="Select appropiate option for ALL to see score" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Efficiency</h4>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Resolved issue in a timely manner
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="eff_1" onchange="eff(this)" value="10" id="b1" required="">
+                    <label for="b1">Yes</label>
+                    <input type="radio" name="eff_1" onchange="eff(this)" value="0" id="b2">
+                    <label for="b2">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Categorized case properly/Check other Tickets & Previous communition Merged
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="eff_2" onchange="eff(this)" value="10" id="b3" required="">
+                    <label for="b3">Yes</label>
+                    <input type="radio" name="eff_2" onchange="eff(this)" value="0" id="b4">
+                    <label for="b4">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8 score">
+                    Efficiency Section Score
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control scoree" name="eff_score" value="Select appropiate option for ALL to see score" readonly>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Compliance</h4>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Appropriate use of macros
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="compliance_1" onchange="compliance(this)" value="10" id="yes1" required="">
+                    <label for="yes1">PASS</label>
+                    <input type="radio" name="compliance_1" onchange="compliance(this)" value="0" id="no1">
+                    <label for="no1">FATAL</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Magento was utilized correctly
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="compliance_2" onchange="compliance(this)" value="10" id="yes2" required="">
+                    <label for="yes2">PASS</label>
+                    <input type="radio" name="compliance_2" onchange="compliance(this)" value="0" id="no2">
+                    <label for="no2">FATAL</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Identified correct order type
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="compliance_3" onchange="compliance(this)" value="10" id="yes3" required="">
+                    <label for="yes3">PASS</label>
+                    <input type="radio" name="compliance_3" onchange="compliance(this)" value="0" id="no3">
+                    <label for="no3">FATAL</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8 score">
+                    Compliance Score
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control scoree" name="compliance_score" value="Select appropiate option for ALL to see score" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Areas of improvement</h4>
+                    <textarea name="areaimprovement" id="areaimp" cols="30" rows="5" class="form-control" required=""></textarea>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <h4>Positives</h4>
+                    <textarea name="positives" id="positives" cols="30" rows="5" class="form-control" required=""></textarea>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <h4>Comments</h4>
+                    <textarea name="comments" id="cfeedback" cols="30" rows="5" class="form-control" required=""></textarea>
+                </div>
+                <div class="col-md-12 mt-5" align="center">
+                    <button class="btn btn-lg btn-info" type="button" onclick="full_score(this)" data-toggle="modal" data-target="#viewscore">View Score</button>
+                    <button class="btn btn-lg btn-success" onclick="confirm('Are you sure you want to continue?');" type="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+ 
+    <!-- Modal -->
+    <div class="modal fade" id="viewscore" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Full Score</h5><p class="mt-2"> (Please select all the options to see score)</p>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div align="center">
+                <h1 id="myscore"></h1>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script type="text/javascript">
+    var n=0;
+    var score1;
+    var score2;
+    var score3;
+    var fatal1;
+    var fatal2;
+    var fatal3;
+
+    function solution(e) {
+        n=n+1;
+        var solution_score = document.querySelector('input[name="solution_score"]');
+        var solution_1 = parseInt(document.querySelector('input[name="solution_1"]:checked').value);
+        var solution_2 = parseInt(document.querySelector('input[name="solution_2"]:checked').value);
+        var solution_3 = parseInt(document.querySelector('input[name="solution_3"]:checked').value);
+        var solution_4 = parseInt(document.querySelector('input[name="solution_4"]:checked').value);
+        for (var i = 0; i <= n; i++) {
+            solution_score.value = solution_1+solution_2+solution_3+solution_4;
+        }
+        if (solution_score.value < 30) {
+            solution_score.classList.add("less");
+            solution_score.classList.remove("perfect");
+        }
+        else {
+            solution_score.classList.remove("less");
+            solution_score.classList.add("perfect");
+        }
+        score1 = parseInt(solution_score.value);
+    }
+    function eff(e) {
+        n=n+1;
+        var eff_score = document.querySelector('input[name="eff_score"]');
+        var eff_1 = parseInt(document.querySelector('input[name="eff_1"]:checked').value);
+        var eff_2 = parseInt(document.querySelector('input[name="eff_2"]:checked').value);
+        for (var i = 0; i <= n; i++) {
+            eff_score.value = eff_1+eff_2;
+            
+        }
+        if (eff_score.value < 20) {
+            eff_score.classList.add("less");
+            eff_score.classList.remove("perfect");
+        }
+        else {
+            eff_score.classList.remove("less");
+            eff_score.classList.add("perfect");
+        }
+        score2 = parseInt(eff_score.value);
+    }
+    function compliance(e) {
+        n=n+1;
+        var compliance_score = document.querySelector('input[name="compliance_score"]');
+        var compliance_1 = parseInt(document.querySelector('input[name="compliance_1"]:checked').value);
+        var compliance_2 = parseInt(document.querySelector('input[name="compliance_2"]:checked').value);
+        var compliance_3 = parseInt(document.querySelector('input[name="compliance_3"]:checked').value);
+        fatal1 = compliance_1
+        fatal2 = compliance_2
+        fatal3 = compliance_3
+        if (compliance_1 == 0 || compliance_2 == 0 || compliance_3 == 0) {
+            compliance_score.value = "FAIL"
+        } else {
+            for (var i = 0; i <= n; i++) {
+                compliance_score.value = compliance_1+compliance_2+compliance_3;
+                
+            }
+        }
+        if (compliance_score.value != 30) {
+            compliance_score.classList.add("less");
+            compliance_score.classList.remove("perfect");
+        }
+        else {
+            compliance_score.classList.remove("less");
+            compliance_score.classList.add("perfect");
+        }
+        score3 = parseInt(compliance_score.value);
+    }
+    function full_score(e) {
+        n=n+1;
+        var fullscore = document.getElementById('myscore');
+        if ((fatal2 == 0 ) || ( fatal1 == 0 ) || ( fatal3 == 0 )){
+            fullscore.innerHTML = 0;
+        }
+        else {
+            for (var i = 0; i <= n; i++) {
+                fullscore.innerHTML = score1+score2+score3;
+            }
+        }
+    }
+
+</script>
+{% endblock %}

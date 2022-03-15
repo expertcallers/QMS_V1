@@ -7,8 +7,12 @@ class CampaignSearch(admin.ModelAdmin):
     search_fields = ('name','type')
     list_display = ('name','type')
 
+class profileSearch(admin.ModelAdmin):
+    search_fields = ('emp_id','emp_name')
+    list_display = ('emp_id','emp_name')
+
 admin.site.register(Team)
-admin.site.register(Profile)
+admin.site.register(Profile,profileSearch)
 admin.site.register(Process)
 admin.site.register(Empdata)
 admin.site.register(Campaigns,CampaignSearch)
@@ -123,7 +127,4 @@ admin.site.register(CredAvenueOutboundmonform)
 admin.site.register(TKAWDIWOutboundmonform)
 admin.site.register(DreamPickOutboundmonform)
 admin.site.register(NerotelInboundmonform)
-
-
-
-
+admin.site.register(SpoiledChildChatmonform)

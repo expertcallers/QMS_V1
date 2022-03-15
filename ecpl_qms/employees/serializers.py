@@ -1074,3 +1074,17 @@ class HardHatTechnologiesInboundMonFormSerializer(serializers.ModelSerializer):
         model = HardHatTechnologiesInboundMonForm
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
 
+class TKAWDIWOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TKAWDIWOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class NerotelInboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NerotelInboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class SpoiledChildChatmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SpoiledChildChatmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']

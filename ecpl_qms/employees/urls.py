@@ -25,6 +25,7 @@ urlpatterns = [
     path('ilm-email-chat',ilmEMailChat),
     path('abh-form-update',abhFormSAve),
     path('nerotel-inbound', nerotelInbound),
+    path('spoiled-child-email', spoiledChildEmail),
 
     #### Credentials
     path('accounts/login/',login_view),

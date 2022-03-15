@@ -102,6 +102,8 @@ list_of_monforms = [ # OutBound
                         BlazingHogEmailChatmonform,
                         # Nerotel Inbound
                         NerotelInboundmonform,
+                        # Spoiled Child Email/Chat
+                        SpoiledChildChatmonform,
 
                         ]
 
@@ -1552,6 +1554,10 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching':coaching}
         return render(request,'coaching-views/emp-coaching-view-nerotel.html',data)
 
+    if process_name == 'Spoiled Child':
+        coaching = SpoiledChildChatmonform.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/emp-coaching-view-spoiled-child.html',data)
     else:
         pass
 
@@ -2475,6 +2481,11 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching':coaching}
         return render(request,'coaching-views/qa-coaching-view-nerotel.html',data)
 
+    if process_name == 'Spoiled Child':
+        coaching = SpoiledChildChatmonform.objects.get(id=pk)
+        data = {'coaching':coaching}
+        return render(request,'coaching-views/qa-coaching-view-spoiled-child.html',data)
+
     else:
         pass
 
@@ -3143,6 +3154,10 @@ def selectCoachingForm(request):
         elif campaign_type == 'Nerotel Inbound':
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/nerotel_inbound.html', data)
+
+        elif campaign_type == 'Spoiled Child':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
+            return render(request, 'mon-forms/qa-coaching-view-spoiled-child.html', data)
 
     else:
         return redirect('/employees/qahome')
@@ -5493,6 +5508,70 @@ def exportAuditReport(request):
 
             return response
 
+        elif campaign == "Spoiled Child":
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['Process', 'Employee ID', 'Associate Name', 'Zone', 'Concept', 'Customer Name', 'Ticket ID',
+                       'Qurey Tpe', 'Chat Date', 'Audit Date', 'Quality Analyst', 'Team Lead', 'Manager',
+                       'Assistant Manager',
+                       'Week', 'Campaign',
+
+                       "Understanding and Solved Customer's Issue?",
+                       "Gave alternatives when required/applicable & displayed expert product knowledge?",
+                       "Coupon code added/Edited Name/Values & Date//Personalized when applicable?",
+                       "Answered all question effectively?",
+
+                       "Resolved issue in a timely manner?",
+                       "Categorized case properly/Check other Tickets &Previous commination Merged?",
+
+                       "Appropriate use of macros?",
+                       "Magento was utilized correctly?",
+                       "Identified correct order type?",
+
+                       "Solution Total", "Efficiency Total", "Compliance Total", "Total Score",
+
+                       'Fatal', 'Fatal Count', 'Dispute Status', 'Status',
+                       'Closed Date', 'Areas of improvement', 'Positives', 'Comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = SpoiledChildChatmonform.objects.filter(audit_date__range=[start_date, end_date],
+                                                          ).values_list(
+                'process', 'emp_id', 'associate_name', 'zone', 'concept', 'customer_name', 'ticket_id', 'query_type',
+                'chat_date', 'audit_date', 'qa', 'team_lead', 'manager', 'am', 'week', 'campaign',
+
+                'solution_1', 'solution_2', 'solution_3', 'solution_4',
+
+                'efficiency_1', 'efficiency_2',
+
+                'compliance_1', 'compliance_2', 'compliance_3',
+
+                "solution_total", "efficiency_total", "compliance_total", "overall_score",
+
+                'fatal', 'fatal_count', 'disput_status', 'status', 'closed_date', 'areas_improvement', 'positives',
+                'comments', )
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
 
 
         else:
@@ -7627,6 +7706,7 @@ def exportAuditReportQA(request):
             wb.save(response)
 
             return response
+
         elif campaign == "Nerotel Inbound":
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
@@ -7700,6 +7780,72 @@ def exportAuditReportQA(request):
 
             return response
 
+
+        elif campaign == "Spoiled Child":
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['Process', 'Employee ID', 'Associate Name', 'Zone', 'Concept', 'Customer Name', 'Ticket ID',
+                       'Qurey Tpe', 'Chat Date', 'Audit Date', 'Quality Analyst', 'Team Lead', 'Manager',
+                       'Assistant Manager',
+                       'Week', 'Campaign',
+
+                       "Understanding and Solved Customer's Issue?",
+                       "Gave alternatives when required/applicable & displayed expert product knowledge?",
+                       "Coupon code added/Edited Name/Values & Date//Personalized when applicable?",
+                       "Answered all question effectively?",
+
+                       "Resolved issue in a timely manner?",
+                       "Categorized case properly/Check other Tickets &Previous commination Merged?",
+
+                       "Appropriate use of macros?",
+                       "Magento was utilized correctly?",
+                       "Identified correct order type?",
+
+                       "Solution Total", "Efficiency Total", "Compliance Total", "Total Score",
+
+                       'Fatal', 'Fatal Count', 'Dispute Status', 'Status',
+                       'Closed Date', 'Areas of improvement', 'Positives', 'Comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = SpoiledChildChatmonform.objects.filter(audit_date__range=[start_date, end_date], qa=qa
+                                                          ).values_list(
+
+                'process', 'emp_id', 'associate_name', 'zone', 'concept', 'customer_name', 'ticket_id', 'query_type',
+                'chat_date', 'audit_date', 'qa', 'team_lead', 'manager', 'am', 'week', 'campaign',
+
+                'solution_1', 'solution_2', 'solution_3', 'solution_4',
+
+                'efficiency_1', 'efficiency_2',
+
+                'compliance_1', 'compliance_2', 'compliance_3',
+
+                "solution_total", "efficiency_total", "compliance_total", "overall_score",
+
+                'fatal', 'fatal_count', 'disput_status', 'status', 'closed_date', 'areas_improvement', 'positives',
+                'comments', )
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
 
         else:
             return redirect(request, 'error-pages/export-error.html')
@@ -11076,6 +11222,99 @@ def nerotelInbound(request):
         leadsales.save()
         return redirect('/employees/qahome')
 
+
+
+def spoiledChildEmail(request):
+
+    if request.method =='POST':
+
+        category = 'Email - Chat'
+
+        emp_id = request.POST['empid']
+        associate_name = request.POST['empname']
+        zone = request.POST['zone']
+        concept = request.POST['concept']
+        customer_name = request.POST['customer']
+        ticket_id = request.POST['ticketid']
+        query_type = request.POST['query_type']
+        call_date = request.POST['calldate']
+        audit_date = request.POST['auditdate']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        # mgt
+        manager = Profile.objects.get(emp_id=emp_id).manager
+        manager_id = Profile.objects.get(emp_name=manager).emp_id
+        am = request.POST['am']
+        week = request.POST['week']
+
+        campaign = request.POST['campaign']
+
+
+        # Opening and Closing
+
+        solution_1 = int(request.POST['solution_1'])
+        solution_2 = int(request.POST['solution_2'])
+        solution_3 = int(request.POST['solution_3'])
+        solution_4 = int(request.POST['solution_4'])
+        solution_total = solution_1 + solution_2 + solution_3 + solution_4
+
+        # Softskills
+        efficiency_1 = int(request.POST['eff_1'])
+        efficiency_2 = int(request.POST['eff_2'])
+        efficiency_total = efficiency_1 + efficiency_2
+
+        # Compliance
+        compliance_1 = int(request.POST['compliance_1'])
+        compliance_2 = int(request.POST['compliance_2'])
+        compliance_3 = int(request.POST['compliance_3'])
+
+        compliance_total = compliance_1 + compliance_2 + compliance_3
+
+        fatal_list = [compliance_1, compliance_2, compliance_3]
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 0:
+                fatal_list_count.append(i)
+        no_of_fatals = len(fatal_list_count)
+
+        if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0:
+            overall_score = 0
+            fatal = True
+        else:
+            overall_score = solution_total + efficiency_total + compliance_total
+            fatal = False
+
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+        added_by = request.user.profile.emp_name
+
+
+        spoil = SpoiledChildChatmonform(
+            associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+            manager=manager, manager_id=manager_id,
+            chat_date=call_date, audit_date=audit_date, customer_name=customer_name, ticket_id=ticket_id,
+            campaign=campaign, concept=concept, zone=zone, query_type=query_type,
+
+            solution_1=solution_1, solution_2=solution_2, solution_3=solution_3,solution_4=solution_4,
+
+            efficiency_1=efficiency_1, efficiency_2=efficiency_2,
+
+            compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
+
+            solution_total=solution_total,efficiency_total=efficiency_total,
+            compliance_total=compliance_total,
+
+            areas_improvement=areas_improvement,
+            positives=positives, comments=comments,
+            added_by=added_by,
+            overall_score=overall_score, category=category,
+            week=week, am=am, fatal_count=no_of_fatals, fatal=fatal,
+        )
+        spoil.save()
+        return redirect('/employees/qahome')
+
+
 ############## End Mon Forms ##############################
 
 
@@ -11915,5 +12154,13 @@ class TotalList(FlatMultipleModelAPIView):
         {'queryset': HardHatTechnologiesInboundMonForm.objects.all(),
          'serializer_class': HardHatTechnologiesInboundMonFormSerializer},
 
+        {'queryset': TKAWDIWOutboundmonform.objects.all(),
+         'serializer_class': TKAWDIWOutboundmonformSerializer},
+
+        {'queryset': NerotelInboundmonform.objects.all(),
+         'serializer_class': NerotelInboundmonformSerializer},
+
+        {'queryset': SpoiledChildChatmonform.objects.all(),
+         'serializer_class': SpoiledChildChatmonformSerializer},
     ]
 

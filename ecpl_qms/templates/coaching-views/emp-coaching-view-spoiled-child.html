@@ -1,0 +1,466 @@
+{% extends 'base.html' %}
+{% block main %}
+    <style type="text/css">
+        .fatal {
+            color: red;
+        }
+        #sec1_score {
+            border: none;
+            background: #ECECF3;
+            padding: 0 10px;
+        }
+        label {
+            margin-right: 30px;
+        }
+        .score {
+            font-size: 18px;
+            color: green;
+            font-weight: 600;
+        }
+        h4 {
+            color: #010162;
+            font-weight: 800;
+        }
+        #reports .container-fluid, #reports .container {
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(0,0,0,.1);
+        }
+        .less {
+            background: red !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        .perfect{
+            background: green !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        #myscore{
+            color: green;
+            font-weight: 800;
+        }
+        input[type="radio"] {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            transform: scale(1.5);
+        }
+        input[type="text"].scoree {
+            font-size: 12px;
+        }
+        .btn-success {
+            color: white;
+            background-color: green !important;
+            border-color: green !important;
+            padding: 3px 30px;
+        }
+        @media (min-width:768px) {
+            body {
+                margin: 0 80px;
+            }
+        }
+        @media (max-width:768px) {
+            body {
+                margin: 0 20px;
+            }
+        }
+        #last .row .col-md-6{
+            border: 1px solid #e5e5e5;
+            padding-top: 15px;
+        } 
+        #last .noborder .col-md-6 {
+            padding-top: 10px;
+            text-align: center;
+        } 
+        #last .noborder .col-md-6{
+            border-right: 1px solid #e5e5e5;
+            margin-top: -10px;
+            padding-top: 10px;
+            text-align: center;
+        } 
+        #last .noborder .col-md-6 h4 {
+            font-size: 24px !important;
+        } 
+        #last .row .col-md-6 h4{
+            font-size: 18px;
+        } 
+        
+        .fields .row .col-md-3{
+            padding: 5px 25px;
+        }
+        .fields .row .col-md-3 .row .col-md-6{
+            border: 1px solid #e5e5e5;
+        }
+        .fields .row .col-md-3 .row .col-md-6 h4{
+            color: #000;
+            padding-top: 8px;
+            font-size: 18px;
+        }
+        .fields .row .col-md-3 .row .col-md-6 p{
+            padding-top: 6px;
+            margin-bottom: 0px;
+        }
+    </style>
+<div id="reports">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mt-5 pt-5" align="center">
+                <h2>Audit Report - {{coaching.process}}</h2>
+            </div>
+            <div class="col-md-12" style="display: inline-flex;">
+                <h2>Result: </h2>
+                <h2 id="result"></h2>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid fields">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Associate Name</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.associate_name}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Employee ID</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.emp_id}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Zone</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.zone}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Concept</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.concept}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Customer Name</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.customer_name}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Email/Chat Date</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.chat_date}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Ticket Id</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.ticket_id}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Query Type</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.query_type}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Audit Date</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.audit_date}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Quality Analyst</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.qa}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Team Lead</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.team_lead}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Manager</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.manager}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>AM</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.am}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Week</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.week}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Solution</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Understanding and Solved Customer's Issue
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="o_1">{{coaching.solution_1}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Gave alternatives when required/applicable & Displayed expert product knowledge
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="o_2">{{coaching.solution_2}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Coupon code added/Edited Name/Values & Date//Personalised when applicable
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="o_3">{{coaching.solution_3}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Answered all question effectively
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="o_4">{{coaching.solution_4}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score">
+                Solution Section Score
+            </div>
+            <div class="col-md-4">
+                <h5 id="o_score">{{coaching.solution_total}}</h5>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Efficiency</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+               Resolved issue in a timely manner
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="c_1">{{coaching.efficiency_1}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Categorized case properly/Check other Tickets & Previous communication Merged
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="c_2">{{coaching.efficiency_2}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score">
+                Efficiency Section Score
+            </div>
+            <div class="col-md-4">
+                <h5 id="c_score">{{coaching.efficiency_total}}</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Compliance</h4>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+                Appropriate use of macros
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="t_1">{{coaching.compliance_1}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+                Magento was utilized correctly
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="t_2">{{coaching.compliance_2}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+                Identified correct order type
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="t_3">{{coaching.compliance_3}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score">
+                Compliance Section Score
+            </div>
+            <div class="col-md-4">
+                <h5 id="t_score">10</h5>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container" id="last">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Areas of improvement</h4>
+            </div>
+            <div class="col-md-6">
+                <p>{{coaching.areas_improvement}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Positives</h4>
+            </div>
+            <div class="col-md-6">
+                <p>{{coaching.positives}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Comments</h4>
+            </div>
+            <div class="col-md-6">
+                <p>{{coaching.comments}}</p>
+            </div>
+        </div>
+        <div class="row mt-5 noborder">
+            <div class="col-md-6">
+                <h5>Total Score</h5>
+            </div>
+            <div class="col-md-6">
+                <h4 id="tot_score">{{coaching.overall_score}}</h4>
+            </div>
+            <div class="col-md-12 mt-3">
+                <form class="login-form" action="/employees/coaching/signcoaching/{{coaching.id}}" method="post">
+                          {% csrf_token %}
+                    <label for="emp_com_acc">Employee Comments *</label>
+                    <input type="hidden" value="{{coaching.process}}" name="category">
+                    <textarea class="form-control" id="emp_com_acc" required rows="4" name="emp_comments"></textarea>
+                    <button class="btn btn-lg btn-success mt-2"><i class="fa fa-check"></i> Accept & Sign</button>
+                </form>
+            </div>
+            <div class="col-md-12 mt-3">
+                <form action="/employees/coaching-dispute/{{coaching.id}}" method="POST">
+                {% csrf_token %}
+                    <label for="emp_com_rej">Employee Comments *</label>
+                    <input type="hidden" value="{{coaching.process}}" name="category">
+                     <input type="hidden" name="campaign" id="" value="{{coaching.process}}">
+                    <textarea class="form-control" id="emp_com_rej" required rows="4" name="emp_comments_dispute"></textarea>
+                    <button class="btn btn-lg btn-danger mt-2"><i class="fa fa-close"></i> Reject & Dispute</button>
+                </form>
+            </div>
+            <div class="col-md-12 mt-3" align="center">
+                <a href="#" onclick="history.back();" class="btn btn-info btn-lg">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var o_1 = parseInt($('#o_1').html());
+    var o_2 = parseInt($('#o_2').html());
+    var o_3 = parseInt($('#o_3').html());
+    var o_4 = parseInt($('#o_4').html());
+    $('#o_score').html(o_1+o_2+o_3+o_4);
+    var c_1 = parseInt($('#c_1').html());
+    var c_2 = parseInt($('#c_2').html());
+    $('#c_score').html(c_1+c_2);
+    var t_1 = parseInt($('#t_1').html());
+    var t_2 = parseInt($('#t_2').html());
+    var t_3 = parseInt($('#t_3').html());
+    $('#t_score').html(t_1+t_2+t_3);
+    var total = parseInt($('#tot_score').html());
+    if (total <= 99) {
+        $('#result').html("Fail");
+        $('#result').css("color","red");
+    } else {
+        $('#result').html("Pass");
+        $('#result').css("color","green");
+    }
+</script>
+{% endblock %}
