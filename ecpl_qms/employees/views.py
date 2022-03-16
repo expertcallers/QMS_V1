@@ -5447,7 +5447,7 @@ def exportAuditReport(request):
             font_style.font.bold = True
             columns = ['Process', 'Employee ID', 'Associate Name',
                        'Quality Analyst', 'Team Lead', 'Assistant Manager', 'Manager', 'Customer Name',
-                       'Customer Contact', 'Call Date', 'Audit Date', 'Campaign', 'Zone', 'Concept', 'Call Duration',
+                       'Customer Contact', 'Call Date', 'Audit Date', 'Zone', 'Concept', 'Call Duration',
                        'Week',
 
                        'Greeting?',
@@ -5484,7 +5484,7 @@ def exportAuditReport(request):
                 'process', 'emp_id', 'associate_name', 'qa', 'team_lead',
                 'am', 'manager', 'customer_name', 'customer_contact',
                 'call_date',
-                'audit_date', 'campaign', 'zone', 'concept', 'call_duration', 'week',
+                'audit_date', 'zone', 'concept', 'call_duration', 'week',
 
                 'eng_1', 'eng_2', 'eng_3', 'eng_4', 'eng_5', 'eng_6', 'eng_7', 'eng_8', 'eng_9',
 
@@ -7718,7 +7718,7 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['Process', 'Employee ID', 'Associate Name',
                        'Quality Analyst', 'Team Lead', 'Assistant Manager', 'Manager', 'Customer Name',
-                       'Customer Contact', 'Call Date', 'Audit Date', 'Campaign', 'Zone', 'Concept', 'Call Duration',
+                       'Customer Contact', 'Call Date', 'Audit Date', 'Zone', 'Concept', 'Call Duration',
                        'Week',
 
                        'Greeting?',
@@ -7756,7 +7756,7 @@ def exportAuditReportQA(request):
                 'process', 'emp_id', 'associate_name', 'qa', 'team_lead',
                 'am', 'manager', 'customer_name', 'customer_contact',
                 'call_date',
-                'audit_date', 'campaign', 'zone', 'concept', 'call_duration', 'week',
+                'audit_date', 'zone', 'concept', 'call_duration', 'week',
 
                 'eng_1', 'eng_2', 'eng_3', 'eng_4', 'eng_5', 'eng_6', 'eng_7', 'eng_8', 'eng_9',
 
