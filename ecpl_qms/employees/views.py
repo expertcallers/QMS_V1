@@ -11145,7 +11145,6 @@ def nerotelInbound(request):
         customer_contact=request.POST['customercontact']
         call_date = request.POST['calldate']
         audit_date = request.POST['auditdate']
-        campaign = request.POST['campaign']
         concept = request.POST['concept']
         zone=request.POST['zone']
         call_duration=(int(request.POST['durationh'])*3600)+(int(request.POST['durationm'])*60)+int(request.POST['durations'])
@@ -11209,7 +11208,7 @@ def nerotelInbound(request):
                             associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
                             manager=manager_name,manager_id=manager_emp_id,
                             call_date=call_date, audit_date=audit_date, customer_name=customer_name,customer_contact=customer_contact,
-                            campaign=campaign, concept=concept, zone=zone,call_duration=call_duration,
+                            concept=concept, zone=zone,call_duration=call_duration,
                             eng_1=eng_1,eng_2=eng_2,eng_3=eng_3,eng_4=eng_4,eng_5=eng_5,eng_6=eng_6,eng_7=eng_7,eng_8=eng_8,eng_9=eng_9,
                             res_1=res_1, res_2=res_2, res_3=res_3, res_4=res_4,
                             compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3, compliance_4=compliance_4,

@@ -12281,7 +12281,6 @@ class NerotelInboundmonform(models.Model):
     customer_contact = models.CharField(max_length=100)
     call_date = models.DateField()
     audit_date = models.DateField()
-    campaign = models.CharField(max_length=100)
     zone=models.CharField(max_length=50)
     concept = models.CharField(max_length=60)
     call_duration=models.CharField(max_length=20)
