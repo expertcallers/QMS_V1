@@ -12308,6 +12308,7 @@ class NerotelInboundmonform(models.Model):
     compliance_2 = models.IntegerField()
     compliance_3 = models.IntegerField()
     compliance_4 = models.IntegerField()
+    campaign = models.CharField(max_length=100)
 
     areas_improvement = models.TextField()
     positives = models.TextField()
