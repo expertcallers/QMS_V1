@@ -3157,7 +3157,7 @@ def selectCoachingForm(request):
 
         elif campaign_type == 'Spoiled Child':
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
-            return render(request, 'mon-forms/qa-coaching-view-spoiled-child.html', data)
+            return render(request, 'mon-forms/spoiled_child.html', data)
 
     else:
         return redirect('/employees/qahome')
