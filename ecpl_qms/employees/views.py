@@ -50,7 +50,7 @@ list_of_monforms = [ # OutBound
                         SapphireMedicalsOutboundMonForm,
                         K7Outboundmonform,GlobalArkOutboundMonform,TrialMappingOutboundmonform,
                         EduClassOutboundmonform,CredAvenueOutboundmonform,TKAWDIWOutboundmonform,
-                        DreamPickOutboundmonform,
+                        DreamPickOutboundmonform,KheloyarOutboundmonform,MaxTradingOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -1195,6 +1195,16 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Kheloyar Outbound':
+        coaching = KheloyarOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Max Trading Outbound':
+        coaching = MaxTradingOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2118,6 +2128,17 @@ def coachingViewQaDetailed(request,process,pk):
         coaching = DreamPickOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Kheloyar Outbound':
+        coaching = KheloyarOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Max Trading Outbound':
+        coaching = MaxTradingOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
 
     ########### Inbound ########################
 
@@ -3687,6 +3708,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Dream Pick Outbound':
             response = exportAadyaseries(DreamPickOutboundmonform)
+            return response
+
+        elif campaign == 'Kheloyar Outbound':
+            response = exportAadyaseries(KheloyarOutboundmonform)
+            return response
+
+        elif campaign == 'Max Trading Outbound':
+            response = exportAadyaseries(MaxTradingOutboundmonform)
             return response
 
         ######## Inbound ###############################
@@ -6098,6 +6127,14 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(DreamPickOutboundmonform)
             return response
 
+        elif campaign == 'Kheloyar Outbound':
+            response = exportAadyaseries(KheloyarOutboundmonform)
+            return response
+
+        elif campaign == 'Max Trading Outbound':
+            response = exportAadyaseries(MaxTradingOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -8387,6 +8424,14 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'Dream Pick Outbound':
             newseriesAddCoaching(DreamPickOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Kheloyar Outbound':
+            newseriesAddCoaching(KheloyarOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Max Trading Outbound':
+            newseriesAddCoaching(MaxTradingOutboundmonform)
             return redirect('/employees/qahome')
 
         else:
