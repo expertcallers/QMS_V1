@@ -9596,8 +9596,7 @@ def fameHouseNew(request):
         na_list = []
         sum_list = []
         def scoreCalc(pk):
-
-            if pk != 'NA':
+            if pk == 'NA':
                 na_list.append(pk)
                 return pk
             else:
@@ -9660,7 +9659,10 @@ def fameHouseNew(request):
             overall_score=0
             fatal=True
         else:
-            overall_score= (sum(sum_list)/len(sum_list))*100
+            if sum(sum_list) != 0:
+                overall_score= (sum(sum_list)/len(sum_list))*100
+            else:
+                overall_score = 100
             fatal=False
 
         #################################################
@@ -9670,7 +9672,6 @@ def fameHouseNew(request):
         comments = request.POST['comments']
 
         added_by = request.user.profile.emp_name
-
 
         famehouse = FameHouseNewMonForm(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
                                      manager=manager_name,manager_id=manager_emp_id,am=am,
