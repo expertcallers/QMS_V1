@@ -7428,7 +7428,7 @@ class KheloyarOutboundmonform(models.Model):
 
 
 class MaxTradingOutboundmonform(models.Model):
-    process = models.CharField(default='Max Trading Outbound',max_length=50)
+    process = models.CharField(default='Mex Trading Outbound',max_length=50)
     type = models.CharField(default='Outbound', max_length=50)
     emp_id = models.IntegerField()
     associate_name = models.CharField(max_length=50)

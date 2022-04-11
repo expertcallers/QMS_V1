@@ -1200,7 +1200,7 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
-    elif process_name == 'Max Trading Outbound':
+    elif process_name == 'Mex Trading Outbound':
         coaching = MaxTradingOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
@@ -2134,7 +2134,7 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
-    elif process_name == 'Max Trading Outbound':
+    elif process_name == 'Mex Trading Outbound':
         coaching = MaxTradingOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
@@ -3714,7 +3714,7 @@ def exportAuditReport(request):
             response = exportAadyaseries(KheloyarOutboundmonform)
             return response
 
-        elif campaign == 'Max Trading Outbound':
+        elif campaign == 'Mex Trading Outbound':
             response = exportAadyaseries(MaxTradingOutboundmonform)
             return response
 
@@ -6131,7 +6131,7 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(KheloyarOutboundmonform)
             return response
 
-        elif campaign == 'Max Trading Outbound':
+        elif campaign == 'Mex Trading Outbound':
             response = exportAadyaseries(MaxTradingOutboundmonform)
             return response
 
@@ -8430,7 +8430,7 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(KheloyarOutboundmonform)
             return redirect('/employees/qahome')
 
-        elif campaign_name == 'Max Trading Outbound':
+        elif campaign_name == 'Mex Trading Outbound':
             newseriesAddCoaching(MaxTradingOutboundmonform)
             return redirect('/employees/qahome')
 
