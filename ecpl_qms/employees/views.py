@@ -51,6 +51,7 @@ list_of_monforms = [ # OutBound
                         K7Outboundmonform,GlobalArkOutboundMonform,TrialMappingOutboundmonform,
                         EduClassOutboundmonform,CredAvenueOutboundmonform,TKAWDIWOutboundmonform,
                         DreamPickOutboundmonform,KheloyarOutboundmonform,MaxTradingOutboundmonform,
+                        ESRTechTalentOutboundmonform, MaxTradingOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -1205,6 +1206,16 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'ESR Tech Talent Outbound':
+        coaching = ESRTechTalentOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Green Connect Outbound':
+        coaching = GreenConnectOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2136,6 +2147,16 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Mex Trading Outbound':
         coaching = MaxTradingOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'ESR Tech Talent Outbound':
+        coaching = ESRTechTalentOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Green Connect Outbound':
+        coaching = GreenConnectOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -3716,6 +3737,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Mex Trading Outbound':
             response = exportAadyaseries(MaxTradingOutboundmonform)
+            return response
+
+        elif campaign == 'ESR Tech Talent Outbound':
+            response = exportAadyaseries(ESRTechTalentOutboundmonform)
+            return response
+
+        elif campaign == 'Green Connect Outbound':
+            response = exportAadyaseries(GreenConnectOutboundmonform)
             return response
 
         ######## Inbound ###############################
@@ -6135,6 +6164,14 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(MaxTradingOutboundmonform)
             return response
 
+        elif campaign == 'ESR Tech Talent Outbound':
+            response = exportAadyaseries(ESRTechTalentOutboundmonform)
+            return response
+
+        elif campaign == 'Green Connect Outbound':
+            response = exportAadyaseries(GreenConnectOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -8432,6 +8469,14 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'Mex Trading Outbound':
             newseriesAddCoaching(MaxTradingOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'ESR Tech Talent Outbound':
+            newseriesAddCoaching(ESRTechTalentOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Green Connect Outbound':
+            newseriesAddCoaching(GreenConnectOutboundmonform)
             return redirect('/employees/qahome')
 
         else:
