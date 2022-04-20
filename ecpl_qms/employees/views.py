@@ -51,7 +51,7 @@ list_of_monforms = [ # OutBound
                         K7Outboundmonform,GlobalArkOutboundMonform,TrialMappingOutboundmonform,
                         EduClassOutboundmonform,CredAvenueOutboundmonform,TKAWDIWOutboundmonform,
                         DreamPickOutboundmonform,KheloyarOutboundmonform,MaxTradingOutboundmonform,
-                        ESRTechTalentOutboundmonform, MaxTradingOutboundmonform,
+                        ESRTechTalentOutboundmonform, GreenConnectOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
