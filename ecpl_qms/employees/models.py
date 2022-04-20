@@ -7491,7 +7491,7 @@ class MaxTradingOutboundmonform(models.Model):
 
 
 class ESRTechTalentOutboundmonform(models.Model):
-    process = models.CharField(default='ESR Tech Talent Outbound',max_length=50)
+    process = models.CharField(default='ESR TechTalent Outbound',max_length=50)
     type = models.CharField(default='Outbound', max_length=50)
     emp_id = models.IntegerField()
     associate_name = models.CharField(max_length=50)

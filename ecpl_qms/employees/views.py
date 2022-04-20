@@ -1206,7 +1206,7 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
-    elif process_name == 'ESR Tech Talent Outbound':
+    elif process_name == 'ESR TechTalent Outbound':
         coaching = ESRTechTalentOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
@@ -2150,7 +2150,7 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
-    elif process_name == 'ESR Tech Talent Outbound':
+    elif process_name == 'ESR TechTalent Outbound':
         coaching = ESRTechTalentOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
@@ -3739,7 +3739,7 @@ def exportAuditReport(request):
             response = exportAadyaseries(MaxTradingOutboundmonform)
             return response
 
-        elif campaign == 'ESR Tech Talent Outbound':
+        elif campaign == 'ESR TechTalent Outbound':
             response = exportAadyaseries(ESRTechTalentOutboundmonform)
             return response
 
@@ -6164,7 +6164,7 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(MaxTradingOutboundmonform)
             return response
 
-        elif campaign == 'ESR Tech Talent Outbound':
+        elif campaign == 'ESR TechTalent Outbound':
             response = exportAadyaseries(ESRTechTalentOutboundmonform)
             return response
 
@@ -8471,7 +8471,7 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(MaxTradingOutboundmonform)
             return redirect('/employees/qahome')
 
-        elif campaign_name == 'ESR Tech Talent Outbound':
+        elif campaign_name == 'ESR TechTalent Outbound':
             newseriesAddCoaching(ESRTechTalentOutboundmonform)
             return redirect('/employees/qahome')
 
@@ -12252,5 +12252,11 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': SpoiledChildChatmonform.objects.all(),
          'serializer_class': SpoiledChildChatmonformSerializer},
+
+        {'queryset': ESRTechTalentOutboundmonform.objects.all(),
+         'serializer_class': ESRTechTalentOutboundmonformSerializer},
+
+        {'queryset': GreenConnectOutboundmonform.objects.all(),
+         'serializer_class': GreenConnectOutboundmonformSerializer},
     ]
 
