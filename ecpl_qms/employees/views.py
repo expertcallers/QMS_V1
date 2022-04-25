@@ -76,7 +76,7 @@ list_of_monforms = [ # OutBound
                         TanaorJewelryEmailMonForm,DecentralizedVisionEmailChatMonForm,
                         USJacleanEmailChatForm,
                         CrossTowerEmailChatForm,SanaLifeScienceEmailChatForm,SapphireMedicalsChatMonForm,
-                        GretnaMedicalCenterEmailChatForm,
+                        GretnaMedicalCenterEmailChatForm, JumpRydesEmailChatForm,
 
                         #FLA
                         FLAMonitoringForm,
@@ -1507,6 +1507,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
+    elif process_name == 'Jump Rydes Email - Chat':
+        coaching = JumpRydesEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
 
     ################ Others ##########################################################
 
@@ -2452,6 +2457,11 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Gretna Medical Center Email':
         coaching = GretnaMedicalCenterEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Jump Rydes Email - Chat':
+        coaching = JumpRydesEmailChatForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
@@ -4128,6 +4138,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Gretna Medical Center Email':
             response = exportEmailChat(GretnaMedicalCenterEmailChatForm)
+            return response
+
+        elif campaign == 'Jump Rydes Email - Chat':
+            response = exportEmailChat(JumpRydesEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -6554,6 +6568,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Gretna Medical Center Email':
             response = exportEmailChat(GretnaMedicalCenterEmailChatForm)
+            return response
+
+        elif campaign == 'Jump Rydes Email - Chat':
+            response = exportEmailChat(JumpRydesEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -9082,6 +9100,10 @@ def domesticChatEmail(request):
 
         elif campaign_name == 'Gretna Medical Center Email':
             domesticEmailChatAddCoaching(GretnaMedicalCenterEmailChatForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Jump Rydes Email - Chat':
+            domesticEmailChatAddCoaching(JumpRydesEmailChatForm)
             return redirect('/employees/qahome')
 
 
@@ -12258,5 +12280,8 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': GreenConnectOutboundmonform.objects.all(),
          'serializer_class': GreenConnectOutboundmonformSerializer},
+
+        {'queryset': JumpRydesEmailChatForm.objects.all(),
+         'serializer_class': JumpRydesEmailChatFormSerializer},
     ]
 

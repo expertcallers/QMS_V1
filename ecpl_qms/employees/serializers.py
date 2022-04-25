@@ -1098,3 +1098,8 @@ class GreenConnectOutboundmonformSerializer(serializers.ModelSerializer):
     class Meta:
         model = GreenConnectOutboundmonform
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class JumpRydesEmailChatFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JumpRydesEmailChatForm
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
