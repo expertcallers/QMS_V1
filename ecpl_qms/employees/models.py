@@ -11988,8 +11988,9 @@ class NewPractoWithSubCategory(models.Model):
     team_lead = models.CharField(max_length=150)
 
     case_no = models.CharField(max_length=200,null=True,blank=True)
-    query_type = models.CharField(max_length=200,null=True,blank=True)
-    sub_query_type = models.CharField(max_length=200,null=True,blank=True)
+    issue_type = models.CharField(max_length=200,null=True,blank=True)
+    sub_issue = models.CharField(max_length=200,null=True,blank=True)
+    sub_sub_issue = models.CharField(max_length=200,null=True,blank=True)
     chat_date = models.DateField(null=True,blank=True)
     csat = models.CharField(max_length=200,null=True,blank=True)
     product = models.CharField(max_length=200,null=True,blank=True)

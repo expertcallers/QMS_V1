@@ -4996,8 +4996,9 @@ def exportAuditReport(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'Chat date',
                         'Case Number',
-                        'Query Type',
-                        'Sub Query Type',
+                        'Issue Type',
+                        'Sub-Issue Type',
+                        'Sub Sub-Issue Type',
                         'CSAT',
                         'Product',
                        'Audit Date', 'overall_score',
@@ -5112,8 +5113,9 @@ def exportAuditReport(request):
                 audit_date__range=[start_date, end_date], ).values_list(
                 'process', 'emp_id', 'associate_name', 'chat_date',
                 'case_no',
-                'query_type',
-                'sub_query_type',
+                'issue_type',
+                'sub_issue',
+                'sub_sub_issue',
                 'csat',
                 'product',
                 'audit_date', 'overall_score', 'fatal_count', 'qa',
@@ -7321,8 +7323,9 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'Chat date',
                         'Case Number',
-                        'Query Type',
-                        'Sub Query Type',
+                        'Issue Type',
+                        'Sub-Issue Type',
+                        'Sub Sub-Issue Type',
                         'CSAT',
                         'Product',
                        'Audit Date', 'overall_score',
@@ -7437,8 +7440,9 @@ def exportAuditReportQA(request):
                 audit_date__range=[start_date, end_date], ).values_list(
                 'process', 'emp_id', 'associate_name', 'chat_date',
                 'case_no',
-                'query_type',
-                'sub_query_type',
+                'issue_type',
+                'sub_issue',
+                'sub_sub_issue',
                 'csat',
                 'product',
                 'audit_date', 'overall_score', 'fatal_count', 'qa',
@@ -11186,8 +11190,11 @@ def PractoWithSubCategoryFunc(request):
         qa = request.POST['qa']
         team_lead = request.POST['tl']
         case_no = request.POST["case_no"]
-        query_type = request.POST["query_type"]
-        sub_query_type = request.POST["sub_query_type"]
+
+        issue_type = request.POST["issue_type"]
+        sub_issue_type = request.POST["sub_issue_type"]
+        sub_sub_issue_type = request.POST["sub_sub_issue_type"]
+
         chat_date = request.POST["chat_date"]
         csat = request.POST['csat']
         product = request.POST['product']
@@ -11234,7 +11241,8 @@ def PractoWithSubCategoryFunc(request):
 
         domestic = NewPractoWithSubCategory(associate_name = associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
                            manager=manager_name, manager_id=manager_emp_id, audit_date=audit_date, concept=concept,
-                            zone=zone, case_no = case_no, query_type = query_type, sub_query_type = sub_query_type,
+                            zone=zone, case_no = case_no, issue_type = issue_type, sub_issue = sub_issue_type,
+                            sub_sub_issue=sub_sub_issue_type,
                             chat_date = chat_date, csat = csat, product = product,campaign=campaign,
 
                             p_1=p_1, p_2=p_2, p_3=p_3, p_4=p_4, p_5=p_5, p_6=p_6, p_7=p_7,
