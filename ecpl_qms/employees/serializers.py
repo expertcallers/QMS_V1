@@ -1103,3 +1103,23 @@ class JumpRydesEmailChatFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = JumpRydesEmailChatForm
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class CentralMortgageFundingOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CentralMortgageFundingOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class RapidMortgageOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RapidMortgageOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class BridanAssociatesOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BridanAssociatesOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class LinenFinderOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LinenFinderOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']

@@ -52,6 +52,8 @@ list_of_monforms = [ # OutBound
                         EduClassOutboundmonform,CredAvenueOutboundmonform,TKAWDIWOutboundmonform,
                         DreamPickOutboundmonform,KheloyarOutboundmonform,MaxTradingOutboundmonform,
                         ESRTechTalentOutboundmonform, GreenConnectOutboundmonform,
+                        CentralMortgageFundingOutboundmonform, RapidMortgageOutboundmonform, LinenFinderOutboundmonform,
+                        BridanAssociatesOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -1216,6 +1218,26 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Central Mortgage Funding':
+        coaching = CentralMortgageFundingOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Rapid Mortgage':
+        coaching = RapidMortgageOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Bridan & Associates Outbound':
+        coaching = BridanAssociatesOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Linen Finder Outbound':
+        coaching = LinenFinderOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2162,6 +2184,26 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Green Connect Outbound':
         coaching = GreenConnectOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Central Mortgage Funding':
+        coaching = CentralMortgageFundingOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Rapid Mortgage':
+        coaching = RapidMortgageOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Bridan & Associates Outbound':
+        coaching = BridanAssociatesOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Linen Finder Outbound':
+        coaching = LinenFinderOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -3755,6 +3797,22 @@ def exportAuditReport(request):
 
         elif campaign == 'Green Connect Outbound':
             response = exportAadyaseries(GreenConnectOutboundmonform)
+            return response
+
+        elif campaign == 'Central Mortgage Funding':
+            response = exportAadyaseries(CentralMortgageFundingOutboundmonform)
+            return response
+
+        elif campaign == 'Rapid Mortgage':
+            response = exportAadyaseries(RapidMortgageOutboundmonform)
+            return response
+
+        elif campaign == 'Bridan & Associates Outbound':
+            response = exportAadyaseries(BridanAssociatesOutboundmonform)
+            return response
+
+        elif campaign == 'Linen Finder Outbound':
+            response = exportAadyaseries(LinenFinderOutboundmonform)
             return response
 
         ######## Inbound ###############################
@@ -6148,6 +6206,22 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(GreenConnectOutboundmonform)
             return response
 
+        elif campaign == 'Central Mortgage Funding':
+            response = exportAadyaseries(CentralMortgageFundingOutboundmonform)
+            return response
+
+        elif campaign == 'Rapid Mortgage':
+            response = exportAadyaseries(RapidMortgageOutboundmonform)
+            return response
+
+        elif campaign == 'Bridan & Associates Outbound':
+            response = exportAadyaseries(BridanAssociatesOutboundmonform)
+            return response
+
+        elif campaign == 'Linen Finder Outbound':
+            response = exportAadyaseries(LinenFinderOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -8506,6 +8580,22 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'Green Connect Outbound':
             newseriesAddCoaching(GreenConnectOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Rapid Mortgage':
+            newseriesAddCoaching(RapidMortgageOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Central Mortgage Funding':
+            newseriesAddCoaching(CentralMortgageFundingOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Bridan & Associates Outbound':
+            newseriesAddCoaching(BridanAssociatesOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Linen Finder Outbound':
+            newseriesAddCoaching(LinenFinderOutboundmonform)
             return redirect('/employees/qahome')
 
         else:
@@ -12311,5 +12401,17 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': JumpRydesEmailChatForm.objects.all(),
          'serializer_class': JumpRydesEmailChatFormSerializer},
+
+        {'queryset': CentralMortgageFundingOutboundmonform.objects.all(),
+         'serializer_class': CentralMortgageFundingOutboundmonformSerializer},
+
+        {'queryset': RapidMortgageOutboundmonform.objects.all(),
+         'serializer_class': RapidMortgageOutboundmonformSerializer},
+
+        {'queryset': BridanAssociatesOutboundmonform.objects.all(),
+         'serializer_class': BridanAssociatesOutboundmonformSerializer},
+
+        {'queryset': LinenFinderOutboundmonform.objects.all(),
+         'serializer_class': LinenFinderOutboundmonformSerializer},
     ]
 
