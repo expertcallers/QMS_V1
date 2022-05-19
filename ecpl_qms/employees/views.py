@@ -11542,9 +11542,6 @@ def createUserAndProfile(request):
 
 
 
-
-
-
 def editTeamRMS(request):
     campaigns = Campaigns.objects.all()
     profile = Profile.objects.filter(Q(emp_desi = 'Team Leader') | Q(emp_desi = 'AM') | Q(emp_desi = 'Manager'))
