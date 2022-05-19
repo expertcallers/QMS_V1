@@ -21,7 +21,7 @@
             color: #010162;
             font-weight: 800;
         }
-        .container-fluid, .container {
+        .container-fluid.form, .container {
             padding: 30px 0;
             border-bottom: 1px solid rgba(0,0,0,.1);
         }
@@ -75,7 +75,7 @@
     </div>
     <form action="/employees/spoiled-child-email" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="container-fluid">
+        <div class="container-fluid form">
             <div class="row">
                 <div class="col-md-3 form-group">
                     <label for="empname">Associate Name</label>
@@ -158,7 +158,7 @@
                     Understanding and Solved Customer's Issue
                 </div>
                 <div class="col-md-4 form-group">
-                    <input type="radio" name="solution_1" onchange="solution(this)" value="2" id="yes4" required="">
+                    <input type="radio" name="solution_1" onchange="solution(this)" value="10" id="yes4" required="">
                     <label for="yes4">Yes</label>
                     <input type="radio" name="solution_1" onchange="solution(this)" value="0" id="no4">
                     <label for="no4">No</label>
@@ -169,7 +169,7 @@
                     Gave alternatives when required/applicable & Displayed expert product knowledge
                 </div>
                 <div class="col-md-4 form-group">
-                    <input type="radio" name="solution_2" onchange="solution(this)" value="3" id="yes5" required="">
+                    <input type="radio" name="solution_2" onchange="solution(this)" value="10" id="yes5" required="">
                     <label for="yes5">Yes</label>
                     <input type="radio" name="solution_2" onchange="solution(this)" value="0" id="no5">
                     <label for="no5">No</label>
@@ -180,7 +180,7 @@
                     Coupon code added/Edited Name/Values & Date//Personalised when applicable
                 </div>
                 <div class="col-md-4 form-group">
-                    <input type="radio" name="solution_3" onchange="solution(this)" value="3" id="yes6" required="">
+                    <input type="radio" name="solution_3" onchange="solution(this)" value="10" id="yes6" required="">
                     <label for="yes6">Yes</label>
                     <input type="radio" name="solution_3" onchange="solution(this)" value="0" id="no6">
                     <label for="no6">No</label>
@@ -191,7 +191,7 @@
                     Answered all question effectively
                 </div>
                 <div class="col-md-4 form-group">
-                    <input type="radio" name="solution_4" onchange="solution(this)" value="3" id="yes7" required="">
+                    <input type="radio" name="solution_4" onchange="solution(this)" value="10" id="yes7" required="">
                     <label for="yes7">Yes</label>
                     <input type="radio" name="solution_4" onchange="solution(this)" value="0" id="no7">
                     <label for="no7">No</label>
@@ -268,7 +268,7 @@
                     Magento was utilized correctly
                 </div>
                 <div class="col-md-4 form-group">
-                    <input type="radio" name="compliance_2" onchange="compliance(this)" value="10" id="yes2" required="">
+                    <input type="radio" name="compliance_2" onchange="compliance(this)" value="15" id="yes2" required="">
                     <label for="yes2">PASS</label>
                     <input type="radio" name="compliance_2" onchange="compliance(this)" value="0" id="no2">
                     <label for="no2">FATAL</label>
@@ -279,7 +279,7 @@
                     Identified correct order type
                 </div>
                 <div class="col-md-4 form-group">
-                    <input type="radio" name="compliance_3" onchange="compliance(this)" value="10" id="yes3" required="">
+                    <input type="radio" name="compliance_3" onchange="compliance(this)" value="15" id="yes3" required="">
                     <label for="yes3">PASS</label>
                     <input type="radio" name="compliance_3" onchange="compliance(this)" value="0" id="no3">
                     <label for="no3">FATAL</label>
@@ -358,7 +358,7 @@
         for (var i = 0; i <= n; i++) {
             solution_score.value = solution_1+solution_2+solution_3+solution_4;
         }
-        if (solution_score.value < 30) {
+        if (solution_score.value != 40) {
             solution_score.classList.add("less");
             solution_score.classList.remove("perfect");
         }
@@ -377,7 +377,7 @@
             eff_score.value = eff_1+eff_2;
             
         }
-        if (eff_score.value < 20) {
+        if (eff_score.value != 20) {
             eff_score.classList.add("less");
             eff_score.classList.remove("perfect");
         }
@@ -404,7 +404,7 @@
                 
             }
         }
-        if (compliance_score.value != 30) {
+        if (compliance_score.value != 40) {
             compliance_score.classList.add("less");
             compliance_score.classList.remove("perfect");
         }

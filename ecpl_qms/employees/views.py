@@ -50,7 +50,10 @@ list_of_monforms = [ # OutBound
                         SapphireMedicalsOutboundMonForm,
                         K7Outboundmonform,GlobalArkOutboundMonform,TrialMappingOutboundmonform,
                         EduClassOutboundmonform,CredAvenueOutboundmonform,TKAWDIWOutboundmonform,
-                        DreamPickOutboundmonform,
+                        DreamPickOutboundmonform,KheloyarOutboundmonform,MaxTradingOutboundmonform,
+                        ESRTechTalentOutboundmonform, GreenConnectOutboundmonform,
+                        CentralMortgageFundingOutboundmonform, RapidMortgageOutboundmonform, LinenFinderOutboundmonform,
+                        BridanAssociatesOutboundmonform, BetterEdOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -64,6 +67,7 @@ list_of_monforms = [ # OutBound
                         EduvocateInboundMonForms,CrossTowerInboundMonForms,
                         SanaLifeScienceInbound,MonitoringFormMobile22InboundCalls,XportDigitalInboundMonForm,CalistaInboundMonForm,
                         ThirdWaveInboundMonForm, HardHatTechnologiesInboundMonForm,GretnaMedicalCenterInboundMonForm,
+                        BetterEdInboundMonForm,
 
 
                         # Email/CHat
@@ -75,7 +79,7 @@ list_of_monforms = [ # OutBound
                         TanaorJewelryEmailMonForm,DecentralizedVisionEmailChatMonForm,
                         USJacleanEmailChatForm,
                         CrossTowerEmailChatForm,SanaLifeScienceEmailChatForm,SapphireMedicalsChatMonForm,
-                        GretnaMedicalCenterEmailChatForm,
+                        GretnaMedicalCenterEmailChatForm, JumpRydesEmailChatForm,
 
                         #FLA
                         FLAMonitoringForm,
@@ -88,7 +92,7 @@ list_of_monforms = [ # OutBound
                         #Practo
                         PractoNewVersion,
                         #Practo WIth Sub Category
-                        PractoWithSubCategory,
+                        PractoWithSubCategory, NewPractoWithSubCategory,
                         #Gubagoo
                         GubagooAuditForm,
                         #ILM
@@ -1195,6 +1199,51 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Kheloyar Outbound':
+        coaching = KheloyarOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Mex Trading Outbound':
+        coaching = MaxTradingOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'ESR TechTalent Outbound':
+        coaching = ESRTechTalentOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Green Connect Outbound':
+        coaching = GreenConnectOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Central Mortgage Funding':
+        coaching = CentralMortgageFundingOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Rapid Mortgage':
+        coaching = RapidMortgageOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Bridan & Associates Outbound':
+        coaching = BridanAssociatesOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Linen Finder Outbound':
+        coaching = LinenFinderOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Better Ed Outbound':
+        coaching = BetterEdOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1358,6 +1407,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'Better Ed Inbound':
+        coaching = BetterEdInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -1486,6 +1540,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
+    elif process_name == 'Jump Rydes Email - Chat':
+        coaching = JumpRydesEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
 
     ################ Others ##########################################################
 
@@ -1512,7 +1571,7 @@ def coachingViewAgents(request,process,pk):
     if process_name == 'Practo':
         coaching = PractoNewVersion.objects.get(id=pk)
         data = {'coaching': coaching}
-        return render(request, 'coaching-views/emp-coaching-view-practo.html', data)
+        return render(request, 'coaching-views/emp-coaching-view-practo-chat.html', data)
 
     if process_name == 'Gubagoo':
         coaching = GubagooAuditForm.objects.get(id=pk)
@@ -1545,7 +1604,7 @@ def coachingViewAgents(request,process,pk):
         return render(request,'coaching-views/emp-coaching-view-blazing.html',data)
 
     if process_name == 'Practo Chat':
-        coaching = PractoWithSubCategory.objects.get(id=pk)
+        coaching = NewPractoWithSubCategory.objects.get(id=pk)
         data = {'coaching':coaching}
         return render(request,'coaching-views/emp-coaching-view-practo-chat.html',data)
 
@@ -2119,6 +2178,52 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Kheloyar Outbound':
+        coaching = KheloyarOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Mex Trading Outbound':
+        coaching = MaxTradingOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'ESR TechTalent Outbound':
+        coaching = ESRTechTalentOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Green Connect Outbound':
+        coaching = GreenConnectOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Central Mortgage Funding':
+        coaching = CentralMortgageFundingOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Rapid Mortgage':
+        coaching = RapidMortgageOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Bridan & Associates Outbound':
+        coaching = BridanAssociatesOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Linen Finder Outbound':
+        coaching = LinenFinderOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Better Ed Outbound':
+        coaching = BetterEdOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2283,6 +2388,12 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+
+    elif process_name == 'Better Ed Inbound':
+        coaching = BetterEdInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -2413,6 +2524,11 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
+    elif process_name == 'Jump Rydes Email - Chat':
+        coaching = JumpRydesEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
 
     ################ Others ##########################################################
 
@@ -2439,7 +2555,7 @@ def coachingViewQaDetailed(request,process,pk):
     if process_name == 'Practo':
         coaching = PractoNewVersion.objects.get(id=pk)
         data = {'coaching': coaching}
-        return render(request, 'coaching-views/qa-coaching-view-practo.html', data)
+        return render(request, 'coaching-views/qa-coaching-view-practo-chat.html', data)
 
     if process_name == 'Gubagoo':
         coaching = GubagooAuditForm.objects.get(id=pk)
@@ -2472,7 +2588,7 @@ def coachingViewQaDetailed(request,process,pk):
         return render(request,'coaching-views/qa-coaching-view-blazing.html',data)
 
     if process_name == 'Practo Chat':
-        coaching = PractoWithSubCategory.objects.get(id=pk)
+        coaching = NewPractoWithSubCategory.objects.get(id=pk)
         data = {'coaching':coaching}
         return render(request,'coaching-views/qa-coaching-view-practo-chat.html',data)
 
@@ -3157,7 +3273,7 @@ def selectCoachingForm(request):
 
         elif campaign_type == 'Spoiled Child':
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
-            return render(request, 'mon-forms/qa-coaching-view-spoiled-child.html', data)
+            return render(request, 'mon-forms/spoiled_child.html', data)
 
     else:
         return redirect('/employees/qahome')
@@ -3689,6 +3805,42 @@ def exportAuditReport(request):
             response = exportAadyaseries(DreamPickOutboundmonform)
             return response
 
+        elif campaign == 'Kheloyar Outbound':
+            response = exportAadyaseries(KheloyarOutboundmonform)
+            return response
+
+        elif campaign == 'Mex Trading Outbound':
+            response = exportAadyaseries(MaxTradingOutboundmonform)
+            return response
+
+        elif campaign == 'ESR TechTalent Outbound':
+            response = exportAadyaseries(ESRTechTalentOutboundmonform)
+            return response
+
+        elif campaign == 'Green Connect Outbound':
+            response = exportAadyaseries(GreenConnectOutboundmonform)
+            return response
+
+        elif campaign == 'Central Mortgage Funding':
+            response = exportAadyaseries(CentralMortgageFundingOutboundmonform)
+            return response
+
+        elif campaign == 'Rapid Mortgage':
+            response = exportAadyaseries(RapidMortgageOutboundmonform)
+            return response
+
+        elif campaign == 'Bridan & Associates Outbound':
+            response = exportAadyaseries(BridanAssociatesOutboundmonform)
+            return response
+
+        elif campaign == 'Linen Finder Outbound':
+            response = exportAadyaseries(LinenFinderOutboundmonform)
+            return response
+
+        elif campaign == 'Better Ed Outbound':
+            response = exportAadyaseries(BetterEdOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -3892,6 +4044,10 @@ def exportAuditReport(request):
             response = exportinbound(GretnaMedicalCenterInboundMonForm)
             return response
 
+        elif campaign == 'Better Ed Inbound':
+            response = exportinbound(BetterEdInboundMonForm)
+            return response
+
         #########    Email/CHat ##########################
 
         def exportEmailChat(monform):
@@ -4070,6 +4226,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Gretna Medical Center Email':
             response = exportEmailChat(GretnaMedicalCenterEmailChatForm)
+            return response
+
+        elif campaign == 'Jump Rydes Email - Chat':
+            response = exportEmailChat(JumpRydesEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -4846,148 +5006,74 @@ def exportAuditReport(request):
         elif campaign == 'Practo':
 
             response = HttpResponse(content_type='application/ms-excel')
-
             response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
-
             wb = xlwt.Workbook(encoding='utf-8')
-
             ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
-
             # Sheet header, first row
-
             row_num = 0
-
             font_style = xlwt.XFStyle()
-
             font_style.font.bold = True
-
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
-
                        'Fatal Count',
-
                        'qa', 'am', 'team_lead', 'manager', 'conversation_id', 'customer_contact', 'training',
 
                        'Chat Opening (Greetings & being attentive) & Closing',
-
                        'FRTAT',
-
                        'Addressing the user/Personalisation of chat',
-
                        'Assurance & Acknowledgement',
-
                        'Coherence (understanding the issue) being attentive on chat.',
-
                        'Probing',
-
                        'Interaction: Empathy , Profressional, care',
-
                        'Grammar:',
-
                        'Relavant responses',
-
                        'Being courteous & using plesantries',
-
                        'Process followed',
-
                        'Explanation skills (Reasoning) & Rebuttal Handling',
-
                        'Sharing the information in a sequential manner',
-
                        'Case Documentation',
-
                        'Curation',
-
                        'Average speed of answer',
-
                        'Chat Hold Procedure &: Taking Perrmission before putting the chat on hold',
-
                        'Expectations: Setting correct expectations about issue resolution',
-
                        'ZTP(Zero Tolerance Policy)',
 
-                       'status', 'disput_status',
-
+                       'status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
                 ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
 
             # Sheet body, remaining rows
-
             font_style = xlwt.XFStyle()
-
             rows = PractoNewVersion.objects.filter(
-
-                audit_date__range=[start_date, end_date], ).values_list(
-
+                audit_date__range=[start_date, end_date], qa=qa).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
-
                 'am',
-
                 'team_lead', 'manager', 'conversation_id', 'customer_contact', 'training',
-
                 'p_1',
-
                 'p_2',
-
                 'p_3',
-
                 'p_4',
-
                 'p_5',
-
                 'p_6',
-
                 'p_7',
-
                 'p_8',
-
                 'p_9',
-
                 'p_10',
-
                 'p_11',
-
                 'p_12',
-
                 'p_13',
-
                 'p_14',
-
                 'p_15',
-
                 'p_16',
-
                 'p_17',
-
                 'compliance_1',
-
                 'compliance_2',
 
-                'status', 'disput_status',
-
-                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
-
-            import datetime
-
-            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
-
-                    rows]
-
-            for row in rows:
-
-                row_num += 1
-
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-
-            wb.save(response)
-
-            return response
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
         #practo chat
         elif campaign == 'Practo Chat':
-
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
             wb = xlwt.Workbook(encoding='utf-8')
@@ -4998,75 +5084,110 @@ def exportAuditReport(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'Chat date',
                         'Case Number',
-                        'Query Type',
-                        'Sub Query Type',
+                        'Issue Type',
+                        'Sub-Issue Type',
+                        'Sub Sub-Issue Type',
                         'CSAT',
                         'Product',
                        'Audit Date', 'overall_score',
                        'Fatal Count',
                        'qa', 'am', 'team_lead', 'manager',
 
-                       'Chat Opening (Greetings & being attentive) & Closing',
-                       "Standard script Opening",
-                       "Greeting",
-                       "Standard script Closing",
-                       "Being Attentive",
-                       "Offering further assistance",
+                       'Chat Closing',
+                       "Failed to close the chat",
+                       "Failed to use the standard script (survey)",
+                       "Multiple closing statement used",
+                       "Failed to offer further assistance",
+                       "User ended the chat",
+                       "NA",
+
                        'FRTAT',
-                       'Addressing the user/Personalisation of chat',
+
+                       'Addressing User/Personalization of Chat',
                        "No Attempt",
-                       "First Name",
-                       "No. of Times",
-                       "Didn't Probe for name",
-                       'Assurance & Acknowledgement',
-                       "Acknowledgement Missing",
-                       "Assurance Missing",
-                       "Wasn't Done Throughout Chat",
-                       'Coherence (understanding the issue) being attentive on chat.',
+                       "First name used on the chat",
+                       "Less attempt - More scope",
+                       "Failed to probe the user name",
+                       "Incorrect Salutation",
+                       "NA",
+
+                       'Assistance & Acknowledgement',
+                       "Failed to acknowledge",
+                       "Incomplete acknowledgment",
+                       "Failed to do throughout the chat",
+                       "Incorrect assistance statement",
+                       "NA",
+
+                       'Relevant responses',
+
+                       'Assurance',
+
                        'Probing',
                        "Irrelevant Probing",
                        "Incomplete Probing",
                        "Didn't Attempt to Probe",
-                       'Interaction: Empathy , Profressional, care',
+                       "NA",
+
+                       'Interaction: Empathy & Care, Professionalism',
                        "No Empathy",
                        "Lack of Professionalism",
                        "Lack of Care",
                        "Lack of Empathy",
                        "Inappropriate empathy",
+                       'Repetitive empathy statement',
+                       'NA',
+
                        'Grammar:',
                        "Punctuation",
                        "Capitalization",
                        "Typing Error",
                        "Sentence Formation",
-                       'Relavant responses',
-                       "Incorrect Window",
-                       "Not related to query",
-                       'Being courteous & using plesantries',
+                       'Spacing',
+                       "Spacing",
+
+                       'Being Courteous & Using Pleasantries',
+
                        'Process followed',
-                       "Dashboard/Slack",
-                       "Trackers",
-                       "SOP/Process doc/SME",
-                       "Verification Process",
-                       "Email Format",
-                       "Links (webpage)",
-                       "Ticket creation",
-                       "Assignment of chat",
-                       'Explanation skills (Reasoning) & Rebuttal Handling',
-                       'Sharing the information in a sequential manner',
+                       "SOP has not followed",
+                       "Incorrect Information",
+                       "Incomplete Information",
+                       "Failed to authenticate for the medicine order",
+                       "Incorrect TAT (or) Failed to inform the TAT",
+                       "Incomplete/Incorrect refund details and wrong redirection",
+                       "NA",
+
+                       'Explanation Skills (Being Specific, Reasoning) & Rebuttal Handling',
+
+                       'Sharing the Information in Sequential Manner',
+
                        'Case Documentation',
+
                        'Curation',
                        "Incomplete",
                        "Inappropriate",
+                       "NA",
+
                        'Average speed of answer',
-                       'Chat Hold Procedure &: Taking Perrmission before putting the chat on hold',
-                       "Script",
-                       "Duration",
-                       "Didn't thank the user",
-                       'Expectations: Setting correct expectations about issue resolution',
+
+                       'Chat Hold Procedure &: Taking Permission before putting the chat on hold',
+                       "Standard script not used",
+                       "Failed to refresh the chat within promised time.",
+                       "Failed to retrieve the chat",
+                       "NA",
+
+                       'PE knowledge base adherence',
+                       "Failed to refer the knowledge base",
+                       "Referred, but not confident",
+                       "Incorrect category referred by the agent",
+                       "NA",
+
+                       'Expectations: Setting Correct Expectations about Issue Resolution',
                        "Incomplete Resolution",
                        "Incorrect Resolution",
                        "Process breach",
-                       'ZTP(Zero Tolerance Policy)',
+
+                       'ZTP (Zero Tolerance Policy)',
+
                        'status', 'disput_status',
                        'closed_date', 'fatal',
                        'areas_improvement', 'Specific Reason for FATAL with Labels and Sub Label', 'comments']
@@ -5076,52 +5197,61 @@ def exportAuditReport(request):
 
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
-            rows = PractoWithSubCategory.objects.filter(
+            rows = NewPractoWithSubCategory.objects.filter(
                 audit_date__range=[start_date, end_date], ).values_list(
                 'process', 'emp_id', 'associate_name', 'chat_date',
                 'case_no',
-                'query_type',
-                'sub_query_type',
+                'issue_type',
+                'sub_issue',
+                'sub_sub_issue',
                 'csat',
                 'product',
                 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
                 'team_lead', 'manager',
                 'p_1',
-                "p1_s1",
-                "p1_s2",
-                "p1_s3",
-                "p1_s4",
-                "p1_s5",
+                'p1_s1',
+                'p1_s2',
+                'p1_s3',
+                'p1_s4',
+                'p1_s5',
+                'p1_s6',
                 'p_2',
                 'p_3',
-                "p3_s1",
+                'p3_s1',
                 'p3_s2',
                 'p3_s3',
                 'p3_s4',
+                'p3_s5',
+                'p3_s6',
                 'p_4',
-                "p4_s1",
-                "p4_s2",
-                "p4_s3",
+                'p4_s1',
+                'p4_s2',
+                'p4_s3',
+                'p4_s4',
+                'p4_s5',
                 'p_5',
                 'p_6',
-                "p6_s1",
-                "p6_s2",
-                "p6_s3",
                 'p_7',
-                "p7_s1",
-                "p7_s2",
+                'p7_s1',
+                'p7_s2',
                 'p7_s3',
                 'p7_s4',
-                'p7_s5',
                 'p_8',
                 'p8_s1',
                 'p8_s2',
                 'p8_s3',
                 'p8_s4',
+                'p8_s5',
+                'p8_s6',
+                'p8_s7',
                 'p_9',
                 'p9_s1',
                 'p9_s2',
+                'p9_s3',
+                'p9_s4',
+                'p9_s5',
+                'p9_s6',
                 'p_10',
                 'p_11',
                 'p11_s1',
@@ -5131,19 +5261,24 @@ def exportAuditReport(request):
                 'p11_s5',
                 'p11_s6',
                 'p11_s7',
-                'p11_s8',
                 'p_12',
                 'p_13',
                 'p_14',
                 'p_15',
                 'p15_s1',
                 'p15_s2',
+                'p15_s3',
                 'p_16',
                 'p_17',
                 'p17_s1',
                 'p17_s2',
                 'p17_s3',
-
+                'p17_s4',
+                'p_18',
+                'p18_s1',
+                'p18_s2',
+                'p18_s3',
+                'p18_s4',
                 'compliance_1',
                 'compliance1_s1',
                 'compliance1_s2',
@@ -5152,19 +5287,6 @@ def exportAuditReport(request):
 
                 'status', 'disput_status',
                 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
-
-            import datetime
-            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
-                    rows]
-
-            for row in rows:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-
-            wb.save(response)
-
-            return response
 
         elif campaign == 'Gubagoo':
 
@@ -6098,6 +6220,42 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(DreamPickOutboundmonform)
             return response
 
+        elif campaign == 'Kheloyar Outbound':
+            response = exportAadyaseries(KheloyarOutboundmonform)
+            return response
+
+        elif campaign == 'Mex Trading Outbound':
+            response = exportAadyaseries(MaxTradingOutboundmonform)
+            return response
+
+        elif campaign == 'ESR TechTalent Outbound':
+            response = exportAadyaseries(ESRTechTalentOutboundmonform)
+            return response
+
+        elif campaign == 'Green Connect Outbound':
+            response = exportAadyaseries(GreenConnectOutboundmonform)
+            return response
+
+        elif campaign == 'Central Mortgage Funding':
+            response = exportAadyaseries(CentralMortgageFundingOutboundmonform)
+            return response
+
+        elif campaign == 'Rapid Mortgage':
+            response = exportAadyaseries(RapidMortgageOutboundmonform)
+            return response
+
+        elif campaign == 'Bridan & Associates Outbound':
+            response = exportAadyaseries(BridanAssociatesOutboundmonform)
+            return response
+
+        elif campaign == 'Linen Finder Outbound':
+            response = exportAadyaseries(LinenFinderOutboundmonform)
+            return response
+
+        elif campaign == 'Better Ed Outbound':
+            response = exportAadyaseries(BetterEdOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -6300,7 +6458,9 @@ def exportAuditReportQA(request):
             response = exportinbound(GretnaMedicalCenterInboundMonForm)
             return response
 
-
+        elif campaign == 'Better Ed Inbound':
+            response = exportinbound(BetterEdInboundMonForm)
+            return response
 
         #########    Email/CHat ##########################
 
@@ -6480,6 +6640,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Gretna Medical Center Email':
             response = exportEmailChat(GretnaMedicalCenterEmailChatForm)
+            return response
+
+        elif campaign == 'Jump Rydes Email - Chat':
+            response = exportEmailChat(JumpRydesEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -7257,7 +7421,7 @@ def exportAuditReportQA(request):
 
             return response
 
-            # practo chat
+        # practo chat
         elif campaign == 'Practo Chat':
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
@@ -7268,76 +7432,111 @@ def exportAuditReportQA(request):
             font_style = xlwt.XFStyle()
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'Chat date',
-                       'Case Number',
-                       'Query Type',
-                       'Sub Query Type',
-                       'CSAT',
-                       'Product',
+                        'Case Number',
+                        'Issue Type',
+                        'Sub-Issue Type',
+                        'Sub Sub-Issue Type',
+                        'CSAT',
+                        'Product',
                        'Audit Date', 'overall_score',
                        'Fatal Count',
                        'qa', 'am', 'team_lead', 'manager',
 
-                       'Chat Opening (Greetings & being attentive) & Closing',
-                       "Standard script Opening",
-                       "Greeting",
-                       "Standard script Closing",
-                       "Being Attentive",
-                       "Offering further assistance",
+                       'Chat Closing',
+                       "Failed to close the chat",
+                       "Failed to use the standard script (survey)",
+                       "Multiple closing statement used",
+                       "Failed to offer further assistance",
+                       "User ended the chat",
+                       "NA",
+
                        'FRTAT',
-                       'Addressing the user/Personalisation of chat',
+
+                       'Addressing User/Personalization of Chat',
                        "No Attempt",
-                       "First Name",
-                       "No. of Times",
-                       "Didn't Probe for name",
-                       'Assurance & Acknowledgement',
-                       "Acknowledgement Missing",
-                       "Assurance Missing",
-                       "Wasn't Done Throughout Chat",
-                       'Coherence (understanding the issue) being attentive on chat.',
+                       "First name used on the chat",
+                       "Less attempt - More scope",
+                       "Failed to probe the user name",
+                       "Incorrect Salutation",
+                       "NA",
+
+                       'Assistance & Acknowledgement',
+                       "Failed to acknowledge",
+                       "Incomplete acknowledgment",
+                       "Failed to do throughout the chat",
+                       "Incorrect assistance statement",
+                       "NA",
+
+                       'Relevant responses',
+
+                       'Assurance',
+
                        'Probing',
                        "Irrelevant Probing",
                        "Incomplete Probing",
                        "Didn't Attempt to Probe",
-                       'Interaction: Empathy , Profressional, care',
+                       "NA",
+
+                       'Interaction: Empathy & Care, Professionalism',
                        "No Empathy",
                        "Lack of Professionalism",
                        "Lack of Care",
                        "Lack of Empathy",
                        "Inappropriate empathy",
+                       'Repetitive empathy statement',
+                       'NA',
+
                        'Grammar:',
                        "Punctuation",
                        "Capitalization",
                        "Typing Error",
                        "Sentence Formation",
-                       'Relavant responses',
-                       "Incorrect Window",
-                       "Not related to query",
-                       'Being courteous & using plesantries',
+                       'Spacing',
+                       "Spacing",
+
+                       'Being Courteous & Using Pleasantries',
+
                        'Process followed',
-                       "Dashboard/Slack",
-                       "Trackers",
-                       "SOP/Process doc/SME",
-                       "Verification Process",
-                       "Email Format",
-                       "Links (webpage)",
-                       "Ticket creation",
-                       "Assignment of chat",
-                       'Explanation skills (Reasoning) & Rebuttal Handling',
-                       'Sharing the information in a sequential manner',
+                       "SOP has not followed",
+                       "Incorrect Information",
+                       "Incomplete Information",
+                       "Failed to authenticate for the medicine order",
+                       "Incorrect TAT (or) Failed to inform the TAT",
+                       "Incomplete/Incorrect refund details and wrong redirection",
+                       "NA",
+
+                       'Explanation Skills (Being Specific, Reasoning) & Rebuttal Handling',
+
+                       'Sharing the Information in Sequential Manner',
+
                        'Case Documentation',
+
                        'Curation',
                        "Incomplete",
                        "Inappropriate",
+                       "NA",
+
                        'Average speed of answer',
-                       'Chat Hold Procedure &: Taking Perrmission before putting the chat on hold',
-                       "Script",
-                       "Duration",
-                       "Didn't thank the user",
-                       'Expectations: Setting correct expectations about issue resolution',
+
+                       'Chat Hold Procedure &: Taking Permission before putting the chat on hold',
+                       "Standard script not used",
+                       "Failed to refresh the chat within promised time.",
+                       "Failed to retrieve the chat",
+                       "NA",
+
+                       'PE knowledge base adherence',
+                       "Failed to refer the knowledge base",
+                       "Referred, but not confident",
+                       "Incorrect category referred by the agent",
+                       "NA",
+
+                       'Expectations: Setting Correct Expectations about Issue Resolution',
                        "Incomplete Resolution",
                        "Incorrect Resolution",
                        "Process breach",
-                       'ZTP(Zero Tolerance Policy)',
+
+                       'ZTP (Zero Tolerance Policy)',
+
                        'status', 'disput_status',
                        'closed_date', 'fatal',
                        'areas_improvement', 'Specific Reason for FATAL with Labels and Sub Label', 'comments']
@@ -7347,52 +7546,61 @@ def exportAuditReportQA(request):
 
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
-            rows = PractoWithSubCategory.objects.filter(
-                audit_date__range=[start_date, end_date],qa=qa ).values_list(
+            rows = NewPractoWithSubCategory.objects.filter(
+                audit_date__range=[start_date, end_date], ).values_list(
                 'process', 'emp_id', 'associate_name', 'chat_date',
                 'case_no',
-                'query_type',
-                'sub_query_type',
+                'issue_type',
+                'sub_issue',
+                'sub_sub_issue',
                 'csat',
                 'product',
                 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
                 'team_lead', 'manager',
                 'p_1',
-                "p1_s1",
-                "p1_s2",
-                "p1_s3",
-                "p1_s4",
-                "p1_s5",
+                'p1_s1',
+                'p1_s2',
+                'p1_s3',
+                'p1_s4',
+                'p1_s5',
+                'p1_s6',
                 'p_2',
                 'p_3',
-                "p3_s1",
+                'p3_s1',
                 'p3_s2',
                 'p3_s3',
                 'p3_s4',
+                'p3_s5',
+                'p3_s6',
                 'p_4',
-                "p4_s1",
-                "p4_s2",
-                "p4_s3",
+                'p4_s1',
+                'p4_s2',
+                'p4_s3',
+                'p4_s4',
+                'p4_s5',
                 'p_5',
                 'p_6',
-                "p6_s1",
-                "p6_s2",
-                "p6_s3",
                 'p_7',
-                "p7_s1",
-                "p7_s2",
+                'p7_s1',
+                'p7_s2',
                 'p7_s3',
                 'p7_s4',
-                'p7_s5',
                 'p_8',
                 'p8_s1',
                 'p8_s2',
                 'p8_s3',
                 'p8_s4',
+                'p8_s5',
+                'p8_s6',
+                'p8_s7',
                 'p_9',
                 'p9_s1',
                 'p9_s2',
+                'p9_s3',
+                'p9_s4',
+                'p9_s5',
+                'p9_s6',
                 'p_10',
                 'p_11',
                 'p11_s1',
@@ -7402,19 +7610,24 @@ def exportAuditReportQA(request):
                 'p11_s5',
                 'p11_s6',
                 'p11_s7',
-                'p11_s8',
                 'p_12',
                 'p_13',
                 'p_14',
                 'p_15',
                 'p15_s1',
                 'p15_s2',
+                'p15_s3',
                 'p_16',
                 'p_17',
                 'p17_s1',
                 'p17_s2',
                 'p17_s3',
-
+                'p17_s4',
+                'p_18',
+                'p18_s1',
+                'p18_s2',
+                'p18_s3',
+                'p18_s4',
                 'compliance_1',
                 'compliance1_s1',
                 'compliance1_s2',
@@ -8389,6 +8602,42 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(DreamPickOutboundmonform)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Kheloyar Outbound':
+            newseriesAddCoaching(KheloyarOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Mex Trading Outbound':
+            newseriesAddCoaching(MaxTradingOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'ESR TechTalent Outbound':
+            newseriesAddCoaching(ESRTechTalentOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Green Connect Outbound':
+            newseriesAddCoaching(GreenConnectOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Rapid Mortgage':
+            newseriesAddCoaching(RapidMortgageOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Central Mortgage Funding':
+            newseriesAddCoaching(CentralMortgageFundingOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Bridan & Associates Outbound':
+            newseriesAddCoaching(BridanAssociatesOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Linen Finder Outbound':
+            newseriesAddCoaching(LinenFinderOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Better Ed Outbound':
+            newseriesAddCoaching(BetterEdOutboundmonform)
+            return redirect('/employees/qahome')
+
         else:
             pass
 
@@ -8765,6 +9014,10 @@ def newSeriesInboundForms(request):
             inboundAddCoaching(GretnaMedicalCenterInboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Better Ed Inbound':
+            inboundAddCoaching(BetterEdInboundMonForm)
+            return redirect('/employees/qahome')
+
 
     else:
         pass
@@ -8992,6 +9245,10 @@ def domesticChatEmail(request):
 
         elif campaign_name == 'Gretna Medical Center Email':
             domesticEmailChatAddCoaching(GretnaMedicalCenterEmailChatForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Jump Rydes Email - Chat':
+            domesticEmailChatAddCoaching(JumpRydesEmailChatForm)
             return redirect('/employees/qahome')
 
 
@@ -9551,8 +9808,7 @@ def fameHouseNew(request):
         na_list = []
         sum_list = []
         def scoreCalc(pk):
-
-            if pk != 'NA':
+            if pk == 'NA':
                 na_list.append(pk)
                 return pk
             else:
@@ -9615,7 +9871,10 @@ def fameHouseNew(request):
             overall_score=0
             fatal=True
         else:
-            overall_score= (sum(sum_list)/len(sum_list))*100
+            if sum(sum_list) != 0:
+                overall_score= (sum(sum_list)/len(sum_list))*100
+            else:
+                overall_score = 100
             fatal=False
 
         #################################################
@@ -9625,7 +9884,6 @@ def fameHouseNew(request):
         comments = request.POST['comments']
 
         added_by = request.user.profile.emp_name
-
 
         famehouse = FameHouseNewMonForm(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
                                      manager=manager_name,manager_id=manager_emp_id,am=am,
@@ -10977,43 +11235,51 @@ def practoNewVersion(request):
 
 def PractoWithSubCategoryFunc(request):
     if request.method == 'POST':
-        p_1 = int(request.POST['p1'])
+        p_1 = int(request.POST['p1']) #Chat Closing
         p1_s1 = request.POST.get("chat_1")
         p1_s2 = request.POST.get("chat_2")
         p1_s3 = request.POST.get("chat_3")
         p1_s4 = request.POST.get("chat_4")
         p1_s5 = request.POST.get("chat_5")
-        p_2 = int(request.POST['p2'])
-        p_3 = int(request.POST['p3'])
+        p1_s6 = request.POST.get("chat_6")
+        p_2 = int(request.POST['p2']) #FRTAT
+        p_3 = int(request.POST['p3']) #Addressing the user/Personalisation of chat
         p3_s1 = request.POST.get("pers_1")
         p3_s2 = request.POST.get("pers_2")
         p3_s3 = request.POST.get("pers_3")
         p3_s4 = request.POST.get("pers_4")
-        p_4 = int(request.POST['p4'])
+        p3_s5 = request.POST.get("pers_5")
+        p3_s6 = request.POST.get("pers_6")
+        p_4 = int(request.POST['p4']) #Assistance & Acknowledgment
         p4_s1 = request.POST.get("assu_1")
         p4_s2 = request.POST.get("assu_2")
         p4_s3 = request.POST.get("assu_3")
-        p_5 = int(request.POST['p5'])
-        p_6 = int(request.POST['p6'])
-        p6_s1 = request.POST.get("prob_1")
-        p6_s2 = request.POST.get("prob_2")
-        p6_s3 = request.POST.get("prob_3")
-        p_7 = int(request.POST['p7'])
-        p7_s1 = request.POST.get("inte_1")
-        p7_s2 = request.POST.get("inte_2")
-        p7_s3 = request.POST.get("inte_3")
-        p7_s4 = request.POST.get("inte_4")
-        p7_s5 = request.POST.get("inte_5")
-        p_8 = int(request.POST['p8'])
-        p8_s1 = request.POST.get("gram_1")
-        p8_s2 = request.POST.get("gram_2")
-        p8_s3 = request.POST.get("gram_3")
-        p8_s4 = request.POST.get("gram_4")
-        p_9 = int(request.POST['p9'])
-        p9_s1 = request.POST.get("rela_1")
-        p9_s2 = request.POST.get("rela_2")
-        p_10 = int(request.POST['p10'])
-        p_11 = int(request.POST['p11'])
+        p4_s4 = request.POST.get("assu_4")
+        p4_s5 = request.POST.get("assu_5")
+        p_5 = int(request.POST['p5']) #Relevant responses
+        p_6 = int(request.POST['p19']) #Assurance
+        p_7 = int(request.POST['p6']) #Probing
+        p7_s1 = request.POST.get("prob_1")
+        p7_s2 = request.POST.get("prob_2")
+        p7_s3 = request.POST.get("prob_3")
+        p7_s4 = request.POST.get("prob_4")
+        p_8 = int(request.POST['p7']) #Interaction: Empathy , Profressional, care
+        p8_s1 = request.POST.get("inte_1")
+        p8_s2 = request.POST.get("inte_2")
+        p8_s3 = request.POST.get("inte_3")
+        p8_s4 = request.POST.get("inte_4")
+        p8_s5 = request.POST.get("inte_5")
+        p8_s6 = request.POST.get("inte_6")
+        p8_s7 = request.POST.get("inte_7")
+        p_9 = int(request.POST['p8']) #Grammar
+        p9_s1 = request.POST.get("gram_1")
+        p9_s2 = request.POST.get("gram_2")
+        p9_s3 = request.POST.get("gram_3")
+        p9_s4 = request.POST.get("gram_4")
+        p9_s5 = request.POST.get("gram_5")
+        p9_s6 = request.POST.get("gram_6")
+        p_10 = int(request.POST['p10']) #Being courteous & using plesantries
+        p_11 = int(request.POST['p11']) #Process followed
         p11_s1 = request.POST.get("proc_1")
         p11_s2 = request.POST.get("proc_2")
         p11_s3 = request.POST.get("proc_3")
@@ -11021,39 +11287,48 @@ def PractoWithSubCategoryFunc(request):
         p11_s5 = request.POST.get("proc_5")
         p11_s6 = request.POST.get("proc_6")
         p11_s7 = request.POST.get("proc_7")
-        p11_s8 = request.POST.get("proc_8")
-        p_12 = int(request.POST['p12'])
-        p_13 = int(request.POST['p13'])
-        p_14 = int(request.POST['p14'])
-        p_15 = int(request.POST['p15'])
+        p_12 = int(request.POST['p12']) #Explanation Skills (Being Specific, Reasoning) & Rebuttal Handling
+        p_13 = int(request.POST['p13']) #Sharing the information in a sequential manner
+        p_14 = int(request.POST['p14']) #Case Documentation
+        p_15 = int(request.POST['p15']) #Curation
         p15_s1 = request.POST.get("cura_1")
         p15_s2 = request.POST.get("cura_2")
-        p_16 = int(request.POST['p16'])
-        p_17 = int(request.POST['p17'])
+        p15_s3 = request.POST.get("cura_3")
+        p_16 = int(request.POST['p16']) #Average Speed of Answer
+        p_17 = int(request.POST['p17']) #Chat Hold Procedure &: Taking Permission before putting the chat on hold.
         p17_s1 = request.POST.get("hold_1")
         p17_s2 = request.POST.get("hold_3")
         p17_s3 = request.POST.get("hold_3")
+        p17_s4 = request.POST.get("hold_4")
+        p_18 = int(request.POST['p18']) #PE knowledge base adherence
+        p18_s1 = request.POST.get("pekb_1")
+        p18_s2 = request.POST.get("pekb_2")
+        p18_s3 = request.POST.get("pekb_3")
+        p18_s4 = request.POST.get("pekb_4")
 
 
         # Compliance
-        compliance_1 = request.POST['fatal1']
-        p18_s1 = request.POST.get("expe_1")
-        p18_s2 = request.POST.get("expe_2")
-        p18_s3 = request.POST.get("expe_3")
-        compliance_2 = request.POST['fatal2']
+        compliance_1 = request.POST['fatal1'] #Expectations: Setting correct expectations about issue resolution
+        compliance1_s1 = request.POST.get("expe_1")
+        compliance1_s2 = request.POST.get("expe_2")
+        compliance1_s3 = request.POST.get("expe_3")
+        compliance_2 = request.POST['fatal2'] #ZTP(Zero Tolerance Policy)
 
-        lst = [p_1,p_2,p_3,p_4,p_5,p_6,p_7,p_8,p_9,p_10,p_11,p_12,p_13,p_14,p_15,p_16,p_17,]
+        lst = [p_1,p_2,p_3,p_4,p_5,p_6,p_7,p_8,p_9,p_10,p_11,p_12,p_13,p_14,p_15,p_16,p_17,p_18]
 
         total_score = sum(lst)
 
-        category = 'PractoNew'
+        category = 'Practo Chat'
         associate_name = request.POST['empname']
         emp_id = request.POST['empid']
         qa = request.POST['qa']
         team_lead = request.POST['tl']
         case_no = request.POST["case_no"]
-        query_type = request.POST["query_type"]
-        sub_query_type = request.POST["sub_query_type"]
+
+        issue_type = request.POST["issue_type"]
+        sub_issue_type = request.POST["sub_issue_type"]
+        sub_sub_issue_type = request.POST["sub_sub_issue_type"]
+
         chat_date = request.POST["chat_date"]
         csat = request.POST['csat']
         product = request.POST['product']
@@ -11098,28 +11373,28 @@ def PractoWithSubCategoryFunc(request):
         week = request.POST['week']
         am = request.POST['am']
 
-        domestic = PractoWithSubCategory(associate_name = associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+        domestic = NewPractoWithSubCategory(associate_name = associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
                            manager=manager_name, manager_id=manager_emp_id, audit_date=audit_date, concept=concept,
-                            zone=zone, case_no = case_no, query_type = query_type, sub_query_type = sub_query_type,
+                            zone=zone, case_no = case_no, issue_type = issue_type, sub_issue = sub_issue_type,
+                            sub_sub_issue=sub_sub_issue_type,
                             chat_date = chat_date, csat = csat, product = product,campaign=campaign,
 
                             p_1=p_1, p_2=p_2, p_3=p_3, p_4=p_4, p_5=p_5, p_6=p_6, p_7=p_7,
                             p_8=p_8, p_9=p_9, p_10=p_10, p_11=p_11,p_12=p_12,p_13=p_13,p_14=p_14,
-                            p_15=p_15,p_16=p_16,p_17=p_17,
+                            p_15=p_15, p_16=p_16, p_17=p_17, p_18=p_18,
 
-                            p1_s1=p1_s1, p1_s2 = p1_s2, p1_s3 = p1_s3, p1_s4 = p1_s4, p1_s5 = p1_s5,
-                            p3_s1=p3_s1, p3_s2 = p3_s2, p3_s3 = p3_s3, p3_s4=p3_s4,
-                            p4_s1=p4_s1, p4_s2 = p4_s2, p4_s3 =p4_s3,
-                            p6_s1 = p6_s1, p6_s2 = p6_s2, p6_s3 = p6_s3,
-                            p7_s1=p7_s1, p7_s2 = p7_s2, p7_s3 = p7_s3, p7_s4 = p7_s4, p7_s5 = p7_s5,
-                            p8_s1 = p8_s1, p8_s2 = p8_s2, p8_s3 = p8_s3, p8_s4 = p8_s4,
-                            p9_s1 = p9_s1, p9_s2 = p9_s2,
+                            p1_s1=p1_s1, p1_s2 = p1_s2, p1_s3 = p1_s3, p1_s4 = p1_s4, p1_s5 = p1_s5, p1_s6 = p1_s6,
+                            p3_s1=p3_s1, p3_s2 = p3_s2, p3_s3 = p3_s3, p3_s4=p3_s4, p3_s5=p3_s5, p3_s6=p3_s6,
+                            p4_s1=p4_s1, p4_s2 = p4_s2, p4_s3 =p4_s3, p4_s4 =p4_s4, p4_s5 =p4_s5,
+                            p7_s1=p7_s1, p7_s2 = p7_s2, p7_s3 = p7_s3, p7_s4 = p7_s4,
+                            p8_s1 = p8_s1, p8_s2 = p8_s2, p8_s3 = p8_s3, p8_s4 = p8_s4, p8_s5 = p8_s5, p8_s6 = p8_s6, p8_s7 = p8_s7,
+                            p9_s1 = p9_s1, p9_s2 = p9_s2, p9_s3 = p9_s3, p9_s4 = p9_s4, p9_s5 = p9_s5, p9_s6 = p9_s6,
                             p11_s1=p11_s1, p11_s2 = p11_s2, p11_s3 =p11_s3, p11_s4 = p11_s4, p11_s5 = p11_s5,
-                                    p11_s6 = p11_s6, p11_s7 = p11_s7, p11_s8 =p11_s8,
-                            p15_s1 = p15_s1, p15_s2 = p15_s2,
-                            p17_s1 = p17_s1, p17_s2 = p17_s2, p17_s3 = p17_s3,
-                            compliance1_s1=p18_s1, compliance1_s2 = p18_s2, compliance1_s3 = p18_s3,
-
+                                            p11_s6 = p11_s6, p11_s7 = p11_s7,
+                            p15_s1 = p15_s1, p15_s2 = p15_s2, p15_s3 = p15_s3,
+                            p17_s1 = p17_s1, p17_s2 = p17_s2, p17_s3 = p17_s3, p17_s4 = p17_s4,
+                            p18_s1=p18_s1, p18_s2=p18_s2, p18_s3=p18_s3, p18_s4=p18_s4,
+                            compliance1_s1=compliance1_s1, compliance1_s2 = compliance1_s2, compliance1_s3 = compliance1_s3,
 
                            compliance_1=compliance_1, compliance_2=compliance_2,
                            areas_improvement=areas_improvement,
@@ -12158,5 +12433,32 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': SpoiledChildChatmonform.objects.all(),
          'serializer_class': SpoiledChildChatmonformSerializer},
+
+        {'queryset': ESRTechTalentOutboundmonform.objects.all(),
+         'serializer_class': ESRTechTalentOutboundmonformSerializer},
+
+        {'queryset': GreenConnectOutboundmonform.objects.all(),
+         'serializer_class': GreenConnectOutboundmonformSerializer},
+
+        {'queryset': JumpRydesEmailChatForm.objects.all(),
+         'serializer_class': JumpRydesEmailChatFormSerializer},
+
+        {'queryset': CentralMortgageFundingOutboundmonform.objects.all(),
+         'serializer_class': CentralMortgageFundingOutboundmonformSerializer},
+
+        {'queryset': RapidMortgageOutboundmonform.objects.all(),
+         'serializer_class': RapidMortgageOutboundmonformSerializer},
+
+        {'queryset': BridanAssociatesOutboundmonform.objects.all(),
+         'serializer_class': BridanAssociatesOutboundmonformSerializer},
+
+        {'queryset': LinenFinderOutboundmonform.objects.all(),
+         'serializer_class': LinenFinderOutboundmonformSerializer},
+
+        {'queryset': BetterEdOutboundmonform.objects.all(),
+         'serializer_class': BetterEdOutboundmonformSerializer},
+
+        {'queryset': BetterEdInboundMonForm.objects.all(),
+         'serializer_class': BetterEdInboundMonFormSerializer},
     ]
 
