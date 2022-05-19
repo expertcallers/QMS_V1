@@ -1123,3 +1123,13 @@ class LinenFinderOutboundmonformSerializer(serializers.ModelSerializer):
     class Meta:
         model = LinenFinderOutboundmonform
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class BetterEdOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BetterEdOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class BetterEdInboundMonFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BetterEdInboundMonForm
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']

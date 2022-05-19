@@ -53,7 +53,7 @@ list_of_monforms = [ # OutBound
                         DreamPickOutboundmonform,KheloyarOutboundmonform,MaxTradingOutboundmonform,
                         ESRTechTalentOutboundmonform, GreenConnectOutboundmonform,
                         CentralMortgageFundingOutboundmonform, RapidMortgageOutboundmonform, LinenFinderOutboundmonform,
-                        BridanAssociatesOutboundmonform,
+                        BridanAssociatesOutboundmonform, BetterEdOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -67,6 +67,7 @@ list_of_monforms = [ # OutBound
                         EduvocateInboundMonForms,CrossTowerInboundMonForms,
                         SanaLifeScienceInbound,MonitoringFormMobile22InboundCalls,XportDigitalInboundMonForm,CalistaInboundMonForm,
                         ThirdWaveInboundMonForm, HardHatTechnologiesInboundMonForm,GretnaMedicalCenterInboundMonForm,
+                        BetterEdInboundMonForm,
 
 
                         # Email/CHat
@@ -1238,6 +1239,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Better Ed Outbound':
+        coaching = BetterEdOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1398,6 +1404,11 @@ def coachingViewAgents(request,process,pk):
 
     elif process_name == 'Gretna Medical Center Inbound':
         coaching = GretnaMedicalCenterInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Better Ed Inbound':
+        coaching = BetterEdInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
@@ -2207,6 +2218,11 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Better Ed Outbound':
+        coaching = BetterEdOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
 
     ########### Inbound ########################
 
@@ -2369,6 +2385,12 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Gretna Medical Center Inbound':
         coaching = GretnaMedicalCenterInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+
+    elif process_name == 'Better Ed Inbound':
+        coaching = BetterEdInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
@@ -3815,6 +3837,10 @@ def exportAuditReport(request):
             response = exportAadyaseries(LinenFinderOutboundmonform)
             return response
 
+        elif campaign == 'Better Ed Outbound':
+            response = exportAadyaseries(BetterEdOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -4016,6 +4042,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Gretna Medical Center Inbound':
             response = exportinbound(GretnaMedicalCenterInboundMonForm)
+            return response
+
+        elif campaign == 'Better Ed Inbound':
+            response = exportinbound(BetterEdInboundMonForm)
             return response
 
         #########    Email/CHat ##########################
@@ -6222,6 +6252,10 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(LinenFinderOutboundmonform)
             return response
 
+        elif campaign == 'Better Ed Outbound':
+            response = exportAadyaseries(BetterEdOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -6424,7 +6458,9 @@ def exportAuditReportQA(request):
             response = exportinbound(GretnaMedicalCenterInboundMonForm)
             return response
 
-
+        elif campaign == 'Better Ed Inbound':
+            response = exportinbound(BetterEdInboundMonForm)
+            return response
 
         #########    Email/CHat ##########################
 
@@ -8598,6 +8634,10 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(LinenFinderOutboundmonform)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Better Ed Outbound':
+            newseriesAddCoaching(BetterEdOutboundmonform)
+            return redirect('/employees/qahome')
+
         else:
             pass
 
@@ -8972,6 +9012,10 @@ def newSeriesInboundForms(request):
 
         elif campaign_name == 'Gretna Medical Center Inbound':
             inboundAddCoaching(GretnaMedicalCenterInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Better Ed Inbound':
+            inboundAddCoaching(BetterEdInboundMonForm)
             return redirect('/employees/qahome')
 
 
@@ -12413,5 +12457,11 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': LinenFinderOutboundmonform.objects.all(),
          'serializer_class': LinenFinderOutboundmonformSerializer},
+
+        {'queryset': BetterEdOutboundmonform.objects.all(),
+         'serializer_class': BetterEdOutboundmonformSerializer},
+
+        {'queryset': BetterEdInboundMonForm.objects.all(),
+         'serializer_class': BetterEdInboundMonFormSerializer},
     ]
 
