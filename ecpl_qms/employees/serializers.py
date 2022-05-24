@@ -1133,3 +1133,28 @@ class BetterEdInboundMonFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = BetterEdInboundMonForm
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class Com98OutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Com98Outboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class Com98InboundMonFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Com98InboundMonForm
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class GretnaMedicalCentreOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GretnaMedicalCentreOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class AristaMDOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AristaMDOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class OpenWindsInboundMonFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OpenWindsInboundMonForm
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']

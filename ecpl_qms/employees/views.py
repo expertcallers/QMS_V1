@@ -53,7 +53,8 @@ list_of_monforms = [ # OutBound
                         DreamPickOutboundmonform,KheloyarOutboundmonform,MaxTradingOutboundmonform,
                         ESRTechTalentOutboundmonform, GreenConnectOutboundmonform,
                         CentralMortgageFundingOutboundmonform, RapidMortgageOutboundmonform, LinenFinderOutboundmonform,
-                        BridanAssociatesOutboundmonform, BetterEdOutboundmonform,
+                        BridanAssociatesOutboundmonform, BetterEdOutboundmonform, Com98Outboundmonform,
+                        GretnaMedicalCentreOutboundmonform, AristaMDOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -67,7 +68,7 @@ list_of_monforms = [ # OutBound
                         EduvocateInboundMonForms,CrossTowerInboundMonForms,
                         SanaLifeScienceInbound,MonitoringFormMobile22InboundCalls,XportDigitalInboundMonForm,CalistaInboundMonForm,
                         ThirdWaveInboundMonForm, HardHatTechnologiesInboundMonForm,GretnaMedicalCenterInboundMonForm,
-                        BetterEdInboundMonForm,
+                        BetterEdInboundMonForm, Com98InboundMonForm, OpenWindsInboundMonForm,
 
 
                         # Email/CHat
@@ -1244,6 +1245,21 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Com 98 Outbound':
+        coaching = Com98Outboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Gretna Medical Centre Outbound':
+        coaching = GretnaMedicalCentreOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Arista MD Outbound':
+        coaching = AristaMDOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1409,6 +1425,16 @@ def coachingViewAgents(request,process,pk):
 
     elif process_name == 'Better Ed Inbound':
         coaching = BetterEdInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Com 98 Inbound':
+        coaching = Com98InboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Open Winds Inbound':
+        coaching = OpenWindsInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
@@ -2223,6 +2249,21 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Com 98 Outbound':
+        coaching = Com98Outboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Gretna Medical Centre Outbound':
+        coaching = GretnaMedicalCentreOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Arista MD Outbound':
+        coaching = AristaMDOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
 
     ########### Inbound ########################
 
@@ -2391,6 +2432,18 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Better Ed Inbound':
         coaching = BetterEdInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+
+    elif process_name == 'Com 98 Inbound':
+        coaching = Com98InboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+
+    elif process_name == 'Open Winds Inbound':
+        coaching = OpenWindsInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
@@ -3287,8 +3340,6 @@ def qualityDashboard(request):
 
 
 def exportAuditReport(request):
-
-
     if request.method == 'POST':
 
         start_date = request.POST['start_date']
@@ -3841,6 +3892,19 @@ def exportAuditReport(request):
             response = exportAadyaseries(BetterEdOutboundmonform)
             return response
 
+        elif campaign == 'Com 98 Outbound':
+            response = exportAadyaseries(Com98Outboundmonform)
+            return response
+
+
+        elif campaign == 'Gretna Medical Centre Outbound':
+            response = exportAadyaseries(GretnaMedicalCentreOutboundmonform)
+            return response
+
+        elif campaign == 'Arista MD Outbound':
+            response = exportAadyaseries(AristaMDOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -4046,6 +4110,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Better Ed Inbound':
             response = exportinbound(BetterEdInboundMonForm)
+            return response
+
+        elif campaign == 'Com 98 Inbound':
+            response = exportinbound(Com98InboundMonForm)
+            return response
+
+        elif campaign == 'Open Winds Inbound':
+            response = exportinbound(OpenWindsInboundMonForm)
             return response
 
         #########    Email/CHat ##########################
@@ -6256,6 +6328,18 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(BetterEdOutboundmonform)
             return response
 
+        elif campaign == 'Com 98 Outbound':
+            response = exportAadyaseries(Com98Outboundmonform)
+            return response
+
+        elif campaign == 'Gretna Medical Centre Outbound':
+            response = exportAadyaseries(GretnaMedicalCentreOutboundmonform)
+            return response
+
+        elif campaign == 'Arista MD Outbound':
+            response = exportAadyaseries(AristaMDOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -6460,6 +6544,14 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Better Ed Inbound':
             response = exportinbound(BetterEdInboundMonForm)
+            return response
+
+        elif campaign == 'Com 98 Inbound':
+            response = exportinbound(Com98InboundMonForm)
+            return response
+
+        elif campaign == 'Open Winds Inbound':
+            response = exportinbound(OpenWindsInboundMonForm)
             return response
 
         #########    Email/CHat ##########################
@@ -8638,6 +8730,18 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(BetterEdOutboundmonform)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Com 98 Outbound':
+            newseriesAddCoaching(Com98Outboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Gretna Medical Centre Outbound':
+            newseriesAddCoaching(GretnaMedicalCentreOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Arista MD Outbound':
+            newseriesAddCoaching(AristaMDOutboundmonform)
+            return redirect('/employees/qahome')
+
         else:
             pass
 
@@ -9016,6 +9120,14 @@ def newSeriesInboundForms(request):
 
         elif campaign_name == 'Better Ed Inbound':
             inboundAddCoaching(BetterEdInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Com 98 Inbound':
+            inboundAddCoaching(Com98InboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Open Winds Inbound':
+            inboundAddCoaching(OpenWindsInboundMonForm)
             return redirect('/employees/qahome')
 
 
@@ -12463,5 +12575,20 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': BetterEdInboundMonForm.objects.all(),
          'serializer_class': BetterEdInboundMonFormSerializer},
+
+        {'queryset': Com98Outboundmonform.objects.all(),
+         'serializer_class': Com98OutboundmonformSerializer},
+
+        {'queryset': Com98InboundMonForm.objects.all(),
+         'serializer_class': Com98InboundMonFormSerializer},
+
+        {'queryset': GretnaMedicalCentreOutboundmonform.objects.all(),
+         'serializer_class': GretnaMedicalCentreOutboundmonformSerializer},
+
+        {'queryset': AristaMDOutboundmonform.objects.all(),
+         'serializer_class': AristaMDOutboundmonformSerializer},
+
+        {'queryset': OpenWindsInboundMonForm.objects.all(),
+         'serializer_class': OpenWindsInboundMonFormSerializer},
     ]
 
