@@ -5118,7 +5118,7 @@ def exportAuditReport(request):
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
             rows = PractoNewVersion.objects.filter(
-                audit_date__range=[start_date, end_date], qa=qa).values_list(
+                audit_date__range=[start_date, end_date]).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
                 'team_lead', 'manager', 'conversation_id', 'customer_contact', 'training',
@@ -5359,6 +5359,19 @@ def exportAuditReport(request):
 
                 'status', 'disput_status',
                 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
 
         elif campaign == 'Gubagoo':
 
