@@ -58,17 +58,18 @@ list_of_monforms = [ # OutBound
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
-                        NuclusInboundCalls,NaffaInnovationsInboundCalls,KappimachineInboundCalls,HealthyplusInboundMonForm,
+                        NuclusInboundCalls, NaffaInnovationsInboundCalls,KappimachineInboundCalls,HealthyplusInboundMonForm,
                         FinesseMortgageInboundMonForm,DigitalSwissGoldInboundMonForm,DanielwellingtoInboundMonForm,BhagyaLakshmiInboundMonForm,
-                        AKDYInboundMonFormNew,AdityaBirlainboundMonForm,ABHindalcoInboundMonForm,
+                        AKDYInboundMonFormNew, AdityaBirlainboundMonForm,ABHindalcoInboundMonForm,
                         RainbowDiagnosticsInboundMonForm,DecentralizedVisionLTDInboundMonForm,
-                        AmerisaveInboundMonForm,IEDHHInboundMonForm,ClearViewInboundMonForms,QuickAutoPartsInboundMonForms,
+                        AmerisaveInboundMonForm, IEDHHInboundMonForm,ClearViewInboundMonForms,QuickAutoPartsInboundMonForms,
                         LJHubInboundMonForms,
                         ObtheraIncInboundMonForms,
-                        EduvocateInboundMonForms,CrossTowerInboundMonForms,
-                        SanaLifeScienceInbound,MonitoringFormMobile22InboundCalls,XportDigitalInboundMonForm,CalistaInboundMonForm,
+                        EduvocateInboundMonForms, CrossTowerInboundMonForms,
+                        SanaLifeScienceInbound, MonitoringFormMobile22InboundCalls,XportDigitalInboundMonForm,CalistaInboundMonForm,
                         ThirdWaveInboundMonForm, HardHatTechnologiesInboundMonForm,GretnaMedicalCenterInboundMonForm,
                         BetterEdInboundMonForm, Com98InboundMonForm, OpenWindsInboundMonForm,
+                        EmbassyLuxuryInboundMonForm,
 
 
                         # Email/CHat
@@ -1443,6 +1444,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'Embassy Luxury Inbound':
+        coaching = EmbassyLuxuryInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -2454,6 +2460,11 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Open Winds Inbound':
         coaching = OpenWindsInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Embassy Luxury Inbound':
+        coaching = EmbassyLuxuryInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
@@ -4132,6 +4143,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Open Winds Inbound':
             response = exportinbound(OpenWindsInboundMonForm)
+            return response
+
+        elif campaign == 'Embassy Luxury Inbound':
+            response = exportinbound(EmbassyLuxuryInboundMonForm)
             return response
 
         #########    Email/CHat ##########################
@@ -6583,6 +6598,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Open Winds Inbound':
             response = exportinbound(OpenWindsInboundMonForm)
+            return response
+
+        elif campaign == 'Embassy Luxury Inbound':
+            response = exportinbound(EmbassyLuxuryInboundMonForm)
             return response
 
         #########    Email/CHat ##########################
@@ -9165,6 +9184,10 @@ def newSeriesInboundForms(request):
             inboundAddCoaching(OpenWindsInboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Embassy Luxury Inbound':
+            inboundAddCoaching(EmbassyLuxuryInboundMonForm)
+            return redirect('/employees/qahome')
+
 
     else:
         pass
@@ -9619,45 +9642,30 @@ def ilmEMailChat(request):
         #########################################
 
         lst = []
-        lst_tot = []
-        def addtoScore(score,tot):
+        def addtoScore(score):
             if score == 'na':
-                pass
+                lst.append(10)
             else:
                 lst.append(int(score))
-                lst_tot.append(tot)
+            return score
+
 
         # Solution
-        s_1 = request.POST['s_1']
-        addtoScore(s_1,10)
-
-        s_2 = request.POST['s_2']
-        addtoScore(s_2, 10)
-
-        s_3 = request.POST['s_3']
-        addtoScore(s_3, 10)
-
-        s_4 = request.POST['s_4']
-        addtoScore(s_4, 10)
-
+        s_1 = addtoScore(request.POST['s_1'])
+        s_2 = addtoScore(request.POST['s_2'])
+        s_3 = addtoScore(request.POST['s_3'])
+        s_4 = addtoScore(request.POST['s_4'])
 
         # Efficiency
-        e_1 = request.POST['e_1']
-        addtoScore(e_1, 10)
-
-        e_2 = request.POST['e_2']
-        addtoScore(e_2, 10)
+        e_1 = addtoScore(request.POST['e_1'])
+        e_2 = addtoScore(request.POST['e_2'])
 
 
         # Compliance
-        compliance_1 = int(request.POST['compliance_1'])
-        addtoScore(compliance_1,10)
+        compliance_1 = addtoScore(int(request.POST['compliance_1']))
+        compliance_2 = addtoScore(int(request.POST['compliance_2']))
+        compliance_3 = addtoScore(int(request.POST['compliance_3']))
 
-        compliance_2 = int(request.POST['compliance_2'])
-        addtoScore(compliance_2, 10)
-
-        compliance_3 = int(request.POST['compliance_3'])
-        addtoScore(compliance_3, 10)
 
         #################################################
 
@@ -9670,14 +9678,12 @@ def ilmEMailChat(request):
         no_of_fatals = len(fatal_list_count)
 
         ####################################################
-
         if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0:
             overall_score = 0
             fatal = True
         else:
-            overall_score = sum(lst)/sum(lst_tot)
+            overall_score = sum(lst)
             fatal = False
-
 
         areas_improvement = request.POST['areaimprovement']
         positives = request.POST['positives']
@@ -9689,7 +9695,6 @@ def ilmEMailChat(request):
 
         ilm = ILMakiageEmailChatForm(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
                            manager=manager_name, manager_id=manager_emp_id,
-
                            trans_date=trans_date, audit_date=audit_date, customer_name=customer_name,
                            ticket_id=ticket_id,
                            campaign=campaign, concept=concept, zone=zone,
@@ -12625,6 +12630,9 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': RobertDamonProductionOutboundmonform.objects.all(),
          'serializer_class': RobertDamonProductionOutboundmonformSerializer},
+
+        {'queryset': EmbassyLuxuryInboundMonForm.objects.all(),
+         'serializer_class': EmbassyLuxuryInboundMonFormSerializer},
     ]
 
 

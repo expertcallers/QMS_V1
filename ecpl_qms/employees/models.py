@@ -10411,6 +10411,69 @@ class OpenWindsInboundMonForm(models.Model):
     def snippet(self):
         return self.comments[:100] + '...'
 
+class EmbassyLuxuryInboundMonForm(models.Model):
+    process = models.CharField(default='Embassy Luxury Inbound', max_length=50)
+    type = models.CharField(default='Inbound', max_length=50)
+    emp_id = models.IntegerField()
+    associate_name = models.CharField(max_length=50)
+    qa = models.CharField(max_length=50)
+    team_lead = models.CharField(max_length=50)
+    customer_name = models.CharField(max_length=50)
+    customer_contact = models.CharField(max_length=100)
+    call_date = models.DateField()
+    audit_date = models.DateField()
+    campaign = models.CharField(max_length=100)
+    zone=models.CharField(max_length=50)
+    concept = models.CharField(max_length=60)
+    call_duration=models.IntegerField()
+    # mgt
+    manager = models.CharField(max_length=50)
+    manager_id = models.IntegerField()
+    category = models.CharField(max_length=20)
+    # Customer Experience
+    ce_1 = models.IntegerField()
+    ce_2 = models.IntegerField()
+    ce_3 = models.IntegerField()
+    ce_4 = models.IntegerField()
+    ce_5 = models.IntegerField()
+    ce_6 = models.IntegerField()
+    ce_7 = models.IntegerField()
+    ce_8 = models.IntegerField()
+    ce_9 = models.IntegerField()
+    ce_10 = models.IntegerField()
+    ce_11 = models.IntegerField()
+    # Business
+    business_1 = models.IntegerField()
+    business_2 = models.IntegerField()
+    # Compliance
+    compliance_1 = models.IntegerField()
+    compliance_2 = models.IntegerField()
+    compliance_3 = models.IntegerField()
+    compliance_4 = models.IntegerField()
+    compliance_5 = models.IntegerField()
+
+    areas_improvement = models.TextField()
+    positives = models.TextField()
+    comments = models.TextField()
+    added_by = models.CharField(max_length=30)
+    status = models.BooleanField(default=False)
+    closed_date = models.DateTimeField(null=True)
+    emp_comments = models.TextField(null=True)
+    ce_total = models.IntegerField(null=True)
+    business_total=models.IntegerField(null=True)
+    compliance_total = models.IntegerField(null=True)
+    overall_score = models.IntegerField(null=True)
+    am = models.CharField(max_length=50,null=True)
+    week = models.CharField(max_length=20,null=True)
+    fatal = models.BooleanField(default=False)
+    fatal_count = models.IntegerField(default=0)
+    disput_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.associate_name
+    def snippet(self):
+        return self.comments[:100] + '...'
+
 
 
 ######################################################
@@ -13302,14 +13365,14 @@ class ILMakiageEmailChatForm(models.Model):
     manager_id = models.IntegerField()
     category = models.CharField(max_length=20)
     # solution
-    s_1 = models.IntegerField()
-    s_2 = models.IntegerField()
-    s_3 = models.IntegerField()
-    s_4 = models.IntegerField()
+    s_1 = models.CharField(max_length=50)
+    s_2 = models.CharField(max_length=50)
+    s_3 = models.CharField(max_length=50)
+    s_4 = models.CharField(max_length=50)
 
     # Efficiency
-    e_1 = models.IntegerField()
-    e_2 = models.IntegerField()
+    e_1 = models.CharField(max_length=50)
+    e_2 = models.CharField(max_length=50)
 
     # Compliance
     compliance_1 = models.IntegerField()

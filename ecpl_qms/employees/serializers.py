@@ -1163,3 +1163,8 @@ class RobertDamonProductionOutboundmonformSerializer(serializers.ModelSerializer
     class Meta:
         model = RobertDamonProductionOutboundmonform
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class EmbassyLuxuryInboundMonFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmbassyLuxuryInboundMonForm
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
