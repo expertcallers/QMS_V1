@@ -55,6 +55,7 @@ list_of_monforms = [ # OutBound
                         CentralMortgageFundingOutboundmonform, RapidMortgageOutboundmonform, LinenFinderOutboundmonform,
                         BridanAssociatesOutboundmonform, BetterEdOutboundmonform, Com98Outboundmonform,
                         GretnaMedicalCentreOutboundmonform, AristaMDOutboundmonform,
+                        RobertDamonProductionOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
