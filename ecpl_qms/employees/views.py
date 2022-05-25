@@ -1260,6 +1260,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Robert Damon Production Outbound':
+        coaching = RobertDamonProductionOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2261,6 +2266,11 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Arista MD Outbound':
         coaching = AristaMDOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Robert Damon Production Outbound':
+        coaching = RobertDamonProductionOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -3903,6 +3913,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Arista MD Outbound':
             response = exportAadyaseries(AristaMDOutboundmonform)
+            return response
+
+        elif campaign == 'Robert Damon Production Outbound':
+            response = exportAadyaseries(RobertDamonProductionOutboundmonform)
             return response
 
         ######## Inbound ###############################
@@ -6353,6 +6367,10 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(AristaMDOutboundmonform)
             return response
 
+        elif campaign == 'Robert Damon Production Outbound':
+            response = exportAadyaseries(RobertDamonProductionOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -8753,6 +8771,10 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'Arista MD Outbound':
             newseriesAddCoaching(AristaMDOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Robert Damon Production Outbound':
+            newseriesAddCoaching(RobertDamonProductionOutboundmonform)
             return redirect('/employees/qahome')
 
         else:
@@ -12600,6 +12622,9 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': OpenWindsInboundMonForm.objects.all(),
          'serializer_class': OpenWindsInboundMonFormSerializer},
+
+        {'queryset': RobertDamonProductionOutboundmonform.objects.all(),
+         'serializer_class': RobertDamonProductionOutboundmonformSerializer},
     ]
 
 
