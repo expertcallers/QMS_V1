@@ -9642,31 +9642,23 @@ def ilmEMailChat(request):
         manager_name = manager
         #########################################
 
-        lst = []
-        def addtoScore(score):
-            if score == 'na':
-                lst.append(10)
-            else:
-                lst.append(int(score))
-            return score
-
-
         # Solution
-        s_1 = addtoScore(request.POST['s_1'])
-        s_2 = addtoScore(request.POST['s_2'])
-        s_3 = addtoScore(request.POST['s_3'])
-        s_4 = addtoScore(request.POST['s_4'])
+        s_1 = int(request.POST['s_1'])
+        s_2 = int(request.POST['s_2'])
+        s_3 = int(request.POST['s_3'])
+        s_4 = int(request.POST['s_4'])
+        s_total = s_1+s_2+s_3+s_4
 
         # Efficiency
-        e_1 = addtoScore(request.POST['e_1'])
-        e_2 = addtoScore(request.POST['e_2'])
-
+        e_1 = int(request.POST['e_1'])
+        e_2 = int(request.POST['e_2'])
+        e_total = e_1+e_2
 
         # Compliance
-        compliance_1 = addtoScore(int(request.POST['compliance_1']))
-        compliance_2 = addtoScore(int(request.POST['compliance_2']))
-        compliance_3 = addtoScore(int(request.POST['compliance_3']))
-
+        compliance_1 = int(request.POST['compliance_1'])
+        compliance_2 = int(request.POST['compliance_2'])
+        compliance_3 = int(request.POST['compliance_3'])
+        compliance_total = compliance_1+compliance_2+compliance_3
 
         #################################################
 
@@ -9683,7 +9675,7 @@ def ilmEMailChat(request):
             overall_score = 0
             fatal = True
         else:
-            overall_score = sum(lst)
+            overall_score = s_total+e_total+compliance_total
             fatal = False
 
         areas_improvement = request.POST['areaimprovement']
@@ -9707,7 +9699,8 @@ def ilmEMailChat(request):
                            positives=positives, comments=comments,
                            added_by=added_by,
                            overall_score=overall_score, category=category,
-                           week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+                           week=week, am=am, fatal_count=no_of_fatals, fatal=fatal,
+                                     s_total=s_total, e_total=e_total,compliance_total=compliance_total
                            )
         ilm.save()
         return redirect('/employees/qahome')

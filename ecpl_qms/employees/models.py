@@ -13365,14 +13365,14 @@ class ILMakiageEmailChatForm(models.Model):
     manager_id = models.IntegerField()
     category = models.CharField(max_length=20)
     # solution
-    s_1 = models.CharField(max_length=50)
-    s_2 = models.CharField(max_length=50)
-    s_3 = models.CharField(max_length=50)
-    s_4 = models.CharField(max_length=50)
+    s_1 = models.IntegerField()
+    s_2 = models.IntegerField()
+    s_3 = models.IntegerField()
+    s_4 = models.IntegerField()
 
     # Efficiency
-    e_1 = models.CharField(max_length=50)
-    e_2 = models.CharField(max_length=50)
+    e_1 = models.IntegerField()
+    e_2 = models.IntegerField()
 
     # Compliance
     compliance_1 = models.IntegerField()
