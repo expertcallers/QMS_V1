@@ -14,7 +14,9 @@
 
     <script src="https://kit.fontawesome.com/4a95aa7adc.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
+    <!-- The follwing two tags to be added Can be added to base file-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
     <!------------Navigation-------------->
@@ -54,7 +56,9 @@
                     <li class="nav-item"><a class="nav-link" href="/employees/login">login</a></li>
                     <!--<li class="nav_item"><a class="nav-link" href="/employees/signup">Register</a></li>-->
                     {% endif %}
-
+                    {% if request.user.profile.emp_id == 8413 or request.user.profile.emp_id == 5670 or request.user.profile.emp_id == 4458 %}
+                    <li class="nav-item"><a class="nav-link" href="/employees/password-reset">Change Employee Password</a></li>
+                    {% endif %}
                 </ul>
                 <div>
 
@@ -67,6 +71,14 @@
     {% block main %}
     {% endblock %}
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+   <script>
+      $('.select2').select2();
+      {% if messages %}
+          {% for m in messages %}
+            alert('{{m}}');
+          {% endfor %}
+      {% endif %}
+    </script>
 </body>
 </html>

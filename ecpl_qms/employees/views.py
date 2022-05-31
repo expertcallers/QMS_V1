@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
@@ -12070,6 +12071,31 @@ def disputeStatusAgents(request,campaign):
         data = campaignWise(monform)
     return render(request, 'dispute-summary-view-agents.html', data)
 
+
+
+def PasswordReset(request):
+    emp = request.user.profile.emp_id
+    if emp == 8413 or emp == 4458 or emp == 5670:
+        if request.method == 'POST':
+            emp_id = request.POST['emp_id']
+            new = request.POST['new']
+            confirm = request.POST['confirm']
+            if new == confirm:
+                user = User.objects.get(username=emp_id)
+                user.password = make_password(new)
+                user.save()
+                messages.error(request, 'Password changed successfully!')
+                return redirect('/password-reset')
+            else:
+                messages.error(request, 'Passwords does not match')
+                return redirect('/password-reset')
+        else:
+            profiles = Profile.objects.all()
+            data = {'profiles':profiles}
+            return render(request, 'password-reset.html', data)
+    else:
+        messages.error(request, 'Invalid Request!!')
+        return redirect('/')
 
 from drf_multiple_model.views import ObjectMultipleModelAPIView
 from drf_multiple_model.views import FlatMultipleModelAPIView
