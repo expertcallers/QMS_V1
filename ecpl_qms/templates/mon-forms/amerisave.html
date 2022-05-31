@@ -1,0 +1,699 @@
+{% extends 'base.html' %}
+{% block main %}
+<style>
+    .fatal {
+			color: red;
+		}
+        #sec1_score {
+            border: none;
+            background: #ECECF3;
+            padding: 0 10px;
+        }
+        label {
+            margin-right: 30px;
+        }
+        .score {
+            font-size: 18px;
+            color: green;
+            font-weight: 600;
+        }
+        h4 {
+            color: #010162;
+            font-weight: 800;
+        }
+        .container-fluid.class, .container.class {
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(0,0,0,.1);
+        }
+        .less {
+            background: red !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        .perfect{
+            background: green !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        #myscore{
+            color: green;
+            font-weight: 800;
+        }
+        input[type="radio"] {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            transform: scale(1.5);
+        }
+        input[type="text"].scoree {
+            font-size: 12px;
+        }
+        .btn-success {
+            color: white;
+            background-color: green !important;
+            border-color: green !important;
+            padding: 3px 30px;
+        }
+        @media (min-width:768px) {
+            body {
+                margin: 0 80px;
+            }
+        }
+        @media (max-width:768px) {
+            body {
+                margin: 0 20px;
+            }
+        }
+        .smallp {
+            font-size: 12px;
+        }
+</style>
+    <div class="container class pt-5 mt-5">
+        <div class="row">
+            <div class="col-md-12" align="center">
+                <h2 class="text-center">{{campaign.name}}</h2>
+            </div>
+        </div>
+    </div>
+    <form action="/employees/practo-chat" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container-fluid class">
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="empname">Associate Name</label>
+                    <input type="text" class="form-control" id="empname" readonly name="empname" value="{{agent.emp_name}}">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="empid">Employee ID</label>
+                    <input type="text" class="form-control" id="empid" name="empid" readonly value="{{agent.emp_id}}">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="zone">Zone</label>
+                    <input type="text" class="form-control" id="zone" name="zone" required>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="concept">Concept</label>
+                    <input type="text" class="form-control" id="concept" name="concept" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="case_no">Case Number/Chat Link</label>
+                    <input type="text" class="form-control" id="case_no" name="case_no" required>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="query_type">Issue Type</label>
+                    <input type="text" class="form-control" id="query_type" name="issue_type" required>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="sub_query_type">Sub-Issue Type</label>
+                    <input type="text" class="form-control" id="sub_query_type" name="sub_issue_type" required>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="sub_sub_issue_type">Sub Sub-Issue Type</label>
+                    <input type="text" class="form-control" id="sub_sub_issue_type" name="sub_sub_issue_type" required>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="chat_date">Chat Date</label>
+                    <input type="date" class="form-control" id="chat_date" name="chat_date" required="">
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="csat">CSAT</label>
+                    <select class="form-control" id="csat" name="csat" required="">
+                        <option value="" selected disabled>Please Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="product">Product</label>
+                    <select class="form-control" id="product" name="product" required="">
+                        <option value="" selected disabled>Please Select</option>
+                        <option value="Plus">Plus</option>
+                        <option value="Book">Book</option>
+                        <option value="Consult">Consult</option>
+                        <option value="Rx">Rx</option>
+                        <option value="Dx">Dx</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 form-group">
+                    <label for="auditdate">Audit Date</label>
+                    <input type="text" class="form-control" id="auditdate" name="auditdate" value="{{date}}" readonly>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="qa">Quality Analyst</label>
+                    <input type="text" class="form-control" id="qa" name="qa" value="{{request.user.profile.emp_name}}" readonly>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="tl">Team Lead</label>
+                    <input type="text" class="form-control" id="tl" name="tl" readonly value="{{agent.team_lead}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="manager">Manager</label>
+                    <input type="text" class="form-control" id="manager" name="manager" readonly value="{{agent.manager}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="am">AM</label>
+                    <input type="text" class="form-control" id="am" name="am" readonly value="{{agent.am}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="week">Week</label>
+                    <select class="form-control" name="week" id="week" required="">
+                        <option value="week1">Week1</option>
+                        <option value="week2">Week2</option>
+                        <option value="week3">Week3</option>
+                        <option value="week4">Week4</option>
+                        <option value="week5">Week5</option>
+                    </select>
+                </div>
+                <input type="hidden" name="campaign" value="{{campaign}}">
+            </div>
+        </div>
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>NCE</h4>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Did CSS adhere to the script associated with the lead source?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="solution_1" onclick="soltion(this);" value="10" id="solution_yes_1" required="">
+                    <label for="solution_yes_1">Yes</label>
+                    <input type="radio" name="solution_1" onclick="soltion(this);" value="0" id="solution_no_1">
+                    <label for="solution_no_1">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    What was the consumer's main objection?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="solution_2" onclick="soltion(this);" value="10" id="solution_yes_2" required="">
+                    <label for="solution_yes_2">Yes</label>
+                    <input type="radio" name="solution_2" onclick="soltion(this);" value="0" id="solution_no_2">
+                    <label for="solution_no_2">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Did CSS attempt to overcome objections?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="solution_3" onclick="soltion(this);" value="10" id="solution_yes_3" required="">
+                    <label for="solution_yes_3">Yes</label>
+                    <input type="radio" name="solution_3" onclick="soltion(this);" value="0" id="solution_no_3">
+                    <label for="solution_no_3">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Transfer Only: Did CSS properly transfer the customer to sales?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="solution_4" onclick="soltion(this);" value="10" id="solution_yes_4" required="">
+                    <label for="solution_yes_4">Yes</label>
+                    <input type="radio" name="solution_4" onclick="soltion(this);" value="0" id="solution_no_4">
+                    <label for="solution_no_4">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8 score">
+                    Solution Score
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control scoree" name="solution_score" id="solution_score" value="Select appropriate option for ALL to see score">
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>CE</h4>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Did CSS disposition call correctly?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="efficiency_1" onclick="eff(this);" value="10" id="efficiency_yes_1" required="">
+                    <label for="efficiency_yes_1">Yes</label>
+                    <input type="radio" name="efficiency_1" onclick="eff(this);" value="0" id="efficiency_no_1">
+                    <label for="efficiency_no_1">No</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8 score">
+                    Efficiency Score
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control scoree" name="efficiency_score" id="efficiency_score" value="Select appropriate option for ALL to see score">
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Compliance</h4>
+                </div>
+            </div>
+            <div class="row mt-3 fatal">
+                <div class="col-md-8">
+                    CSS Full Name
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="compliance_1" onclick="compliance(this);" value="10" id="compliance_pass_1" required="">
+                    <label for="compliance_pass_1">Pass</label>
+                    <input type="radio" name="compliance_1" onclick="compliance(this);" value="0" id="compliance_fatal_1">
+                    <label for="compliance_fatal_1">Fatal</label>
+                </div>
+            </div>
+            <div class="row mt-3 fatal">
+                <div class="col-md-8">
+                    AmeriSave Mortgage Corporation
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="compliance_2" onclick="compliance(this);" value="15" id="compliance_pass_2" required="">
+                    <label for="compliance_pass_2">Pass</label>
+                    <input type="radio" name="compliance_2" onclick="compliance(this);" value="0" id="compliance_fatal_2">
+                    <label for="compliance_fatal_2">Fatal</label>
+                </div>
+            </div>
+            <div class="row mt-3 fatal">
+                <div class="col-md-8">
+                    Recorded Line
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="compliance_3" onclick="compliance(this);" value="15" id="compliance_pass_3" required="">
+                    <label for="compliance_pass_3">Pass</label>
+                    <input type="radio" name="compliance_3" onclick="compliance(this);" value="0" id="compliance_fatal_3">
+                    <label for="compliance_fatal_3">Fatal</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8 score">
+                    Compliance Score
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control scoree" name="compliance_score" id="compliance_score" value="Select appropriate option for ALL to see score">
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>IMCI Compliance</h4>
+                </div>
+            </div>
+            <div class="row mt-3 fatal">
+                <div class="col-md-8">
+                    Pre-qualified for a loan with AMC
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="compliance_1" onclick="compliance(this);" value="10" id="imci_compliance_pass_1" required="">
+                    <label for="compliance_pass_1">Pass</label>
+                    <input type="radio" name="compliance_1" onclick="compliance(this);" value="0" id="imci_compliance_fatal_1">
+                    <label for="compliance_fatal_1">Fatal</label>
+                </div>
+            </div>
+            <div class="row mt-3 fatal">
+                <div class="col-md-8">
+                    Did CSS read Fine Print verbatim and completely?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" name="compliance_2" onclick="compliance(this);" value="15" id="imci_compliance_pass_2" required="">
+                    <label for="compliance_pass_2">Pass</label>
+                    <input type="radio" name="compliance_2" onclick="compliance(this);" value="0" id="imci_compliance_fatal_2">
+                    <label for="compliance_fatal_2">Fatal</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8 score">
+                    Compliance Score
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control scoree" name="imci_compliance_score" id="imci_compliance_score" value="Select appropriate option for ALL to see score">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="viewscore" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Full Score</h5><p class="mt-2"> (Please select all the options to see score)</p>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div align="center">
+                <h1 id="myscore"></h1>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script type="text/javascript">
+    var n=0;
+    var score1;
+    var p1no = document.getElementById('no1');
+    var p1yes = document.getElementById('yes1');
+    var p1na = document.getElementById('na_1');
+
+    var p3no = document.getElementById('no3');
+    var p3yes = document.getElementById('yes3');
+
+    var p4no = document.getElementById('no4');
+    var p4yes = document.getElementById('yes4');
+
+    var p6no = document.getElementById('no6');
+    var p6yes = document.getElementById('yes6');
+    var p6na = document.getElementById('na1');
+
+    var p7no = document.getElementById('no7');
+    var p7yes = document.getElementById('yes7');
+    var p7na = document.getElementById('na2');
+
+    var p8yes = document.getElementById('yes8');
+    var p8no = document.getElementById('no8');
+    var p11yes = document.getElementById('yes11');
+    var p11no = document.getElementById('no11');
+    var p15yes = document.getElementById('yes15');
+    var p15na = document.getElementById('na15');
+    var p15no = document.getElementById('no15');
+    var p17no = document.getElementById('no17');
+    var p17yes = document.getElementById('yes17');
+    var p17na = document.getElementById('na5');
+
+
+    var p18no = document.getElementById('no18');
+    var p18yes = document.getElementById('yes18');
+    var p18na = document.getElementById('na6');
+
+    var pass1 = document.getElementById('pass1');
+    var fatal1 = document.getElementById('fatal1');
+
+    fatal1.addEventListener('click', function(){
+        document.getElementById('expectations').classList.remove("d-none");
+        document.querySelector('input[name="expe_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="expe_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="expe_3"]').setAttribute("required", "required");
+    });
+    pass1.addEventListener('click', function(){
+        document.getElementById('expectations').classList.add("d-none");
+        document.querySelector('input[name="expe_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="expe_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="expe_3"]').removeAttribute("required", "required");
+    });
+    p15no.addEventListener('click', function(){
+        document.getElementById('curation').classList.remove("d-none");
+        document.querySelector('input[name="cura_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="cura_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="cura_3"]').setAttribute("required", "required");
+    });
+    p15yes.addEventListener('click', function(){
+        document.getElementById('curation').classList.add("d-none");
+        document.querySelector('input[name="cura_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="cura_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="cura_3"]').removeAttribute("required", "required");
+    });
+    p15na.addEventListener('click', function(){
+        document.getElementById('curation').classList.add("d-none");
+        document.querySelector('input[name="cura_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="cura_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="cura_3"]').removeAttribute("required", "required");
+    });
+
+    p11no.addEventListener('click', function(){
+        document.getElementById('process').classList.remove("d-none");
+        document.querySelector('input[name="proc_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_4"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_5"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_6"]').setAttribute("required", "required");
+        document.querySelector('input[name="proc_7"]').setAttribute("required", "required");
+    });
+    p11yes.addEventListener('click', function(){
+        document.getElementById('process').classList.add("d-none");
+        document.querySelector('input[name="proc_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_4"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_5"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_6"]').removeAttribute("required", "required");
+        document.querySelector('input[name="proc_7"]').removeAttribute("required", "required");
+    });
+    p8no.addEventListener('click', function(){
+        document.getElementById('grammer').classList.remove("d-none");
+        document.querySelector('input[name="gram_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="gram_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="gram_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="gram_4"]').setAttribute("required", "required");
+        document.querySelector('input[name="gram_5"]').setAttribute("required", "required");
+        document.querySelector('input[name="gram_6"]').setAttribute("required", "required");
+    });
+    p8yes.addEventListener('click', function(){
+        document.getElementById('grammer').classList.add("d-none");
+        document.querySelector('input[name="gram_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="gram_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="gram_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="gram_4"]').removeAttribute("required", "required");
+        document.querySelector('input[name="gram_5"]').removeAttribute("required", "required");
+        document.querySelector('input[name="gram_6"]').removeAttribute("required", "required");
+    });
+
+    p1no.addEventListener('click', function(){
+        document.getElementById('chat').classList.remove("d-none");
+        document.querySelector('input[name="chat_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="chat_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="chat_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="chat_4"]').setAttribute("required", "required");
+        document.querySelector('input[name="chat_5"]').setAttribute("required", "required");
+        document.querySelector('input[name="chat_6"]').setAttribute("required", "required");
+    });
+    p1yes.addEventListener('click', function(){
+        document.getElementById('chat').classList.add("d-none");
+        document.querySelector('input[name="chat_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_4"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_5"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_6"]').removeAttribute("required", "required");
+    });
+    p1na.addEventListener('click', function(){
+        document.getElementById('chat').classList.add("d-none");
+        document.querySelector('input[name="chat_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_4"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_5"]').removeAttribute("required", "required");
+        document.querySelector('input[name="chat_6"]').removeAttribute("required", "required");
+    });
+
+    p3no.addEventListener('click', function(){
+        document.getElementById('personalisation').classList.remove("d-none");
+        document.querySelector('input[name="pers_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="pers_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="pers_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="pers_4"]').setAttribute("required", "required");
+        document.querySelector('input[name="pers_5"]').setAttribute("required", "required");
+        document.querySelector('input[name="pers_6"]').setAttribute("required", "required");
+    });
+    p3yes.addEventListener('click', function(){
+        document.getElementById('personalisation').classList.add("d-none");
+        document.querySelector('input[name="pers_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pers_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pers_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pers_4"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pers_5"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pers_6"]').removeAttribute("required", "required");
+    });
+    
+    p4no.addEventListener('click', function(){
+        document.getElementById('assurance').classList.remove("d-none");
+        document.querySelector('input[name="assu_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="assu_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="assu_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="assu_4"]').setAttribute("required", "required");
+        document.querySelector('input[name="assu_5"]').setAttribute("required", "required");
+    });
+    p4yes.addEventListener('click', function(){
+        document.getElementById('assurance').classList.add("d-none");
+        document.querySelector('input[name="assu_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="assu_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="assu_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="assu_4"]').removeAttribute("required", "required");
+        document.querySelector('input[name="assu_5"]').removeAttribute("required", "required");
+    });
+    
+    p6no.addEventListener('click', function(){
+        document.getElementById('probing').classList.remove("d-none");
+        document.querySelector('input[name="prob_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="prob_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="prob_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="prob_4"]').setAttribute("required", "required");
+    });
+    p6yes.addEventListener('click', function(){
+        document.getElementById('probing').classList.add("d-none");
+        document.querySelector('input[name="prob_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="prob_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="prob_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="prob_4"]').removeAttribute("required", "required");
+    });
+    p6na.addEventListener('click', function(){
+        document.getElementById('probing').classList.add("d-none");
+        document.querySelector('input[name="prob_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="prob_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="prob_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="prob_4"]').removeAttribute("required", "required");
+    });
+    
+    p7no.addEventListener('click', function(){
+        document.getElementById('interaction').classList.remove("d-none");
+        document.querySelector('input[name="inte_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="inte_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="inte_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="inte_4"]').setAttribute("required", "required");
+        document.querySelector('input[name="inte_5"]').setAttribute("required", "required");
+        document.querySelector('input[name="inte_6"]').setAttribute("required", "required");
+        document.querySelector('input[name="inte_7"]').setAttribute("required", "required");
+    });
+    p7yes.addEventListener('click', function(){
+        document.getElementById('interaction').classList.add("d-none");
+        document.querySelector('input[name="inte_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_4"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_5"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_6"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_7"]').removeAttribute("required", "required");
+    });
+    p7na.addEventListener('click', function(){
+        document.getElementById('interaction').classList.add("d-none");
+        document.querySelector('input[name="inte_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_4"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_5"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_6"]').removeAttribute("required", "required");
+        document.querySelector('input[name="inte_7"]').removeAttribute("required", "required");
+    });
+    
+    p17no.addEventListener('click', function(){
+        document.getElementById('chathold').classList.remove("d-none");
+        document.querySelector('input[name="hold_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="hold_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="hold_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="hold_4"]').setAttribute("required", "required");
+    });
+    p17yes.addEventListener('click', function(){
+        document.getElementById('chathold').classList.add("d-none");
+        document.querySelector('input[name="hold_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="hold_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="hold_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="hold_4"]').removeAttribute("required", "required");
+    });
+    p17na.addEventListener('click', function(){
+        document.getElementById('chathold').classList.add("d-none");
+        document.querySelector('input[name="hold_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="hold_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="hold_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="hold_4"]').removeAttribute("required", "required");
+    });
+
+    p18no.addEventListener('click', function(){
+        document.getElementById('pekb').classList.remove("d-none");
+        document.querySelector('input[name="pekb_1"]').setAttribute("required", "required");
+        document.querySelector('input[name="pekb_2"]').setAttribute("required", "required");
+        document.querySelector('input[name="pekb_3"]').setAttribute("required", "required");
+        document.querySelector('input[name="pekb_4"]').setAttribute("required", "required");
+    });
+    p18yes.addEventListener('click', function(){
+        document.getElementById('pekb').classList.add("d-none");
+        document.querySelector('input[name="pekb_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pekb_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pekb_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pekb_4"]').removeAttribute("required", "required");
+    });
+    p18na.addEventListener('click', function(){
+        document.getElementById('pekb').classList.add("d-none");
+        document.querySelector('input[name="pekb_1"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pekb_2"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pekb_3"]').removeAttribute("required", "required");
+        document.querySelector('input[name="pekb_4"]').removeAttribute("required", "required");
+    });
+        
+    function score(e) {
+        n=n+1;
+        var ce_score = document.querySelector('input[name="my_score"]');
+        var p1 = parseInt(document.querySelector('input[name="p1"]:checked').value);
+        var p2 = parseInt(document.querySelector('input[name="p2"]:checked').value);
+        var p3 = parseInt(document.querySelector('input[name="p3"]:checked').value);
+        var p4 = parseInt(document.querySelector('input[name="p4"]:checked').value);
+        var p5 = parseInt(document.querySelector('input[name="p5"]:checked').value);
+        var p6 = parseInt(document.querySelector('input[name="p6"]:checked').value);
+        var p7 = parseInt(document.querySelector('input[name="p7"]:checked').value);
+        var p8 = parseInt(document.querySelector('input[name="p8"]:checked').value);
+        var p9 = parseInt(document.querySelector('input[name="p18"]:checked').value);
+        var p10 = parseInt(document.querySelector('input[name="p10"]:checked').value);
+        var p11 = parseInt(document.querySelector('input[name="p11"]:checked').value);
+        var p12 = parseInt(document.querySelector('input[name="p12"]:checked').value);
+        var p13 = parseInt(document.querySelector('input[name="p13"]:checked').value);
+        var p14 = parseInt(document.querySelector('input[name="p14"]:checked').value);
+        var p15 = parseInt(document.querySelector('input[name="p15"]:checked').value);
+        var p16 = parseInt(document.querySelector('input[name="p16"]:checked').value);
+        var p17 = parseInt(document.querySelector('input[name="p17"]:checked').value);
+        var p19 = parseInt(document.querySelector('input[name="p19"]:checked').value);
+        for (var i = 0; i <= n; i++) {
+            ce_score.value = p1+p2+p3+p4+p5+p6+p7+p8+p9+p10+p11+p12+p13+p14+p15+p16+p17+p19;
+        }
+        if (ce_score.value < 100) {
+            ce_score.classList.add("less");
+            ce_score.classList.remove("perfect");
+        }
+        else {
+            ce_score.classList.remove("less");
+            ce_score.classList.add("perfect");
+        }
+        score1 = parseInt(ce_score.value);
+    }
+    function full_score(e) {
+        var fatal2 = document.querySelector('input[name="fatal2"]:checked').value;
+        var fatal1 = document.querySelector('input[name="fatal1"]:checked').value;
+        var fullscore = document.getElementById('myscore');
+        n=n+1;
+        if ((fatal2 == "fatal" ) || ( fatal1 == "fatal" )){
+            fullscore.innerHTML = 0;
+        }
+        else {
+            for (var i = 0; i <= n; i++) {
+                fullscore.innerHTML = score1;
+            }
+        }
+    }
+
+</script>
+{% endblock %}

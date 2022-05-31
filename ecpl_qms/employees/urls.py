@@ -23,6 +23,7 @@ urlpatterns = [
     path('practo-new-version',practoNewVersion),
     path('practo-chat',PractoWithSubCategoryFunc),
     path('ilm-email-chat',ilmEMailChat),
+    # path('amerisave', Amerisave),
     path('abh-form-update',abhFormSAve),
     path('nerotel-inbound', nerotelInbound),
     path('spoiled-child-email', spoiledChildEmail),

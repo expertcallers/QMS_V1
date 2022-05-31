@@ -1168,3 +1168,8 @@ class EmbassyLuxuryInboundMonFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmbassyLuxuryInboundMonForm
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class VenwizOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VenwizOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']

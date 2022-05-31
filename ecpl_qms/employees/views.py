@@ -55,7 +55,7 @@ list_of_monforms = [ # OutBound
                         CentralMortgageFundingOutboundmonform, RapidMortgageOutboundmonform, LinenFinderOutboundmonform,
                         BridanAssociatesOutboundmonform, BetterEdOutboundmonform, Com98Outboundmonform,
                         GretnaMedicalCentreOutboundmonform, AristaMDOutboundmonform,
-                        RobertDamonProductionOutboundmonform,
+                        RobertDamonProductionOutboundmonform, VenwizOutboundmonform,
 
                         # Inbound
                         MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
@@ -117,6 +117,7 @@ list_of_monforms = [ # OutBound
 
 #Index
 def index(request):
+    # Profile.objects.get(emp_id=)
     return render(request,'index.html')
 #Okay
 
@@ -1267,6 +1268,11 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Venwiz Outbound':
+        coaching = VenwizOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2278,6 +2284,11 @@ def coachingViewQaDetailed(request,process,pk):
 
     elif process_name == 'Robert Damon Production Outbound':
         coaching = RobertDamonProductionOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Venwiz Outbound':
+        coaching = VenwizOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -3929,6 +3940,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Robert Damon Production Outbound':
             response = exportAadyaseries(RobertDamonProductionOutboundmonform)
+            return response
+
+        elif campaign == 'Venwiz Outbound':
+            response = exportAadyaseries(VenwizOutboundmonform)
             return response
 
         ######## Inbound ###############################
@@ -6387,6 +6402,10 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(RobertDamonProductionOutboundmonform)
             return response
 
+        elif campaign == 'Venwiz Outbound':
+            response = exportAadyaseries(VenwizOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -8795,6 +8814,10 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'Robert Damon Production Outbound':
             newseriesAddCoaching(RobertDamonProductionOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Venwiz Outbound':
+            newseriesAddCoaching(VenwizOutboundmonform)
             return redirect('/employees/qahome')
 
         else:
@@ -12627,6 +12650,9 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': EmbassyLuxuryInboundMonForm.objects.all(),
          'serializer_class': EmbassyLuxuryInboundMonFormSerializer},
+
+        {'queryset': VenwizOutboundmonform.objects.all(),
+         'serializer_class': VenwizOutboundmonformSerializer},
     ]
 
 
