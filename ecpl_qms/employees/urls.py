@@ -23,7 +23,7 @@ urlpatterns = [
     path('practo-new-version', practoNewVersion),
     path('practo-chat', PractoWithSubCategoryFunc),
     path('ilm-email-chat', ilmEMailChat),
-    # path('amerisave', Amerisave),
+    path('amerisave', Amerisave),
     path('abh-form-update', abhFormSAve),
     path('nerotel-inbound', nerotelInbound),
     path('spoiled-child-email', spoiledChildEmail),
@@ -97,7 +97,6 @@ urlpatterns = [
 
     path('delete', deleteData),
     path('campaigns', campaignDetails),
-
 
     path('password-reset', PasswordReset),
 

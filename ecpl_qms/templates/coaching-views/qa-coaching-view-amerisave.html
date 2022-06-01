@@ -1,0 +1,412 @@
+{% extends 'base.html' %}
+{% block main %}
+
+<style type="text/css" xmlns="http://www.w3.org/1999/html">
+        .fatal {
+            color: red;
+        }
+        #sec1_score {
+            border: none;
+            background: #ECECF3;
+            padding: 0 10px;
+        }
+        label {
+            margin-right: 30px;
+        }
+        .score {
+            font-size: 18px;
+            color: green;
+            font-weight: 600;
+        }
+        h4 {
+            color: #010162;
+            font-weight: 800;
+        }
+        .container-fluid.class, .container.class {
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(0,0,0,.1);
+        }
+        .less {
+            background: red !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        .perfect{
+            background: green !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        #myscore{
+            color: green;
+            font-weight: 800;
+        }
+        input[type="radio"] {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            transform: scale(1.5);
+        }
+        input[type="text"].scoree {
+            font-size: 12px;
+        }
+        .btn-success {
+            color: white;
+            background-color: green !important;
+            border-color: green !important;
+            padding: 3px 30px;
+        }
+        @media (min-width:768px) {
+            body {
+                margin: 0 80px;
+            }
+        }
+        @media (max-width:768px) {
+            body {
+                margin: 0 20px;
+            }
+        }
+        #last .row .col-md-6{
+            border: 1px solid #e5e5e5;
+            padding-top: 15px;
+        }
+        #last .noborder .col-md-6 {
+            padding-top: 10px;
+            text-align: center;
+        }
+        #last .noborder .col-md-6{
+            border-right: 1px solid #e5e5e5;
+            margin-top: -10px;
+            padding-top: 10px;
+            text-align: center;
+        }
+        #last .noborder .col-md-6 h4 {
+            font-size: 24px !important;
+        }
+        #last .row .col-md-6 h4{
+            font-size: 18px;
+        }
+        .fields .row .col-md-3{
+            padding: 5px 25px;
+        }
+        .fields .row .col-md-3 .row .col-md-6{
+            border: 1px solid #e5e5e5;
+        }
+        .fields .row .col-md-3 .row .col-md-6 h4{
+            color: #000;
+            padding-top: 8px;
+            font-size: 18px;
+        }
+        .fields .row .col-md-3 .row .col-md-6 p{
+            padding-top: 6px;
+            margin-bottom: 0px;
+        }
+        .smallp {
+            font-size: 12px;
+        }
+    </style>
+    <div class="container class pt-5 mt-5">
+        <div class="row">
+            <div class="col-md-12" align="center">
+                <h2>Audit Report - Amerisave</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid class fields">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Associate Name</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.associate_name}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Employee ID</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.emp_id}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Type - Inbound/Outbound</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.category}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Lead Source</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.lead_source}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Customer ID</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.customer_id}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Transfer/Non-transfer</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.transfer}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Call Date</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.call_date}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Audit Date</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.audit_date}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Quality Analyst</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.qa}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Team Lead</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.team_lead}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Manager</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.manager}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>AM</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.am}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Week</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{coaching.week}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container class mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>NCE</h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Did CSS adhere to the script associated with the lead source?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="nce_1">{{coaching.nce_1}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                What was the consumer's main objection?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="nce_2">{{coaching.nce_2}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Did CSS attempt to overcome objections?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="nce_3">{{coaching.nce_3}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8">
+                Transfer Only: Did CSS properly transfer the customer to sales?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="nce_4">{{coaching.nce_4}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score">
+                NCE Section Score
+            </div>
+            <div class="col-md-4">
+                <h5 id="nce_score">{{coaching.nce_total}}</h5>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container class mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Compliance</h4>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+                Did CSS disposition call correctly?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="t_1">{{coaching.compliance_1}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+               CSS Full Name
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="t_2">{{coaching.compliance_2}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+                AmeriSave Mortgage Corporation
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="t_3">{{coaching.compliance_3}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+                Recorded Line
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="t_4">{{coaching.compliance_4}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+                Pre-qualified for a loan with AMC
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="t_5">{{coaching.compliance_5}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3 fatal">
+            <div class="col-md-8">
+                Did CSS read Fine Print verbatim and completely?
+            </div>
+            <div class="col-md-4 form-group">
+                <h5 id="t_6">{{coaching.compliance_6}}</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8 score">
+                Compliance Section Score
+            </div>
+            <div class="col-md-4">
+                <h5 id="t_score">{{coaching.compliance_total}}</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pb-5" id="last">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Areas of improvement</h4>
+            </div>
+            <div class="col-md-6">
+                <p>{{coaching.areas_improvement}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Positives</h4>
+            </div>
+            <div class="col-md-6">
+                <p>{{coaching.positives}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Comments</h4>
+            </div>
+            <div class="col-md-6">
+                <p>{{coaching.comments}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>If Fail, Which Type</h4>
+            </div>
+            <div class="col-md-6">
+                <p>{{coaching.fail_type}}</p>
+            </div>
+        </div>
+        <div class="row mt-5 noborder">
+            <div class="col-md-6">
+                <h5>Total Score</h5>
+            </div>
+            <div class="col-md-6">
+                <h4 id="tot_score">{{coaching.overall_score}}</h4>
+            </div>
+            <div class="col-md-12 mt-3" align="center">
+                <a href="#" class="btn btn-info btn-lg">Back</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
