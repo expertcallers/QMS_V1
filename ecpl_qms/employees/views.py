@@ -130,7 +130,7 @@ list_of_monforms = [  # OutBound
 # Index
 def index(request):
     # Profile.objects.get(emp_id=)
-    return render(request, 'mon-forms/amerisave.html')
+    return render(request, 'index.html')
 
 
 # Okay
