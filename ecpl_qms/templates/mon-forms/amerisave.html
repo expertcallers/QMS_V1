@@ -191,30 +191,30 @@
                     What was the consumer's main objection?
                 </div>
                 <div class="col-md-4 form-group">
-<!--                    <select class="form-control" required name="nce_2" onchange="nce(this)">-->
-<!--                        <option value="" selected disabled>&#45;&#45; Please Select &#45;&#45;</option>\-->
-<!--                        <option value="HELOC">HELOC</option>-->
-<!--                        <option value="Not Ready">Not Ready</option>-->
-<!--                        <option value="Not Interested">Not Interested</option>-->
-<!--                        <option value="Busy">Busy</option>-->
-<!--                        <option value="Another Lender">Another Lender</option>-->
-<!--                        <option value="DNC">DNC</option>-->
-<!--                        <option value="Email Only">Email Only</option>-->
-<!--                        <option value="Too Many Calls">Too Many Calls</option>-->
-<!--                        <option value="Government Money">Government Money</option>-->
-<!--                        <option value="Can't Help Me">Can't Help Me</option>-->
-<!--                        <option value="Not Decision Maker">Not Decision Maker</option>-->
-<!--                        <option value="Credit Pull">Credit Pull</option>-->
-<!--                        <option value="N/A">N/A</option>-->
-<!--                        <option value="Never Inquired">Never Inquired</option>-->
-<!--                        <option value="Prop Type Issue">Prop Type Issue</option>-->
-<!--                    </select>-->
-                    <input type="radio" name="nce_2" onclick="nce(this);" value="5" id="nce_yes_2" required="">
-                    <label for="nce_yes_2">Yes</label>
-                    <input type="radio" name="nce_2" onclick="nce(this);" value="0" id="nce_no_2">
-                    <label for="nce_no_2">No</label>
-                    <input type="radio" name="nce_2" onclick="nce(this);" value="5" id="nce_na_2">
-                    <label for="nce_na_2">NA</label>
+                    <select class="form-control" required name="nce_2">
+                        <option value="" selected disabled>-- Please Select --</option>
+                        <option value="HELOC">HELOC</option>
+                        <option value="Not Ready">Not Ready</option>
+                        <option value="Not Interested">Not Interested</option>
+                        <option value="Busy">Busy</option>
+                        <option value="Another Lender">Another Lender</option>
+                        <option value="DNC">DNC</option>
+                        <option value="Email Only">Email Only</option>
+                        <option value="Too Many Calls">Too Many Calls</option>
+                        <option value="Government Money">Government Money</option>
+                        <option value="Can't Help Me">Can't Help Me</option>
+                        <option value="Not Decision Maker">Not Decision Maker</option>
+                        <option value="Credit Pull">Credit Pull</option>
+                        <option value="N/A">N/A</option>
+                        <option value="Never Inquired">Never Inquired</option>
+                        <option value="Prop Type Issue">Prop Type Issue</option>
+                    </select>
+<!--                    <input type="radio" name="nce_2" onclick="nce(this);" value="5" id="nce_yes_2" required="">-->
+<!--                    <label for="nce_yes_2">Yes</label>-->
+<!--                    <input type="radio" name="nce_2" onclick="nce(this);" value="0" id="nce_no_2">-->
+<!--                    <label for="nce_no_2">No</label>-->
+<!--                    <input type="radio" name="nce_2" onclick="nce(this);" value="5" id="nce_na_2">-->
+<!--                    <label for="nce_na_2">NA</label>-->
                 </div>
             </div>
             <div class="row mt-3">
@@ -248,7 +248,7 @@
                     NCE Section Score
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control scoree" name="nce_score" id="nce_score" value="Select appropriate option for ALL to see score">
+                    <input type="text" class="form-control scoree" name="nce_score" readonly id="nce_score" value="Select appropriate option for ALL to see score">
                 </div>
             </div>
         </div>
@@ -264,11 +264,11 @@
                     Did CSS disposition call correctly?
                 </div>
                 <div class="col-md-4 form-group">
-                    <input type="radio" name="compliance_1" onclick="compliance(this);" value="12" id="compliance_yes_1" required="">
+                    <input type="radio" name="compliance_1" onclick="compliance(this);" value="15" id="compliance_yes_1" required="">
                     <label for="compliance_yes_1">Yes</label>
                     <input type="radio" name="compliance_1" onclick="compliance(this);" value="0" id="compliance_no_1">
                     <label for="compliance_no_1">No</label>
-                    <input type="radio" name="compliance_1" onclick="compliance(this);" value="12" id="compliance_na_1">
+                    <input type="radio" name="compliance_1" onclick="compliance(this);" value="15" id="compliance_na_1">
                     <label for="compliance_na_1">NA</label>
                 </div>
             </div>
@@ -331,11 +331,11 @@
                     Did CSS read Fine Print verbatim and completely?
                 </div>
                 <div class="col-md-4 form-group">
-                    <input type="radio" name="compliance_6" onclick="compliance(this);" value="15" id="compliance_yes_6" required="">
+                    <input type="radio" name="compliance_6" onclick="compliance(this);" value="17" id="compliance_yes_6" required="">
                     <label for="compliance_yes_6">Yes</label>
                     <input type="radio" name="compliance_6" onclick="compliance(this);" value="0" id="compliance_no_6">
                     <label for="compliance_no_6">No</label>
-                    <input type="radio" name="compliance_6" onclick="compliance(this);" value="15" id="compliance_na_6">
+                    <input type="radio" name="compliance_6" onclick="compliance(this);" value="17" id="compliance_na_6">
                     <label for="compliance_na_6">NA</label>
                 </div>
             </div>
@@ -345,7 +345,7 @@
                     Compliance Section Score
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control scoree" name="compliance_score" id="compliance_score" value="Select appropriate option for ALL to see score">
+                    <input type="text" class="form-control scoree" name="compliance_score" id="compliance_score" readonly value="Select appropriate option for ALL to see score">
                 </div>
             </div>
         </div>
@@ -429,13 +429,12 @@
         n=n+1;
         var nce_score = document.querySelector('input[name="nce_score"]');
         var nce_1 = parseInt(document.querySelector('input[name="nce_1"]:checked').value);
-        var nce_2 = parseInt(document.querySelector('input[name="nce_2"]:checked').value);
         var nce_3 = parseInt(document.querySelector('input[name="nce_3"]:checked').value);
         var nce_4 = parseInt(document.querySelector('input[name="nce_4"]:checked').value);
         for (var i = 0; i <= n; i++) {
-            nce_score.value = nce_1+nce_2+nce_3+nce_4;
+            nce_score.value = nce_1+nce_3+nce_4;
         }
-        if (nce_score.value < 20) {
+        if (nce_score.value < 15) {
             nce_score.classList.add("less");
             nce_score.classList.remove("perfect");
         }
@@ -463,7 +462,7 @@
         for (var i = 0; i <= n; i++) {
             comp_score.value = comp_1+comp_2+comp_3+comp_4+comp_5+comp_6;
         }
-        if (comp_score.value < 80) {
+        if (comp_score.value < 85) {
             comp_score.classList.add("less");
             comp_score.classList.remove("perfect");
         }

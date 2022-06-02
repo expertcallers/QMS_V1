@@ -9961,10 +9961,10 @@ def Amerisave(request):
 
         # NCE
         nce_1 = int(request.POST['nce_1'])
-        nce_2 = int(request.POST['nce_2'])
+        nce_2 = request.POST['nce_2']
         nce_3 = int(request.POST['nce_3'])
         nce_4 = int(request.POST['nce_4'])
-        nce_total = nce_1 + nce_2 + nce_3 + nce_4
+        nce_total = nce_1 + nce_3 + nce_4
 
         # Compliance
         compliance_1 = int(request.POST['compliance_1'])
