@@ -1268,3 +1268,13 @@ class AmerisaveMonFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = AmerisaveMonForm
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class CityHabitatOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CityHabitatOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class OptelOutboundmonformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OptelOutboundmonform
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']

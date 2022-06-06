@@ -64,7 +64,8 @@ list_of_monforms = [  # OutBound
     CentralMortgageFundingOutboundmonform, RapidMortgageOutboundmonform, LinenFinderOutboundmonform,
     BridanAssociatesOutboundmonform, BetterEdOutboundmonform, Com98Outboundmonform,
     GretnaMedicalCentreOutboundmonform, AristaMDOutboundmonform,
-    RobertDamonProductionOutboundmonform, VenwizOutboundmonform,
+    RobertDamonProductionOutboundmonform, VenwizOutboundmonform, CityHabitatOutboundmonform,
+    OptelOutboundmonform,
 
     # Inbound
     MasterMonitoringFormTonnCoaInboundCalls, SomethingsBrewingInbound, PrinterPixMasterMonitoringFormInboundCalls,
@@ -1305,6 +1306,16 @@ def coachingViewAgents(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'City Habitat Outbound':
+        coaching = CityHabitatOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Optel Outbound':
+        coaching = OptelOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2324,6 +2335,16 @@ def coachingViewQaDetailed(request, process, pk):
 
     elif process_name == 'Venwiz Outbound':
         coaching = VenwizOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'City Habitat Outbound':
+        coaching = CityHabitatOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Optel Outbound':
+        coaching = OptelOutboundmonform.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -4003,6 +4024,14 @@ def exportAuditReport(request):
 
         elif campaign == 'Venwiz Outbound':
             response = exportAadyaseries(VenwizOutboundmonform)
+            return response
+
+        elif campaign == 'City Habitat Outbound':
+            response = exportAadyaseries(CityHabitatOutboundmonform)
+            return response
+
+        elif campaign == 'Optel Outbound':
+            response = exportAadyaseries(OptelOutboundmonform)
             return response
 
         ######## Inbound ###############################
@@ -6536,6 +6565,14 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(VenwizOutboundmonform)
             return response
 
+        elif campaign == 'City Habitat Outbound':
+            response = exportAadyaseries(CityHabitatOutboundmonform)
+            return response
+
+        elif campaign == 'Optel Outbound':
+            response = exportAadyaseries(OptelOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -9021,6 +9058,16 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'Venwiz Outbound':
             newseriesAddCoaching(VenwizOutboundmonform)
+            return redirect('/employees/qahome')
+
+
+        elif campaign_name == 'City Habitat Outbound':
+            newseriesAddCoaching(CityHabitatOutboundmonform)
+            return redirect('/employees/qahome')
+
+
+        elif campaign_name == 'Optel Outbound':
+            newseriesAddCoaching(OptelOutboundmonform)
             return redirect('/employees/qahome')
 
         else:
@@ -12953,4 +13000,10 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': AmerisaveMonForm.objects.all(),
          'serializer_class': AmerisaveMonFormSerializer},
+
+        {'queryset': CityHabitatOutboundmonform.objects.all(),
+         'serializer_class': CityHabitatOutboundmonformSerializer},
+
+        {'queryset': OptelOutboundmonform.objects.all(),
+         'serializer_class': OptelOutboundmonformSerializer},
     ]
