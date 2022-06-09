@@ -102,6 +102,9 @@ urlpatterns = [
 
     path('allprofileupdate', AllProfileUpdate),
 
+
+    path('delete-audits', DeleteTestAudits),
+
     # Edit RMS
     path('edit-team-rms', editTeamRMS),
     # All Coaching Forms

@@ -19,6 +19,7 @@ from . import forms
 from .serializers import *
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.db.models import Q
 
 list_of_monforms = [  # OutBound
     MonitoringFormLeadsAadhyaSolution, AccutimeMonForm, MonitoringFormLeadsAdvanceConsultants,
@@ -12237,8 +12238,13 @@ def AllProfileUpdate(request):
                 j.save()
 
 
+def DeleteTestAudits(request):
+    for i in list_of_monforms:
+        i.objects.filter(Q(added_by='5670') | Q(added_by='Ranjitha M')).delete()
+    return redirect('/')
+
+
 # EDit Team RM
-from django.db.models import Q
 
 
 def createUserAndProfile(request):
