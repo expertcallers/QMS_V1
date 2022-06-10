@@ -82,7 +82,7 @@ list_of_monforms = [  # OutBound
     SanaLifeScienceInbound, MonitoringFormMobile22InboundCalls, XportDigitalInboundMonForm, CalistaInboundMonForm,
     ThirdWaveInboundMonForm, HardHatTechnologiesInboundMonForm, GretnaMedicalCenterInboundMonForm,
     BetterEdInboundMonForm, Com98InboundMonForm, OpenWindsInboundMonForm,
-    EmbassyLuxuryInboundMonForm,
+    EmbassyLuxuryInboundMonForm, SouthCountyInboundMonForm,
 
     # Email/CHat
     SuperPlayMonForm, DanielWellinChatEmailMonForm, TerraceoChatEmailMonForm, TonnChatsEmailNewMonForm,
@@ -1500,6 +1500,11 @@ def coachingViewAgents(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'South County Inbound':
+        coaching = SouthCountyInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -2533,6 +2538,11 @@ def coachingViewQaDetailed(request, process, pk):
 
     elif process_name == 'Embassy Luxury Inbound':
         coaching = EmbassyLuxuryInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'South County Inbound':
+        coaching = SouthCountyInboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
@@ -4252,6 +4262,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Embassy Luxury Inbound':
             response = exportinbound(EmbassyLuxuryInboundMonForm)
+            return response
+
+        elif campaign == 'South County Inbound':
+            response = exportinbound(SouthCountyInboundMonForm)
             return response
 
         #########    Email/CHat ##########################
@@ -6790,6 +6804,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Embassy Luxury Inbound':
             response = exportinbound(EmbassyLuxuryInboundMonForm)
+            return response
+
+        elif campaign == 'South County Inbound':
+            response = exportinbound(SouthCountyInboundMonForm)
             return response
 
         #########    Email/CHat ##########################
@@ -9463,6 +9481,10 @@ def newSeriesInboundForms(request):
 
         elif campaign_name == 'Embassy Luxury Inbound':
             inboundAddCoaching(EmbassyLuxuryInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'South County Inbound':
+            inboundAddCoaching(SouthCountyInboundMonForm)
             return redirect('/employees/qahome')
 
 
@@ -13012,4 +13034,7 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': OptelOutboundmonform.objects.all(),
          'serializer_class': OptelOutboundmonformSerializer},
+
+        {'queryset': SouthCountyInboundMonForm.objects.all(),
+         'serializer_class': SouthCountyInboundMonFormSerializer},
     ]
