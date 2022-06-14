@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
@@ -9,7 +10,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.template.loader import get_template
 import django_pivot.pivot
 from django.core.mail import send_mail, EmailMessage
-from django.db.models import Count,Avg,Sum
+from django.db.models import Count, Avg, Sum
 import xlwt
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -18,121 +19,148 @@ from . import forms
 from .serializers import *
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.db.models import Q
 
-list_of_monforms = [ # OutBound
-                        MonitoringFormLeadsAadhyaSolution,AccutimeMonForm,MonitoringFormLeadsAdvanceConsultants,
-                        MonitoringFormLeadsAllenConsulting,CamIndustrialMonForm,CitizenCapitalMonForm,MonitoringFormLeadsCitySecurity,
-                        MonitoringFormLeadsCTS,EmbassyLuxuryMonForm,MonitoringFormLeadsGetARates,GlydeAppMonForm,GoldenEastMonForm,IbizMonForm,
-                        IIBMonForm,MonitoringFormLeadsInfothinkLLC,MonitoringFormLeadsInsalvage,JJStudioMonForm,KalkiFashions,MonitoringFormLeadsLouisville,
-                        MonitoringFormLeadsMedicare,MicroDistributingMonForm,MillenniumScientificMonForm,MTCosmeticsMonForm,NavigatorBioMonForm,OptimalStudentLoanMonForm,
-                        ProtostarMonForm,MonitoringFormLeadsPSECU,QBIQMonForm,RestaurentSolMonForm,RitBrainMonForm,
-                        RoofWellMonForm,ScalaMonForm,SolarCampaignMonForm,StandSpotMonForm,MonitoringFormLeadsSystem4,MonitoringFormLeadsTentamusFood,MonitoringFormLeadsTentamusPet,
-                        TerraceoLeadMonForm,UpfrontOnlineLLCMonform,WTUMonForm,YesHealthMolinaMonForm,ZeroStressMarketingMonForm,
-                        ABHindalcoOutboundMonForm,AdityaBirlaOutboundMonForm,AmerisaveoutboundMonForm,BhagyaLakshmiOutbound,
-                        ClearViewOutboundMonForm,DanielWellingtonOutboundMonForm,DigitalSwissGoldOutboundMonForm,HealthyplusOutboundMonForm,
-                        MaxwellPropertiesOutboundMonForm,MovementofInsuranceOutboundMonForm,SterlingStrategiesOutboundMonForm,TonnCoaOutboundMonForm,WitDigitalOutboundMonForm,
-                        PosTechOutboundMonForm,SchindlerMediaOutboundMonForm,UPSOutboundMonForm,
-                        PickPackDeliveriesMonForm,MarceloPerezMonForm,MedTechGroupOutboundMonForm,DigitalSignageOutboundMonForm,
-                        HiveIncubatorsOutboundMonForm,KaapiMachinesOutboundMonForm,SomethingsBrewingOutboundMonForm,NaffaOutboundMonForm,JBNOutboundMonForm,
-                        QuickAutoPartsOutboundMonForm,
-                        ApexCommunicationsOutboundMonForm,LawOfficesOutboundMonForm,WokeUpEnergyOutboundMonForm,
-                        FinnesseMortgageOutboundMonForm,
-                        UnitedMortgageOutboundMonForm,CleanLivingHealthWellnessOutboundMonForm,PractoOutboundMonForm,
-                        ImaginariumOutboundMonForm,
-                        USJacleanOutboundForm,GlobalGalaxyOutboundForm,CommunityHealthProjectIncOutbound,EducatedAnalyticsLLCOutbound,
-                        NewDimensionPharmacyOutbound,StayNChargeOutbound,
-                        JHEnergyConsultantOutbound,MDRGroupLLCOutbound,CoreySmallInsuranceAgencyOutbound,EduvocateOutbound,CrossTowerOutbound,
-                        DawnFinancialOutbound,XportDigitalOutbound,
-                        AllCarePhysicalTherapyMonform,ExecutiveCapitalResourcesmonform,CalistaOutboundMonForm,
-                        BrightWayOutboundmonform,BuildinglabLLCOutboundmonform,
-                        GlobalPharmaOutboundmonform, ThirdWaveOutboundmonform,
-                        HardHatTechnologiesOutboundmonform, RedefinePlasticsOutboundmonform,
-                        SapphireMedicalsOutboundMonForm,
-                        K7Outboundmonform,GlobalArkOutboundMonform,TrialMappingOutboundmonform,
-                        EduClassOutboundmonform,CredAvenueOutboundmonform,TKAWDIWOutboundmonform,
-                        DreamPickOutboundmonform,KheloyarOutboundmonform,MaxTradingOutboundmonform,
-                        ESRTechTalentOutboundmonform, GreenConnectOutboundmonform,
-                        CentralMortgageFundingOutboundmonform, RapidMortgageOutboundmonform, LinenFinderOutboundmonform,
-                        BridanAssociatesOutboundmonform, BetterEdOutboundmonform,
+list_of_monforms = [  # OutBound
+    MonitoringFormLeadsAadhyaSolution, AccutimeMonForm, MonitoringFormLeadsAdvanceConsultants,
+    MonitoringFormLeadsAllenConsulting, CamIndustrialMonForm, CitizenCapitalMonForm, MonitoringFormLeadsCitySecurity,
+    MonitoringFormLeadsCTS, EmbassyLuxuryMonForm, MonitoringFormLeadsGetARates, GlydeAppMonForm, GoldenEastMonForm,
+    IbizMonForm,
+    IIBMonForm, MonitoringFormLeadsInfothinkLLC, MonitoringFormLeadsInsalvage, JJStudioMonForm, KalkiFashions,
+    MonitoringFormLeadsLouisville,
+    MonitoringFormLeadsMedicare, MicroDistributingMonForm, MillenniumScientificMonForm, MTCosmeticsMonForm,
+    NavigatorBioMonForm, OptimalStudentLoanMonForm,
+    ProtostarMonForm, MonitoringFormLeadsPSECU, QBIQMonForm, RestaurentSolMonForm, RitBrainMonForm,
+    RoofWellMonForm, ScalaMonForm, SolarCampaignMonForm, StandSpotMonForm, MonitoringFormLeadsSystem4,
+    MonitoringFormLeadsTentamusFood, MonitoringFormLeadsTentamusPet,
+    TerraceoLeadMonForm, UpfrontOnlineLLCMonform, WTUMonForm, YesHealthMolinaMonForm, ZeroStressMarketingMonForm,
+    ABHindalcoOutboundMonForm, AdityaBirlaOutboundMonForm, AmerisaveoutboundMonForm, BhagyaLakshmiOutbound,
+    ClearViewOutboundMonForm, DanielWellingtonOutboundMonForm, DigitalSwissGoldOutboundMonForm,
+    HealthyplusOutboundMonForm,
+    MaxwellPropertiesOutboundMonForm, MovementofInsuranceOutboundMonForm, SterlingStrategiesOutboundMonForm,
+    TonnCoaOutboundMonForm, WitDigitalOutboundMonForm,
+    PosTechOutboundMonForm, SchindlerMediaOutboundMonForm, UPSOutboundMonForm,
+    PickPackDeliveriesMonForm, MarceloPerezMonForm, MedTechGroupOutboundMonForm, DigitalSignageOutboundMonForm,
+    HiveIncubatorsOutboundMonForm, KaapiMachinesOutboundMonForm, SomethingsBrewingOutboundMonForm, NaffaOutboundMonForm,
+    JBNOutboundMonForm,
+    QuickAutoPartsOutboundMonForm,
+    ApexCommunicationsOutboundMonForm, LawOfficesOutboundMonForm, WokeUpEnergyOutboundMonForm,
+    FinnesseMortgageOutboundMonForm,
+    UnitedMortgageOutboundMonForm, CleanLivingHealthWellnessOutboundMonForm, PractoOutboundMonForm,
+    ImaginariumOutboundMonForm,
+    USJacleanOutboundForm, GlobalGalaxyOutboundForm, CommunityHealthProjectIncOutbound, EducatedAnalyticsLLCOutbound,
+    NewDimensionPharmacyOutbound, StayNChargeOutbound,
+    JHEnergyConsultantOutbound, MDRGroupLLCOutbound, CoreySmallInsuranceAgencyOutbound, EduvocateOutbound,
+    CrossTowerOutbound,
+    DawnFinancialOutbound, XportDigitalOutbound,
+    AllCarePhysicalTherapyMonform, ExecutiveCapitalResourcesmonform, CalistaOutboundMonForm,
+    BrightWayOutboundmonform, BuildinglabLLCOutboundmonform,
+    GlobalPharmaOutboundmonform, ThirdWaveOutboundmonform,
+    HardHatTechnologiesOutboundmonform, RedefinePlasticsOutboundmonform,
+    SapphireMedicalsOutboundMonForm,
+    K7Outboundmonform, GlobalArkOutboundMonform, TrialMappingOutboundmonform,
+    EduClassOutboundmonform, CredAvenueOutboundmonform, TKAWDIWOutboundmonform,
+    DreamPickOutboundmonform, KheloyarOutboundmonform, MaxTradingOutboundmonform,
+    ESRTechTalentOutboundmonform, GreenConnectOutboundmonform,
+    CentralMortgageFundingOutboundmonform, RapidMortgageOutboundmonform, LinenFinderOutboundmonform,
+    BridanAssociatesOutboundmonform, BetterEdOutboundmonform, Com98Outboundmonform,
+    GretnaMedicalCentreOutboundmonform, AristaMDOutboundmonform,
+    RobertDamonProductionOutboundmonform, VenwizOutboundmonform, CityHabitatOutboundmonform,
+    OptelOutboundmonform,
 
-                        # Inbound
-                        MasterMonitoringFormTonnCoaInboundCalls,SomethingsBrewingInbound,PrinterPixMasterMonitoringFormInboundCalls,
-                        NuclusInboundCalls,NaffaInnovationsInboundCalls,KappimachineInboundCalls,HealthyplusInboundMonForm,
-                        FinesseMortgageInboundMonForm,DigitalSwissGoldInboundMonForm,DanielwellingtoInboundMonForm,BhagyaLakshmiInboundMonForm,
-                        AKDYInboundMonFormNew,AdityaBirlainboundMonForm,ABHindalcoInboundMonForm,
-                        RainbowDiagnosticsInboundMonForm,DecentralizedVisionLTDInboundMonForm,
-                        AmerisaveInboundMonForm,IEDHHInboundMonForm,ClearViewInboundMonForms,QuickAutoPartsInboundMonForms,
-                        LJHubInboundMonForms,
-                        ObtheraIncInboundMonForms,
-                        EduvocateInboundMonForms,CrossTowerInboundMonForms,
-                        SanaLifeScienceInbound,MonitoringFormMobile22InboundCalls,XportDigitalInboundMonForm,CalistaInboundMonForm,
-                        ThirdWaveInboundMonForm, HardHatTechnologiesInboundMonForm,GretnaMedicalCenterInboundMonForm,
-                        BetterEdInboundMonForm,
+    # Inbound
+    MasterMonitoringFormTonnCoaInboundCalls, SomethingsBrewingInbound, PrinterPixMasterMonitoringFormInboundCalls,
+    NuclusInboundCalls, NaffaInnovationsInboundCalls, KappimachineInboundCalls, HealthyplusInboundMonForm,
+    FinesseMortgageInboundMonForm, DigitalSwissGoldInboundMonForm, DanielwellingtoInboundMonForm,
+    BhagyaLakshmiInboundMonForm,
+    AKDYInboundMonFormNew, AdityaBirlainboundMonForm, ABHindalcoInboundMonForm,
+    RainbowDiagnosticsInboundMonForm, DecentralizedVisionLTDInboundMonForm,
+    AmerisaveInboundMonForm, IEDHHInboundMonForm, ClearViewInboundMonForms, QuickAutoPartsInboundMonForms,
+    LJHubInboundMonForms,
+    ObtheraIncInboundMonForms,
+    EduvocateInboundMonForms, CrossTowerInboundMonForms,
+    SanaLifeScienceInbound, MonitoringFormMobile22InboundCalls, XportDigitalInboundMonForm, CalistaInboundMonForm,
+    ThirdWaveInboundMonForm, HardHatTechnologiesInboundMonForm, GretnaMedicalCenterInboundMonForm,
+    BetterEdInboundMonForm, Com98InboundMonForm, OpenWindsInboundMonForm,
+    EmbassyLuxuryInboundMonForm, SouthCountyInboundMonForm,
+
+    # Email/CHat
+    SuperPlayMonForm, DanielWellinChatEmailMonForm, TerraceoChatEmailMonForm, TonnChatsEmailNewMonForm,
+    PrinterPixMasterMonitoringFormChatsEmail, FurBabyMonForm, AKDYEmailMonForm, AmerisaveEmailMonForm,
+    ClearViewEmailMonForm, FinesseMortgageEmailMonForm, DigitalSwissGoldEmailChatMonForm,
+    RainbowDiagnosticsEmailMonForm, HiveIncubatorEmailMonForm, MedTechGroupEmailMonForm,
+    Ri8BrainEmailMonForm, ScalaEmailMonForm, KalkiFashionEmailMonForm, MaxwellEmailMonForm,
+    TanaorJewelryEmailMonForm, DecentralizedVisionEmailChatMonForm,
+    USJacleanEmailChatForm,
+    CrossTowerEmailChatForm, SanaLifeScienceEmailChatForm, SapphireMedicalsChatMonForm,
+    GretnaMedicalCenterEmailChatForm, JumpRydesEmailChatForm,
+
+    # FLA
+    FLAMonitoringForm,
+
+    # Noom
+    ChatMonitoringFormEva, ChatMonitoringFormPodFather,
+
+    # FameHouse
+    FameHouseNewMonForm,
+    # Practo
+    PractoNewVersion,
+    # Practo WIth Sub Category
+    PractoWithSubCategory, NewPractoWithSubCategory,
+    # Gubagoo
+    GubagooAuditForm,
+    # ILM
+    ILMakiageEmailChatForm,
+    # wino
+    WinopolyOutbound,
+    # ABH
+    ABHindalcoMonForm,
+
+    # blazhog
+    BlazingHogEmailChatmonform,
+    # Nerotel Inbound
+    NerotelInboundmonform,
+    # Spoiled Child Email/Chat
+    SpoiledChildChatmonform,
+
+    # Amerisave
+    AmerisaveMonForm,
+
+]
 
 
-                        # Email/CHat
-                        SuperPlayMonForm,DanielWellinChatEmailMonForm,TerraceoChatEmailMonForm,TonnChatsEmailNewMonForm,
-                        PrinterPixMasterMonitoringFormChatsEmail,FurBabyMonForm,AKDYEmailMonForm,AmerisaveEmailMonForm,
-                        ClearViewEmailMonForm,FinesseMortgageEmailMonForm,DigitalSwissGoldEmailChatMonForm,
-                        RainbowDiagnosticsEmailMonForm,HiveIncubatorEmailMonForm,MedTechGroupEmailMonForm,
-                        Ri8BrainEmailMonForm,ScalaEmailMonForm,KalkiFashionEmailMonForm,MaxwellEmailMonForm,
-                        TanaorJewelryEmailMonForm,DecentralizedVisionEmailChatMonForm,
-                        USJacleanEmailChatForm,
-                        CrossTowerEmailChatForm,SanaLifeScienceEmailChatForm,SapphireMedicalsChatMonForm,
-                        GretnaMedicalCenterEmailChatForm, JumpRydesEmailChatForm,
-
-                        #FLA
-                        FLAMonitoringForm,
-
-                        #Noom
-                        ChatMonitoringFormEva,ChatMonitoringFormPodFather,
-
-                        #FameHouse
-                        FameHouseNewMonForm,
-                        #Practo
-                        PractoNewVersion,
-                        #Practo WIth Sub Category
-                        PractoWithSubCategory, NewPractoWithSubCategory,
-                        #Gubagoo
-                        GubagooAuditForm,
-                        #ILM
-                        ILMakiageEmailChatForm,
-                        #wino
-                        WinopolyOutbound,
-                        #ABH
-                        ABHindalcoMonForm,
-
-                        #blazhog
-                        BlazingHogEmailChatmonform,
-                        # Nerotel Inbound
-                        NerotelInboundmonform,
-                        # Spoiled Child Email/Chat
-                        SpoiledChildChatmonform,
-
-                        ]
-
-
-#Index
+# Index
 def index(request):
-    return render(request,'index.html')
-#Okay
+    # Profile.objects.get(emp_id=)
+    return render(request, 'index.html')
 
-#Guidelines
+
+# Okay
+
+# Guidelines
 def outboundGuidelines(request):
-    return render(request,'guidelines/outbound.html')
+    return render(request, 'guidelines/outbound.html')
+
+
 def inboundGuidelines(request):
-    return render(request,'guidelines/inbound.html')
+    return render(request, 'guidelines/inbound.html')
+
+
 def chatGuidelines(request):
-    return render(request,'guidelines/chat.html')
+    return render(request, 'guidelines/chat.html')
+
+
 def emailGuidelines(request):
-    return render(request,'guidelines/email.html')
-#Okay
+    return render(request, 'guidelines/email.html')
+
+
+# Okay
 
 # Reistration, Sign up, Login, Logout, Change Password
 
 def signup(request):
-    team_leaders=Profile.objects.filter(emp_desi='Team Leader')
-    managers=Profile.objects.filter(emp_desi='Manager')
+    team_leaders = Profile.objects.filter(emp_desi='Team Leader')
+    managers = Profile.objects.filter(emp_desi='Manager')
     ams = Profile.objects.filter(emp_desi='AM')
 
     if request.method == 'POST':
@@ -144,34 +172,35 @@ def signup(request):
 
         if form.is_valid() and profile_form.is_valid():
             # Admin ID PWD validation
-            if admin_id=='ecpl-qms' and admin_pwd=='3cplQm52021#':
+            if admin_id == 'ecpl-qms' and admin_pwd == '3cplQm52021#':
 
-                manager=request.POST['manager']
-                team_lead=request.POST['team-leader']
-                am=request.POST['am']
+                manager = request.POST['manager']
+                team_lead = request.POST['team-leader']
+                am = request.POST['am']
                 user = form.save()
                 profile = profile_form.save(commit=False)
 
                 profile.user = user
-                profile.manager=manager
-                profile.team_lead=team_lead
-                profile.am=am
+                profile.manager = manager
+                profile.team_lead = team_lead
+                profile.am = am
 
                 profile.save()
                 # login(request,user)
-                return render(request,'index.html')
+                return render(request, 'index.html')
             else:
                 messages.info(request, 'Invalid Admin Credentials !')
-                return render(request,'sign-up.html',{'form': form, 'profile_form': profile_form})
+                return render(request, 'sign-up.html', {'form': form, 'profile_form': profile_form})
     else:
         form = UserCreationForm()
         profile_form = forms.ProfileCreation()
 
     return render(request, 'sign-up.html', {'form': form, 'profile_form': profile_form,
-                                            'team_leaders':team_leaders,'managers':managers,'ams':ams
+                                            'team_leaders': team_leaders, 'managers': managers, 'ams': ams
                                             })
 
-#Okay
+
+# Okay
 
 def login_view(request):
     if request.method == 'POST':
@@ -183,14 +212,14 @@ def login_view(request):
             login(request, user)
 
             # redirecting
-            if user.profile.emp_desi=='QA':
+            if user.profile.emp_desi == 'QA':
                 return redirect('/employees/qahome')
-            elif user.profile.emp_desi=='Manager' or user.profile.emp_desi=='AM' or user.profile.emp_desi=='Trainer' or user.profile.emp_id==224 or user.profile.emp_id==6479 or user.profile.emp_desi=='Team Leader':
+            elif user.profile.emp_desi == 'Manager' or user.profile.emp_desi == 'AM' or user.profile.emp_desi == 'Trainer' or user.profile.emp_id == 224 or user.profile.emp_id == 6479 or user.profile.emp_desi == 'Team Leader':
                 return redirect('/employees/manager-home')
             # Special Access ##########
-            elif user.profile.emp_id==3495 or user.profile.emp_id== 2922:
+            elif user.profile.emp_id == 3495 or user.profile.emp_id == 2922:
                 return redirect('/employees/manager-home')
-            elif user.profile.emp_desi=='CRO' or user.profile.emp_desi=='Patrolling officer':
+            elif user.profile.emp_desi == 'CRO' or user.profile.emp_desi == 'Patrolling officer':
                 return redirect('/employees/agenthome')
             else:
                 form = AuthenticationForm()
@@ -199,17 +228,21 @@ def login_view(request):
 
         else:
             form = AuthenticationForm()
-            messages.info(request,'Invalid Credentials !')
-            return render(request,'login.html',{'form':form})
+            messages.info(request, 'Invalid Credentials !')
+            return render(request, 'login.html', {'form': form})
     else:
         logout(request)
         form = AuthenticationForm()
         return render(request, 'login.html', {'form': form})
-#Okay
+
+
+# Okay
 def logout_view(request):
     logout(request)
     return redirect('/employees/login')
-#Okay
+
+
+# Okay
 
 # Password Reset
 
@@ -221,7 +254,7 @@ def change_password(request):
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
             logout(request)
-            return render(request,'login.html')
+            return render(request, 'login.html')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -229,39 +262,38 @@ def change_password(request):
     return render(request, 'change_password.html', {'form': form})
 
 
-def updateEmailAddress(request,pk):
-
-    if request.method=='POST':
-        emp_id=pk
-        email_1=request.POST['email1']
+def updateEmailAddress(request, pk):
+    if request.method == 'POST':
+        emp_id = pk
+        email_1 = request.POST['email1']
         email_2 = request.POST['email2']
-        if email_1 == email_2 :
-            profile_obj=Profile.objects.get(emp_id=emp_id)
-            profile_obj.email=email_2
+        if email_1 == email_2:
+            profile_obj = Profile.objects.get(emp_id=emp_id)
+            profile_obj.email = email_2
             profile_obj.save()
-            messages.success(request,'Email Address Updated Successfully ! Please login back')
+            messages.success(request, 'Email Address Updated Successfully ! Please login back')
             return redirect('/logout')
         else:
-            messages.error(request,'Email Address Mismatching')
+            messages.error(request, 'Email Address Mismatching')
             return render(request, 'update-email.html')
     else:
-        return render(request,'update-email.html')
+        return render(request, 'update-email.html')
 
-#Done
+
+# Done
 
 
 def employeeWiseReport(request):
-
     if request.method == 'POST':
 
         currentMonth = request.POST['month']
         currentYear = request.POST['year']
         emp_id = request.POST['emp_id']
-        profile=Profile.objects.get(emp_id=emp_id)
+        profile = Profile.objects.get(emp_id=emp_id)
         # Mon Form List
-        associate_data=[]
-        associate_data_fatal=[]
-        associate_data_errors=[]
+        associate_data = []
+        associate_data_fatal = []
+        associate_data_errors = []
 
         #### Avg Score Overall ####
 
@@ -275,7 +307,7 @@ def employeeWiseReport(request):
 
         for i in list_of_monforms:
             avgScoreTotal(i)
-        if len(avgs)>0:
+        if len(avgs) > 0:
             total_score = sum(avgs) / len(avgs)
         else:
             total_score = 100
@@ -286,40 +318,39 @@ def employeeWiseReport(request):
             coaching = i.objects.filter(emp_id=emp_id, audit_date__year=currentYear,
                                         audit_date__month=currentMonth)
             if coaching.count() > 0:
-
-                emp_wise = i.objects.filter(emp_id=emp_id,audit_date__year=currentYear, audit_date__month=currentMonth).values(
+                emp_wise = i.objects.filter(emp_id=emp_id, audit_date__year=currentYear,
+                                            audit_date__month=currentMonth).values(
                     'process').annotate(dcount=Count('associate_name')).annotate(
                     davg=Avg('overall_score'))
                 emp_wise_fatal = i.objects.filter(emp_id=emp_id, audit_date__year=currentYear,
-                                            audit_date__month=currentMonth,fatal=True).values(
+                                                  audit_date__month=currentMonth, fatal=True).values(
                     'process').annotate(dsum=Sum('fatal_count'))
 
                 emp_wise_errors = i.objects.filter(emp_id=emp_id, audit_date__year=currentYear,
-                                                  audit_date__month=currentMonth,overall_score__lt=100).values(
+                                                   audit_date__month=currentMonth, overall_score__lt=100).values(
                     'process').annotate(dcount=Count('process'))
 
                 associate_data.append(emp_wise)
                 associate_data_fatal.append(emp_wise_fatal)
                 associate_data_errors.append(emp_wise_errors)
 
-        data = {'profile':profile,'associate_data':associate_data,
-                'associate_data_fatal':associate_data_fatal,
-                'associate_data_errors':associate_data_errors,
-                'avg_score':avg_score,
+        data = {'profile': profile, 'associate_data': associate_data,
+                'associate_data_fatal': associate_data_fatal,
+                'associate_data_errors': associate_data_errors,
+                'avg_score': avg_score,
                 }
 
+        return render(request, 'employee-wise-report.html', data)
 
-        return render(request,'employee-wise-report.html',data)
 
 def managerWiseReport(request):
-
     if request.method == 'POST':
 
         currentMonth = request.POST['month']
         currentYear = request.POST['year']
-        manager_emp_id=request.POST['emp_id']
-        profile=Profile.objects.get(emp_id=manager_emp_id)
-        manager_name=profile.emp_name
+        manager_emp_id = request.POST['emp_id']
+        profile = Profile.objects.get(emp_id=manager_emp_id)
+        manager_name = profile.emp_name
         # Mon Form List
         category = request.POST['category']
 
@@ -434,13 +465,15 @@ def managerWiseReport(request):
                 'associate_data_errors': associate_data_errors,
                 }
 
-        return render(request,'manager-wise-report.html',data)
+        return render(request, 'manager-wise-report.html', data)
+
 
 def qualityDashboardMgt(request):
     from django.db.models import Avg
     campaigns = Campaigns.objects.all()
     import datetime
-    employees = Profile.objects.exclude(emp_desi__in=['AM','Manager','Team Leader','Trainer','QA']).order_by('emp_name')
+    employees = Profile.objects.exclude(emp_desi__in=['AM', 'Manager', 'Team Leader', 'Trainer', 'QA']).order_by(
+        'emp_name')
     managers = Profile.objects.filter(emp_desi='Manager')
     ams = Profile.objects.filter(emp_desi='AM')
     tls = Profile.objects.filter(emp_desi='Team Leader')
@@ -449,9 +482,9 @@ def qualityDashboardMgt(request):
     teams = Team.objects.all()
 
     # Date Time
-    if request.method=='POST':
+    if request.method == 'POST':
 
-        month =request.POST['month']
+        month = request.POST['month']
         year = request.POST['year']
 
         outbound_avg_list = []
@@ -464,15 +497,18 @@ def qualityDashboardMgt(request):
                 'process').annotate(dcount=Count('process')).annotate(davg=Avg('overall_score'))
             camp_wise_tot.append(camp_wise_total)
 
-            outbound_score = i.objects.filter(type='Outbound',audit_date__year=year, audit_date__month=month).aggregate(davg=Avg('overall_score'))
+            outbound_score = i.objects.filter(type='Outbound', audit_date__year=year,
+                                              audit_date__month=month).aggregate(davg=Avg('overall_score'))
             if outbound_score['davg']:
                 outbound_avg_list.append(outbound_score['davg'])
 
-            inbound_score = i.objects.filter(type='Inbound',audit_date__year=year, audit_date__month=month).aggregate(davg=Avg('overall_score'))
+            inbound_score = i.objects.filter(type='Inbound', audit_date__year=year, audit_date__month=month).aggregate(
+                davg=Avg('overall_score'))
             if inbound_score['davg']:
                 inbound_avg_list.append(inbound_score['davg'])
 
-            email_chat_score = i.objects.filter(type='Email - Chat',audit_date__year=year, audit_date__month=month).aggregate(davg=Avg('overall_score'))
+            email_chat_score = i.objects.filter(type='Email - Chat', audit_date__year=year,
+                                                audit_date__month=month).aggregate(davg=Avg('overall_score'))
             if email_chat_score['davg']:
                 email_chat_avg_list.append(email_chat_score['davg'])
 
@@ -494,9 +530,9 @@ def qualityDashboardMgt(request):
                 'outbound_avg': outbound_avg,
                 'inbound_avg': inbound_avg,
                 'email_chat_avg': email_chat_avg,
-                'ams':ams,
-                'tls':tls,
-                'qas':qas,
+                'ams': ams,
+                'tls': tls,
+                'qas': qas,
                 }
 
         return render(request, 'quality-dashboard-management.html', data)
@@ -517,36 +553,39 @@ def qualityDashboardMgt(request):
                 'process').annotate(dcount=Count('process')).annotate(davg=Avg('overall_score'))
             camp_wise_tot.append(camp_wise_total)
 
-            outbound_score = i.objects.filter(type='Outbound',audit_date__year=year, audit_date__month=month).aggregate(davg=Avg('overall_score'))
+            outbound_score = i.objects.filter(type='Outbound', audit_date__year=year,
+                                              audit_date__month=month).aggregate(davg=Avg('overall_score'))
             if outbound_score['davg']:
                 outbound_avg_list.append(outbound_score['davg'])
 
-            inbound_score = i.objects.filter(type='Inbound',audit_date__year=year, audit_date__month=month).aggregate(davg=Avg('overall_score'))
+            inbound_score = i.objects.filter(type='Inbound', audit_date__year=year, audit_date__month=month).aggregate(
+                davg=Avg('overall_score'))
             if inbound_score['davg']:
                 inbound_avg_list.append(inbound_score['davg'])
 
-            email_chat_score = i.objects.filter(type='Email - Chat',audit_date__year=year, audit_date__month=month).aggregate(davg=Avg('overall_score'))
+            email_chat_score = i.objects.filter(type='Email - Chat', audit_date__year=year,
+                                                audit_date__month=month).aggregate(davg=Avg('overall_score'))
             if email_chat_score['davg']:
                 email_chat_avg_list.append(email_chat_score['davg'])
 
-        if len(outbound_avg_list)>0:
-            outbound_avg = sum(outbound_avg_list)/len(outbound_avg_list)
+        if len(outbound_avg_list) > 0:
+            outbound_avg = sum(outbound_avg_list) / len(outbound_avg_list)
         else:
             outbound_avg = 100
-        if len(inbound_avg_list)>0:
+        if len(inbound_avg_list) > 0:
             inbound_avg = sum(inbound_avg_list) / len(inbound_avg_list)
         else:
             inbound_avg = 100
-        if len(email_chat_avg_list)>0:
+        if len(email_chat_avg_list) > 0:
             email_chat_avg = sum(email_chat_avg_list) / len(email_chat_avg_list)
         else:
             email_chat_avg = 100
         #
         data = {'employees': employees, 'managers': managers, 'campaigns': campaigns,
-            'teams': teams, 'camp_total': camp_wise_tot,
-                'outbound_avg':outbound_avg,
-                'inbound_avg':inbound_avg,
-                'email_chat_avg':email_chat_avg,
+                'teams': teams, 'camp_total': camp_wise_tot,
+                'outbound_avg': outbound_avg,
+                'inbound_avg': inbound_avg,
+                'email_chat_avg': email_chat_avg,
                 'ams': ams,
                 'tls': tls,
                 'qas': qas,
@@ -555,9 +594,7 @@ def qualityDashboardMgt(request):
         return render(request, 'quality-dashboard-management.html', data)
 
 
-
 def agenthome(request):
-
     agent_name = request.user.profile.emp_name
     team = request.user.profile.process
     currentMonth = datetime.now().month
@@ -576,7 +613,7 @@ def agenthome(request):
     for i in list_of_monforms:
         avgScoreTotal(i)
 
-    if len(avgs)>0:
+    if len(avgs) > 0:
         total_score = sum(avgs) / len(avgs)
     else:
         total_score = 100
@@ -604,8 +641,9 @@ def agenthome(request):
 
     def openCampaigns(monforms):
         all_obj = monforms.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,
-                                           associate_name=agent_name).order_by('-audit_date')
-        open_obj = monforms.objects.filter(associate_name=agent_name, status=False, disput_status=False).order_by('-audit_date')
+                                          associate_name=agent_name).order_by('-audit_date')
+        open_obj = monforms.objects.filter(associate_name=agent_name, status=False, disput_status=False).order_by(
+            '-audit_date')
         disp_obj = monforms.objects.filter(associate_name=agent_name, disput_status=True).order_by('-audit_date')
 
         all_coaching_list.append(all_obj)
@@ -622,7 +660,7 @@ def agenthome(request):
         count = i.objects.filter(associate_name=agent_name, audit_date__year=currentYear,
                                  audit_date__month=currentMonth, status=False).count()
         count_all = i.objects.filter(associate_name=agent_name, audit_date__year=currentYear,
-                                 audit_date__month=currentMonth).count()
+                                     audit_date__month=currentMonth).count()
         list_of_open_count.append(count)
         list_of_all_count.append(count_all)
 
@@ -633,7 +671,7 @@ def agenthome(request):
             'open_coaching': open_coaching_list,
             'disput_coaching': disput_list,
             'total_open': total_open_coachings,
-            'total_coachings':total_coachings,
+            'total_coachings': total_coachings,
             'team': team,
             'overall_score': avg_score,
             'avg_campaignwise': avg_campaignwise,
@@ -643,7 +681,7 @@ def agenthome(request):
     return render(request, 'agent-home.html', data)
 
 
-def coachingViewAgents(request,process,pk):
+def coachingViewAgents(request, process, pk):
     process_name = process
 
     ########## Outbound ##############################
@@ -1244,6 +1282,41 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Com 98 Outbound':
+        coaching = Com98Outboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Gretna Medical Centre Outbound':
+        coaching = GretnaMedicalCentreOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Arista MD Outbound':
+        coaching = AristaMDOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Robert Damon Production Outbound':
+        coaching = RobertDamonProductionOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Venwiz Outbound':
+        coaching = VenwizOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'City Habitat Outbound':
+        coaching = CityHabitatOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
+    elif process_name == 'Optel Outbound':
+        coaching = OptelOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1412,6 +1485,26 @@ def coachingViewAgents(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'Com 98 Inbound':
+        coaching = Com98InboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Open Winds Inbound':
+        coaching = OpenWindsInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Embassy Luxury Inbound':
+        coaching = EmbassyLuxuryInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'South County Inbound':
+        coaching = SouthCountyInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -1544,7 +1637,6 @@ def coachingViewAgents(request,process,pk):
         coaching = JumpRydesEmailChatForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
-
 
     ################ Others ##########################################################
 
@@ -1575,13 +1667,13 @@ def coachingViewAgents(request,process,pk):
 
     if process_name == 'Gubagoo':
         coaching = GubagooAuditForm.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/emp-coaching-view-gubagoo.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-gubagoo.html', data)
 
     if process_name == 'IL Makiage':
         coaching = ILMakiageEmailChatForm.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/emp-coaching-view-ILM.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-ILM.html', data)
 
     if process_name == 'Digital Swiss Gold Email - Chat':
         coaching = DigitalSwissGoldEmailChatMonForm.objects.get(id=pk)
@@ -1595,34 +1687,38 @@ def coachingViewAgents(request,process,pk):
 
     if process_name == 'AB Hindalco':
         coaching = ABHindalcoMonForm.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/emp-coaching-view-abh.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-abh.html', data)
 
     if process_name == 'Blazing Hog':
         coaching = BlazingHogEmailChatmonform.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/emp-coaching-view-blazing.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-blazing.html', data)
 
     if process_name == 'Practo Chat':
         coaching = NewPractoWithSubCategory.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/emp-coaching-view-practo-chat.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-practo-chat.html', data)
 
     if process_name == 'Nerotel Inbound':
         coaching = NerotelInboundmonform.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/emp-coaching-view-nerotel.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-nerotel.html', data)
 
     if process_name == 'Spoiled Child':
         coaching = SpoiledChildChatmonform.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/emp-coaching-view-spoiled-child.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-spoiled-child.html', data)
+
+    if process_name == 'Amerisave':
+        coaching = AmerisaveMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-spoiled-child.html', data)
     else:
         pass
 
 
-def coachingViewQaDetailed(request,process,pk):
-
+def coachingViewQaDetailed(request, process, pk):
     process_name = process
 
     ########## Outbound ##############################
@@ -2223,6 +2319,40 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Com 98 Outbound':
+        coaching = Com98Outboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Gretna Medical Centre Outbound':
+        coaching = GretnaMedicalCentreOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Arista MD Outbound':
+        coaching = AristaMDOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Robert Damon Production Outbound':
+        coaching = RobertDamonProductionOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Venwiz Outbound':
+        coaching = VenwizOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'City Habitat Outbound':
+        coaching = CityHabitatOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Optel Outbound':
+        coaching = OptelOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
     ########### Inbound ########################
 
@@ -2394,6 +2524,28 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+
+    elif process_name == 'Com 98 Inbound':
+        coaching = Com98InboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+
+    elif process_name == 'Open Winds Inbound':
+        coaching = OpenWindsInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'Embassy Luxury Inbound':
+        coaching = EmbassyLuxuryInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
+    elif process_name == 'South County Inbound':
+        coaching = SouthCountyInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -2427,7 +2579,6 @@ def coachingViewQaDetailed(request,process,pk):
         coaching = FurBabyMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
-
 
     if process_name == 'Printer Pix Chat Email':
         coaching = PrinterPixMasterMonitoringFormChatsEmail.objects.get(id=pk)
@@ -2529,7 +2680,6 @@ def coachingViewQaDetailed(request,process,pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
-
     ################ Others ##########################################################
 
     if process_name == 'Fame House':
@@ -2559,13 +2709,13 @@ def coachingViewQaDetailed(request,process,pk):
 
     if process_name == 'Gubagoo':
         coaching = GubagooAuditForm.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/qa-coaching-view-gubagoo.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-gubagoo.html', data)
 
     if process_name == 'IL Makiage':
         coaching = ILMakiageEmailChatForm.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/qa-coaching-view-ILM.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-ILM.html', data)
 
     if process_name == 'Digital Swiss Gold Email - Chat':
         coaching = DigitalSwissGoldEmailChatMonForm.objects.get(id=pk)
@@ -2574,33 +2724,38 @@ def coachingViewQaDetailed(request,process,pk):
 
     if process_name == 'Winopoly Outbound':
         coaching = WinopolyOutbound.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/qa-coaching-view-winopoly.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-winopoly.html', data)
 
     if process_name == 'AB Hindalco':
         coaching = ABHindalcoMonForm.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/qa-coaching-view-abh.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-abh.html', data)
 
     if process_name == 'Blazing Hog':
         coaching = BlazingHogEmailChatmonform.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/qa-coaching-view-blazing.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-blazing.html', data)
 
     if process_name == 'Practo Chat':
         coaching = NewPractoWithSubCategory.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/qa-coaching-view-practo-chat.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-practo-chat.html', data)
 
     if process_name == 'Nerotel Inbound':
         coaching = NerotelInboundmonform.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/qa-coaching-view-nerotel.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-nerotel.html', data)
 
     if process_name == 'Spoiled Child':
         coaching = SpoiledChildChatmonform.objects.get(id=pk)
-        data = {'coaching':coaching}
-        return render(request,'coaching-views/qa-coaching-view-spoiled-child.html',data)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-spoiled-child.html', data)
+
+    if process_name == 'Amerisave':
+        coaching = AmerisaveMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-amerisave.html', data)
 
     else:
         pass
@@ -2609,63 +2764,67 @@ def coachingViewQaDetailed(request,process,pk):
 # Campaign wise coaching view - qa - manager
 
 def campaignwiseCoachings(request):
-
     if request.method == 'POST':
         campaign = request.POST['campaign']
-        status=request.POST['status']
+        status = request.POST['status']
         start_date = request.POST['start_date']
         end_date = request.POST['end_date']
         if start_date and end_date:
-            if status=='all':
-                coaching_list=[]
+            if status == 'all':
+                coaching_list = []
+
                 def dateAll(monform):
-                    obj=monform.objects.filter(process=campaign,audit_date__range=[start_date, end_date])
+                    obj = monform.objects.filter(process=campaign, audit_date__range=[start_date, end_date])
                     return obj
 
                 for i in list_of_monforms:
-                    obj=dateAll(i)
+                    obj = dateAll(i)
                     coaching_list.append(obj)
             else:
                 coaching_list = []
+
                 def datestatusAll(monform):
-                    obj = monform.objects.filter(process=campaign,status=status,audit_date__range=[start_date, end_date])
+                    obj = monform.objects.filter(process=campaign, status=status,
+                                                 audit_date__range=[start_date, end_date])
                     return obj
 
                 for i in list_of_monforms:
                     obj = datestatusAll(i)
                     coaching_list.append(obj)
 
-            data={'coaching_list':coaching_list,
+            data = {'coaching_list': coaching_list,
 
-                 }
-            return render(request,'campaign-wise-coaching-view.html',data)
+                    }
+            return render(request, 'campaign-wise-coaching-view.html', data)
 
         else:
 
-            if status=='all':
-                coaching_list=[]
+            if status == 'all':
+                coaching_list = []
+
                 def dateAll(monform):
-                    obj=monform.objects.filter(process=campaign)
+                    obj = monform.objects.filter(process=campaign)
                     return obj
 
                 for i in list_of_monforms:
-                    obj=dateAll(i)
+                    obj = dateAll(i)
                     coaching_list.append(obj)
 
             else:
                 coaching_list = []
+
                 def datestatusAll(monform):
-                    obj = monform.objects.filter(process=campaign,status=status)
+                    obj = monform.objects.filter(process=campaign, status=status)
                     return obj
 
                 for i in list_of_monforms:
                     obj = datestatusAll(i)
                     coaching_list.append(obj)
 
-            data={'coaching_list':coaching_list,
-                 }
+            data = {'coaching_list': coaching_list,
+                    }
 
-            return render(request,'campaign-wise-coaching-view.html',data)
+            return render(request, 'campaign-wise-coaching-view.html', data)
     else:
         pass
 
@@ -2679,10 +2838,10 @@ def campaignwiseCoachingsQA(request):
 
         coaching_list = []
         for i in list_of_monforms:
-            coaching = i.objects.filter(qa=qa,process=campaign,audit_date__range=[start_date, end_date])
+            coaching = i.objects.filter(qa=qa, process=campaign, audit_date__range=[start_date, end_date])
             coaching_list.append(coaching)
-        data={'coaching_list':coaching_list}
-        return render(request,'campaign-wise-coaching-view.html',data)
+        data = {'coaching_list': coaching_list}
+        return render(request, 'campaign-wise-coaching-view.html', data)
 
     else:
         pass
@@ -2691,15 +2850,13 @@ def campaignwiseCoachingsQA(request):
 # Campaign wise coaching view - Agent
 
 def campaignwiseCoachingsAgent(request):
-
     if request.method == 'POST':
         team_id = request.POST['team_id']
         status = request.POST['status']
         team_name = Team.objects.get(id=team_id)
         start_date = request.POST['start_date']
         end_date = request.POST['end_date']
-        emp_name=request.POST['emp_name']
-
+        emp_name = request.POST['emp_name']
 
         if start_date and end_date:
 
@@ -2708,7 +2865,8 @@ def campaignwiseCoachingsAgent(request):
                 coaching_list = []
 
                 def dateAll(monform):
-                    obj = monform.objects.filter(campaign=team_name,associate_name=emp_name, audit_date__range=[start_date, end_date])
+                    obj = monform.objects.filter(campaign=team_name, associate_name=emp_name,
+                                                 audit_date__range=[start_date, end_date])
                     return obj
 
                 for i in list_of_monforms:
@@ -2720,7 +2878,7 @@ def campaignwiseCoachingsAgent(request):
                 coaching_list = []
 
                 def datestatusAll(monform):
-                    obj = monform.objects.filter(campaign=team_name,associate_name=emp_name, status=status,
+                    obj = monform.objects.filter(campaign=team_name, associate_name=emp_name, status=status,
                                                  audit_date__range=[start_date, end_date])
                     return obj
 
@@ -2742,7 +2900,7 @@ def campaignwiseCoachingsAgent(request):
                 coaching_list = []
 
                 def dateAll(monform):
-                    obj = monform.objects.filter(campaign=team_name,associate_name=emp_name,)
+                    obj = monform.objects.filter(campaign=team_name, associate_name=emp_name, )
                     return obj
 
                 for i in list_of_monforms:
@@ -2754,7 +2912,7 @@ def campaignwiseCoachingsAgent(request):
                 coaching_list = []
 
                 def datestatusAll(monform):
-                    obj = monform.objects.filter(campaign=team_name,associate_name=emp_name, status=status)
+                    obj = monform.objects.filter(campaign=team_name, associate_name=emp_name, status=status)
                     return obj
 
                 for i in list_of_monforms:
@@ -2770,14 +2928,13 @@ def campaignwiseCoachingsAgent(request):
         pass
 
 
-def campaignwiseDetailedReport(request,cname):
-
-    if request.method=='POST':
+def campaignwiseDetailedReport(request, cname):
+    if request.method == 'POST':
 
         from datetime import datetime
         currentMonth = request.POST['month']
         currentYear = request.POST['year']
-        campaign=cname
+        campaign = cname
 
         def campaignWiseCalculator(monform):
 
@@ -2815,12 +2972,14 @@ def campaignwiseDetailedReport(request,cname):
 
             # Parameter wise ########
 
-            open_coaching_employee_wise = monform.objects.filter(status=False,audit_date__year=currentYear, audit_date__month=currentMonth).values('associate_name').annotate(
+            open_coaching_employee_wise = monform.objects.filter(status=False, audit_date__year=currentYear,
+                                                                 audit_date__month=currentMonth).values(
+                'associate_name').annotate(
                 dcount=Count('status'))
 
-            dispute_coaching = monform.objects.filter(disput_status=True,audit_date__year=currentYear, audit_date__month=currentMonth).values('associate_name').annotate(
+            dispute_coaching = monform.objects.filter(disput_status=True, audit_date__year=currentYear,
+                                                      audit_date__month=currentMonth).values('associate_name').annotate(
                 dcount=Count('status'))
-
 
             data = {
                 'total_errors': total_errors,
@@ -2871,18 +3030,23 @@ def campaignwiseDetailedReport(request,cname):
                 '-dcount')
 
             emp_wise_fatal = monform.objects.filter(fatal=True, audit_date__year=currentYear,
-                                                    audit_date__month=currentMonth).values('associate_name').annotate(dcount=Sum('fatal_count'))
-            total_errors = monform.objects.filter(overall_score__lt=100, audit_date__year=currentYear,audit_date__month=currentMonth).count()
-            total_fatal_obj = monform.objects.filter(fatal=True, audit_date__year=currentYear, audit_date__month=currentMonth)
+                                                    audit_date__month=currentMonth).values('associate_name').annotate(
+                dcount=Sum('fatal_count'))
+            total_errors = monform.objects.filter(overall_score__lt=100, audit_date__year=currentYear,
+                                                  audit_date__month=currentMonth).count()
+            total_fatal_obj = monform.objects.filter(fatal=True, audit_date__year=currentYear,
+                                                     audit_date__month=currentMonth)
             total_fata_list = []
 
             for i in total_fatal_obj:
                 total_fata_list.append(i.fatal_count)
 
             total_fatal = sum(total_fata_list)
-            total_audit_count = monform.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth).count()
+            total_audit_count = monform.objects.filter(audit_date__year=currentYear,
+                                                       audit_date__month=currentMonth).count()
 
-            avg = monform.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth).aggregate(Avg('overall_score'))
+            avg = monform.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth).aggregate(
+                Avg('overall_score'))
             processavg = avg['overall_score__avg']
 
             if processavg == None:
@@ -2895,24 +3059,28 @@ def campaignwiseDetailedReport(request,cname):
 
             # Parameter wise ########
 
-            open_coaching_employee_wise = monform.objects.filter(status=False,audit_date__year=currentYear, audit_date__month=currentMonth).values('associate_name').annotate( dcount=Count('status'))
+            open_coaching_employee_wise = monform.objects.filter(status=False, audit_date__year=currentYear,
+                                                                 audit_date__month=currentMonth).values(
+                'associate_name').annotate(dcount=Count('status'))
 
-            dispute_coaching = monform.objects.filter(disput_status=True,audit_date__year=currentYear, audit_date__month=currentMonth).values('associate_name').annotate(dcount=Count('status'))
+            dispute_coaching = monform.objects.filter(disput_status=True, audit_date__year=currentYear,
+                                                      audit_date__month=currentMonth).values('associate_name').annotate(
+                dcount=Count('status'))
 
             data = {
-                    'total_errors': total_errors,
-                    'total_fatal': total_fatal,
-                    'total_audit_count': total_audit_count,
-                    'process_avg': process_avg,
-                    'week_wise_avg': week_wise_avg,
-                    'emp_wise': emp_wise,
-                    'emp_wise_fatal': emp_wise_fatal,
-                    'process': campaign,
-                    'emp_coaching': open_coaching_employee_wise,
-                    'dispute_coaching':dispute_coaching,
-                    'cmonth': currentMonth,
-                    'cyear': currentYear
-                    }
+                'total_errors': total_errors,
+                'total_fatal': total_fatal,
+                'total_audit_count': total_audit_count,
+                'process_avg': process_avg,
+                'week_wise_avg': week_wise_avg,
+                'emp_wise': emp_wise,
+                'emp_wise_fatal': emp_wise_fatal,
+                'process': campaign,
+                'emp_coaching': open_coaching_employee_wise,
+                'dispute_coaching': dispute_coaching,
+                'cmonth': currentMonth,
+                'cyear': currentYear
+            }
 
             return data
 
@@ -2934,16 +3102,15 @@ def campaignwiseDetailedReport(request,cname):
         return render(request, 'campaign-report/detailed.html', data)
 
 
-def signCoaching(request,pk):
-
+def signCoaching(request, pk):
     from datetime import date
     now = date.today()
-    category=request.POST['category']
-    emp_comments=request.POST['emp_comments']
+    category = request.POST['category']
+    emp_comments = request.POST['emp_comments']
 
     for i in list_of_monforms:
         obj = i.objects.all()
-        if obj.count() >0:
+        if obj.count() > 0:
             if obj[0].process == category:
                 campaign = i
             else:
@@ -2954,16 +3121,16 @@ def signCoaching(request,pk):
     coaching.status = True
     coaching.closed_date = now
     coaching.emp_comments = emp_comments
-    coaching.disput_status=False
+    coaching.disput_status = False
     coaching.save()
     return redirect('/employees/agenthome')
 
 
 def coachingSuccess(request):
+    return render(request, 'coaching-success-message.html')
 
-    return render(request,'coaching-success-message.html')
 
-def coachingDispute(request,pk):
+def coachingDispute(request, pk):
     if request.method == 'POST':
         id = pk
         managers = Profile.objects.filter(emp_desi='Manager').order_by('emp_name')
@@ -2973,17 +3140,17 @@ def coachingDispute(request,pk):
         process = request.POST['campaign']
         emp_comments = request.POST['emp_comments_dispute']
 
-        data = {'managers':managers,'ams':ams,'tls':tls,
-                'emp_comments':emp_comments,'process':process,
-                'id':id
+        data = {'managers': managers, 'ams': ams, 'tls': tls,
+                'emp_comments': emp_comments, 'process': process,
+                'id': id
                 }
-        return render(request,'select-manager-am-tl.html',data)
+        return render(request, 'select-manager-am-tl.html', data)
 
 
-def coachingDisputeFinal(request,pk):
+def coachingDisputeFinal(request, pk):
     if request.method == 'POST':
 
-        emp_name=request.user.profile.emp_name
+        emp_name = request.user.profile.emp_name
         team = request.user.profile.process
         cid = pk
         process = request.POST['campaign']
@@ -3002,9 +3169,9 @@ def coachingDisputeFinal(request,pk):
             else:
                 pass
 
-        obj=campaign.objects.get(id=cid)
-        obj.disput_status=True
-        obj.emp_comments=emp_comments
+        obj = campaign.objects.get(id=cid)
+        obj.disput_status = True
+        obj.emp_comments = emp_comments
         obj.save()
         qn_name = obj.qa
 
@@ -3016,8 +3183,8 @@ def coachingDisputeFinal(request,pk):
             qa_am_email_id = 'sumitkumar.s@expertcallers.com'
 
         # ##### sending EMAIL ##### #
-        receive_list = [manager_email, am_email, tl_email,'tabassum.z@expertcallers.com',
-                        qa_am_email_id,qa_email_id]
+        receive_list = [manager_email, am_email, tl_email, 'tabassum.z@expertcallers.com',
+                        qa_am_email_id, qa_email_id]
 
         html_path = 'dispute-template.html'
         data = {'id': cid, 'process': process, 'emp_name': emp_name, 'emp_comments': emp_comments}
@@ -3032,13 +3199,13 @@ def coachingDisputeFinal(request,pk):
 
         data = {'team': team}
 
-        return render(request,'coaching-dispute-message.html',data)
+        return render(request, 'coaching-dispute-message.html', data)
     else:
         return redirect('/employees/agenthome')
 
-def qahome(request):
 
-    if request.method=='POST':
+def qahome(request):
+    if request.method == 'POST':
 
         currentMonth = request.POST['month']
         currentYear = request.POST['year']
@@ -3047,7 +3214,7 @@ def qahome(request):
         # Total NO of Coachings
         total_coaching_ids = []
         for i in list_of_monforms:
-            x = i.objects.filter(added_by=qa_name,audit_date__year=currentYear,audit_date__month=currentMonth)
+            x = i.objects.filter(added_by=qa_name, audit_date__year=currentYear, audit_date__month=currentMonth)
             for i in x:
                 total_coaching_ids.append(i.id)
         total_coaching = len(total_coaching_ids)
@@ -3118,7 +3285,7 @@ def qahome(request):
         # Total NO of Coachings
         total_coaching_ids = []
         for i in list_of_monforms:
-            x = i.objects.filter(added_by=qa_name,audit_date__year=currentYear,audit_date__month=currentMonth)
+            x = i.objects.filter(added_by=qa_name, audit_date__year=currentYear, audit_date__month=currentMonth)
             for i in x:
                 total_coaching_ids.append(i.id)
         total_coaching = len(total_coaching_ids)
@@ -3127,27 +3294,32 @@ def qahome(request):
         list_dispute_campaigns = []
         all_coachings = []
         for i in list_of_monforms:
-            opn_cmp_obj = i.objects.filter(status=False, added_by=qa_name, audit_date__year=currentYear,audit_date__month=currentMonth)
+            opn_cmp_obj = i.objects.filter(status=False, added_by=qa_name, audit_date__year=currentYear,
+                                           audit_date__month=currentMonth)
             list_open_campaigns.append(opn_cmp_obj)
-            disp_obj = i.objects.filter(disput_status=True, added_by=qa_name, audit_date__year=currentYear,audit_date__month=currentMonth)
+            disp_obj = i.objects.filter(disput_status=True, added_by=qa_name, audit_date__year=currentYear,
+                                        audit_date__month=currentMonth)
             list_dispute_campaigns.append(disp_obj)
-            all_coaching = i.objects.filter(added_by=qa_name, audit_date__year=currentYear,audit_date__month=currentMonth).order_by('-id')
+            all_coaching = i.objects.filter(added_by=qa_name, audit_date__year=currentYear,
+                                            audit_date__month=currentMonth).order_by('-id')
             all_coachings.append(all_coaching)
 
         list_of_open_count = []
         list_of_disp_count = []
         for i in list_of_monforms:
-            count = i.objects.filter(added_by=qa_name, status=False, audit_date__year=currentYear,audit_date__month=currentMonth).count()
+            count = i.objects.filter(added_by=qa_name, status=False, audit_date__year=currentYear,
+                                     audit_date__month=currentMonth).count()
             list_of_open_count.append(count)
             disp_count = i.objects.filter(added_by=qa_name, disput_status=True, audit_date__year=currentYear,
-                                     audit_date__month=currentMonth).count()
+                                          audit_date__month=currentMonth).count()
             list_of_disp_count.append(disp_count)
         total_open_coachings = sum(list_of_open_count)
         total_disp_coachings = sum(list_of_disp_count)
 
         avg_campaignwise = []
         for i in list_of_monforms:
-            emp_wise = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,qa=qa_name).values(
+            emp_wise = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,
+                                        qa=qa_name).values(
                 'process').annotate(davg=Avg('overall_score'))
             avg_campaignwise.append(emp_wise)
 
@@ -3155,53 +3327,53 @@ def qahome(request):
         campaigns_from_db = Campaigns.objects.filter(type='Outbound').order_by('name')
         campaigns_inbound = Campaigns.objects.filter(type='Inbound').order_by('name')
         campaigns_email_chat = Campaigns.objects.filter(type='Email - Chat').order_by('name')
-        campaigns_other = Campaigns.objects.exclude(type__in=['Outbound','Inbound','Email - Chat'])
+        campaigns_other = Campaigns.objects.exclude(type__in=['Outbound', 'Inbound', 'Email - Chat'])
         all_campaigns = Campaigns.objects.all().order_by('name')
         data = {
-                'total_open': total_open_coachings,
-                'total_dispute':total_disp_coachings,
-                'total_coaching': total_coaching,
-                'open_campaigns': list_open_campaigns,
-                'all_coachings':all_coachings,
-                'dispute_coachings':list_dispute_campaigns,
-                'avg_campaignwise': avg_campaignwise,
-                'campaigns':campaigns_from_db,
-                'campaigns_inbound':campaigns_inbound,
-                'campaigns_email_chat':campaigns_email_chat,
-                'campaigns_other':campaigns_other,
-                'all_campaigns':all_campaigns,
-                'month':currentMonth,
-                'year':currentYear,
-                }
+            'total_open': total_open_coachings,
+            'total_dispute': total_disp_coachings,
+            'total_coaching': total_coaching,
+            'open_campaigns': list_open_campaigns,
+            'all_coachings': all_coachings,
+            'dispute_coachings': list_dispute_campaigns,
+            'avg_campaignwise': avg_campaignwise,
+            'campaigns': campaigns_from_db,
+            'campaigns_inbound': campaigns_inbound,
+            'campaigns_email_chat': campaigns_email_chat,
+            'campaigns_other': campaigns_other,
+            'all_campaigns': all_campaigns,
+            'month': currentMonth,
+            'year': currentYear,
+        }
 
         return render(request, 'qa-home.html', data)
 
 
-#campaign View
+# campaign View
 
 def campaignView(request):
-
-    if request.method=='POST':
+    if request.method == 'POST':
 
         campaign_id = request.POST['campaign_id']
         campaign = Campaigns.objects.get(id=campaign_id)
-        agents=Profile.objects.exclude(emp_desi__in=['AM','Manager','Team Leader','Trainer','QA']).order_by('emp_name')
+        agents = Profile.objects.exclude(emp_desi__in=['AM', 'Manager', 'Team Leader', 'Trainer', 'QA']).order_by(
+            'emp_name')
 
-        data = {'campaign':campaign,'agents':agents}
-        return render(request,'campaign-view.html',data)
+        data = {'campaign': campaign, 'agents': agents}
+        return render(request, 'campaign-view.html', data)
 
     else:
         pass
 
-def selectCoachingForm(request):
 
+def selectCoachingForm(request):
     if request.method == 'POST':
 
         import datetime
         today_date = datetime.date.today()
         new_today_date = today_date.strftime("%Y-%m-%d")
-        agent_id=request.POST['agent_id']
-        campaign_id=request.POST['campaign_id']
+        agent_id = request.POST['agent_id']
+        campaign_id = request.POST['campaign_id']
         campaign = Campaigns.objects.get(id=campaign_id)
         campaign_type = campaign.type
         agent = Profile.objects.get(emp_id=agent_id)
@@ -3223,37 +3395,37 @@ def selectCoachingForm(request):
             return render(request, 'mon-forms/FLA-mon-form.html', data)
 
         elif campaign_type == 'Noom Eva':
-            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/ECPL-EVA&NOVO-Monitoring-Form-chat.html', data)
 
         elif campaign_type == 'Noom POD':
 
-            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/ECPL-Pod-Father-Monitoring-Form-chat.html', data)
 
-        elif campaign_type =='Fame House':
-            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+        elif campaign_type == 'Fame House':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/fame-house-new.html', data)
 
-        elif campaign_type =='Gubagoo':
-            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+        elif campaign_type == 'Gubagoo':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/gubagoo.html', data)
 
-        elif campaign_type =='Practo':
-            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+        elif campaign_type == 'Practo':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/practo.html', data)
 
-        elif campaign_type =='PractoNew':
-            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+        elif campaign_type == 'PractoNew':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/practo_chat.html', data)
 
-        elif campaign_type =='ILM':
-            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
+        elif campaign_type == 'ILM':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/ILM.html', data)
 
-        elif campaign_type =='DSG':
-            data = {'agent': agent, 'campaign': campaign,'date': new_today_date}
-            return render(request,'mon-forms/digital-swiss-gold-email-chat.html', data)
+        elif campaign_type == 'DSG':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
+            return render(request, 'mon-forms/digital-swiss-gold-email-chat.html', data)
 
         elif campaign_type == 'wp1':
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
@@ -3275,20 +3447,23 @@ def selectCoachingForm(request):
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/spoiled_child.html', data)
 
+        elif campaign_type == 'Amerisave':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
+            return render(request, 'mon-forms/amerisave.html', data)
+
     else:
         return redirect('/employees/qahome')
 
+
 def coachingSummaryView(request):
-    return render(request,'coaching-summary-view.html')
+    return render(request, 'coaching-summary-view.html')
+
 
 def qualityDashboard(request):
-
-    return render(request,'quality-dashboard.html')
+    return render(request, 'quality-dashboard.html')
 
 
 def exportAuditReport(request):
-
-
     if request.method == 'POST':
 
         start_date = request.POST['start_date']
@@ -3308,7 +3483,7 @@ def exportAuditReport(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact','zone','concept',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
 
                        'Used Standard Opening Protocol',
                        'Introduction of Product / Branding',
@@ -3339,7 +3514,7 @@ def exportAuditReport(request):
                                           ).values_list(
                 'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager', 'customer_name', 'customer_contact','zone','concept',
+                'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
 
                 'oc_1',
                 'oc_2',
@@ -3358,7 +3533,7 @@ def exportAuditReport(request):
                 'compliance_5',
                 'compliance_6',
 
-                'status','disput_status',
+                'status', 'disput_status',
                 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
@@ -3841,6 +4016,35 @@ def exportAuditReport(request):
             response = exportAadyaseries(BetterEdOutboundmonform)
             return response
 
+        elif campaign == 'Com 98 Outbound':
+            response = exportAadyaseries(Com98Outboundmonform)
+            return response
+
+
+        elif campaign == 'Gretna Medical Centre Outbound':
+            response = exportAadyaseries(GretnaMedicalCentreOutboundmonform)
+            return response
+
+        elif campaign == 'Arista MD Outbound':
+            response = exportAadyaseries(AristaMDOutboundmonform)
+            return response
+
+        elif campaign == 'Robert Damon Production Outbound':
+            response = exportAadyaseries(RobertDamonProductionOutboundmonform)
+            return response
+
+        elif campaign == 'Venwiz Outbound':
+            response = exportAadyaseries(VenwizOutboundmonform)
+            return response
+
+        elif campaign == 'City Habitat Outbound':
+            response = exportAadyaseries(CityHabitatOutboundmonform)
+            return response
+
+        elif campaign == 'Optel Outbound':
+            response = exportAadyaseries(OptelOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -3855,7 +4059,7 @@ def exportAuditReport(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact','zone','concept',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
 
                        'Used Standard Opening Protocol',
                        'Personalization ( Report Building, Addressing by Name)',
@@ -3878,7 +4082,7 @@ def exportAuditReport(request):
                        'Process & Procedure Followed',
                        'First Call Resolution',
 
-                       'status','dispute_status',
+                       'status', 'dispute_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -3887,10 +4091,10 @@ def exportAuditReport(request):
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
             rows = monform.objects.filter(audit_date__range=[start_date, end_date],
-                                                                             ).values_list(
+                                          ).values_list(
                 'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager','customer_name','customer_contact','zone','concept',
+                'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
 
                 'ce_1',
                 'ce_2',
@@ -3913,7 +4117,7 @@ def exportAuditReport(request):
                 'compliance_4',
                 'compliance_5',
 
-                'status','disput_status',
+                'status', 'disput_status',
                 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
@@ -4048,6 +4252,22 @@ def exportAuditReport(request):
             response = exportinbound(BetterEdInboundMonForm)
             return response
 
+        elif campaign == 'Com 98 Inbound':
+            response = exportinbound(Com98InboundMonForm)
+            return response
+
+        elif campaign == 'Open Winds Inbound':
+            response = exportinbound(OpenWindsInboundMonForm)
+            return response
+
+        elif campaign == 'Embassy Luxury Inbound':
+            response = exportinbound(EmbassyLuxuryInboundMonForm)
+            return response
+
+        elif campaign == 'South County Inbound':
+            response = exportinbound(SouthCountyInboundMonForm)
+            return response
+
         #########    Email/CHat ##########################
 
         def exportEmailChat(monform):
@@ -4062,7 +4282,7 @@ def exportAuditReport(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact',
 
                        'Associate used the standard greeting format',
                        'Appropriate responses ( acknowledging at the right time)',
@@ -4085,7 +4305,7 @@ def exportAuditReport(request):
                        'Process & Procedure Followed',
                        'First Chat / Email Resolution',
 
-                       'status','disput_status',
+                       'status', 'disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -4094,10 +4314,10 @@ def exportAuditReport(request):
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
             rows = monform.objects.filter(
-                audit_date__range=[start_date, end_date],  ).values_list(
+                audit_date__range=[start_date, end_date], ).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager','customer_name','customer_contact',
+                'team_lead', 'manager', 'customer_name', 'customer_contact',
 
                 'ce_1',
                 'ce_2',
@@ -4120,8 +4340,8 @@ def exportAuditReport(request):
                 'compliance_4',
                 'compliance_5',
 
-                'status','disput_status',
-                'closed_date', 'fatal','areas_improvement', 'positives', 'comments')
+                'status', 'disput_status',
+                'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -4385,7 +4605,7 @@ def exportAuditReport(request):
                        'Rep Name - (Did agent introduce her/himself during opening?)',
                        'Branding/Site Name - (Did the agent state the site name name in the opening?)',
                        'Call Reason - (Did the agent state the reason for the call? (confirmation call))',
-                        'Contact Information - (Did the agent verify the contact info?)',
+                       'Contact Information - (Did the agent verify the contact info?)',
 
                        'Targeted Spotlight offer - (Did the agent attempt the Targeted spotlight offer?)',
                        'Lead offer - (Did the agent attempt the lead offer?)',
@@ -4398,8 +4618,8 @@ def exportAuditReport(request):
                        'Call control - (Did the agent take control of the call)',
                        'Program of Interest - (Did the agent match the lead to a program that they stated interest in, without having to push the lead into agreeing to the program?)',
 
-                        'TCPA Close - (Did the rep read a TCPA statement and receive an affirmative response from the lead (Yes or Yeah)?)',
-                        'TCPA Close - (If interrupted did the agent reread the TCPA and get an affimative response)',
+                       'TCPA Close - (Did the rep read a TCPA statement and receive an affirmative response from the lead (Yes or Yeah)?)',
+                       'TCPA Close - (If interrupted did the agent reread the TCPA and get an affimative response)',
                        'Do Not Call Request - (Agent followed DNC Request Policy)',
                        'California Privacy Policy - (Agent followed CA Policy Privacy by reading the written statement for CA residents)',
                        'Transfering the call - (Did the agent conduct the intro on the transfer correctly?)',
@@ -4407,9 +4627,7 @@ def exportAuditReport(request):
                        'Disposition - (Did the agent used the correct disposition?)',
                        'Auto Fail - (ZERO TOLERANCE POLICY)',
 
-
-
-                       'status','disput_status',
+                       'status', 'disput_status',
                        'closed_date', 'fatal', 'coaching_comments', 'evaluator_comment']
 
             for col_num in range(len(columns)):
@@ -4450,7 +4668,7 @@ def exportAuditReport(request):
                 'tp_3',
                 'comp_6',
 
-                'status','disput_status', 'closed_date', 'fatal', 'evaluator_comment', 'coaching_comments')
+                'status', 'disput_status', 'closed_date', 'fatal', 'evaluator_comment', 'coaching_comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -4499,7 +4717,7 @@ def exportAuditReport(request):
                        'Process & Procedure Followed',
                        'First Chat / Email Resolution',
 
-                       'status','disput_status',
+                       'status', 'disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -4574,7 +4792,7 @@ def exportAuditReport(request):
                        'Magento was utilized correctly',
                        'Identified correct order type',
 
-                       'status','disput_status',
+                       'status', 'disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -4708,7 +4926,7 @@ def exportAuditReport(request):
 
                        'Agent completed all system processes correctly',
 
-                       'status','disput_status',
+                       'status', 'disput_status',
 
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
@@ -4719,7 +4937,7 @@ def exportAuditReport(request):
 
             font_style = xlwt.XFStyle()
 
-            rows = FameHouseNewMonForm.objects.filter(audit_date__range=[start_date, end_date],).values_list(
+            rows = FameHouseNewMonForm.objects.filter(audit_date__range=[start_date, end_date], ).values_list(
 
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
 
@@ -4796,7 +5014,7 @@ def exportAuditReport(request):
 
                 'doc_4',
 
-                'status','disput_status',
+                'status', 'disput_status',
                 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
@@ -4842,7 +5060,7 @@ def exportAuditReport(request):
                        'If the user is missed to send the survey response and assigned directly. If the survey messages are swapped.',
                        'If the user has a question or information about Covid, that needs to addressed to coaches or Seek a help from the slack channels and then respond to it',
 
-                       'status','disput_status',
+                       'status', 'disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -4868,7 +5086,7 @@ def exportAuditReport(request):
                 'compliance_5',
                 'compliance_6',
 
-                'status','disput_status',
+                'status', 'disput_status',
                 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
@@ -4910,7 +5128,7 @@ def exportAuditReport(request):
                        'If the user is missed to send the survey response and assigned directly. If the survey messages are swapped.',
                        'If the user has a question or information about Covid, that needs to addressed to coaches or Seek a help from the slack channels and then respond to it',
 
-                       'status','disput_status',
+                       'status', 'disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -4918,7 +5136,7 @@ def exportAuditReport(request):
 
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
-            rows = ChatMonitoringFormEva.objects.filter(audit_date__range=[start_date, end_date],  ).values_list(
+            rows = ChatMonitoringFormEva.objects.filter(audit_date__range=[start_date, end_date], ).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
                 'team_lead', 'manager', 'ticket_no',
@@ -4969,7 +5187,7 @@ def exportAuditReport(request):
                        'Check List Used Correctly',
                        'Reason for failure',
 
-                       'status','disput_status',
+                       'status', 'disput_status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
             for col_num in range(len(columns)):
@@ -4978,7 +5196,7 @@ def exportAuditReport(request):
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
             rows = FLAMonitoringForm.objects.filter(
-                audit_date__range=[start_date, end_date],  ).values_list(
+                audit_date__range=[start_date, end_date], ).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
                 'team_lead', 'manager',
@@ -5046,7 +5264,7 @@ def exportAuditReport(request):
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
             rows = PractoNewVersion.objects.filter(
-                audit_date__range=[start_date, end_date], qa=qa).values_list(
+                audit_date__range=[start_date, end_date]).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
                 'team_lead', 'manager', 'conversation_id', 'customer_contact', 'training',
@@ -5072,7 +5290,7 @@ def exportAuditReport(request):
 
                 'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
-        #practo chat
+        # practo chat
         elif campaign == 'Practo Chat':
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
@@ -5083,12 +5301,12 @@ def exportAuditReport(request):
             font_style = xlwt.XFStyle()
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'Chat date',
-                        'Case Number',
-                        'Issue Type',
-                        'Sub-Issue Type',
-                        'Sub Sub-Issue Type',
-                        'CSAT',
-                        'Product',
+                       'Case Number',
+                       'Issue Type',
+                       'Sub-Issue Type',
+                       'Sub Sub-Issue Type',
+                       'CSAT',
+                       'Product',
                        'Audit Date', 'overall_score',
                        'Fatal Count',
                        'qa', 'am', 'team_lead', 'manager',
@@ -5288,6 +5506,19 @@ def exportAuditReport(request):
                 'status', 'disput_status',
                 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
         elif campaign == 'Gubagoo':
 
             response = HttpResponse(content_type='application/ms-excel')
@@ -5299,9 +5530,9 @@ def exportAuditReport(request):
             font_style = xlwt.XFStyle()
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
-                       'Fatal Count','qa', 'am', 'team_lead', 'manager',
+                       'Fatal Count', 'qa', 'am', 'team_lead', 'manager',
                        'chat1_id', 'chat2_id', 'chat3_id', 'chat4_id', 'chat5_id', 'chat6_id',
-                       'chat 1 score','chat 2 score','chat 3 score','chat 4 score','chat 5 score','chat 6 score',
+                       'chat 1 score', 'chat 2 score', 'chat 3 score', 'chat 4 score', 'chat 5 score', 'chat 6 score',
 
                        'Was there a greeting? - chat1',
                        'Was there a greeting? - chat2',
@@ -5415,8 +5646,8 @@ def exportAuditReport(request):
                        'Auto-fail - chat5',
                        'Auto-fail - chat6',
 
-                       'status','disput_status',
-                       'closed_date', 'fatal',]
+                       'status', 'disput_status',
+                       'closed_date', 'fatal', ]
 
             for col_num in range(len(columns)):
                 ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
@@ -5424,11 +5655,12 @@ def exportAuditReport(request):
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
             rows = GubagooAuditForm.objects.filter(
-                audit_date__range=[start_date, end_date],).values_list(
+                audit_date__range=[start_date, end_date], ).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count',
-                'qa','am','team_lead', 'manager',
-                'chat1_id','chat2_id','chat3_id','chat4_id','chat5_id','chat6_id',
-                'chat1_total_score','chat2_total_score','chat3_total_score','chat4_total_score','chat5_total_score', 'chat6_total_score',
+                'qa', 'am', 'team_lead', 'manager',
+                'chat1_id', 'chat2_id', 'chat3_id', 'chat4_id', 'chat5_id', 'chat6_id',
+                'chat1_total_score', 'chat2_total_score', 'chat3_total_score', 'chat4_total_score', 'chat5_total_score',
+                'chat6_total_score',
 
                 'cat1chat1',
                 'cat1chat2',
@@ -5602,7 +5834,7 @@ def exportAuditReport(request):
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
             rows = NerotelInboundmonform.objects.filter(audit_date__range=[start_date, end_date],
-                                          ).values_list(
+                                                        ).values_list(
                 'process', 'emp_id', 'associate_name', 'qa', 'team_lead',
                 'am', 'manager', 'customer_name', 'customer_contact',
                 'call_date',
@@ -5695,6 +5927,79 @@ def exportAuditReport(request):
 
             return response
 
+        elif campaign == "Amerisave":
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['Process', 'Employee ID', 'Associate Name', 'Type', 'Lead Source', 'Customer ID',
+                       'Transfer/Non-transfer', 'Call Date', 'Audit Date', 'Quality Analyst', 'Team Lead', 'Manager',
+                       'Assistant Manager', 'Week',
+
+                       "Did CSS adhere to the script associated with the lead source?",
+                       "What was the consumer's main objection?",
+                       "Did CSS attempt to overcome objections?",
+                       "Transfer Only: Did CSS properly transfer the customer to sales?",
+
+                       "Did CSS disposition call correctly?",
+                       "CSS Full Name",
+                       "AmeriSave Mortgage Corporation",
+                       "Recorded Line",
+                       "Pre-qualified for a loan with AMC",
+                       "Did CSS read Fine Print verbatim and completely?",
+
+                       "If Fail, Which Type",
+                       "Total Score",
+
+                       'Fatal', 'Fatal Count', 'Dispute Status', 'Status',
+                       'Closed Date', 'Areas of improvement', 'Positives', 'Comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = AmerisaveMonForm.objects.filter(audit_date__range=[start_date, end_date],
+                                                   ).values_list(
+                'process', 'emp_id', 'associate_name', 'category', 'lead_source', 'customer_id',
+                'transfer', 'call_date', 'audit_date', 'qa', 'team_lead', 'manager',
+                'am', 'week',
+
+                "nce_1",
+                "nce_2",
+                "nce_3",
+                "nce_4",
+
+                "compliance_1",
+                "compliance_2",
+                "compliance_3",
+                "compliance_4",
+                "compliance_5",
+                "compliance_6",
+
+                "fail_type",
+                "overall_score",
+
+                'fatal', 'fatal_count', 'disput_status', 'status',
+                'closed_date', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
 
         else:
             return redirect(request, 'error-pages/export-error.html')
@@ -5703,7 +6008,6 @@ def exportAuditReport(request):
 
 
 def exportAuditReportQA(request):
-
     if request.method == 'POST':
         start_date = request.POST['start_date']
         end_date = request.POST['end_date']
@@ -5724,7 +6028,7 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact','zone','concept',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
 
                        'Used Standard Opening Protocol',
                        'Introduction of Product / Branding',
@@ -5755,7 +6059,7 @@ def exportAuditReportQA(request):
                                           ).values_list(
                 'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager', 'customer_name', 'customer_contact','zone','concept',
+                'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
 
                 'oc_1',
                 'oc_2',
@@ -6256,6 +6560,34 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(BetterEdOutboundmonform)
             return response
 
+        elif campaign == 'Com 98 Outbound':
+            response = exportAadyaseries(Com98Outboundmonform)
+            return response
+
+        elif campaign == 'Gretna Medical Centre Outbound':
+            response = exportAadyaseries(GretnaMedicalCentreOutboundmonform)
+            return response
+
+        elif campaign == 'Arista MD Outbound':
+            response = exportAadyaseries(AristaMDOutboundmonform)
+            return response
+
+        elif campaign == 'Robert Damon Production Outbound':
+            response = exportAadyaseries(RobertDamonProductionOutboundmonform)
+            return response
+
+        elif campaign == 'Venwiz Outbound':
+            response = exportAadyaseries(VenwizOutboundmonform)
+            return response
+
+        elif campaign == 'City Habitat Outbound':
+            response = exportAadyaseries(CityHabitatOutboundmonform)
+            return response
+
+        elif campaign == 'Optel Outbound':
+            response = exportAadyaseries(OptelOutboundmonform)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -6270,7 +6602,7 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact','zone','concept',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
 
                        'Used Standard Opening Protocol',
                        'Personalization ( Report Building, Addressing by Name)',
@@ -6302,10 +6634,10 @@ def exportAuditReportQA(request):
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
             rows = monform.objects.filter(audit_date__range=[start_date, end_date], qa=qa
-                                                                             ).values_list(
+                                          ).values_list(
                 'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager','customer_name','customer_contact','zone','concept',
+                'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
 
                 'ce_1',
                 'ce_2',
@@ -6462,6 +6794,22 @@ def exportAuditReportQA(request):
             response = exportinbound(BetterEdInboundMonForm)
             return response
 
+        elif campaign == 'Com 98 Inbound':
+            response = exportinbound(Com98InboundMonForm)
+            return response
+
+        elif campaign == 'Open Winds Inbound':
+            response = exportinbound(OpenWindsInboundMonForm)
+            return response
+
+        elif campaign == 'Embassy Luxury Inbound':
+            response = exportinbound(EmbassyLuxuryInboundMonForm)
+            return response
+
+        elif campaign == 'South County Inbound':
+            response = exportinbound(SouthCountyInboundMonForm)
+            return response
+
         #########    Email/CHat ##########################
 
         def exportEmailChat(monform):
@@ -6476,7 +6824,7 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','customer_name','customer_contact',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'customer_contact',
 
                        'Associate used the standard greeting format',
                        'Appropriate responses ( acknowledging at the right time)',
@@ -6511,7 +6859,7 @@ def exportAuditReportQA(request):
                 audit_date__range=[start_date, end_date], qa=qa).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager','customer_name','customer_contact',
+                'team_lead', 'manager', 'customer_name', 'customer_contact',
 
                 'ce_1',
                 'ce_2',
@@ -6534,7 +6882,7 @@ def exportAuditReportQA(request):
                 'compliance_4',
                 'compliance_5',
 
-                'status', 'closed_date', 'fatal','areas_improvement', 'positives', 'comments')
+                'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -6659,7 +7007,8 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'ticket_id', 'zone', 'concept','query_type',
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'ticket_id', 'zone', 'concept',
+                       'query_type',
 
                        "Understanding and Solved Customer's Issue",
                        "Displayed process knowledge",
@@ -6682,19 +7031,19 @@ def exportAuditReportQA(request):
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
             rows = BlazingHogEmailChatmonform.objects.filter(audit_date__range=[start_date, end_date], qa=qa
-                                          ).values_list(
+                                                             ).values_list(
                 'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager', 'customer_name', 'ticket_id', 'zone', 'concept','query_type',
-                
-                 'solution_1',
-                 'solution_2',
-                 'solution_3',
-                 'solution_4',
-                
-                    'efficiency_1',
-                    'efficiency_2',
-                
+                'team_lead', 'manager', 'customer_name', 'ticket_id', 'zone', 'concept', 'query_type',
+
+                'solution_1',
+                'solution_2',
+                'solution_3',
+                'solution_4',
+
+                'efficiency_1',
+                'efficiency_2',
+
                 'compliance_1',
                 'compliance_2',
                 'compliance_3',
@@ -6749,7 +7098,7 @@ def exportAuditReportQA(request):
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
             rows = ABHindalcoMonForm.objects.filter(audit_date__range=[start_date, end_date], qa=qa
-                                          ).values_list(
+                                                    ).values_list(
                 'process', 'emp_id', 'associate_name', 'call_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
                 'team_lead', 'manager', 'customer_name', 'customer_contact', 'zone', 'concept',
@@ -6762,12 +7111,10 @@ def exportAuditReportQA(request):
                 'softskill_2',
                 'softskill_3',
 
-
                 'compliance_1',
                 'compliance_2',
                 'compliance_3',
                 'compliance_4',
-
 
                 'status', 'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments')
 
@@ -6801,7 +7148,7 @@ def exportAuditReportQA(request):
                        'Rep Name - (Did agent introduce her/himself during opening?)',
                        'Branding/Site Name - (Did the agent state the site name name in the opening?)',
                        'Call Reason - (Did the agent state the reason for the call? (confirmation call))',
-                        'Contact Information - (Did the agent verify the contact info?)',
+                       'Contact Information - (Did the agent verify the contact info?)',
 
                        'Targeted Spotlight offer - (Did the agent attempt the Targeted spotlight offer?)',
                        'Lead offer - (Did the agent attempt the lead offer?)',
@@ -6814,15 +7161,15 @@ def exportAuditReportQA(request):
                        'Call control - (Did the agent take control of the call)',
                        'Program of Interest - (Did the agent match the lead to a program that they stated interest in, without having to push the lead into agreeing to the program?)',
 
-                        'TCPA Close - (Did the rep read a TCPA statement and receive an affirmative response from the lead (Yes or Yeah)?)',
-                        'TCPA Close - (If interrupted did the agent reread the TCPA and get an affimative response)',
+                       'TCPA Close - (Did the rep read a TCPA statement and receive an affirmative response from the lead (Yes or Yeah)?)',
+                       'TCPA Close - (If interrupted did the agent reread the TCPA and get an affimative response)',
                        'Do Not Call Request - (Agent followed DNC Request Policy)',
                        'California Privacy Policy - (Agent followed CA Policy Privacy by reading the written statement for CA residents)',
                        'Transfering the call - (Did the agent conduct the intro on the transfer correctly?)',
                        'Transfer Only - (Did the agent conduct the intro on the transfer correctly)',
                        'Disposition - (Did the agent used the correct disposition?)',
                        'Auto Fail - (ZERO TOLERANCE POLICY)',
-                       'status','disput_status',
+                       'status', 'disput_status',
                        'closed_date', 'fatal', 'coaching_comments', 'evaluator_comment']
 
             for col_num in range(len(columns)):
@@ -6863,7 +7210,7 @@ def exportAuditReportQA(request):
                 'tp_3',
                 'comp_6',
 
-                'status','disput_status', 'closed_date', 'fatal', 'evaluator_comment', 'coaching_comments')
+                'status', 'disput_status', 'closed_date', 'fatal', 'evaluator_comment', 'coaching_comments')
 
             import datetime
             rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
@@ -6974,8 +7321,8 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'Email/chat date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'ticket_id','Query Type',
-                       
+                       'qa', 'am', 'team_lead', 'manager', 'customer_name', 'ticket_id', 'Query Type',
+
                        "Understanding and Solved Customer's Issue",
                        'Gave alternatives when required/applicable & Displayed expert product knowledge',
                        'Coupon code added/Edited Name/Values & Date//Personalised when applicable',
@@ -6985,7 +7332,7 @@ def exportAuditReportQA(request):
                        'Appropriate use of macros',
                        'Magento was utilized correctly',
                        'Identified correct order type',
-                       
+
                        'status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
@@ -6998,13 +7345,13 @@ def exportAuditReportQA(request):
                 audit_date__range=[start_date, end_date], qa=qa).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager', 'customer_name', 'ticket_id','query_type',
+                'team_lead', 'manager', 'customer_name', 'ticket_id', 'query_type',
 
                 's_1',
                 's_2',
                 's_3',
                 's_4',
-        
+
                 'e_1',
                 'e_2',
 
@@ -7038,7 +7385,7 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count', 'qa', 'am', 'team_lead', 'manager', 'ticket_no', 'ticket_type',
-                        'Shipping product incorrectly',
+                       'Shipping product incorrectly',
                        'Incorrect grammar and spelling being used/illegible responses/Does not make sense.',
                        'Blatantly incorrect or made up information provided to the customer',
                        'Sending internal notes as Public response',
@@ -7350,10 +7697,10 @@ def exportAuditReportQA(request):
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
                        'Fatal Count',
-                       'qa', 'am', 'team_lead', 'manager','conversation_id','customer_contact','training',
+                       'qa', 'am', 'team_lead', 'manager', 'conversation_id', 'customer_contact', 'training',
 
-                        'Chat Opening (Greetings & being attentive) & Closing',
-                        'FRTAT',
+                       'Chat Opening (Greetings & being attentive) & Closing',
+                       'FRTAT',
                        'Addressing the user/Personalisation of chat',
                        'Assurance & Acknowledgement',
                        'Coherence (understanding the issue) being attentive on chat.',
@@ -7372,7 +7719,6 @@ def exportAuditReportQA(request):
                        'Expectations: Setting correct expectations about issue resolution',
                        'ZTP(Zero Tolerance Policy)',
 
-
                        'status',
                        'closed_date', 'fatal', 'areas_improvement', 'positives', 'comments']
 
@@ -7385,8 +7731,8 @@ def exportAuditReportQA(request):
                 audit_date__range=[start_date, end_date], qa=qa).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count', 'qa',
                 'am',
-                'team_lead', 'manager','conversation_id','customer_contact','training',
-                 'p_1',
+                'team_lead', 'manager', 'conversation_id', 'customer_contact', 'training',
+                'p_1',
                 'p_2',
                 'p_3',
                 'p_4',
@@ -7432,12 +7778,12 @@ def exportAuditReportQA(request):
             font_style = xlwt.XFStyle()
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'Chat date',
-                        'Case Number',
-                        'Issue Type',
-                        'Sub-Issue Type',
-                        'Sub Sub-Issue Type',
-                        'CSAT',
-                        'Product',
+                       'Case Number',
+                       'Issue Type',
+                       'Sub-Issue Type',
+                       'Sub Sub-Issue Type',
+                       'CSAT',
+                       'Product',
                        'Audit Date', 'overall_score',
                        'Fatal Count',
                        'qa', 'am', 'team_lead', 'manager',
@@ -7662,9 +8008,9 @@ def exportAuditReportQA(request):
             font_style = xlwt.XFStyle()
             font_style.font.bold = True
             columns = ['process', 'empID', 'Associate Name', 'transaction date', 'Audit Date', 'overall_score',
-                       'Fatal Count','qa', 'am', 'team_lead', 'manager',
+                       'Fatal Count', 'qa', 'am', 'team_lead', 'manager',
                        'chat1_id', 'chat2_id', 'chat3_id', 'chat4_id', 'chat5_id', 'chat6_id',
-                       'chat 1 score','chat 2 score','chat 3 score','chat 4 score','chat 5 score','chat 6 score',
+                       'chat 1 score', 'chat 2 score', 'chat 3 score', 'chat 4 score', 'chat 5 score', 'chat 6 score',
 
                        'Was there a greeting? - chat1',
                        'Was there a greeting? - chat2',
@@ -7779,7 +8125,7 @@ def exportAuditReportQA(request):
                        'Auto-fail - chat6',
 
                        'status',
-                       'closed_date', 'fatal',]
+                       'closed_date', 'fatal', ]
 
             for col_num in range(len(columns)):
                 ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
@@ -7789,9 +8135,10 @@ def exportAuditReportQA(request):
             rows = GubagooAuditForm.objects.filter(
                 audit_date__range=[start_date, end_date], qa=qa).values_list(
                 'process', 'emp_id', 'associate_name', 'trans_date', 'audit_date', 'overall_score', 'fatal_count',
-                'qa','am','team_lead', 'manager',
-                'chat1_id','chat2_id','chat3_id','chat4_id','chat5_id','chat6_id',
-                'chat1_total_score','chat2_total_score','chat3_total_score','chat4_total_score','chat5_total_score', 'chat6_total_score',
+                'qa', 'am', 'team_lead', 'manager',
+                'chat1_id', 'chat2_id', 'chat3_id', 'chat4_id', 'chat5_id', 'chat6_id',
+                'chat1_total_score', 'chat2_total_score', 'chat3_total_score', 'chat4_total_score', 'chat5_total_score',
+                'chat6_total_score',
 
                 'cat1chat1',
                 'cat1chat2',
@@ -7903,7 +8250,7 @@ def exportAuditReportQA(request):
                 'cat16chat3',
                 'cat16chat4',
                 'cat16chat5',
-                'cat16chat6', 
+                'cat16chat6',
 
                 'status', 'closed_date', 'fatal')
 
@@ -7964,7 +8311,7 @@ def exportAuditReportQA(request):
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
             rows = NerotelInboundmonform.objects.filter(audit_date__range=[start_date, end_date], qa=qa
-                                          ).values_list(
+                                                        ).values_list(
 
                 'process', 'emp_id', 'associate_name', 'qa', 'team_lead',
                 'am', 'manager', 'customer_name', 'customer_contact',
@@ -8060,6 +8407,77 @@ def exportAuditReportQA(request):
 
             return response
 
+        elif campaign == "Amerisave":
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = ['Process', 'Employee ID', 'Associate Name', 'Type', 'Lead Source', 'Customer ID',
+                       'Transfer/Non-transfer', 'Call Date', 'Audit Date', 'Quality Analyst', 'Team Lead', 'Manager',
+                       'Assistant Manager', 'Week',
+
+                       "Did CSS adhere to the script associated with the lead source?",
+                       "What was the consumer's main objection?",
+                       "Did CSS attempt to overcome objections?",
+                       "Transfer Only: Did CSS properly transfer the customer to sales?",
+
+                       "Did CSS disposition call correctly?",
+                       "CSS Full Name",
+                       "AmeriSave Mortgage Corporation",
+                       "Recorded Line",
+                       "Pre-qualified for a loan with AMC",
+                       "Did CSS read Fine Print verbatim and completely?",
+
+                       "If Fail, Which Type",
+                       "Total Score",
+
+                       'Fatal', 'Fatal Count', 'Dispute Status', 'Status',
+                       'Closed Date', 'Areas of improvement', 'Positives', 'Comments']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = AmerisaveMonForm.objects.filter(
+                audit_date__range=[start_date, end_date], qa=qa).values_list(
+                'process', 'emp_id', 'associate_name', 'category', 'lead_source', 'customer_id',
+                'transfer', 'call_date', 'audit_date', 'qa', 'team_lead', 'manager',
+                'am', 'week',
+                "nce_1",
+                "nce_2",
+                "nce_3",
+                "nce_4",
+
+                "compliance_1",
+                "compliance_2",
+                "compliance_3",
+                "compliance_4",
+                "compliance_5",
+                "compliance_6",
+
+                "fail_type",
+                "overall_score",
+                'fatal', 'fatal_count', 'disput_status', 'status',
+                'closed_date', 'areas_improvement', 'positives', 'comments')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
         else:
             return redirect(request, 'error-pages/export-error.html')
 
@@ -8069,28 +8487,28 @@ def exportAuditReportQA(request):
         pass
 
 
-
-#------------------ New Series MonForms ----------------copy Aadya---------#
+# ------------------ New Series MonForms ----------------copy Aadya---------#
 
 def newSeriesMonForms(request):
-
     if request.method == 'POST':
         campaign_name = request.POST['campaign']
+
         def newseriesAddCoaching(monform):
 
-            category='Outbound'
+            category = 'Outbound'
             associate_name = request.POST['empname']
             emp_id = request.POST['empid']
             qa = request.POST['qa']
             team_lead = request.POST['tl']
-            customer_name=request.POST['customer']
-            customer_contact=request.POST['customercontact']
+            customer_name = request.POST['customer']
+            customer_contact = request.POST['customercontact']
             call_date = request.POST['calldate']
             audit_date = request.POST['auditdate']
             campaign = request.POST['campaign']
             concept = request.POST['concept']
-            zone=request.POST['zone']
-            call_duration=(int(request.POST['durationh'])*3600)+(int(request.POST['durationm'])*60)+int(request.POST['durations'])
+            zone = request.POST['zone']
+            call_duration = (int(request.POST['durationh']) * 3600) + (int(request.POST['durationm']) * 60) + int(
+                request.POST['durations'])
 
             #######################################
             prof_obj = Profile.objects.get(emp_id=emp_id)
@@ -8113,7 +8531,7 @@ def newSeriesMonForms(request):
             softskill_4 = int(request.POST['softskill_4'])
             softskill_5 = int(request.POST['softskill_5'])
 
-            softskill_total = softskill_1 + softskill_2+ softskill_3+ softskill_4+softskill_5
+            softskill_total = softskill_1 + softskill_2 + softskill_3 + softskill_4 + softskill_5
             # Compliance
             compliance_1 = int(request.POST['compliance_1'])
             compliance_2 = int(request.POST['compliance_2'])
@@ -8122,9 +8540,9 @@ def newSeriesMonForms(request):
             compliance_5 = int(request.POST['compliance_5'])
             compliance_6 = int(request.POST['compliance_6'])
 
-            compliance_total = compliance_1 + compliance_2 + compliance_3+compliance_4+compliance_5+compliance_6
+            compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4 + compliance_5 + compliance_6
 
-            fatal_list = [compliance_1, compliance_2, compliance_3, compliance_4,compliance_5,compliance_6]
+            fatal_list = [compliance_1, compliance_2, compliance_3, compliance_4, compliance_5, compliance_6]
             fatal_list_count = []
             for i in fatal_list:
                 if i == 0:
@@ -8135,7 +8553,7 @@ def newSeriesMonForms(request):
                 overall_score = 0
                 fatal = True
             else:
-                overall_score = oc_total + softskill_total +compliance_total
+                overall_score = oc_total + softskill_total + compliance_total
                 fatal = False
 
             areas_improvement = request.POST['areaimprovement']
@@ -8146,20 +8564,23 @@ def newSeriesMonForms(request):
             am = request.POST['am']
 
             leadsales = monform(
-                                associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                                manager=manager_name,manager_id=manager_emp_id,
-                                call_date=call_date, audit_date=audit_date, customer_name=customer_name,customer_contact=customer_contact,
-                                campaign=campaign, concept=concept, zone=zone,call_duration=call_duration,
-                                oc_1=oc_1,oc_2=oc_2,oc_3=oc_3,
-                                softskill_1=softskill_1,softskill_2=softskill_2,softskill_3=softskill_3,softskill_4=softskill_4,softskill_5=softskill_5,softskill_total=softskill_total,
-                                compliance_1=compliance_1, compliance_2=compliance_2,compliance_3=compliance_3,compliance_4=compliance_4,compliance_5=compliance_5,compliance_6=compliance_6,
-                                compliance_total=compliance_total,
-                                areas_improvement=areas_improvement,
-                                positives=positives, comments=comments,
-                                added_by=added_by,
-                                overall_score=overall_score,category=category,
-                                week=week,am=am,fatal_count=no_of_fatals,fatal=fatal,ce_total=oc_total,
-                                )
+                associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                manager=manager_name, manager_id=manager_emp_id,
+                call_date=call_date, audit_date=audit_date, customer_name=customer_name,
+                customer_contact=customer_contact,
+                campaign=campaign, concept=concept, zone=zone, call_duration=call_duration,
+                oc_1=oc_1, oc_2=oc_2, oc_3=oc_3,
+                softskill_1=softskill_1, softskill_2=softskill_2, softskill_3=softskill_3, softskill_4=softskill_4,
+                softskill_5=softskill_5, softskill_total=softskill_total,
+                compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
+                compliance_4=compliance_4, compliance_5=compliance_5, compliance_6=compliance_6,
+                compliance_total=compliance_total,
+                areas_improvement=areas_improvement,
+                positives=positives, comments=comments,
+                added_by=added_by,
+                overall_score=overall_score, category=category,
+                week=week, am=am, fatal_count=no_of_fatals, fatal=fatal, ce_total=oc_total,
+            )
             leadsales.save()
 
         if campaign_name == 'Zero Stress Marketing':
@@ -8638,6 +9059,36 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(BetterEdOutboundmonform)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Com 98 Outbound':
+            newseriesAddCoaching(Com98Outboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Gretna Medical Centre Outbound':
+            newseriesAddCoaching(GretnaMedicalCentreOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Arista MD Outbound':
+            newseriesAddCoaching(AristaMDOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Robert Damon Production Outbound':
+            newseriesAddCoaching(RobertDamonProductionOutboundmonform)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Venwiz Outbound':
+            newseriesAddCoaching(VenwizOutboundmonform)
+            return redirect('/employees/qahome')
+
+
+        elif campaign_name == 'City Habitat Outbound':
+            newseriesAddCoaching(CityHabitatOutboundmonform)
+            return redirect('/employees/qahome')
+
+
+        elif campaign_name == 'Optel Outbound':
+            newseriesAddCoaching(OptelOutboundmonform)
+            return redirect('/employees/qahome')
+
         else:
             pass
 
@@ -8648,8 +9099,8 @@ def newSeriesMonForms(request):
         data = {'teams': teams, 'users': users}
         return render(request, 'mon-forms/new-series-comon.html', data)
 
-def winopolyAddCoaching(request):
 
+def winopolyAddCoaching(request):
     if request.method == 'POST':
         campaign_name = request.POST['campaign']
         category = 'Outbound'
@@ -8714,7 +9165,7 @@ def winopolyAddCoaching(request):
 
         compliance_total = comp_1 + comp_2 + comp_3 + comp_4 + comp_5 + comp_6
 
-        fatal_list = [comp_1, comp_2, comp_3, comp_4, comp_5,comp_6]
+        fatal_list = [comp_1, comp_2, comp_3, comp_4, comp_5, comp_6]
         fatal_list_count = []
         for i in fatal_list:
             if i == 0:
@@ -8734,37 +9185,37 @@ def winopolyAddCoaching(request):
         am = request.POST['am']
 
         wino = WinopolyOutbound(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                          manager=manager_name, manager_id=manager_emp_id,
+                                manager=manager_name, manager_id=manager_emp_id,
 
-                          trans_date=call_date, audit_date=audit_date,
-                          customer_name=customer_name,
-                          customer_contact=customer_contact,
-                          campaign=campaign, concept=concept, zone=zone,
-                          call_duration=call_duration,
-                            disposition=disposition,
-                          #opening
-                          comp_1 = comp_1,op_2 = op_2,op_3 = op_3,op_4 = op_4,op_5 = op_5,
+                                trans_date=call_date, audit_date=audit_date,
+                                customer_name=customer_name,
+                                customer_contact=customer_contact,
+                                campaign=campaign, concept=concept, zone=zone,
+                                call_duration=call_duration,
+                                disposition=disposition,
+                                # opening
+                                comp_1=comp_1, op_2=op_2, op_3=op_3, op_4=op_4, op_5=op_5,
                                 op_total=op_total,
 
-                          mp_1 = mp_1, mp_2=mp_2,mp_3=mp_3, mp_total=mp_total,
+                                mp_1=mp_1, mp_2=mp_2, mp_3=mp_3, mp_total=mp_total,
 
-                          cp_1 = cp_1, cp_2 = cp_2, cp_3 = cp_3,cp_4 = cp_4, cp_5 = cp_5,
-                          cp_6 = cp_6, cp_total = cp_total,
+                                cp_1=cp_1, cp_2=cp_2, cp_3=cp_3, cp_4=cp_4, cp_5=cp_5,
+                                cp_6=cp_6, cp_total=cp_total,
 
-                          comp_2=comp_2,comp_3=comp_3,comp_4=comp_4,comp_5=comp_5,
+                                comp_2=comp_2, comp_3=comp_3, comp_4=comp_4, comp_5=comp_5,
 
-                          tp_1 = tp_1,tp_2 = tp_2, tp_3=tp_3,
-                          comp_6=comp_6,tp_total=tp_total,
+                                tp_1=tp_1, tp_2=tp_2, tp_3=tp_3,
+                                comp_6=comp_6, tp_total=tp_total,
 
-                          evaluator_comment = evaluator_comment,coaching_comments=coaching_comments,
+                                evaluator_comment=evaluator_comment, coaching_comments=coaching_comments,
 
-                          compliance_total=compliance_total,
+                                compliance_total=compliance_total,
 
-                          added_by=added_by,
+                                added_by=added_by,
 
-                          overall_score=overall_score, category=category,
-                          week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
-                          )
+                                overall_score=overall_score, category=category,
+                                week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+                                )
         wino.save()
         return redirect('/employees/qahome')
     else:
@@ -8788,7 +9239,8 @@ def newSeriesInboundForms(request):
             campaign = request.POST['campaign']
             concept = request.POST['concept']
             zone = request.POST['zone']
-            call_duration = (int(request.POST['durationh']) * 3600) + (int(request.POST['durationm']) * 60) + int(request.POST['durations'])
+            call_duration = (int(request.POST['durationh']) * 3600) + (int(request.POST['durationm']) * 60) + int(
+                request.POST['durations'])
 
             try:
                 prof_obj = Profile.objects.get(emp_id=emp_id)
@@ -8856,34 +9308,35 @@ def newSeriesInboundForms(request):
             week = request.POST['week']
             am = request.POST['am']
 
-            inbound = monform(associate_name=associate_name, emp_id=emp_id, qa=qa,team_lead=team_lead,manager=manager_name, manager_id=manager_emp_id,
+            inbound = monform(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                              manager=manager_name, manager_id=manager_emp_id,
 
-                                                                 call_date=call_date, audit_date=audit_date,
-                                                                 customer_name=customer_name,
-                                                                 customer_contact=customer_contact,
-                                                                 campaign=campaign, concept=concept, zone=zone,
-                                                                 call_duration=call_duration,
+                              call_date=call_date, audit_date=audit_date,
+                              customer_name=customer_name,
+                              customer_contact=customer_contact,
+                              campaign=campaign, concept=concept, zone=zone,
+                              call_duration=call_duration,
 
-                                                                 ce_1=ce_1, ce_2=ce_2, ce_3=ce_3, ce_4=ce_4, ce_5=ce_5,
-                                                                 ce_6=ce_6, ce_7=ce_7, ce_8=ce_8, ce_9=ce_9,
-                                                                 ce_10=ce_10, ce_11=ce_11,
-                                                                 ce_total=ce_total,
+                              ce_1=ce_1, ce_2=ce_2, ce_3=ce_3, ce_4=ce_4, ce_5=ce_5,
+                              ce_6=ce_6, ce_7=ce_7, ce_8=ce_8, ce_9=ce_9,
+                              ce_10=ce_10, ce_11=ce_11,
+                              ce_total=ce_total,
 
-                                                                 business_1=business_1, business_2=business_2,
-                                                                 business_total=business_total,
+                              business_1=business_1, business_2=business_2,
+                              business_total=business_total,
 
-                                                                 compliance_1=compliance_1, compliance_2=compliance_2,
-                                                                 compliance_3=compliance_3, compliance_4=compliance_4,
-                                                                 compliance_5=compliance_5,
-                                                                 compliance_total=compliance_total,
+                              compliance_1=compliance_1, compliance_2=compliance_2,
+                              compliance_3=compliance_3, compliance_4=compliance_4,
+                              compliance_5=compliance_5,
+                              compliance_total=compliance_total,
 
-                                                                 areas_improvement=areas_improvement,
-                                                                 positives=positives, comments=comments,
-                                                                 added_by=added_by,
+                              areas_improvement=areas_improvement,
+                              positives=positives, comments=comments,
+                              added_by=added_by,
 
-                                                                 overall_score=overall_score, category=category,
-                                                                 week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
-                                                                 )
+                              overall_score=overall_score, category=category,
+                              week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+                              )
             inbound.save()
 
         if campaign_name == 'Tonn Coa Inbound':
@@ -9018,14 +9471,30 @@ def newSeriesInboundForms(request):
             inboundAddCoaching(BetterEdInboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Com 98 Inbound':
+            inboundAddCoaching(Com98InboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Open Winds Inbound':
+            inboundAddCoaching(OpenWindsInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Embassy Luxury Inbound':
+            inboundAddCoaching(EmbassyLuxuryInboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'South County Inbound':
+            inboundAddCoaching(SouthCountyInboundMonForm)
+            return redirect('/employees/qahome')
+
 
     else:
         pass
 
+
 ############### Doestic Chat Email #################
 
 def domesticChatEmail(request):
-
     if request.method == 'POST':
         campaign_name = request.POST['campaign']
 
@@ -9043,7 +9512,8 @@ def domesticChatEmail(request):
             campaign = request.POST['campaign']
             concept = request.POST['concept']
             zone = request.POST['zone']
-            duration=(int(request.POST['durationh'])*3600)+(int(request.POST['durationm'])*60)+int(request.POST['durations'])
+            duration = (int(request.POST['durationh']) * 3600) + (int(request.POST['durationm']) * 60) + int(
+                request.POST['durations'])
 
             #######################################
             prof_obj = Profile.objects.get(emp_id=emp_id)
@@ -9113,29 +9583,29 @@ def domesticChatEmail(request):
             am = request.POST['am']
 
             domestic = monform(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                                     manager=manager_name, manager_id=manager_emp_id,
+                               manager=manager_name, manager_id=manager_emp_id,
 
-                                     trans_date=trans_date, audit_date=audit_date, customer_name=customer_name,
-                                     customer_contact=customer_contact,
-                                     campaign=campaign, concept=concept, zone=zone, duration=duration,
+                               trans_date=trans_date, audit_date=audit_date, customer_name=customer_name,
+                               customer_contact=customer_contact,
+                               campaign=campaign, concept=concept, zone=zone, duration=duration,
 
-                                     ce_1=ce_1, ce_2=ce_2, ce_3=ce_3, ce_4=ce_4, ce_5=ce_5, ce_6=ce_6, ce_7=ce_7,
-                                     ce_8=ce_8, ce_9=ce_9, ce_10=ce_10, ce_11=ce_11,
-                                     ce_total=ce_total,
+                               ce_1=ce_1, ce_2=ce_2, ce_3=ce_3, ce_4=ce_4, ce_5=ce_5, ce_6=ce_6, ce_7=ce_7,
+                               ce_8=ce_8, ce_9=ce_9, ce_10=ce_10, ce_11=ce_11,
+                               ce_total=ce_total,
 
-                                     business_1=business_1, business_2=business_2, business_total=business_total,
+                               business_1=business_1, business_2=business_2, business_total=business_total,
 
-                                     compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
-                                     compliance_4=compliance_4, compliance_5=compliance_5,
-                                     compliance_total=compliance_total,
+                               compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
+                               compliance_4=compliance_4, compliance_5=compliance_5,
+                               compliance_total=compliance_total,
 
-                                     areas_improvement=areas_improvement,
-                                     positives=positives, comments=comments,
-                                     added_by=added_by,
+                               areas_improvement=areas_improvement,
+                               positives=positives, comments=comments,
+                               added_by=added_by,
 
-                                     overall_score=overall_score, category=category,
-                                     week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
-                                     )
+                               overall_score=overall_score, category=category,
+                               week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+                               )
             domestic.save()
 
         if campaign_name == 'Super Play':
@@ -9258,11 +9728,11 @@ def domesticChatEmail(request):
     else:
         return redirect('/employees/qahome')
 
+
 # Other Forms
 
 def blazinghogauditform(request):
-
-    if request.method =='POST':
+    if request.method == 'POST':
 
         category = 'Email - Chat'
         associate_name = request.POST['empname']
@@ -9334,13 +9804,13 @@ def blazinghogauditform(request):
             call_date=call_date, audit_date=audit_date, customer_name=customer_name, ticket_id=ticket_id,
             campaign=campaign, concept=concept, zone=zone, query_type=query_type,
 
-            solution_1=solution_1, solution_2=solution_2, solution_3=solution_3,solution_4=solution_4,
+            solution_1=solution_1, solution_2=solution_2, solution_3=solution_3, solution_4=solution_4,
 
             efficiency_1=efficiency_1, efficiency_2=efficiency_2,
 
             compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
 
-            solution_total=solution_total,efficiency_total=efficiency_total,
+            solution_total=solution_total, efficiency_total=efficiency_total,
             compliance_total=compliance_total,
 
             areas_improvement=areas_improvement,
@@ -9354,7 +9824,7 @@ def blazinghogauditform(request):
 
 
 def abhFormSAve(request):
-    if request.method =='POST':
+    if request.method == 'POST':
         category = 'Outbound'
         associate_name = request.POST['empname']
         emp_id = request.POST['empid']
@@ -9392,14 +9862,12 @@ def abhFormSAve(request):
         softskill_3 = int(request.POST['softskill_3'])
         softskill_4 = int(request.POST['softskill_4'])
 
-
         softskill_total = softskill_1 + softskill_2 + softskill_3
         # Compliance
         compliance_1 = int(request.POST['compliance_1'])
         compliance_2 = int(request.POST['compliance_2'])
         compliance_3 = int(request.POST['compliance_3'])
         compliance_4 = int(request.POST['compliance_4'])
-
 
         compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4
 
@@ -9432,7 +9900,8 @@ def abhFormSAve(request):
 
             oc_1=oc_1, oc_2=oc_2, oc_3=oc_3,
 
-            softskill_1=softskill_1, softskill_2=softskill_2, softskill_3=softskill_3, softskill_4=softskill_4,softskill_total=softskill_total,
+            softskill_1=softskill_1, softskill_2=softskill_2, softskill_3=softskill_3, softskill_4=softskill_4,
+            softskill_total=softskill_total,
 
             compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3, compliance_4=compliance_4,
 
@@ -9447,9 +9916,10 @@ def abhFormSAve(request):
         leadsales.save()
         return redirect('/employees/qahome')
 
+
 def ilmEMailChat(request):
     if request.method == 'POST':
-        category = 'ILM'
+        category = 'Email - Chat'
         associate_name = request.POST['empname']
         emp_id = request.POST['empid']
         qa = request.POST['qa']
@@ -9471,46 +9941,23 @@ def ilmEMailChat(request):
         manager_name = manager
         #########################################
 
-        lst = []
-        lst_tot = []
-        def addtoScore(score,tot):
-            if score == 'na':
-                pass
-            else:
-                lst.append(int(score))
-                lst_tot.append(tot)
-
         # Solution
-        s_1 = request.POST['s_1']
-        addtoScore(s_1,10)
-
-        s_2 = request.POST['s_2']
-        addtoScore(s_2, 10)
-
-        s_3 = request.POST['s_3']
-        addtoScore(s_3, 10)
-
-        s_4 = request.POST['s_4']
-        addtoScore(s_4, 10)
-
+        s_1 = int(request.POST['s_1'])
+        s_2 = int(request.POST['s_2'])
+        s_3 = int(request.POST['s_3'])
+        s_4 = int(request.POST['s_4'])
+        s_total = s_1 + s_2 + s_3 + s_4
 
         # Efficiency
-        e_1 = request.POST['e_1']
-        addtoScore(e_1, 10)
-
-        e_2 = request.POST['e_2']
-        addtoScore(e_2, 10)
-
+        e_1 = int(request.POST['e_1'])
+        e_2 = int(request.POST['e_2'])
+        e_total = e_1 + e_2
 
         # Compliance
         compliance_1 = int(request.POST['compliance_1'])
-        addtoScore(compliance_1,10)
-
         compliance_2 = int(request.POST['compliance_2'])
-        addtoScore(compliance_2, 10)
-
         compliance_3 = int(request.POST['compliance_3'])
-        addtoScore(compliance_3, 10)
+        compliance_total = compliance_1 + compliance_2 + compliance_3
 
         #################################################
 
@@ -9523,14 +9970,12 @@ def ilmEMailChat(request):
         no_of_fatals = len(fatal_list_count)
 
         ####################################################
-
         if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0:
             overall_score = 0
             fatal = True
         else:
-            overall_score = sum(lst)/sum(lst_tot)
+            overall_score = s_total + e_total + compliance_total
             fatal = False
-
 
         areas_improvement = request.POST['areaimprovement']
         positives = request.POST['positives']
@@ -9541,40 +9986,39 @@ def ilmEMailChat(request):
         am = request.POST['am']
 
         ilm = ILMakiageEmailChatForm(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                           manager=manager_name, manager_id=manager_emp_id,
-
-                           trans_date=trans_date, audit_date=audit_date, customer_name=customer_name,
-                           ticket_id=ticket_id,
-                           campaign=campaign, concept=concept, zone=zone,
-                           query_type = query_type,
-                           s_1=s_1, s_2=s_2, s_3=s_3,s_4=s_4,
-                           e_1=e_1, e_2=e_2,
-                           compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
-                           areas_improvement=areas_improvement,
-                           positives=positives, comments=comments,
-                           added_by=added_by,
-                           overall_score=overall_score, category=category,
-                           week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
-                           )
+                                     manager=manager_name, manager_id=manager_emp_id,
+                                     trans_date=trans_date, audit_date=audit_date, customer_name=customer_name,
+                                     ticket_id=ticket_id,
+                                     campaign=campaign, concept=concept, zone=zone,
+                                     query_type=query_type,
+                                     s_1=s_1, s_2=s_2, s_3=s_3, s_4=s_4,
+                                     e_1=e_1, e_2=e_2,
+                                     compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
+                                     areas_improvement=areas_improvement,
+                                     positives=positives, comments=comments,
+                                     added_by=added_by,
+                                     overall_score=overall_score, category=category,
+                                     week=week, am=am, fatal_count=no_of_fatals, fatal=fatal,
+                                     s_total=s_total, e_total=e_total, compliance_total=compliance_total
+                                     )
         ilm.save()
         return redirect('/employees/qahome')
     else:
         pass
 
 
-def chatCoachingformEva(request):
+def Amerisave(request):
     if request.method == 'POST':
-        category='Email/Chat Other'
+        category = request.POST['type']
         associate_name = request.POST['empname']
         emp_id = request.POST['empid']
         qa = request.POST['qa']
         team_lead = request.POST['tl']
-        ticket_no=request.POST['ticketnumber']
-        trans_date = request.POST['transdate']
+        customer_id = request.POST['customer_id']
+        call_date = request.POST['call_date']
         audit_date = request.POST['auditdate']
-        campaign = request.POST['campaign']
-        concept = request.POST['concept']
-        evaluator=request.POST['evaluator']
+        lead_source = request.POST['lead_source']
+        transfer = request.POST['transfer']
 
         #######################################
         prof_obj = Profile.objects.get(emp_id=emp_id)
@@ -9584,18 +10028,15 @@ def chatCoachingformEva(request):
 
         manager_emp_id = manager_emp_id_obj.emp_id
         manager_name = manager
-        #########################################
 
+        # NCE
+        nce_1 = int(request.POST['nce_1'])
+        nce_2 = request.POST['nce_2']
+        nce_3 = int(request.POST['nce_3'])
+        nce_4 = int(request.POST['nce_4'])
+        nce_total = nce_1 + nce_3 + nce_4
 
-        # Customer Experience
-        ce_1 = int(request.POST['ce_1'])
-        ce_2 = int(request.POST['ce_2'])
-        ce_3 = int(request.POST['ce_3'])
-        ce_4 = int(request.POST['ce_4'])
-
-        ce_total=ce_1+ce_2+ce_3+ce_4
-
-        #Compliance
+        # Compliance
         compliance_1 = int(request.POST['compliance_1'])
         compliance_2 = int(request.POST['compliance_2'])
         compliance_3 = int(request.POST['compliance_3'])
@@ -9603,75 +10044,65 @@ def chatCoachingformEva(request):
         compliance_5 = int(request.POST['compliance_5'])
         compliance_6 = int(request.POST['compliance_6'])
 
-        #################################################
+        compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4 + compliance_5 + compliance_6
 
-        fatal_list = [compliance_1,compliance_2,compliance_3,compliance_4,compliance_5,compliance_6]
+        fatal_list = [compliance_1, compliance_2, compliance_3, compliance_4, compliance_5, compliance_6]
         fatal_list_count = []
         for i in fatal_list:
             if i == 0:
                 fatal_list_count.append(i)
-
         no_of_fatals = len(fatal_list_count)
 
-        ####################################################
-
-        compliance_total=compliance_1+compliance_2+compliance_3+compliance_4+compliance_5+compliance_6
-
-        if compliance_1==0 or compliance_2==0 or compliance_3==0 or compliance_4==0 or compliance_5==0 or compliance_6==0:
-            overall_score=0
-            fatal=True
+        if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0 or compliance_4 == 0 or compliance_5 == 0 or compliance_6 == 0:
+            overall_score = 0
+            fatal = True
         else:
-            overall_score=ce_total+compliance_total
-            fatal=False
+            overall_score = nce_total + compliance_total
+            fatal = False
 
         areas_improvement = request.POST['areaimprovement']
         positives = request.POST['positives']
         comments = request.POST['comments']
+        fail_type = request.POST.get('fail_type')
         added_by = request.user.profile.emp_name
-
         week = request.POST['week']
         am = request.POST['am']
 
-        chat = ChatMonitoringFormEva(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                                     manager=manager_name,manager_id=manager_emp_id,
+        leadsales = AmerisaveMonForm(
+            associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+            manager=manager_name, manager_id=manager_emp_id,
+            call_date=call_date, audit_date=audit_date, customer_id=customer_id, lead_source=lead_source,
+            category=category, transfer=transfer, fail_type=fail_type,
 
-                                     trans_date=trans_date, audit_date=audit_date,ticket_no=ticket_no,
-                                     campaign=campaign,concept=concept,evaluator=evaluator,
+            nce_1=nce_1, nce_2=nce_2, nce_3=nce_3, nce_4=nce_4, nce_total=nce_total,
 
-                                     ce_1=ce_1,ce_2=ce_2,ce_3=ce_3,ce_4=ce_4,ce_total=ce_total,
+            compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3, compliance_4=compliance_4,
+            compliance_5=compliance_5, compliance_6=compliance_6,
+            compliance_total=compliance_total,
 
-                                     compliance_1=compliance_1,compliance_2=compliance_2,compliance_3=compliance_3,
-                                     compliance_4=compliance_4,compliance_5=compliance_5,compliance_6=compliance_6,
-                                     compliance_total=compliance_total,
-
-                                     areas_improvement=areas_improvement,
-                                     positives=positives, comments=comments,
-                                     added_by=added_by,
-
-                                     overall_score=overall_score,category=category,
-                                     week=week,am=am,fatal_count=no_of_fatals,fatal=fatal
-                                     )
-        chat.save()
+            areas_improvement=areas_improvement,
+            positives=positives, comments=comments,
+            added_by=added_by,
+            overall_score=overall_score,
+            week=week, am=am, fatal_count=no_of_fatals, fatal=fatal,
+        )
+        leadsales.save()
         return redirect('/employees/qahome')
-    else:
-        teams = Team.objects.all()
-        users = User.objects.all()
-        data = {'teams': teams, 'users': users}
-        return render(request, 'mon-forms/ECPL-EVA&NOVO-Monitoring-Form-chat.html', data)
 
-def chatCoachingformPodFather(request):
+
+def chatCoachingformEva(request):
     if request.method == 'POST':
-        category='Email/Chat Other'
+        category = 'Email/Chat Other'
         associate_name = request.POST['empname']
         emp_id = request.POST['empid']
         qa = request.POST['qa']
         team_lead = request.POST['tl']
-        ticket_no=request.POST['ticketnumber']
+        ticket_no = request.POST['ticketnumber']
         trans_date = request.POST['transdate']
         audit_date = request.POST['auditdate']
         campaign = request.POST['campaign']
         concept = request.POST['concept']
-        evaluator=request.POST['evaluator']
+        evaluator = request.POST['evaluator']
 
         #######################################
         prof_obj = Profile.objects.get(emp_id=emp_id)
@@ -9689,9 +10120,9 @@ def chatCoachingformPodFather(request):
         ce_3 = int(request.POST['ce_3'])
         ce_4 = int(request.POST['ce_4'])
 
-        ce_total=ce_1+ce_2+ce_3+ce_4
+        ce_total = ce_1 + ce_2 + ce_3 + ce_4
 
-        #Compliance
+        # Compliance
         compliance_1 = int(request.POST['compliance_1'])
         compliance_2 = int(request.POST['compliance_2'])
         compliance_3 = int(request.POST['compliance_3'])
@@ -9711,13 +10142,110 @@ def chatCoachingformPodFather(request):
 
         ####################################################
 
-        compliance_total=compliance_1+compliance_2+compliance_3+compliance_4+compliance_5+compliance_6
+        compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4 + compliance_5 + compliance_6
 
-        if compliance_1==0 or compliance_2==0 or compliance_3==0 or compliance_4==0 or compliance_5==0 or compliance_6==0:
-            overall_score=0
-            fatal =True
+        if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0 or compliance_4 == 0 or compliance_5 == 0 or compliance_6 == 0:
+            overall_score = 0
+            fatal = True
         else:
-            overall_score=ce_total+compliance_total
+            overall_score = ce_total + compliance_total
+            fatal = False
+
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+        added_by = request.user.profile.emp_name
+
+        week = request.POST['week']
+        am = request.POST['am']
+
+        chat = ChatMonitoringFormEva(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                                     manager=manager_name, manager_id=manager_emp_id,
+
+                                     trans_date=trans_date, audit_date=audit_date, ticket_no=ticket_no,
+                                     campaign=campaign, concept=concept, evaluator=evaluator,
+
+                                     ce_1=ce_1, ce_2=ce_2, ce_3=ce_3, ce_4=ce_4, ce_total=ce_total,
+
+                                     compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
+                                     compliance_4=compliance_4, compliance_5=compliance_5, compliance_6=compliance_6,
+                                     compliance_total=compliance_total,
+
+                                     areas_improvement=areas_improvement,
+                                     positives=positives, comments=comments,
+                                     added_by=added_by,
+
+                                     overall_score=overall_score, category=category,
+                                     week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+                                     )
+        chat.save()
+        return redirect('/employees/qahome')
+    else:
+        teams = Team.objects.all()
+        users = User.objects.all()
+        data = {'teams': teams, 'users': users}
+        return render(request, 'mon-forms/ECPL-EVA&NOVO-Monitoring-Form-chat.html', data)
+
+
+def chatCoachingformPodFather(request):
+    if request.method == 'POST':
+        category = 'Email/Chat Other'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        ticket_no = request.POST['ticketnumber']
+        trans_date = request.POST['transdate']
+        audit_date = request.POST['auditdate']
+        campaign = request.POST['campaign']
+        concept = request.POST['concept']
+        evaluator = request.POST['evaluator']
+
+        #######################################
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
+
+        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
+
+        manager_emp_id = manager_emp_id_obj.emp_id
+        manager_name = manager
+        #########################################
+
+        # Customer Experience
+        ce_1 = int(request.POST['ce_1'])
+        ce_2 = int(request.POST['ce_2'])
+        ce_3 = int(request.POST['ce_3'])
+        ce_4 = int(request.POST['ce_4'])
+
+        ce_total = ce_1 + ce_2 + ce_3 + ce_4
+
+        # Compliance
+        compliance_1 = int(request.POST['compliance_1'])
+        compliance_2 = int(request.POST['compliance_2'])
+        compliance_3 = int(request.POST['compliance_3'])
+        compliance_4 = int(request.POST['compliance_4'])
+        compliance_5 = int(request.POST['compliance_5'])
+        compliance_6 = int(request.POST['compliance_6'])
+
+        #################################################
+
+        fatal_list = [compliance_1, compliance_2, compliance_3, compliance_4, compliance_5, compliance_6]
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 0:
+                fatal_list_count.append(i)
+
+        no_of_fatals = len(fatal_list_count)
+
+        ####################################################
+
+        compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4 + compliance_5 + compliance_6
+
+        if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0 or compliance_4 == 0 or compliance_5 == 0 or compliance_6 == 0:
+            overall_score = 0
+            fatal = True
+        else:
+            overall_score = ce_total + compliance_total
             fatal = False
 
         areas_improvement = request.POST['areaimprovement']
@@ -9729,43 +10257,44 @@ def chatCoachingformPodFather(request):
         am = request.POST['am']
 
         chat = ChatMonitoringFormPodFather(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                                           manager=manager_name,manager_id=manager_emp_id,
+                                           manager=manager_name, manager_id=manager_emp_id,
 
-                                     trans_date=trans_date, audit_date=audit_date,ticket_no=ticket_no,
-                                     campaign=campaign,concept=concept,evaluator=evaluator,
+                                           trans_date=trans_date, audit_date=audit_date, ticket_no=ticket_no,
+                                           campaign=campaign, concept=concept, evaluator=evaluator,
 
-                                     ce_1=ce_1,ce_2=ce_2,ce_3=ce_3,ce_4=ce_4,ce_total=ce_total,
+                                           ce_1=ce_1, ce_2=ce_2, ce_3=ce_3, ce_4=ce_4, ce_total=ce_total,
 
-                                     compliance_1=compliance_1,compliance_2=compliance_2,compliance_3=compliance_3,
-                                     compliance_4=compliance_4,compliance_5=compliance_5,compliance_6=compliance_6,
-                                     compliance_total=compliance_total,
+                                           compliance_1=compliance_1, compliance_2=compliance_2,
+                                           compliance_3=compliance_3,
+                                           compliance_4=compliance_4, compliance_5=compliance_5,
+                                           compliance_6=compliance_6,
+                                           compliance_total=compliance_total,
 
-                                     areas_improvement=areas_improvement,
-                                     positives=positives, comments=comments,
-                                     added_by=added_by,
+                                           areas_improvement=areas_improvement,
+                                           positives=positives, comments=comments,
+                                           added_by=added_by,
 
-                                     overall_score=overall_score,category=category,
-                                           week=week,am=am,fatal_count=no_of_fatals,fatal=fatal
-                                     )
+                                           overall_score=overall_score, category=category,
+                                           week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+                                           )
         chat.save()
         return redirect('/employees/qahome')
     else:
         teams = Team.objects.all()
         users = User.objects.all()
         data = {'teams': teams, 'users': users}
-        return render(request,'mon-forms/ECPL-Pod-Father-Monitoring-Form-chat.html', data)
+        return render(request, 'mon-forms/ECPL-Pod-Father-Monitoring-Form-chat.html', data)
 
 
 def fameHouseNew(request):
-
     if request.method == 'POST':
-        category='Email/Chat Other'
+        category = 'Email/Chat Other'
         associate_name = request.POST['empname']
         emp_id = request.POST['empid']
         qa = request.POST['qa']
         team_lead = request.POST['tl']
 
-        ticket_no=request.POST['ticket_no']
+        ticket_no = request.POST['ticket_no']
         ticket_type = request.POST['ticket_type']
 
         trans_date = request.POST['ticketdate']
@@ -9803,10 +10332,11 @@ def fameHouseNew(request):
         compliance_11 = int(request.POST['compliance_11'])
 
         compliance_total = compliance_1 + compliance_2 + compliance_3 + compliance_4 + compliance_5 + compliance_6 + \
-                            compliance_7 + compliance_8 + compliance_9 + compliance_10 +compliance_11
+                           compliance_7 + compliance_8 + compliance_9 + compliance_10 + compliance_11
 
         na_list = []
         sum_list = []
+
         def scoreCalc(pk):
             if pk == 'NA':
                 na_list.append(pk)
@@ -9815,7 +10345,7 @@ def fameHouseNew(request):
                 sum_list.append(int(pk))
                 return int(pk)
 
-        #Customer Response
+        # Customer Response
         cr_1 = scoreCalc(request.POST["cr_1"])
 
         # Opening
@@ -9826,11 +10356,11 @@ def fameHouseNew(request):
         comp_1 = scoreCalc(request.POST['comp_1'])
         comp_2 = scoreCalc(request.POST['comp_2'])
 
-        #Macro
+        # Macro
         macro_1 = scoreCalc(request.POST['macro_1'])
         macro_2 = scoreCalc(request.POST['macro_2'])
 
-        #Closing
+        # Closing
         closing_1 = scoreCalc(request.POST['closing_1'])
         closing_2 = scoreCalc(request.POST['closing_2'])
 
@@ -9856,26 +10386,24 @@ def fameHouseNew(request):
         doc_3 = scoreCalc(request.POST['doc_3'])
         doc_4 = scoreCalc(request.POST['doc_4'])
 
+        fatal_list = [compliance_1, compliance_2, compliance_3, compliance_4, compliance_5, compliance_6,
+                      compliance_7, compliance_8, compliance_9, compliance_10, compliance_11]
 
-        fatal_list=[compliance_1,compliance_2,compliance_3,compliance_4,compliance_5,compliance_6,
-                    compliance_7,compliance_8,compliance_9,compliance_10,compliance_11]
-
-        fatal_list_count=[]
+        fatal_list_count = []
         for i in fatal_list:
-            if i==0:
+            if i == 0:
                 fatal_list_count.append(i)
-        no_of_fatals=len(fatal_list_count)
+        no_of_fatals = len(fatal_list_count)
 
-
-        if compliance_1 == 0 or compliance_2 ==0 or compliance_3==0 or compliance_4==0 or compliance_5==0 or compliance_6==0 or compliance_7==0 or compliance_8==0 or compliance_9==0 or compliance_10==0 or compliance_11==0:
-            overall_score=0
-            fatal=True
+        if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0 or compliance_4 == 0 or compliance_5 == 0 or compliance_6 == 0 or compliance_7 == 0 or compliance_8 == 0 or compliance_9 == 0 or compliance_10 == 0 or compliance_11 == 0:
+            overall_score = 0
+            fatal = True
         else:
             if sum(sum_list) != 0:
-                overall_score= (sum(sum_list)/len(sum_list))*100
+                overall_score = (sum(sum_list) / len(sum_list)) * 100
             else:
                 overall_score = 100
-            fatal=False
+            fatal = False
 
         #################################################
 
@@ -9886,26 +10414,30 @@ def fameHouseNew(request):
         added_by = request.user.profile.emp_name
 
         famehouse = FameHouseNewMonForm(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                                     manager=manager_name,manager_id=manager_emp_id,am=am,
-                                     trans_date=trans_date, audit_date=audit_date,ticket_no=ticket_no,
-                                     campaign=campaign,
-                                     compliance_1=compliance_1,compliance_2=compliance_2,compliance_3=compliance_3,compliance_4=compliance_4,
-                                     compliance_5=compliance_5,compliance_6=compliance_6,compliance_7=compliance_7,compliance_8=compliance_8,
-                                     compliance_9=compliance_9,compliance_10=compliance_10,compliance_11=compliance_11,compliance_total=compliance_total,
-                                     cr_1 = cr_1,
-                                     opening_1=opening_1,opening_2=opening_2,
-                                     comp_1=comp_1,comp_2=comp_2,
-                                     cir_1=cir_1,cir_2=cir_2,cir_3=cir_3,cir_4=cir_4,cir_5=cir_5,cir_6=cir_6,cir_7=cir_7,
-                                     macro_1=macro_1,macro_2=macro_2,
-                                     doc_1=doc_1,doc_2=doc_2,doc_3=doc_3,doc_4=doc_4,
-                                     et_1=et_1,et_2=et_2,et_3=et_3,et_4=et_4,et_5=et_5,
-                                     closing_1=closing_1,closing_2=closing_2,
-                                     areas_improvement=areas_improvement,
-                                     positives=positives, comments=comments,
-                                     added_by=added_by,ticket_type=ticket_type,
-                                     category=category,overall_score=overall_score,
-                                     week=week,fatal=fatal,fatal_count=no_of_fatals
-                                     )
+                                        manager=manager_name, manager_id=manager_emp_id, am=am,
+                                        trans_date=trans_date, audit_date=audit_date, ticket_no=ticket_no,
+                                        campaign=campaign,
+                                        compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
+                                        compliance_4=compliance_4,
+                                        compliance_5=compliance_5, compliance_6=compliance_6, compliance_7=compliance_7,
+                                        compliance_8=compliance_8,
+                                        compliance_9=compliance_9, compliance_10=compliance_10,
+                                        compliance_11=compliance_11, compliance_total=compliance_total,
+                                        cr_1=cr_1,
+                                        opening_1=opening_1, opening_2=opening_2,
+                                        comp_1=comp_1, comp_2=comp_2,
+                                        cir_1=cir_1, cir_2=cir_2, cir_3=cir_3, cir_4=cir_4, cir_5=cir_5, cir_6=cir_6,
+                                        cir_7=cir_7,
+                                        macro_1=macro_1, macro_2=macro_2,
+                                        doc_1=doc_1, doc_2=doc_2, doc_3=doc_3, doc_4=doc_4,
+                                        et_1=et_1, et_2=et_2, et_3=et_3, et_4=et_4, et_5=et_5,
+                                        closing_1=closing_1, closing_2=closing_2,
+                                        areas_improvement=areas_improvement,
+                                        positives=positives, comments=comments,
+                                        added_by=added_by, ticket_type=ticket_type,
+                                        category=category, overall_score=overall_score,
+                                        week=week, fatal=fatal, fatal_count=no_of_fatals
+                                        )
 
         famehouse.save()
         return redirect('/employees/qahome')
@@ -9918,33 +10450,33 @@ def fameHouseNew(request):
 
 def flaMonForm(request):
     if request.method == 'POST':
-        category='FLA'
+        category = 'FLA'
         associate_name = request.POST['empname']
         emp_id = request.POST['empid']
         qa = request.POST['qa']
         team_lead = request.POST['tl']
-        order_id=request.POST['order_id']
+        order_id = request.POST['order_id']
         trans_date = request.POST['transdate']
         audit_date = request.POST['auditdate']
         campaign = request.POST['campaign']
         concept = request.POST['concept']
-        service=request.POST['service']
-        check_list=request.POST['checklist']
+        service = request.POST['service']
+        check_list = request.POST['checklist']
 
         #######################################
-        prof_obj=Profile.objects.get(emp_id=emp_id)
-        manager=prof_obj.manager
+        prof_obj = Profile.objects.get(emp_id=emp_id)
+        manager = prof_obj.manager
 
-        manager_emp_id_obj=Profile.objects.get(emp_name=manager)
+        manager_emp_id_obj = Profile.objects.get(emp_name=manager)
 
-        manager_emp_id=manager_emp_id_obj.emp_id
-        manager_name=manager
+        manager_emp_id = manager_emp_id_obj.emp_id
+        manager_name = manager
         #########################################
 
         # Macros
         checklist_1 = int(request.POST['checklist_1'])
 
-        reason_for_failure=request.POST['reason_for_failure']
+        reason_for_failure = request.POST['reason_for_failure']
         areas_improvement = request.POST['areaimprovement']
         positives = request.POST['positives']
         comments = request.POST['comments']
@@ -9954,22 +10486,22 @@ def flaMonForm(request):
         am = request.POST['am']
 
         fla = FLAMonitoringForm(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                                     manager=manager_name,manager_id=manager_emp_id,
+                                manager=manager_name, manager_id=manager_emp_id,
 
-                                     trans_date=trans_date, audit_date=audit_date,order_id=order_id,
-                                     campaign=campaign,concept=concept,service=service,
+                                trans_date=trans_date, audit_date=audit_date, order_id=order_id,
+                                campaign=campaign, concept=concept, service=service,
 
-                                     check_list=check_list,
-                                     checklist_1=checklist_1,
+                                check_list=check_list,
+                                checklist_1=checklist_1,
 
-                                     reason_for_failure=reason_for_failure,
-                                     areas_improvement=areas_improvement,
-                                     positives=positives, comments=comments,
-                                     added_by=added_by,
+                                reason_for_failure=reason_for_failure,
+                                areas_improvement=areas_improvement,
+                                positives=positives, comments=comments,
+                                added_by=added_by,
 
-                                     overall_score=checklist_1,category=category,
-                                week=week,am=am
-                                     )
+                                overall_score=checklist_1, category=category,
+                                week=week, am=am
+                                )
         fla.save()
         return redirect('/employees/qahome')
     else:
@@ -9980,7 +10512,6 @@ def flaMonForm(request):
 
 
 def gubaGooNew(request):
-
     if request.method == 'POST':
 
         chat1_id = request.POST['chat1_id']
@@ -9996,7 +10527,7 @@ def gubaGooNew(request):
         cat1chat4 = request.POST['cat1chat4']
         cat1chat5 = request.POST['cat1chat5']
         cat1chat6 = request.POST['cat1chat6']
-        cat1 = [cat1chat1, cat1chat2, cat1chat3, cat1chat4, cat1chat5,cat1chat6]
+        cat1 = [cat1chat1, cat1chat2, cat1chat3, cat1chat4, cat1chat5, cat1chat6]
 
         cat2chat1 = request.POST['cat2chat1']
         cat2chat2 = request.POST['cat2chat2']
@@ -10004,7 +10535,7 @@ def gubaGooNew(request):
         cat2chat4 = request.POST['cat2chat4']
         cat2chat5 = request.POST['cat2chat5']
         cat2chat6 = request.POST['cat2chat6']
-        cat2 = [cat2chat1, cat2chat2, cat2chat3, cat2chat4, cat2chat5,cat2chat6]
+        cat2 = [cat2chat1, cat2chat2, cat2chat3, cat2chat4, cat2chat5, cat2chat6]
 
         cat3chat1 = request.POST['cat3chat1']
         cat3chat2 = request.POST['cat3chat2']
@@ -10012,7 +10543,7 @@ def gubaGooNew(request):
         cat3chat4 = request.POST['cat3chat4']
         cat3chat5 = request.POST['cat3chat5']
         cat3chat6 = request.POST['cat3chat6']
-        cat3 = [cat3chat1, cat3chat2, cat3chat3, cat3chat4, cat3chat5,cat3chat6]
+        cat3 = [cat3chat1, cat3chat2, cat3chat3, cat3chat4, cat3chat5, cat3chat6]
 
         cat4chat1 = request.POST['cat4chat1']
         cat4chat2 = request.POST['cat4chat2']
@@ -10020,7 +10551,7 @@ def gubaGooNew(request):
         cat4chat4 = request.POST['cat4chat4']
         cat4chat5 = request.POST['cat4chat5']
         cat4chat6 = request.POST['cat4chat6']
-        cat4 = [cat4chat1, cat4chat2, cat4chat3, cat4chat4, cat4chat5,cat4chat6]
+        cat4 = [cat4chat1, cat4chat2, cat4chat3, cat4chat4, cat4chat5, cat4chat6]
 
         cat5chat1 = request.POST['cat5chat1']
         cat5chat2 = request.POST['cat5chat2']
@@ -10028,7 +10559,7 @@ def gubaGooNew(request):
         cat5chat4 = request.POST['cat5chat4']
         cat5chat5 = request.POST['cat5chat5']
         cat5chat6 = request.POST['cat5chat6']
-        cat5 = [cat5chat1, cat5chat2, cat5chat3, cat5chat4, cat5chat5,cat5chat6]
+        cat5 = [cat5chat1, cat5chat2, cat5chat3, cat5chat4, cat5chat5, cat5chat6]
 
         cat6chat1 = request.POST['cat6chat1']
         cat6chat2 = request.POST['cat6chat2']
@@ -10036,7 +10567,7 @@ def gubaGooNew(request):
         cat6chat4 = request.POST['cat6chat4']
         cat6chat5 = request.POST['cat6chat5']
         cat6chat6 = request.POST['cat6chat6']
-        cat6 = [cat6chat1, cat6chat2, cat6chat3, cat6chat4 ,cat6chat5,cat6chat6]
+        cat6 = [cat6chat1, cat6chat2, cat6chat3, cat6chat4, cat6chat5, cat6chat6]
 
         cat7chat1 = request.POST['cat7chat1']
         cat7chat2 = request.POST['cat7chat2']
@@ -10044,7 +10575,7 @@ def gubaGooNew(request):
         cat7chat4 = request.POST['cat7chat4']
         cat7chat5 = request.POST['cat7chat5']
         cat7chat6 = request.POST['cat7chat6']
-        cat7 = [cat7chat1, cat7chat2, cat7chat3, cat7chat4, cat7chat5,cat7chat6]
+        cat7 = [cat7chat1, cat7chat2, cat7chat3, cat7chat4, cat7chat5, cat7chat6]
 
         cat8chat1 = request.POST['cat8chat1']
         cat8chat2 = request.POST['cat8chat2']
@@ -10052,7 +10583,7 @@ def gubaGooNew(request):
         cat8chat4 = request.POST['cat8chat4']
         cat8chat5 = request.POST['cat8chat5']
         cat8chat6 = request.POST['cat8chat6']
-        cat8 = [cat8chat1, cat8chat2, cat8chat3, cat8chat4, cat8chat5,cat8chat6]
+        cat8 = [cat8chat1, cat8chat2, cat8chat3, cat8chat4, cat8chat5, cat8chat6]
 
         cat9chat1 = request.POST['cat9chat1']
         cat9chat2 = request.POST['cat9chat2']
@@ -10060,7 +10591,7 @@ def gubaGooNew(request):
         cat9chat4 = request.POST['cat9chat4']
         cat9chat5 = request.POST['cat9chat5']
         cat9chat6 = request.POST['cat9chat6']
-        cat9 = [cat9chat1, cat9chat2, cat9chat3, cat9chat4, cat9chat5,cat9chat6]
+        cat9 = [cat9chat1, cat9chat2, cat9chat3, cat9chat4, cat9chat5, cat9chat6]
 
         cat10chat1 = request.POST['cat10chat1']
         cat10chat2 = request.POST['cat10chat2']
@@ -10068,7 +10599,7 @@ def gubaGooNew(request):
         cat10chat4 = request.POST['cat10chat4']
         cat10chat5 = request.POST['cat10chat5']
         cat10chat6 = request.POST['cat10chat6']
-        cat10 = [cat10chat1, cat10chat2, cat10chat3, cat10chat4, cat10chat5,cat10chat6]
+        cat10 = [cat10chat1, cat10chat2, cat10chat3, cat10chat4, cat10chat5, cat10chat6]
 
         cat11chat1 = request.POST['cat11chat1']
         cat11chat2 = request.POST['cat11chat2']
@@ -10076,7 +10607,7 @@ def gubaGooNew(request):
         cat11chat4 = request.POST['cat11chat4']
         cat11chat5 = request.POST['cat11chat5']
         cat11chat6 = request.POST['cat11chat6']
-        cat11 = [cat11chat1, cat11chat2, cat11chat3, cat11chat4, cat11chat5,cat11chat6]
+        cat11 = [cat11chat1, cat11chat2, cat11chat3, cat11chat4, cat11chat5, cat11chat6]
 
         cat12chat1 = request.POST['cat12chat1']
         cat12chat2 = request.POST['cat12chat2']
@@ -10084,7 +10615,7 @@ def gubaGooNew(request):
         cat12chat4 = request.POST['cat12chat4']
         cat12chat5 = request.POST['cat12chat5']
         cat12chat6 = request.POST['cat12chat6']
-        cat12 = [cat12chat1, cat12chat2, cat12chat3, cat12chat4, cat12chat5,cat12chat6]
+        cat12 = [cat12chat1, cat12chat2, cat12chat3, cat12chat4, cat12chat5, cat12chat6]
 
         cat13chat1 = request.POST['cat13chat1']
         cat13chat2 = request.POST['cat13chat2']
@@ -10092,7 +10623,7 @@ def gubaGooNew(request):
         cat13chat4 = request.POST['cat13chat4']
         cat13chat5 = request.POST['cat13chat5']
         cat13chat6 = request.POST['cat13chat6']
-        cat13 = [cat13chat1, cat13chat2, cat13chat3, cat13chat4, cat13chat5,cat13chat6]
+        cat13 = [cat13chat1, cat13chat2, cat13chat3, cat13chat4, cat13chat5, cat13chat6]
 
         cat14chat1 = request.POST['cat14chat1']
         cat14chat2 = request.POST['cat14chat2']
@@ -10100,7 +10631,7 @@ def gubaGooNew(request):
         cat14chat4 = request.POST['cat14chat4']
         cat14chat5 = request.POST['cat14chat5']
         cat14chat6 = request.POST['cat14chat6']
-        cat14 = [cat14chat1, cat14chat2, cat14chat3, cat14chat4, cat14chat5,cat14chat6]
+        cat14 = [cat14chat1, cat14chat2, cat14chat3, cat14chat4, cat14chat5, cat14chat6]
 
         cat15chat1 = request.POST['cat15chat1']
         cat15chat2 = request.POST['cat15chat2']
@@ -10108,7 +10639,7 @@ def gubaGooNew(request):
         cat15chat4 = request.POST['cat15chat4']
         cat15chat5 = request.POST['cat15chat5']
         cat15chat6 = request.POST['cat15chat6']
-        cat15 = [cat15chat1, cat15chat2, cat15chat3, cat15chat4, cat15chat5,cat15chat6]
+        cat15 = [cat15chat1, cat15chat2, cat15chat3, cat15chat4, cat15chat5, cat15chat6]
 
         cat16chat1 = request.POST['cat16chat1']
         cat16chat2 = request.POST['cat16chat2']
@@ -10342,18 +10873,16 @@ def gubaGooNew(request):
         cat16chat5cy = request.POST['cat16chat5cy']
         cat16chat6cy = request.POST['cat16chat6cy']
 
-
-
         def scoreCalc(lst):
             ycount = lst.count('y')
             pcount = lst.count('p')
             fcount = lst.count('n')
             nacount = lst.count('NA')
-            cat1score = (ycount + pcount)/6 * 100
-            
+            cat1score = (ycount + pcount) / 6 * 100
+
             return cat1score
 
-        def autoFailCalculation(a,b,lst):
+        def autoFailCalculation(a, b, lst):
 
             fcount = lst.count('n')
             if fcount == 3 or fcount == 4 or fcount == 5:
@@ -10366,25 +10895,25 @@ def gubaGooNew(request):
                 fscore = 0
                 return fscore
 
-        cat1fscore = autoFailCalculation(0.025,0.05,cat1)
-        cat2fscore = autoFailCalculation(0.025,0.05,cat2)
+        cat1fscore = autoFailCalculation(0.025, 0.05, cat1)
+        cat2fscore = autoFailCalculation(0.025, 0.05, cat2)
 
-        cat3fscore = autoFailCalculation(0.05,0.1,cat3)
-        cat4fscore = autoFailCalculation(0.075,0.125,cat4)
+        cat3fscore = autoFailCalculation(0.05, 0.1, cat3)
+        cat4fscore = autoFailCalculation(0.075, 0.125, cat4)
 
-        cat5fscore = autoFailCalculation(0.03,0.05,cat5)
-        cat6fscore = autoFailCalculation(0.03,0.05,cat6)
-        cat7fscore = autoFailCalculation(0.03,0.05,cat7)
-        cat8fscore = autoFailCalculation(0.03,0.05,cat8)
+        cat5fscore = autoFailCalculation(0.03, 0.05, cat5)
+        cat6fscore = autoFailCalculation(0.03, 0.05, cat6)
+        cat7fscore = autoFailCalculation(0.03, 0.05, cat7)
+        cat8fscore = autoFailCalculation(0.03, 0.05, cat8)
 
-        cat9fscore = autoFailCalculation(0.15,0.3,cat9)
-        cat10fscore = autoFailCalculation(0.025,0.05,cat10)
+        cat9fscore = autoFailCalculation(0.15, 0.3, cat9)
+        cat10fscore = autoFailCalculation(0.025, 0.05, cat10)
 
-        cat11fscore = autoFailCalculation(0.025,0.05,cat11)
-        cat13fscore = autoFailCalculation(0.025,0.05,cat13)
+        cat11fscore = autoFailCalculation(0.025, 0.05, cat11)
+        cat13fscore = autoFailCalculation(0.025, 0.05, cat13)
 
-        cat14fscore = autoFailCalculation(0.025,0.05,cat14)
-        cat15fscore = autoFailCalculation(0.025,0.05,cat15)
+        cat14fscore = autoFailCalculation(0.025, 0.05, cat14)
+        cat15fscore = autoFailCalculation(0.025, 0.05, cat15)
 
         total_failing_score = cat1fscore + cat2fscore + cat3fscore + cat4fscore + cat5fscore + cat6fscore + \
                               cat7fscore + cat8fscore + cat9fscore + cat10fscore + \
@@ -10405,29 +10934,29 @@ def gubaGooNew(request):
         cat12score = scoreCalc(cat12)
         cat13score = scoreCalc(cat13)
         cat14score = scoreCalc(cat14)
-        cat15score= scoreCalc(cat15)
+        cat15score = scoreCalc(cat15)
 
         ######### chat 1 calculation  ##############
         total_score = 293
 
-        def catAndTotalScore(c,tot,score):
+        def catAndTotalScore(c, tot, score):
 
             if c == 'y':
                 c = score
-                tot=tot
-                return (c,tot)
+                tot = tot
+                return (c, tot)
             elif c == 'n':
                 c = 0
                 tot = tot
-                return (c,tot)
+                return (c, tot)
             elif c == 'p':
                 c = 0
-                tot = tot-score
-                return (c,tot)
+                tot = tot - score
+                return (c, tot)
             else:
                 c = score
                 tot = tot
-                return (c,tot)
+                return (c, tot)
 
         cat1chat1score, total_score = catAndTotalScore(cat1chat1, total_score, 10)
         cat2chat1score, total_score = catAndTotalScore(cat2chat1, total_score, 10)
@@ -10450,20 +10979,20 @@ def gubaGooNew(request):
         cat11chat1score, total_score = catAndTotalScore(cat11chat1, total_score, 15)
         cat12chat1score, total_score = catAndTotalScore(cat12chat1, total_score, 13)
         cat13chat1score, total_score = catAndTotalScore(cat13chat1, total_score, 11)
-        timing_chat1 = cat11chat1score+cat12chat1score+cat13chat1score
+        timing_chat1 = cat11chat1score + cat12chat1score + cat13chat1score
 
         cat14chat1score, total_score = catAndTotalScore(cat14chat1, total_score, 10)
         cat15chat1score, total_score = catAndTotalScore(cat15chat1, total_score, 10)
         ce_chat1 = cat14chat1score + cat15chat1score
 
         if cat16chat1 == 'y':
-            autofail_chat1 = (greeting_chat1+qn_chat1+lead_chat1+lf_chat1+timing_chat1+ce_chat1)*(-1)
+            autofail_chat1 = (greeting_chat1 + qn_chat1 + lead_chat1 + lf_chat1 + timing_chat1 + ce_chat1) * (-1)
         else:
             autofail_chat1 = 0
 
-        chat1_total = cat1chat1score+cat2chat1score+cat3chat1score+cat4chat1score+cat5chat1score+cat6chat1score+cat7chat1score+cat8chat1score+cat9chat1score+cat10chat1score+cat11chat1score+cat12chat1score+cat13chat1score+cat14chat1score+cat15chat1score
+        chat1_total = cat1chat1score + cat2chat1score + cat3chat1score + cat4chat1score + cat5chat1score + cat6chat1score + cat7chat1score + cat8chat1score + cat9chat1score + cat10chat1score + cat11chat1score + cat12chat1score + cat13chat1score + cat14chat1score + cat15chat1score
         chat1_total += autofail_chat1
-        chat1_total_score = (chat1_total/total_score)*100
+        chat1_total_score = (chat1_total / total_score) * 100
         chat1_total_score = round(chat1_total_score)
 
         ############################# chat2 ####################################
@@ -10664,10 +11193,9 @@ def gubaGooNew(request):
         chat6_total_score = round(chat6_total_score)
 
         total_chat_sum = chat1_total_score + chat2_total_score + chat3_total_score + \
-                           chat4_total_score + chat5_total_score + chat6_total_score 
+                         chat4_total_score + chat5_total_score + chat6_total_score
 
-        total_chat_score = total_chat_sum/6
-
+        total_chat_score = total_chat_sum / 6
 
         total_failing_perc = total_failing_score * 100
         total_audit_score = total_chat_score - total_failing_perc
@@ -10683,7 +11211,6 @@ def gubaGooNew(request):
         campaign = request.POST['campaign']
         concept = request.POST['concept']
         zone = request.POST['zone']
-
 
         prof_obj = Profile.objects.get(emp_id=emp_id)
         manager = prof_obj.manager
@@ -10709,416 +11236,415 @@ def gubaGooNew(request):
 
         no_of_fatals = len(fatal_list_count)
         ####################################################
-        if cat16chat1 == 'y' or cat16chat2 == 'y' or cat16chat3=='y' or cat16chat4 == 'y' or cat16chat5 == 'y' or cat16chat6 =='y':
+        if cat16chat1 == 'y' or cat16chat2 == 'y' or cat16chat3 == 'y' or cat16chat4 == 'y' or cat16chat5 == 'y' or cat16chat6 == 'y':
             fatal = True
         else:
             fatal = False
 
         gubagoo = GubagooAuditForm(
 
-        cat7chat1cy = cat7chat1cy,
-        cat7chat2cy = cat7chat2cy,
-        cat7chat3cy = cat7chat3cy,
-        cat7chat4cy = cat7chat4cy,
-        cat7chat5cy = cat7chat5cy,
-        cat7chat6cy = cat7chat6cy,
+            cat7chat1cy=cat7chat1cy,
+            cat7chat2cy=cat7chat2cy,
+            cat7chat3cy=cat7chat3cy,
+            cat7chat4cy=cat7chat4cy,
+            cat7chat5cy=cat7chat5cy,
+            cat7chat6cy=cat7chat6cy,
 
-        cat8chat1cs = cat8chat1cs,
-        cat8chat2cs = cat8chat2cs,
-        cat8chat3cs = cat8chat3cs,
-        cat8chat4cs = cat8chat4cs,
-        cat8chat5cs = cat8chat5cs,
-        cat8chat6cs = cat8chat6cs,
+            cat8chat1cs=cat8chat1cs,
+            cat8chat2cs=cat8chat2cs,
+            cat8chat3cs=cat8chat3cs,
+            cat8chat4cs=cat8chat4cs,
+            cat8chat5cs=cat8chat5cs,
+            cat8chat6cs=cat8chat6cs,
 
-        cat8chat1cy = cat8chat1cy,
-        cat8chat2cy = cat8chat2cy,
-        cat8chat3cy = cat8chat3cy,
-        cat8chat4cy = cat8chat4cy,
-        cat8chat5cy = cat8chat5cy,
-        cat8chat6cy = cat8chat6cy,
+            cat8chat1cy=cat8chat1cy,
+            cat8chat2cy=cat8chat2cy,
+            cat8chat3cy=cat8chat3cy,
+            cat8chat4cy=cat8chat4cy,
+            cat8chat5cy=cat8chat5cy,
+            cat8chat6cy=cat8chat6cy,
 
-        cat9chat1cs = cat9chat1cs,
-        cat9chat2cs = cat9chat2cs,
-        cat9chat3cs = cat9chat3cs,
-        cat9chat4cs = cat9chat4cs,
-        cat9chat5cs = cat9chat5cs,
-        cat9chat6cs = cat9chat6cs,
+            cat9chat1cs=cat9chat1cs,
+            cat9chat2cs=cat9chat2cs,
+            cat9chat3cs=cat9chat3cs,
+            cat9chat4cs=cat9chat4cs,
+            cat9chat5cs=cat9chat5cs,
+            cat9chat6cs=cat9chat6cs,
 
-        cat9chat1cy = cat9chat1cy,
-        cat9chat2cy = cat9chat2cy,
-        cat9chat3cy = cat9chat3cy,
-        cat9chat4cy = cat9chat4cy,
-        cat9chat5cy = cat9chat5cy,
-        cat9chat6cy = cat9chat6cy,
+            cat9chat1cy=cat9chat1cy,
+            cat9chat2cy=cat9chat2cy,
+            cat9chat3cy=cat9chat3cy,
+            cat9chat4cy=cat9chat4cy,
+            cat9chat5cy=cat9chat5cy,
+            cat9chat6cy=cat9chat6cy,
 
-        cat10chat1cs = cat10chat1cs,
-        cat10chat2cs = cat10chat2cs,
-        cat10chat3cs = cat10chat3cs,
-        cat10chat4cs = cat10chat4cs,
-        cat10chat5cs = cat10chat5cs,
-        cat10chat6cs = cat10chat6cs,
+            cat10chat1cs=cat10chat1cs,
+            cat10chat2cs=cat10chat2cs,
+            cat10chat3cs=cat10chat3cs,
+            cat10chat4cs=cat10chat4cs,
+            cat10chat5cs=cat10chat5cs,
+            cat10chat6cs=cat10chat6cs,
 
-        cat10chat1cy = cat10chat1cy,
-        cat10chat2cy = cat10chat2cy,
-        cat10chat3cy = cat10chat3cy,
-        cat10chat4cy = cat10chat4cy,
-        cat10chat5cy = cat10chat5cy,
-        cat10chat6cy = cat10chat6cy,
+            cat10chat1cy=cat10chat1cy,
+            cat10chat2cy=cat10chat2cy,
+            cat10chat3cy=cat10chat3cy,
+            cat10chat4cy=cat10chat4cy,
+            cat10chat5cy=cat10chat5cy,
+            cat10chat6cy=cat10chat6cy,
 
-        cat11chat1cs = cat11chat1cs,
-        cat11chat2cs = cat11chat2cs,
-        cat11chat3cs = cat11chat3cs,
-        cat11chat4cs = cat11chat4cs,
-        cat11chat5cs = cat11chat5cs,
-        cat11chat6cs = cat11chat6cs,
+            cat11chat1cs=cat11chat1cs,
+            cat11chat2cs=cat11chat2cs,
+            cat11chat3cs=cat11chat3cs,
+            cat11chat4cs=cat11chat4cs,
+            cat11chat5cs=cat11chat5cs,
+            cat11chat6cs=cat11chat6cs,
 
-        cat11chat1cy = cat11chat1cy,
-        cat11chat2cy = cat11chat2cy,
-        cat11chat3cy = cat11chat3cy,
-        cat11chat4cy = cat11chat4cy,
-        cat11chat5cy = cat11chat5cy,
-        cat11chat6cy = cat11chat6cy,
+            cat11chat1cy=cat11chat1cy,
+            cat11chat2cy=cat11chat2cy,
+            cat11chat3cy=cat11chat3cy,
+            cat11chat4cy=cat11chat4cy,
+            cat11chat5cy=cat11chat5cy,
+            cat11chat6cy=cat11chat6cy,
 
-        cat12chat1cs = cat12chat1cs,
-        cat12chat2cs = cat12chat2cs,
-        cat12chat3cs = cat12chat3cs,
-        cat12chat4cs = cat12chat4cs,
-        cat12chat5cs = cat12chat5cs,
-        cat12chat6cs = cat12chat6cs,
+            cat12chat1cs=cat12chat1cs,
+            cat12chat2cs=cat12chat2cs,
+            cat12chat3cs=cat12chat3cs,
+            cat12chat4cs=cat12chat4cs,
+            cat12chat5cs=cat12chat5cs,
+            cat12chat6cs=cat12chat6cs,
 
-        cat12chat1cy = cat12chat1cy,
-        cat12chat2cy = cat12chat2cy,
-        cat12chat3cy = cat12chat3cy,
-        cat12chat4cy = cat12chat4cy,
-        cat12chat5cy = cat12chat5cy,
-        cat12chat6cy = cat12chat6cy,
+            cat12chat1cy=cat12chat1cy,
+            cat12chat2cy=cat12chat2cy,
+            cat12chat3cy=cat12chat3cy,
+            cat12chat4cy=cat12chat4cy,
+            cat12chat5cy=cat12chat5cy,
+            cat12chat6cy=cat12chat6cy,
 
-        cat13chat1cs = cat13chat1cs,
-        cat13chat2cs = cat13chat2cs,
-        cat13chat3cs = cat13chat3cs,
-        cat13chat4cs = cat13chat4cs,
-        cat13chat5cs = cat13chat5cs,
-        cat13chat6cs = cat13chat6cs,
+            cat13chat1cs=cat13chat1cs,
+            cat13chat2cs=cat13chat2cs,
+            cat13chat3cs=cat13chat3cs,
+            cat13chat4cs=cat13chat4cs,
+            cat13chat5cs=cat13chat5cs,
+            cat13chat6cs=cat13chat6cs,
 
-        cat13chat1cy = cat13chat1cy,
-        cat13chat2cy = cat13chat2cy,
-        cat13chat3cy = cat13chat3cy,
-        cat13chat4cy = cat13chat4cy,
-        cat13chat5cy = cat13chat5cy,
-        cat13chat6cy = cat13chat6cy,
+            cat13chat1cy=cat13chat1cy,
+            cat13chat2cy=cat13chat2cy,
+            cat13chat3cy=cat13chat3cy,
+            cat13chat4cy=cat13chat4cy,
+            cat13chat5cy=cat13chat5cy,
+            cat13chat6cy=cat13chat6cy,
 
-        cat14chat1cs = cat14chat1cs,
-        cat14chat2cs = cat14chat2cs,
-        cat14chat3cs = cat14chat3cs,
-        cat14chat4cs = cat14chat4cs,
-        cat14chat5cs = cat14chat5cs,
-        cat14chat6cs = cat14chat6cs,
+            cat14chat1cs=cat14chat1cs,
+            cat14chat2cs=cat14chat2cs,
+            cat14chat3cs=cat14chat3cs,
+            cat14chat4cs=cat14chat4cs,
+            cat14chat5cs=cat14chat5cs,
+            cat14chat6cs=cat14chat6cs,
 
-        cat14chat1cy = cat14chat1cy,
-        cat14chat2cy = cat14chat2cy,
-        cat14chat3cy = cat14chat3cy,
-        cat14chat4cy = cat14chat4cy,
-        cat14chat5cy = cat14chat5cy,
-        cat14chat6cy = cat14chat6cy,
+            cat14chat1cy=cat14chat1cy,
+            cat14chat2cy=cat14chat2cy,
+            cat14chat3cy=cat14chat3cy,
+            cat14chat4cy=cat14chat4cy,
+            cat14chat5cy=cat14chat5cy,
+            cat14chat6cy=cat14chat6cy,
 
-        cat15chat1cs = cat15chat1cs,
-        cat15chat2cs = cat15chat2cs,
-        cat15chat3cs = cat15chat3cs,
-        cat15chat4cs = cat15chat4cs,
-        cat15chat5cs = cat15chat5cs,
-        cat15chat6cs = cat15chat6cs,
+            cat15chat1cs=cat15chat1cs,
+            cat15chat2cs=cat15chat2cs,
+            cat15chat3cs=cat15chat3cs,
+            cat15chat4cs=cat15chat4cs,
+            cat15chat5cs=cat15chat5cs,
+            cat15chat6cs=cat15chat6cs,
 
-        cat15chat1cy = cat15chat1cy,
-        cat15chat2cy = cat15chat2cy,
-        cat15chat3cy = cat15chat3cy,
-        cat15chat4cy = cat15chat4cy,
-        cat15chat5cy = cat15chat5cy,
-        cat15chat6cy = cat15chat6cy,
+            cat15chat1cy=cat15chat1cy,
+            cat15chat2cy=cat15chat2cy,
+            cat15chat3cy=cat15chat3cy,
+            cat15chat4cy=cat15chat4cy,
+            cat15chat5cy=cat15chat5cy,
+            cat15chat6cy=cat15chat6cy,
 
-        cat16chat1cs = cat16chat1cs,
-        cat16chat2cs = cat16chat2cs,
-        cat16chat3cs = cat16chat3cs,
-        cat16chat4cs = cat16chat4cs,
-        cat16chat5cs = cat16chat5cs,
-        cat16chat6cs = cat16chat6cs,
+            cat16chat1cs=cat16chat1cs,
+            cat16chat2cs=cat16chat2cs,
+            cat16chat3cs=cat16chat3cs,
+            cat16chat4cs=cat16chat4cs,
+            cat16chat5cs=cat16chat5cs,
+            cat16chat6cs=cat16chat6cs,
 
-        cat16chat1cy = cat16chat1cy,
-        cat16chat2cy = cat16chat2cy,
-        cat16chat3cy = cat16chat3cy,
-        cat16chat4cy = cat16chat4cy,
-        cat16chat5cy = cat16chat5cy,
-        cat16chat6cy = cat16chat6cy,
+            cat16chat1cy=cat16chat1cy,
+            cat16chat2cy=cat16chat2cy,
+            cat16chat3cy=cat16chat3cy,
+            cat16chat4cy=cat16chat4cy,
+            cat16chat5cy=cat16chat5cy,
+            cat16chat6cy=cat16chat6cy,
 
-        cat1fscore = cat1fscore,
-        cat2fscore=cat2fscore,
-        cat3fscore=cat3fscore,
-        cat4fscore=cat4fscore,
-        cat5fscore=cat5fscore,
+            cat1fscore=cat1fscore,
+            cat2fscore=cat2fscore,
+            cat3fscore=cat3fscore,
+            cat4fscore=cat4fscore,
+            cat5fscore=cat5fscore,
 
-        cat6fscore=cat6fscore,
-        cat7fscore=cat7fscore,
-        cat8fscore=cat8fscore,
-        cat9fscore=cat9fscore,
-        cat10fscore=cat10fscore,
-        cat11fscore=cat11fscore,
-        cat13fscore=cat13fscore,
-        cat14fscore=cat14fscore,
-        cat15fscore=cat15fscore,
+            cat6fscore=cat6fscore,
+            cat7fscore=cat7fscore,
+            cat8fscore=cat8fscore,
+            cat9fscore=cat9fscore,
+            cat10fscore=cat10fscore,
+            cat11fscore=cat11fscore,
+            cat13fscore=cat13fscore,
+            cat14fscore=cat14fscore,
+            cat15fscore=cat15fscore,
 
-        total_failing_score = total_failing_score,
+            total_failing_score=total_failing_score,
 
-        cat1score=cat1score,
-        cat2score=cat2score,
-        cat3score=cat3score,
-        cat4score=cat4score,
-        cat5score=cat5score,
-        cat6score=cat6score,
-        cat7score=cat7score,
-        cat8score=cat8score,
-        cat9score=cat9score,
-        cat10score=cat10score,
-        cat11score=cat11score,
-        cat12score=cat12score,
-        cat13score=cat13score,
-        cat14score=cat14score,
-        cat15score=cat15score,
+            cat1score=cat1score,
+            cat2score=cat2score,
+            cat3score=cat3score,
+            cat4score=cat4score,
+            cat5score=cat5score,
+            cat6score=cat6score,
+            cat7score=cat7score,
+            cat8score=cat8score,
+            cat9score=cat9score,
+            cat10score=cat10score,
+            cat11score=cat11score,
+            cat12score=cat12score,
+            cat13score=cat13score,
+            cat14score=cat14score,
+            cat15score=cat15score,
 
-        chat1_total_score=chat1_total_score,
-        chat2_total_score=chat2_total_score,
-        chat3_total_score=chat3_total_score,
-        chat4_total_score=chat4_total_score,
-        chat5_total_score=chat5_total_score,
-        chat6_total_score=chat6_total_score,
+            chat1_total_score=chat1_total_score,
+            chat2_total_score=chat2_total_score,
+            chat3_total_score=chat3_total_score,
+            chat4_total_score=chat4_total_score,
+            chat5_total_score=chat5_total_score,
+            chat6_total_score=chat6_total_score,
 
-        total_failing_perc = total_failing_perc,
-        associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-        manager=manager_name, manager_id=manager_emp_id,
-        trans_date=trans_date, audit_date=audit_date,
-        campaign=campaign, concept=concept, zone=zone,
-        added_by=added_by,
-        overall_score=total_audit_score, category=category,
-        week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
-                                   )
+            total_failing_perc=total_failing_perc,
+            associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+            manager=manager_name, manager_id=manager_emp_id,
+            trans_date=trans_date, audit_date=audit_date,
+            campaign=campaign, concept=concept, zone=zone,
+            added_by=added_by,
+            overall_score=total_audit_score, category=category,
+            week=week, am=am, fatal_count=no_of_fatals, fatal=fatal
+        )
 
         gubagoo.save()
-        gubagoo = GubagooAuditForm.objects.get(id = gubagoo.id)
+        gubagoo = GubagooAuditForm.objects.get(id=gubagoo.id)
 
-        gubagoo.chat1_id=chat1_id
-        gubagoo.chat2_id=chat2_id
-        gubagoo.chat3_id=chat3_id
-        gubagoo.chat4_id=chat4_id
-        gubagoo.chat5_id=chat5_id
-        gubagoo.chat6_id=chat6_id
+        gubagoo.chat1_id = chat1_id
+        gubagoo.chat2_id = chat2_id
+        gubagoo.chat3_id = chat3_id
+        gubagoo.chat4_id = chat4_id
+        gubagoo.chat5_id = chat5_id
+        gubagoo.chat6_id = chat6_id
 
-        gubagoo.cat1chat1=cat1chat1
-        gubagoo.cat1chat2=cat1chat2
-        gubagoo.cat1chat3=cat1chat3
-        gubagoo.cat1chat4=cat1chat4
-        gubagoo.cat1chat5=cat1chat5
-        gubagoo.cat1chat6=cat1chat6
+        gubagoo.cat1chat1 = cat1chat1
+        gubagoo.cat1chat2 = cat1chat2
+        gubagoo.cat1chat3 = cat1chat3
+        gubagoo.cat1chat4 = cat1chat4
+        gubagoo.cat1chat5 = cat1chat5
+        gubagoo.cat1chat6 = cat1chat6
 
-        gubagoo.cat2chat1=cat2chat1
-        gubagoo.cat2chat2=cat2chat2
-        gubagoo.cat2chat3=cat2chat3
-        gubagoo.cat2chat4=cat2chat4
-        gubagoo.cat2chat5=cat2chat5
-        gubagoo.cat2chat6=cat2chat6
+        gubagoo.cat2chat1 = cat2chat1
+        gubagoo.cat2chat2 = cat2chat2
+        gubagoo.cat2chat3 = cat2chat3
+        gubagoo.cat2chat4 = cat2chat4
+        gubagoo.cat2chat5 = cat2chat5
+        gubagoo.cat2chat6 = cat2chat6
 
-        gubagoo.cat3chat1=cat3chat1
-        gubagoo.cat3chat2=cat3chat2
-        gubagoo.cat3chat3=cat3chat3
-        gubagoo.cat3chat4=cat3chat4
-        gubagoo.cat3chat5=cat3chat5
-        gubagoo.cat3chat6=cat3chat6
+        gubagoo.cat3chat1 = cat3chat1
+        gubagoo.cat3chat2 = cat3chat2
+        gubagoo.cat3chat3 = cat3chat3
+        gubagoo.cat3chat4 = cat3chat4
+        gubagoo.cat3chat5 = cat3chat5
+        gubagoo.cat3chat6 = cat3chat6
 
-        gubagoo.cat4chat1=cat4chat1
-        gubagoo.cat4chat2=cat4chat2
-        gubagoo.cat4chat3=cat4chat3
-        gubagoo.cat4chat4=cat4chat4
-        gubagoo.cat4chat5=cat4chat5
-        gubagoo.cat4chat6=cat4chat6
+        gubagoo.cat4chat1 = cat4chat1
+        gubagoo.cat4chat2 = cat4chat2
+        gubagoo.cat4chat3 = cat4chat3
+        gubagoo.cat4chat4 = cat4chat4
+        gubagoo.cat4chat5 = cat4chat5
+        gubagoo.cat4chat6 = cat4chat6
 
-        gubagoo.cat5chat1=cat5chat1
-        gubagoo.cat5chat2=cat5chat2
-        gubagoo.cat5chat3=cat5chat3
-        gubagoo.cat5chat4=cat5chat4
-        gubagoo.cat5chat5=cat5chat5
-        gubagoo.cat5chat6=cat5chat6
+        gubagoo.cat5chat1 = cat5chat1
+        gubagoo.cat5chat2 = cat5chat2
+        gubagoo.cat5chat3 = cat5chat3
+        gubagoo.cat5chat4 = cat5chat4
+        gubagoo.cat5chat5 = cat5chat5
+        gubagoo.cat5chat6 = cat5chat6
 
-        gubagoo.cat6chat1=cat6chat1
-        gubagoo.cat6chat2=cat6chat2
-        gubagoo.cat6chat3=cat6chat3
-        gubagoo.cat6chat4=cat6chat4
-        gubagoo.cat6chat5=cat6chat5
-        gubagoo.cat6chat6=cat6chat6
+        gubagoo.cat6chat1 = cat6chat1
+        gubagoo.cat6chat2 = cat6chat2
+        gubagoo.cat6chat3 = cat6chat3
+        gubagoo.cat6chat4 = cat6chat4
+        gubagoo.cat6chat5 = cat6chat5
+        gubagoo.cat6chat6 = cat6chat6
 
-        gubagoo.cat7chat1=cat7chat1
-        gubagoo.cat7chat2=cat7chat2
-        gubagoo.cat7chat3=cat7chat3
-        gubagoo.cat7chat4=cat7chat4
-        gubagoo.cat7chat5=cat7chat5
-        gubagoo.cat7chat6=cat7chat6
+        gubagoo.cat7chat1 = cat7chat1
+        gubagoo.cat7chat2 = cat7chat2
+        gubagoo.cat7chat3 = cat7chat3
+        gubagoo.cat7chat4 = cat7chat4
+        gubagoo.cat7chat5 = cat7chat5
+        gubagoo.cat7chat6 = cat7chat6
 
-        gubagoo.cat8chat1=cat8chat1
-        gubagoo.cat8chat2=cat8chat2
-        gubagoo.cat8chat3=cat8chat3
-        gubagoo.cat8chat4=cat8chat4
-        gubagoo.cat8chat5=cat8chat5
-        gubagoo.cat8chat6=cat8chat6
+        gubagoo.cat8chat1 = cat8chat1
+        gubagoo.cat8chat2 = cat8chat2
+        gubagoo.cat8chat3 = cat8chat3
+        gubagoo.cat8chat4 = cat8chat4
+        gubagoo.cat8chat5 = cat8chat5
+        gubagoo.cat8chat6 = cat8chat6
 
-        gubagoo.cat9chat1=cat9chat1
-        gubagoo.cat9chat2=cat9chat2
-        gubagoo.cat9chat3=cat9chat3
-        gubagoo.cat9chat4=cat9chat4
-        gubagoo.cat9chat5=cat9chat5
-        gubagoo.cat9chat6=cat9chat6
+        gubagoo.cat9chat1 = cat9chat1
+        gubagoo.cat9chat2 = cat9chat2
+        gubagoo.cat9chat3 = cat9chat3
+        gubagoo.cat9chat4 = cat9chat4
+        gubagoo.cat9chat5 = cat9chat5
+        gubagoo.cat9chat6 = cat9chat6
 
-        gubagoo.cat10chat1=cat10chat1
-        gubagoo.cat10chat2=cat10chat2
-        gubagoo.cat10chat3=cat10chat3
-        gubagoo.cat10chat4=cat10chat4
-        gubagoo.cat10chat5=cat10chat5
-        gubagoo.cat10chat6=cat10chat6
+        gubagoo.cat10chat1 = cat10chat1
+        gubagoo.cat10chat2 = cat10chat2
+        gubagoo.cat10chat3 = cat10chat3
+        gubagoo.cat10chat4 = cat10chat4
+        gubagoo.cat10chat5 = cat10chat5
+        gubagoo.cat10chat6 = cat10chat6
 
-        gubagoo.cat11chat1=cat11chat1
-        gubagoo.cat11chat2=cat11chat2
-        gubagoo.cat11chat3=cat11chat3
-        gubagoo.cat11chat4=cat11chat4
-        gubagoo.cat11chat5=cat11chat5
-        gubagoo.cat11chat6=cat11chat6
+        gubagoo.cat11chat1 = cat11chat1
+        gubagoo.cat11chat2 = cat11chat2
+        gubagoo.cat11chat3 = cat11chat3
+        gubagoo.cat11chat4 = cat11chat4
+        gubagoo.cat11chat5 = cat11chat5
+        gubagoo.cat11chat6 = cat11chat6
 
-        gubagoo.cat12chat1=cat12chat1
-        gubagoo.cat12chat2=cat12chat2
-        gubagoo.cat12chat3=cat12chat3
-        gubagoo.cat12chat4=cat12chat4
-        gubagoo.cat12chat5=cat12chat5
-        gubagoo.cat12chat6=cat12chat6
+        gubagoo.cat12chat1 = cat12chat1
+        gubagoo.cat12chat2 = cat12chat2
+        gubagoo.cat12chat3 = cat12chat3
+        gubagoo.cat12chat4 = cat12chat4
+        gubagoo.cat12chat5 = cat12chat5
+        gubagoo.cat12chat6 = cat12chat6
 
-        gubagoo.cat13chat1=cat13chat1
-        gubagoo.cat13chat2=cat13chat2
-        gubagoo.cat13chat3=cat13chat3
-        gubagoo.cat13chat4=cat13chat4
-        gubagoo.cat13chat5=cat13chat5
-        gubagoo.cat13chat6=cat13chat6
+        gubagoo.cat13chat1 = cat13chat1
+        gubagoo.cat13chat2 = cat13chat2
+        gubagoo.cat13chat3 = cat13chat3
+        gubagoo.cat13chat4 = cat13chat4
+        gubagoo.cat13chat5 = cat13chat5
+        gubagoo.cat13chat6 = cat13chat6
 
-        gubagoo.cat14chat1=cat14chat1
-        gubagoo.cat14chat2=cat14chat2
-        gubagoo.cat14chat3=cat14chat3
-        gubagoo.cat14chat4=cat14chat4
-        gubagoo.cat14chat5=cat14chat5
-        gubagoo.cat14chat6=cat14chat6
+        gubagoo.cat14chat1 = cat14chat1
+        gubagoo.cat14chat2 = cat14chat2
+        gubagoo.cat14chat3 = cat14chat3
+        gubagoo.cat14chat4 = cat14chat4
+        gubagoo.cat14chat5 = cat14chat5
+        gubagoo.cat14chat6 = cat14chat6
 
-        gubagoo.cat15chat1=cat15chat1
-        gubagoo.cat15chat2=cat15chat2
-        gubagoo.cat15chat3=cat15chat3
-        gubagoo.cat15chat4=cat15chat4
-        gubagoo.cat15chat5=cat15chat5
-        gubagoo.cat15chat6=cat15chat6
+        gubagoo.cat15chat1 = cat15chat1
+        gubagoo.cat15chat2 = cat15chat2
+        gubagoo.cat15chat3 = cat15chat3
+        gubagoo.cat15chat4 = cat15chat4
+        gubagoo.cat15chat5 = cat15chat5
+        gubagoo.cat15chat6 = cat15chat6
 
-        gubagoo.cat16chat1=cat16chat1
-        gubagoo.cat16chat2=cat16chat2
-        gubagoo.cat16chat3=cat16chat3
-        gubagoo.cat16chat4=cat16chat4
-        gubagoo.cat16chat5=cat16chat5
-        gubagoo.cat16chat6=cat16chat6
+        gubagoo.cat16chat1 = cat16chat1
+        gubagoo.cat16chat2 = cat16chat2
+        gubagoo.cat16chat3 = cat16chat3
+        gubagoo.cat16chat4 = cat16chat4
+        gubagoo.cat16chat5 = cat16chat5
+        gubagoo.cat16chat6 = cat16chat6
 
-        gubagoo.cat1chat1cs=cat1chat1cs
-        gubagoo.cat1chat2cs=cat1chat2cs
-        gubagoo.cat1chat3cs=cat1chat3cs
-        gubagoo.cat1chat4cs=cat1chat4cs
-        gubagoo.cat1chat5cs=cat1chat5cs
-        gubagoo.cat1chat6cs=cat1chat6cs
+        gubagoo.cat1chat1cs = cat1chat1cs
+        gubagoo.cat1chat2cs = cat1chat2cs
+        gubagoo.cat1chat3cs = cat1chat3cs
+        gubagoo.cat1chat4cs = cat1chat4cs
+        gubagoo.cat1chat5cs = cat1chat5cs
+        gubagoo.cat1chat6cs = cat1chat6cs
 
-        gubagoo.cat1chat1cy=cat1chat1cy
-        gubagoo.cat1chat2cy=cat1chat2cy
-        gubagoo.cat1chat3cy=cat1chat3cy
-        gubagoo.cat1chat4cy=cat1chat4cy
-        gubagoo.cat1chat5cy=cat1chat5cy
-        gubagoo.cat1chat6cy=cat1chat6cy
+        gubagoo.cat1chat1cy = cat1chat1cy
+        gubagoo.cat1chat2cy = cat1chat2cy
+        gubagoo.cat1chat3cy = cat1chat3cy
+        gubagoo.cat1chat4cy = cat1chat4cy
+        gubagoo.cat1chat5cy = cat1chat5cy
+        gubagoo.cat1chat6cy = cat1chat6cy
 
-        gubagoo.cat2chat1cs=cat2chat1cs
-        gubagoo.cat2chat2cs=cat2chat2cs
-        gubagoo.cat2chat3cs=cat2chat3cs
-        gubagoo.cat2chat4cs=cat2chat4cs
-        gubagoo.cat2chat5cs=cat2chat5cs
-        gubagoo.cat2chat6cs=cat2chat6cs
+        gubagoo.cat2chat1cs = cat2chat1cs
+        gubagoo.cat2chat2cs = cat2chat2cs
+        gubagoo.cat2chat3cs = cat2chat3cs
+        gubagoo.cat2chat4cs = cat2chat4cs
+        gubagoo.cat2chat5cs = cat2chat5cs
+        gubagoo.cat2chat6cs = cat2chat6cs
 
-        gubagoo.cat2chat1cy=cat2chat1cy
-        gubagoo.cat2chat2cy=cat2chat2cy
-        gubagoo.cat2chat3cy=cat2chat3cy
-        gubagoo.cat2chat4cy=cat2chat4cy
-        gubagoo.cat2chat5cy=cat2chat5cy
-        gubagoo.cat2chat6cy=cat2chat6cy
+        gubagoo.cat2chat1cy = cat2chat1cy
+        gubagoo.cat2chat2cy = cat2chat2cy
+        gubagoo.cat2chat3cy = cat2chat3cy
+        gubagoo.cat2chat4cy = cat2chat4cy
+        gubagoo.cat2chat5cy = cat2chat5cy
+        gubagoo.cat2chat6cy = cat2chat6cy
 
-        gubagoo.cat3chat1cs=cat3chat1cs
-        gubagoo.cat3chat2cs=cat3chat2cs
-        gubagoo.cat3chat3cs=cat3chat3cs
-        gubagoo.cat3chat4cs=cat3chat4cs
-        gubagoo.cat3chat5cs=cat3chat5cs
-        gubagoo.cat3chat6cs=cat3chat6cs
+        gubagoo.cat3chat1cs = cat3chat1cs
+        gubagoo.cat3chat2cs = cat3chat2cs
+        gubagoo.cat3chat3cs = cat3chat3cs
+        gubagoo.cat3chat4cs = cat3chat4cs
+        gubagoo.cat3chat5cs = cat3chat5cs
+        gubagoo.cat3chat6cs = cat3chat6cs
 
-        gubagoo.cat3chat1cy=cat3chat1cy
-        gubagoo.cat3chat2cy=cat3chat2cy
-        gubagoo.cat3chat3cy=cat3chat3cy
-        gubagoo.cat3chat4cy=cat3chat4cy
-        gubagoo.cat3chat5cy=cat3chat5cy
-        gubagoo.cat3chat6cy=cat3chat6cy
+        gubagoo.cat3chat1cy = cat3chat1cy
+        gubagoo.cat3chat2cy = cat3chat2cy
+        gubagoo.cat3chat3cy = cat3chat3cy
+        gubagoo.cat3chat4cy = cat3chat4cy
+        gubagoo.cat3chat5cy = cat3chat5cy
+        gubagoo.cat3chat6cy = cat3chat6cy
 
-        gubagoo.cat4chat1cs=cat4chat1cs
-        gubagoo.cat4chat2cs=cat4chat2cs
-        gubagoo.cat4chat3cs=cat4chat3cs
-        gubagoo.cat4chat4cs=cat4chat4cs
-        gubagoo.cat4chat5cs=cat4chat5cs
-        gubagoo.cat4chat6cs=cat4chat6cs
+        gubagoo.cat4chat1cs = cat4chat1cs
+        gubagoo.cat4chat2cs = cat4chat2cs
+        gubagoo.cat4chat3cs = cat4chat3cs
+        gubagoo.cat4chat4cs = cat4chat4cs
+        gubagoo.cat4chat5cs = cat4chat5cs
+        gubagoo.cat4chat6cs = cat4chat6cs
 
-        gubagoo.cat4chat1cy=cat4chat1cy
-        gubagoo.cat4chat2cy=cat4chat2cy
-        gubagoo.cat4chat3cy=cat4chat3cy
-        gubagoo.cat4chat4cy=cat4chat4cy
-        gubagoo.cat4chat5cy=cat4chat5cy
-        gubagoo.cat4chat6cy=cat4chat6cy
+        gubagoo.cat4chat1cy = cat4chat1cy
+        gubagoo.cat4chat2cy = cat4chat2cy
+        gubagoo.cat4chat3cy = cat4chat3cy
+        gubagoo.cat4chat4cy = cat4chat4cy
+        gubagoo.cat4chat5cy = cat4chat5cy
+        gubagoo.cat4chat6cy = cat4chat6cy
 
-        gubagoo.cat5chat1cs=cat5chat1cs
-        gubagoo.cat5chat2cs=cat5chat2cs
-        gubagoo.cat5chat3cs=cat5chat3cs
-        gubagoo.cat5chat4cs=cat5chat4cs
-        gubagoo.cat5chat5cs=cat5chat5cs
-        gubagoo.cat5chat6cs=cat5chat6cs
+        gubagoo.cat5chat1cs = cat5chat1cs
+        gubagoo.cat5chat2cs = cat5chat2cs
+        gubagoo.cat5chat3cs = cat5chat3cs
+        gubagoo.cat5chat4cs = cat5chat4cs
+        gubagoo.cat5chat5cs = cat5chat5cs
+        gubagoo.cat5chat6cs = cat5chat6cs
 
-        gubagoo.cat5chat1cy=cat5chat1cy
-        gubagoo.cat5chat2cy=cat5chat2cy
-        gubagoo.cat5chat3cy=cat5chat3cy
-        gubagoo.cat5chat4cy=cat5chat4cy
-        gubagoo.cat5chat5cy=cat5chat5cy
-        gubagoo.cat5chat6cy=cat5chat6cy
+        gubagoo.cat5chat1cy = cat5chat1cy
+        gubagoo.cat5chat2cy = cat5chat2cy
+        gubagoo.cat5chat3cy = cat5chat3cy
+        gubagoo.cat5chat4cy = cat5chat4cy
+        gubagoo.cat5chat5cy = cat5chat5cy
+        gubagoo.cat5chat6cy = cat5chat6cy
 
-        gubagoo.cat6chat1cs=cat6chat1cs
-        gubagoo.cat6chat2cs=cat6chat2cs
-        gubagoo.cat6chat3cs=cat6chat3cs
-        gubagoo.cat6chat4cs=cat6chat4cs
-        gubagoo.cat6chat5cs=cat6chat5cs
-        gubagoo.cat6chat6cs=cat6chat6cs
+        gubagoo.cat6chat1cs = cat6chat1cs
+        gubagoo.cat6chat2cs = cat6chat2cs
+        gubagoo.cat6chat3cs = cat6chat3cs
+        gubagoo.cat6chat4cs = cat6chat4cs
+        gubagoo.cat6chat5cs = cat6chat5cs
+        gubagoo.cat6chat6cs = cat6chat6cs
 
-        gubagoo.cat6chat1cy=cat6chat1cy
-        gubagoo.cat6chat2cy=cat6chat2cy
-        gubagoo.cat6chat3cy=cat6chat3cy
-        gubagoo.cat6chat4cy=cat6chat4cy
-        gubagoo.cat6chat5cy=cat6chat5cy
-        gubagoo.cat6chat6cy=cat6chat6cy
+        gubagoo.cat6chat1cy = cat6chat1cy
+        gubagoo.cat6chat2cy = cat6chat2cy
+        gubagoo.cat6chat3cy = cat6chat3cy
+        gubagoo.cat6chat4cy = cat6chat4cy
+        gubagoo.cat6chat5cy = cat6chat5cy
+        gubagoo.cat6chat6cy = cat6chat6cy
 
-        gubagoo.cat7chat1cs=cat7chat1cs
-        gubagoo.cat7chat2cs=cat7chat2cs
-        gubagoo.cat7chat3cs=cat7chat3cs
-        gubagoo.cat7chat4cs=cat7chat4cs
-        gubagoo.cat7chat5cs=cat7chat5cs
-        gubagoo.cat7chat6cs=cat7chat6cs
+        gubagoo.cat7chat1cs = cat7chat1cs
+        gubagoo.cat7chat2cs = cat7chat2cs
+        gubagoo.cat7chat3cs = cat7chat3cs
+        gubagoo.cat7chat4cs = cat7chat4cs
+        gubagoo.cat7chat5cs = cat7chat5cs
+        gubagoo.cat7chat6cs = cat7chat6cs
 
         gubagoo.save()
         return redirect('/employees/qahome')
 
 
 def practoNewVersion(request):
-
     if request.method == 'POST':
 
         # Training
@@ -11146,12 +11672,11 @@ def practoNewVersion(request):
         p_16 = int(request.POST['p16'])
         p_17 = int(request.POST['p17'])
 
-
         # Compliance
         compliance_1 = request.POST['fatal1']
         compliance_2 = request.POST['fatal2']
 
-        lst = [p_1,p_2,p_3,p_4,p_5,p_6,p_7,p_8,p_9,p_10,p_11,p_12,p_13,p_14,p_15,p_16,p_17,]
+        lst = [p_1, p_2, p_3, p_4, p_5, p_6, p_7, p_8, p_9, p_10, p_11, p_12, p_13, p_14, p_15, p_16, p_17, ]
 
         total_score = sum(lst)
 
@@ -11208,62 +11733,61 @@ def practoNewVersion(request):
         am = request.POST['am']
 
         domestic = PractoNewVersion(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                           manager=manager_name, manager_id=manager_emp_id,
-                           trans_date=trans_date, audit_date=audit_date, conversation_id=conversation_id,
-                           customer_contact=customer_contact,
-                           campaign=campaign, concept=concept, zone=zone, duration=duration,
+                                    manager=manager_name, manager_id=manager_emp_id,
+                                    trans_date=trans_date, audit_date=audit_date, conversation_id=conversation_id,
+                                    customer_contact=customer_contact,
+                                    campaign=campaign, concept=concept, zone=zone, duration=duration,
 
-                            p_1=p_1, p_2=p_2, p_3=p_3, p_4=p_4, p_5=p_5, p_6=p_6, p_7=p_7,
-                            p_8=p_8, p_9=p_9, p_10=p_10, p_11=p_11,p_12=p_12,p_13=p_13,p_14=p_14,
-                            p_15=p_15,p_16=p_16,p_17=p_17,
+                                    p_1=p_1, p_2=p_2, p_3=p_3, p_4=p_4, p_5=p_5, p_6=p_6, p_7=p_7,
+                                    p_8=p_8, p_9=p_9, p_10=p_10, p_11=p_11, p_12=p_12, p_13=p_13, p_14=p_14,
+                                    p_15=p_15, p_16=p_16, p_17=p_17,
 
-                           # Training
-                           training=training,
+                                    # Training
+                                    training=training,
 
-                           compliance_1=compliance_1, compliance_2=compliance_2,
-                           areas_improvement=areas_improvement,
-                           positives=positives, comments=comments,
-                           added_by=added_by,
-                           overall_score=overall_score, category=category,
-                           week=week, am=am, fatal_count=no_of_fatals, fatal=fatal,
+                                    compliance_1=compliance_1, compliance_2=compliance_2,
+                                    areas_improvement=areas_improvement,
+                                    positives=positives, comments=comments,
+                                    added_by=added_by,
+                                    overall_score=overall_score, category=category,
+                                    week=week, am=am, fatal_count=no_of_fatals, fatal=fatal,
 
-                           )
+                                    )
         domestic.save()
         return redirect('/employees/qahome')
 
 
-
 def PractoWithSubCategoryFunc(request):
     if request.method == 'POST':
-        p_1 = int(request.POST['p1']) #Chat Closing
+        p_1 = int(request.POST['p1'])  # Chat Closing
         p1_s1 = request.POST.get("chat_1")
         p1_s2 = request.POST.get("chat_2")
         p1_s3 = request.POST.get("chat_3")
         p1_s4 = request.POST.get("chat_4")
         p1_s5 = request.POST.get("chat_5")
         p1_s6 = request.POST.get("chat_6")
-        p_2 = int(request.POST['p2']) #FRTAT
-        p_3 = int(request.POST['p3']) #Addressing the user/Personalisation of chat
+        p_2 = int(request.POST['p2'])  # FRTAT
+        p_3 = int(request.POST['p3'])  # Addressing the user/Personalisation of chat
         p3_s1 = request.POST.get("pers_1")
         p3_s2 = request.POST.get("pers_2")
         p3_s3 = request.POST.get("pers_3")
         p3_s4 = request.POST.get("pers_4")
         p3_s5 = request.POST.get("pers_5")
         p3_s6 = request.POST.get("pers_6")
-        p_4 = int(request.POST['p4']) #Assistance & Acknowledgment
+        p_4 = int(request.POST['p4'])  # Assistance & Acknowledgment
         p4_s1 = request.POST.get("assu_1")
         p4_s2 = request.POST.get("assu_2")
         p4_s3 = request.POST.get("assu_3")
         p4_s4 = request.POST.get("assu_4")
         p4_s5 = request.POST.get("assu_5")
-        p_5 = int(request.POST['p5']) #Relevant responses
-        p_6 = int(request.POST['p19']) #Assurance
-        p_7 = int(request.POST['p6']) #Probing
+        p_5 = int(request.POST['p5'])  # Relevant responses
+        p_6 = int(request.POST['p19'])  # Assurance
+        p_7 = int(request.POST['p6'])  # Probing
         p7_s1 = request.POST.get("prob_1")
         p7_s2 = request.POST.get("prob_2")
         p7_s3 = request.POST.get("prob_3")
         p7_s4 = request.POST.get("prob_4")
-        p_8 = int(request.POST['p7']) #Interaction: Empathy , Profressional, care
+        p_8 = int(request.POST['p7'])  # Interaction: Empathy , Profressional, care
         p8_s1 = request.POST.get("inte_1")
         p8_s2 = request.POST.get("inte_2")
         p8_s3 = request.POST.get("inte_3")
@@ -11271,15 +11795,15 @@ def PractoWithSubCategoryFunc(request):
         p8_s5 = request.POST.get("inte_5")
         p8_s6 = request.POST.get("inte_6")
         p8_s7 = request.POST.get("inte_7")
-        p_9 = int(request.POST['p8']) #Grammar
+        p_9 = int(request.POST['p8'])  # Grammar
         p9_s1 = request.POST.get("gram_1")
         p9_s2 = request.POST.get("gram_2")
         p9_s3 = request.POST.get("gram_3")
         p9_s4 = request.POST.get("gram_4")
         p9_s5 = request.POST.get("gram_5")
         p9_s6 = request.POST.get("gram_6")
-        p_10 = int(request.POST['p10']) #Being courteous & using plesantries
-        p_11 = int(request.POST['p11']) #Process followed
+        p_10 = int(request.POST['p10'])  # Being courteous & using plesantries
+        p_11 = int(request.POST['p11'])  # Process followed
         p11_s1 = request.POST.get("proc_1")
         p11_s2 = request.POST.get("proc_2")
         p11_s3 = request.POST.get("proc_3")
@@ -11287,34 +11811,33 @@ def PractoWithSubCategoryFunc(request):
         p11_s5 = request.POST.get("proc_5")
         p11_s6 = request.POST.get("proc_6")
         p11_s7 = request.POST.get("proc_7")
-        p_12 = int(request.POST['p12']) #Explanation Skills (Being Specific, Reasoning) & Rebuttal Handling
-        p_13 = int(request.POST['p13']) #Sharing the information in a sequential manner
-        p_14 = int(request.POST['p14']) #Case Documentation
-        p_15 = int(request.POST['p15']) #Curation
+        p_12 = int(request.POST['p12'])  # Explanation Skills (Being Specific, Reasoning) & Rebuttal Handling
+        p_13 = int(request.POST['p13'])  # Sharing the information in a sequential manner
+        p_14 = int(request.POST['p14'])  # Case Documentation
+        p_15 = int(request.POST['p15'])  # Curation
         p15_s1 = request.POST.get("cura_1")
         p15_s2 = request.POST.get("cura_2")
         p15_s3 = request.POST.get("cura_3")
-        p_16 = int(request.POST['p16']) #Average Speed of Answer
-        p_17 = int(request.POST['p17']) #Chat Hold Procedure &: Taking Permission before putting the chat on hold.
+        p_16 = int(request.POST['p16'])  # Average Speed of Answer
+        p_17 = int(request.POST['p17'])  # Chat Hold Procedure &: Taking Permission before putting the chat on hold.
         p17_s1 = request.POST.get("hold_1")
         p17_s2 = request.POST.get("hold_3")
         p17_s3 = request.POST.get("hold_3")
         p17_s4 = request.POST.get("hold_4")
-        p_18 = int(request.POST['p18']) #PE knowledge base adherence
+        p_18 = int(request.POST['p18'])  # PE knowledge base adherence
         p18_s1 = request.POST.get("pekb_1")
         p18_s2 = request.POST.get("pekb_2")
         p18_s3 = request.POST.get("pekb_3")
         p18_s4 = request.POST.get("pekb_4")
 
-
         # Compliance
-        compliance_1 = request.POST['fatal1'] #Expectations: Setting correct expectations about issue resolution
+        compliance_1 = request.POST['fatal1']  # Expectations: Setting correct expectations about issue resolution
         compliance1_s1 = request.POST.get("expe_1")
         compliance1_s2 = request.POST.get("expe_2")
         compliance1_s3 = request.POST.get("expe_3")
-        compliance_2 = request.POST['fatal2'] #ZTP(Zero Tolerance Policy)
+        compliance_2 = request.POST['fatal2']  # ZTP(Zero Tolerance Policy)
 
-        lst = [p_1,p_2,p_3,p_4,p_5,p_6,p_7,p_8,p_9,p_10,p_11,p_12,p_13,p_14,p_15,p_16,p_17,p_18]
+        lst = [p_1, p_2, p_3, p_4, p_5, p_6, p_7, p_8, p_9, p_10, p_11, p_12, p_13, p_14, p_15, p_16, p_17, p_18]
 
         total_score = sum(lst)
 
@@ -11373,56 +11896,64 @@ def PractoWithSubCategoryFunc(request):
         week = request.POST['week']
         am = request.POST['am']
 
-        domestic = NewPractoWithSubCategory(associate_name = associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                           manager=manager_name, manager_id=manager_emp_id, audit_date=audit_date, concept=concept,
-                            zone=zone, case_no = case_no, issue_type = issue_type, sub_issue = sub_issue_type,
-                            sub_sub_issue=sub_sub_issue_type,
-                            chat_date = chat_date, csat = csat, product = product,campaign=campaign,
+        domestic = NewPractoWithSubCategory(associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+                                            manager=manager_name, manager_id=manager_emp_id, audit_date=audit_date,
+                                            concept=concept,
+                                            zone=zone, case_no=case_no, issue_type=issue_type, sub_issue=sub_issue_type,
+                                            sub_sub_issue=sub_sub_issue_type,
+                                            chat_date=chat_date, csat=csat, product=product, campaign=campaign,
 
-                            p_1=p_1, p_2=p_2, p_3=p_3, p_4=p_4, p_5=p_5, p_6=p_6, p_7=p_7,
-                            p_8=p_8, p_9=p_9, p_10=p_10, p_11=p_11,p_12=p_12,p_13=p_13,p_14=p_14,
-                            p_15=p_15, p_16=p_16, p_17=p_17, p_18=p_18,
+                                            p_1=p_1, p_2=p_2, p_3=p_3, p_4=p_4, p_5=p_5, p_6=p_6, p_7=p_7,
+                                            p_8=p_8, p_9=p_9, p_10=p_10, p_11=p_11, p_12=p_12, p_13=p_13, p_14=p_14,
+                                            p_15=p_15, p_16=p_16, p_17=p_17, p_18=p_18,
 
-                            p1_s1=p1_s1, p1_s2 = p1_s2, p1_s3 = p1_s3, p1_s4 = p1_s4, p1_s5 = p1_s5, p1_s6 = p1_s6,
-                            p3_s1=p3_s1, p3_s2 = p3_s2, p3_s3 = p3_s3, p3_s4=p3_s4, p3_s5=p3_s5, p3_s6=p3_s6,
-                            p4_s1=p4_s1, p4_s2 = p4_s2, p4_s3 =p4_s3, p4_s4 =p4_s4, p4_s5 =p4_s5,
-                            p7_s1=p7_s1, p7_s2 = p7_s2, p7_s3 = p7_s3, p7_s4 = p7_s4,
-                            p8_s1 = p8_s1, p8_s2 = p8_s2, p8_s3 = p8_s3, p8_s4 = p8_s4, p8_s5 = p8_s5, p8_s6 = p8_s6, p8_s7 = p8_s7,
-                            p9_s1 = p9_s1, p9_s2 = p9_s2, p9_s3 = p9_s3, p9_s4 = p9_s4, p9_s5 = p9_s5, p9_s6 = p9_s6,
-                            p11_s1=p11_s1, p11_s2 = p11_s2, p11_s3 =p11_s3, p11_s4 = p11_s4, p11_s5 = p11_s5,
-                                            p11_s6 = p11_s6, p11_s7 = p11_s7,
-                            p15_s1 = p15_s1, p15_s2 = p15_s2, p15_s3 = p15_s3,
-                            p17_s1 = p17_s1, p17_s2 = p17_s2, p17_s3 = p17_s3, p17_s4 = p17_s4,
-                            p18_s1=p18_s1, p18_s2=p18_s2, p18_s3=p18_s3, p18_s4=p18_s4,
-                            compliance1_s1=compliance1_s1, compliance1_s2 = compliance1_s2, compliance1_s3 = compliance1_s3,
+                                            p1_s1=p1_s1, p1_s2=p1_s2, p1_s3=p1_s3, p1_s4=p1_s4, p1_s5=p1_s5,
+                                            p1_s6=p1_s6,
+                                            p3_s1=p3_s1, p3_s2=p3_s2, p3_s3=p3_s3, p3_s4=p3_s4, p3_s5=p3_s5,
+                                            p3_s6=p3_s6,
+                                            p4_s1=p4_s1, p4_s2=p4_s2, p4_s3=p4_s3, p4_s4=p4_s4, p4_s5=p4_s5,
+                                            p7_s1=p7_s1, p7_s2=p7_s2, p7_s3=p7_s3, p7_s4=p7_s4,
+                                            p8_s1=p8_s1, p8_s2=p8_s2, p8_s3=p8_s3, p8_s4=p8_s4, p8_s5=p8_s5,
+                                            p8_s6=p8_s6, p8_s7=p8_s7,
+                                            p9_s1=p9_s1, p9_s2=p9_s2, p9_s3=p9_s3, p9_s4=p9_s4, p9_s5=p9_s5,
+                                            p9_s6=p9_s6,
+                                            p11_s1=p11_s1, p11_s2=p11_s2, p11_s3=p11_s3, p11_s4=p11_s4, p11_s5=p11_s5,
+                                            p11_s6=p11_s6, p11_s7=p11_s7,
+                                            p15_s1=p15_s1, p15_s2=p15_s2, p15_s3=p15_s3,
+                                            p17_s1=p17_s1, p17_s2=p17_s2, p17_s3=p17_s3, p17_s4=p17_s4,
+                                            p18_s1=p18_s1, p18_s2=p18_s2, p18_s3=p18_s3, p18_s4=p18_s4,
+                                            compliance1_s1=compliance1_s1, compliance1_s2=compliance1_s2,
+                                            compliance1_s3=compliance1_s3,
 
-                           compliance_1=compliance_1, compliance_2=compliance_2,
-                           areas_improvement=areas_improvement,
-                           positives=positives, comments=comments,
-                           added_by=added_by,
-                           overall_score=overall_score, category=category,
-                           week=week, am=am, fatal_count=no_of_fatals, fatal=fatal,
+                                            compliance_1=compliance_1, compliance_2=compliance_2,
+                                            areas_improvement=areas_improvement,
+                                            positives=positives, comments=comments,
+                                            added_by=added_by,
+                                            overall_score=overall_score, category=category,
+                                            week=week, am=am, fatal_count=no_of_fatals, fatal=fatal,
 
-                           )
+                                            )
         domestic.save()
         return redirect('/employees/qahome')
     else:
-        return render(request,'mon-forms/practo_chat.html')
+        return render(request, 'mon-forms/practo_chat.html')
+
 
 def nerotelInbound(request):
     if request.method == 'POST':
-        category='Nerotel Inbound'
+        category = 'Nerotel Inbound'
         associate_name = request.POST['empname']
         emp_id = request.POST['empid']
         qa = request.POST['qa']
         team_lead = request.POST['tl']
-        customer_name=request.POST['customer']
-        customer_contact=request.POST['customercontact']
+        customer_name = request.POST['customer']
+        customer_contact = request.POST['customercontact']
         call_date = request.POST['calldate']
         audit_date = request.POST['auditdate']
         concept = request.POST['concept']
-        zone=request.POST['zone']
-        call_duration=(int(request.POST['durationh'])*3600)+(int(request.POST['durationm'])*60)+int(request.POST['durations'])
+        zone = request.POST['zone']
+        call_duration = (int(request.POST['durationh']) * 3600) + (int(request.POST['durationm']) * 60) + int(
+            request.POST['durations'])
 
         #######################################
         prof_obj = Profile.objects.get(emp_id=emp_id)
@@ -11442,21 +11973,20 @@ def nerotelInbound(request):
         eng_7 = int(request.POST['e_7'])
         eng_8 = int(request.POST['e_8'])
         eng_9 = int(request.POST['e_9'])
-        eng_total = eng_1+eng_2+eng_3+eng_4+eng_5+eng_6+eng_7+eng_8+eng_9
+        eng_total = eng_1 + eng_2 + eng_3 + eng_4 + eng_5 + eng_6 + eng_7 + eng_8 + eng_9
         # Resolution
         res_1 = int(request.POST['res_1'])
         res_2 = int(request.POST['res_2'])
         res_3 = int(request.POST['res_3'])
         res_4 = int(request.POST['res_4'])
-        res_total = res_1+res_2+res_3+res_4
+        res_total = res_1 + res_2 + res_3 + res_4
 
         # Business needs
         compliance_1 = int(request.POST['busi_1'])
         compliance_2 = int(request.POST['busi_2'])
         compliance_3 = int(request.POST['busi_3'])
         compliance_4 = int(request.POST['busi_4'])
-        com_total = compliance_1+compliance_2+compliance_3+compliance_4
-
+        com_total = compliance_1 + compliance_2 + compliance_3 + compliance_4
 
         fatal_list = [compliance_1, compliance_2, compliance_3, compliance_4]
         fatal_list_count = []
@@ -11465,7 +11995,7 @@ def nerotelInbound(request):
                 fatal_list_count.append(i)
         no_of_fatals = len(fatal_list_count)
 
-        if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0 or compliance_4 == 0 :
+        if compliance_1 == 0 or compliance_2 == 0 or compliance_3 == 0 or compliance_4 == 0:
             overall_score = 0
             fatal = True
         else:
@@ -11480,27 +12010,26 @@ def nerotelInbound(request):
         am = request.POST['am']
 
         leadsales = NerotelInboundmonform(
-                            associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
-                            manager=manager_name,manager_id=manager_emp_id,
-                            call_date=call_date, audit_date=audit_date, customer_name=customer_name,customer_contact=customer_contact,
-                            concept=concept, zone=zone,call_duration=call_duration,
-                            eng_1=eng_1,eng_2=eng_2,eng_3=eng_3,eng_4=eng_4,eng_5=eng_5,eng_6=eng_6,eng_7=eng_7,eng_8=eng_8,eng_9=eng_9,
-                            res_1=res_1, res_2=res_2, res_3=res_3, res_4=res_4,
-                            compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3, compliance_4=compliance_4,
-                            areas_improvement=areas_improvement,
-                            positives=positives, comments=comments,
-                            added_by=added_by,
-                            overall_score=overall_score,category=category,
-                            week=week,am=am,fatal_count=no_of_fatals,fatal=fatal,
-                            )
+            associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
+            manager=manager_name, manager_id=manager_emp_id,
+            call_date=call_date, audit_date=audit_date, customer_name=customer_name, customer_contact=customer_contact,
+            concept=concept, zone=zone, call_duration=call_duration,
+            eng_1=eng_1, eng_2=eng_2, eng_3=eng_3, eng_4=eng_4, eng_5=eng_5, eng_6=eng_6, eng_7=eng_7, eng_8=eng_8,
+            eng_9=eng_9,
+            res_1=res_1, res_2=res_2, res_3=res_3, res_4=res_4,
+            compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3, compliance_4=compliance_4,
+            areas_improvement=areas_improvement,
+            positives=positives, comments=comments,
+            added_by=added_by,
+            overall_score=overall_score, category=category,
+            week=week, am=am, fatal_count=no_of_fatals, fatal=fatal,
+        )
         leadsales.save()
         return redirect('/employees/qahome')
 
 
-
 def spoiledChildEmail(request):
-
-    if request.method =='POST':
+    if request.method == 'POST':
 
         category = 'Email - Chat'
 
@@ -11522,7 +12051,6 @@ def spoiledChildEmail(request):
         week = request.POST['week']
 
         campaign = request.POST['campaign']
-
 
         # Opening and Closing
 
@@ -11563,20 +12091,19 @@ def spoiledChildEmail(request):
         comments = request.POST['comments']
         added_by = request.user.profile.emp_name
 
-
         spoil = SpoiledChildChatmonform(
             associate_name=associate_name, emp_id=emp_id, qa=qa, team_lead=team_lead,
             manager=manager, manager_id=manager_id,
             chat_date=call_date, audit_date=audit_date, customer_name=customer_name, ticket_id=ticket_id,
             campaign=campaign, concept=concept, zone=zone, query_type=query_type,
 
-            solution_1=solution_1, solution_2=solution_2, solution_3=solution_3,solution_4=solution_4,
+            solution_1=solution_1, solution_2=solution_2, solution_3=solution_3, solution_4=solution_4,
 
             efficiency_1=efficiency_1, efficiency_2=efficiency_2,
 
             compliance_1=compliance_1, compliance_2=compliance_2, compliance_3=compliance_3,
 
-            solution_total=solution_total,efficiency_total=efficiency_total,
+            solution_total=solution_total, efficiency_total=efficiency_total,
             compliance_total=compliance_total,
 
             areas_improvement=areas_improvement,
@@ -11593,37 +12120,31 @@ def spoiledChildEmail(request):
 
 
 def processNameChanger(request):
-
-    obj=MonitoringFormLeadsAadhyaSolution.objects.all()
+    obj = MonitoringFormLeadsAadhyaSolution.objects.all()
     for i in obj:
-        i.process='AAdya'
+        i.process = 'AAdya'
         i.save()
 
+
 def desiChanger(request):
-
-    empid_list = [2145,3831]
+    empid_list = [2145, 3831]
     for i in empid_list:
-
-        prof = Profile.objects.get(emp_id = i)
+        prof = Profile.objects.get(emp_id=i)
         prof.emp_desi = 'QA'
         prof.save()
 
 
 def addSingleProfile(request):
+    emp_id = 6728
 
-    emp_id=6728
-
-    manager='Dina'
-    profile_object=Profile.objects.get(emp_id=emp_id)
-    profile_object.manager=manager
+    manager = 'Dina'
+    profile_object = Profile.objects.get(emp_id=emp_id)
+    profile_object.manager = manager
     profile_object.save()
 
 
-
-
 def updateProfile(request):
-
-    if request.method=='POST':
+    if request.method == 'POST':
         id = request.POST['id']
         name = request.POST['desi']
 
@@ -11632,11 +12153,11 @@ def updateProfile(request):
         emp.emp_name = name
         emp.save()
 
-        return render(request, 'update-profile.html',)
+        return render(request, 'update-profile.html', )
     else:
-        profiles=Profile.objects.all()
-        data={'profiles':profiles}
-        return render(request,'update-profile.html',data)
+        profiles = Profile.objects.all()
+        data = {'profiles': profiles}
+        return render(request, 'update-profile.html', data)
 
 
 def profileDetailedView(request):
@@ -11644,41 +12165,39 @@ def profileDetailedView(request):
         id = request.POST['id']
         obj = Profile.objects.get(id=id)
 
-        data = {'emp':obj}
+        data = {'emp': obj}
 
-        return render(request,'profile-detailed-view.html',data)
+        return render(request, 'profile-detailed-view.html', data)
 
 
 def powerBITest(request):
-    return render(request,'test-powerbi-view.html')
-
+    return render(request, 'test-powerbi-view.html')
 
 
 def addtoUserModel(request):
-
-    empobj=ProfileNewtoAddUserandProfile.objects.all()
+    empobj = ProfileNewtoAddUserandProfile.objects.all()
     for i in empobj:
-        user=User.objects.filter(username=i.username)
+        user = User.objects.filter(username=i.username)
         if user.exists():
-            print(i.emp_name+' '+'exist')
+            print(i.emp_name + ' ' + 'exist')
             pass
         else:
-            user = User.objects.create_user(id=i.username,username=i.username,password=i.password)
-            profile = Profile(id=i.username,emp_name=i.emp_name,emp_id=i.username,emp_desi=i.emp_desi,team=i.team,email=i.email,team_lead=i.team_lead,manager=i.manager,user_id=i.username,am=i.am,process=i.process)
+            user = User.objects.create_user(id=i.username, username=i.username, password=i.password)
+            profile = Profile(id=i.username, emp_name=i.emp_name, emp_id=i.username, emp_desi=i.emp_desi, team=i.team,
+                              email=i.email, team_lead=i.team_lead, manager=i.manager, user_id=i.username, am=i.am,
+                              process=i.process)
             profile.save()
             print('User and Profile created')
 
 
-
 def checkProfile(request):
-
-    profile=Profile.objects.get(emp_id=6043)
-    profile.user=6043
-    profile.id=6043
+    profile = Profile.objects.get(emp_id=6043)
+    profile.user = 6043
+    profile.id = 6043
     profile.save()
 
-def changePassword(request):
 
+def changePassword(request):
     u = User.objects.get(username=1458)
     u.set_password('1458testuser1')
     u.save()
@@ -11686,34 +12205,30 @@ def changePassword(request):
 
 
 def addNewCampaign(request):
-
     if request.method == 'POST':
         campaign = request.POST['campaign']
         type = request.POST['type']
-        c = Campaigns.objects.create(name=campaign,type=type)
+        c = Campaigns.objects.create(name=campaign, type=type)
         c.save()
         return redirect('/add-new-campaign')
 
     else:
-        return render(request,'add-new-campaign.html')
+        return render(request, 'add-new-campaign.html')
 
 
 def deleteData(request):
-
     pass
     '''for i in list_of_monforms:
         i.objects.all().delete()'''
 
 
-
 def campaignDetails(request):
-
     if request.method == 'POST':
         category = request.POST['campaign']
 
         for i in list_of_monforms:
             obj = i.objects.all()
-            if obj.count() >0:
+            if obj.count() > 0:
                 if obj[0].process == category:
                     campaign = i
                 else:
@@ -11727,13 +12242,11 @@ def campaignDetails(request):
 
     else:
         campaigns = Campaigns.objects.all()
-        data = {'campaigns':campaigns}
-        return render(request,'all-campaigns.html',data)
-
+        data = {'campaigns': campaigns}
+        return render(request, 'all-campaigns.html', data)
 
 
 def AllProfileUpdate(request):
-
     new = ABCprofile.objects.all()
 
     prof = Profile.objects.all()
@@ -11746,8 +12259,15 @@ def AllProfileUpdate(request):
                 j.team_lead = i.tl
                 j.save()
 
+
+def DeleteTestAudits(request):
+    for i in list_of_monforms:
+        i.objects.filter(Q(added_by='5670') | Q(added_by='Ranjitha M')).delete()
+    return redirect('/')
+
+
 # EDit Team RM
-from django.db.models import Q
+
 
 def createUserAndProfile(request):
     if request.method == 'POST':
@@ -11773,7 +12293,7 @@ def createUserAndProfile(request):
             pass
 
         if password1 != password2:
-            messages.info(request,'Password not matching !!!')
+            messages.info(request, 'Password not matching !!!')
             return redirect('/create-user-profile')
         else:
             password = password1
@@ -11786,9 +12306,9 @@ def createUserAndProfile(request):
                 return redirect('/create-user-profile')
             else:
 
-                user = User.objects.create_user(id=id,username=user_name,password=password)
-                profile = Profile(id=id,emp_name=emp_name,emp_id=id,emp_desi=emp_desi,team=process,
-                              email=email,team_lead=tl,manager=manager,user_id=id,am=am,process=process)
+                user = User.objects.create_user(id=id, username=user_name, password=password)
+                profile = Profile(id=id, emp_name=emp_name, emp_id=id, emp_desi=emp_desi, team=process,
+                                  email=email, team_lead=tl, manager=manager, user_id=id, am=am, process=process)
                 user.save()
                 profile.save()
 
@@ -11808,30 +12328,29 @@ def createUserAndProfile(request):
 
     else:
 
-        managers = Profile.objects.filter(Q(emp_desi = 'Team Leader') | Q(emp_desi = 'AM') | Q(emp_desi = 'Manager') | Q(emp_desi = 'SME'))
-        ams = Profile.objects.filter(Q(emp_desi = 'Team Leader') | Q(emp_desi = 'AM') | Q(emp_desi = 'Manager') | Q(emp_desi = 'SME'))
-        tls = Profile.objects.filter(Q(emp_desi = 'Team Leader') | Q(emp_desi = 'AM') | Q(emp_desi = 'Manager')| Q(emp_desi = 'SME'))
+        managers = Profile.objects.filter(
+            Q(emp_desi='Team Leader') | Q(emp_desi='AM') | Q(emp_desi='Manager') | Q(emp_desi='SME'))
+        ams = Profile.objects.filter(
+            Q(emp_desi='Team Leader') | Q(emp_desi='AM') | Q(emp_desi='Manager') | Q(emp_desi='SME'))
+        tls = Profile.objects.filter(
+            Q(emp_desi='Team Leader') | Q(emp_desi='AM') | Q(emp_desi='Manager') | Q(emp_desi='SME'))
 
-        data = {'managers':managers,'ams':ams,'tls':tls}
-        return render(request,'create-user-profile.html',data)
-
+        data = {'managers': managers, 'ams': ams, 'tls': tls}
+        return render(request, 'create-user-profile.html', data)
 
 
 def editTeamRMS(request):
     campaigns = Campaigns.objects.all()
-    profile = Profile.objects.filter(Q(emp_desi = 'Team Leader') | Q(emp_desi = 'AM') | Q(emp_desi = 'Manager'))
+    profile = Profile.objects.filter(Q(emp_desi='Team Leader') | Q(emp_desi='AM') | Q(emp_desi='Manager'))
 
-    data = {'campaigns':campaigns,'profile':profile}
-    return render(request,'edit-team-rms.html',data)
-
+    data = {'campaigns': campaigns, 'profile': profile}
+    return render(request, 'edit-team-rms.html', data)
 
 
 def coachingStatusReportAll(request):
-
     lst = []
     lst_dispute = []
     for i in list_of_monforms:
-
         status = i.objects.filter(status=False).values(
             'process').annotate(dcount=Count('status'))
         lst.append(status)
@@ -11840,21 +12359,18 @@ def coachingStatusReportAll(request):
             'process').annotate(dcount=Count('disput_status'))
         lst_dispute.append(dispute)
 
+    data = {'status': lst, 'dispute': lst_dispute}
 
-    data = {'status':lst,'dispute':lst_dispute}
-
-    return render(request,'coaching-summary-view.html',data)
+    return render(request, 'coaching-summary-view.html', data)
 
 
-def coachingStatusCampaignwise(request,campaign):
-
+def coachingStatusCampaignwise(request, campaign):
     def campaignWise(monform):
 
         emp_wise = monform.objects.filter(status=False).values(
             'associate_name').annotate(dcount=Count('status'))
-        data = {'emp_wise':emp_wise,'campaign':campaign}
+        data = {'emp_wise': emp_wise, 'campaign': campaign}
         return data
-
 
     monform = None
     for i in list_of_monforms:
@@ -11874,15 +12390,13 @@ def coachingStatusCampaignwise(request,campaign):
     return render(request, 'coaching-summary-view-agents.html', data)
 
 
-def disputeStatusAgents(request,campaign):
-
+def disputeStatusAgents(request, campaign):
     def campaignWise(monform):
 
         emp_wise = monform.objects.filter(disput_status=True).values(
             'associate_name').annotate(dcount=Count('status'))
-        data = {'emp_wise':emp_wise,'campaign':campaign}
+        data = {'emp_wise': emp_wise, 'campaign': campaign}
         return data
-
 
     monform = None
     for i in list_of_monforms:
@@ -11902,8 +12416,35 @@ def disputeStatusAgents(request,campaign):
     return render(request, 'dispute-summary-view-agents.html', data)
 
 
+def PasswordReset(request):
+    emp = request.user.profile.emp_id
+    if emp == 8413 or emp == 4458 or emp == 5670:
+        if request.method == 'POST':
+            emp_id = request.POST['emp_id']
+            new = request.POST['new']
+            confirm = request.POST['confirm']
+            if new == confirm:
+                user = User.objects.get(username=emp_id)
+                user.password = make_password(new)
+                user.save()
+                messages.error(request, 'Password changed successfully!')
+                return redirect('/password-reset')
+            else:
+                messages.error(request, 'Passwords does not match')
+                return redirect('/password-reset')
+        else:
+            profiles = Profile.objects.all()
+            data = {'profiles': profiles}
+            return render(request, 'password-reset.html', data)
+    else:
+        messages.error(request, 'Invalid Request!!')
+        return redirect('/')
+
+
 from drf_multiple_model.views import ObjectMultipleModelAPIView
 from drf_multiple_model.views import FlatMultipleModelAPIView
+
+
 class TotalList(FlatMultipleModelAPIView):
     querylist = [
         {'queryset': ChatMonitoringFormPodFather.objects.all(),
@@ -12460,8 +13001,40 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': BetterEdInboundMonForm.objects.all(),
          'serializer_class': BetterEdInboundMonFormSerializer},
+
+        {'queryset': Com98Outboundmonform.objects.all(),
+         'serializer_class': Com98OutboundmonformSerializer},
+
+        {'queryset': Com98InboundMonForm.objects.all(),
+         'serializer_class': Com98InboundMonFormSerializer},
+
+        {'queryset': GretnaMedicalCentreOutboundmonform.objects.all(),
+         'serializer_class': GretnaMedicalCentreOutboundmonformSerializer},
+
+        {'queryset': AristaMDOutboundmonform.objects.all(),
+         'serializer_class': AristaMDOutboundmonformSerializer},
+
+        {'queryset': OpenWindsInboundMonForm.objects.all(),
+         'serializer_class': OpenWindsInboundMonFormSerializer},
+
+        {'queryset': RobertDamonProductionOutboundmonform.objects.all(),
+         'serializer_class': RobertDamonProductionOutboundmonformSerializer},
+
+        {'queryset': EmbassyLuxuryInboundMonForm.objects.all(),
+         'serializer_class': EmbassyLuxuryInboundMonFormSerializer},
+
+        {'queryset': VenwizOutboundmonform.objects.all(),
+         'serializer_class': VenwizOutboundmonformSerializer},
+
+        {'queryset': AmerisaveMonForm.objects.all(),
+         'serializer_class': AmerisaveMonFormSerializer},
+
+        {'queryset': CityHabitatOutboundmonform.objects.all(),
+         'serializer_class': CityHabitatOutboundmonformSerializer},
+
+        {'queryset': OptelOutboundmonform.objects.all(),
+         'serializer_class': OptelOutboundmonformSerializer},
+
+        {'queryset': SouthCountyInboundMonForm.objects.all(),
+         'serializer_class': SouthCountyInboundMonFormSerializer},
     ]
-
-
-
-

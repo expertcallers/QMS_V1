@@ -15,7 +15,7 @@ class profileSearch(admin.ModelAdmin):
 
 class Search(admin.ModelAdmin):
     search_fields = ('qa', 'emp_id', 'associate_name')
-    list_display = ('associate_name', 'emp_id', 'qa')
+    list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
 
 
 admin.site.register(Team)
@@ -147,3 +147,17 @@ admin.site.register(RapidMortgageOutboundmonform, Search)
 admin.site.register(CentralMortgageFundingOutboundmonform, Search)
 admin.site.register(BetterEdInboundMonForm, Search)
 admin.site.register(BetterEdOutboundmonform, Search)
+admin.site.register(Com98Outboundmonform, Search)
+admin.site.register(Com98InboundMonForm, Search)
+admin.site.register(GretnaMedicalCentreOutboundmonform, Search)
+admin.site.register(AristaMDOutboundmonform, Search)
+admin.site.register(OpenWindsInboundMonForm, Search)
+admin.site.register(RobertDamonProductionOutboundmonform, Search)
+admin.site.register(VenwizOutboundmonform, Search)
+admin.site.register(EmbassyLuxuryInboundMonForm, Search)
+admin.site.register(CityHabitatOutboundmonform, Search)
+admin.site.register(AmerisaveMonForm, Search)
+admin.site.register(OptelOutboundmonform, Search)
+admin.site.register(SouthCountyInboundMonForm, Search)
+admin.site.register(AmerisaveInboundMonForm, Search)
+admin.site.register(AmerisaveoutboundMonForm, Search)
