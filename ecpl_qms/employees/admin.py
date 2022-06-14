@@ -15,7 +15,7 @@ class profileSearch(admin.ModelAdmin):
 
 class Search(admin.ModelAdmin):
     search_fields = ('qa', 'emp_id', 'associate_name')
-    list_display = ('associate_name', 'emp_id', 'qa')
+    list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
 
 
 admin.site.register(Team)

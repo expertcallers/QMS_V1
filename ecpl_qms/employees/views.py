@@ -10339,6 +10339,7 @@ def fameHouseNew(request):
 
         def scoreCalc(pk):
             if pk == 'NA':
+                sum_list.append(1)
                 na_list.append(pk)
                 return pk
             else:
