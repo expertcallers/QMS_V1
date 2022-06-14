@@ -103,7 +103,6 @@ urlpatterns = [
 
     path('allprofileupdate',AllProfileUpdate),
 
-
     # Edit RMS
     path('edit-team-rms',editTeamRMS),
     # All Coaching Forms
@@ -111,7 +110,5 @@ urlpatterns = [
     path('coaching-status-overall/<str:campaign>',coachingStatusCampaignwise),
     path('dispute-status-overall/<str:campaign>',disputeStatusAgents),
     path("total-list",TotalList.as_view(),name="to_show_the_total_list_of_tables"),
-
-
 
 ]
