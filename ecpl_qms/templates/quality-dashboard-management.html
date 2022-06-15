@@ -16,7 +16,9 @@
                         <p style="color:white"><small style="color:grey"></small>{{user.profile.email}}<i class="fas fa-envelope"></i><a href="/employees/update-email-address/{{user.profile.emp_id}}"><i class="fas fa-edit"></i></a></p>
                         <p style="color:white"><small style="color:grey"></small>{{user.profile.team}}<i class="fas fa-users"></i></p>
                         <p style="color:white"><small style="color:grey"></small>{{user.profile.emp_desi}}<i class="fas fa-briefcase"></i></p>
+                        {% if request.user.profile.emp_id == 4458 or request.user.profile.emp_id == 8413 %}
                         <p><a href="/employees/create-user-profile" style="font-size: 19px;color: #fff06c;">Create New User </a></p>
+                        {% endif %}
                         <p><a href="/employees/coaching-status-overall" style="font-size: 19px;color: #fff06c;">Overall Coaching Status</a></p>
                 </div>
             </div>

@@ -12270,73 +12270,78 @@ def DeleteTestAudits(request):
 
 
 def createUserAndProfile(request):
-    if request.method == 'POST':
+    emp_id = request.user.profile.emp_id
+    if emp_id == 4458 or emp_id == 8413:
+        if request.method == 'POST':
 
-        id = request.POST['emp_id']
-        user_name = request.POST['user_name']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        emp_name = request.POST['emp_name']
-        emp_desi = request.POST['emp_desi']
-        process = request.POST['process']
-        email = request.POST['email']
-        manager = request.POST['manager']
-        am = request.POST['am']
-        tl = request.POST['tl']
-        admin_id = request.POST['admin_id']
-        admin_password = request.POST['admin_password']
+            id = request.POST['emp_id']
+            user_name = request.POST['user_name']
+            password1 = request.POST['password1']
+            password2 = request.POST['password2']
+            emp_name = request.POST['emp_name']
+            emp_desi = request.POST['emp_desi']
+            process = request.POST['process']
+            email = request.POST['email']
+            manager = request.POST['manager']
+            am = request.POST['am']
+            tl = request.POST['tl']
+            admin_id = request.POST['admin_id']
+            admin_password = request.POST['admin_password']
 
-        if id != user_name:
-            messages.info(request, 'Emp ID and Username Must be Same !!!')
-            return redirect('/create-user-profile')
-        else:
-            pass
-
-        if password1 != password2:
-            messages.info(request, 'Password not matching !!!')
-            return redirect('/create-user-profile')
-        else:
-            password = password1
-
-        if admin_id == 'ecpl-qms' and admin_password == 'EcplQms2021!':
-
-            user = User.objects.filter(username=id)
-            if user.exists():
-                messages.info(request, 'User Already exist !!!')
+            if id != user_name:
+                messages.info(request, 'Emp ID and Username Must be Same !!!')
                 return redirect('/create-user-profile')
             else:
+                pass
 
-                user = User.objects.create_user(id=id, username=user_name, password=password)
-                profile = Profile(id=id, emp_name=emp_name, emp_id=id, emp_desi=emp_desi, team=process,
-                                  email=email, team_lead=tl, manager=manager, user_id=id, am=am, process=process)
-                user.save()
-                profile.save()
+            if password1 != password2:
+                messages.info(request, 'Password not matching !!!')
+                return redirect('/create-user-profile')
+            else:
+                password = password1
 
-                add_obj = ProfileCreatedByManagers()
-                add_obj.emp_name = emp_name
-                add_obj.emp_id = id
-                add_obj.created_by = request.user.profile.emp_id
-                add_obj.created_date = datetime.now()
-                add_obj.save()
+            if admin_id == 'ecpl-qms' and admin_password == 'EcplQms2021!':
 
-                messages.info(request, 'User has been Created, Please try Login now !!!')
+                user = User.objects.filter(username=id)
+                if user.exists():
+                    messages.info(request, 'User Already exist !!!')
+                    return redirect('/create-user-profile')
+                else:
+
+                    user = User.objects.create_user(id=id, username=user_name, password=password)
+                    profile = Profile(id=id, emp_name=emp_name, emp_id=id, emp_desi=emp_desi, team=process,
+                                      email=email, team_lead=tl, manager=manager, user_id=id, am=am, process=process)
+                    user.save()
+                    profile.save()
+
+                    add_obj = ProfileCreatedByManagers()
+                    add_obj.emp_name = emp_name
+                    add_obj.emp_id = id
+                    add_obj.created_by = request.user.profile.emp_id
+                    add_obj.created_date = datetime.now()
+                    add_obj.save()
+
+                    messages.info(request, 'User has been Created, Please try Login now !!!')
+                    return redirect('/create-user-profile')
+
+            else:
+                messages.info(request, 'Incorrect Admin ID or Password !!!')
                 return redirect('/create-user-profile')
 
         else:
-            messages.info(request, 'Incorrect Admin ID or Password !!!')
-            return redirect('/create-user-profile')
 
+            managers = Profile.objects.filter(
+                Q(emp_desi='Team Leader') | Q(emp_desi='AM') | Q(emp_desi='Manager') | Q(emp_desi='SME'))
+            ams = Profile.objects.filter(
+                Q(emp_desi='Team Leader') | Q(emp_desi='AM') | Q(emp_desi='Manager') | Q(emp_desi='SME'))
+            tls = Profile.objects.filter(
+                Q(emp_desi='Team Leader') | Q(emp_desi='AM') | Q(emp_desi='Manager') | Q(emp_desi='SME'))
+
+            data = {'managers': managers, 'ams': ams, 'tls': tls}
+            return render(request, 'create-user-profile.html', data)
     else:
-
-        managers = Profile.objects.filter(
-            Q(emp_desi='Team Leader') | Q(emp_desi='AM') | Q(emp_desi='Manager') | Q(emp_desi='SME'))
-        ams = Profile.objects.filter(
-            Q(emp_desi='Team Leader') | Q(emp_desi='AM') | Q(emp_desi='Manager') | Q(emp_desi='SME'))
-        tls = Profile.objects.filter(
-            Q(emp_desi='Team Leader') | Q(emp_desi='AM') | Q(emp_desi='Manager') | Q(emp_desi='SME'))
-
-        data = {'managers': managers, 'ams': ams, 'tls': tls}
-        return render(request, 'create-user-profile.html', data)
+        messages.error(request, "Unauthorized access!")
+        return redirect('/')
 
 
 def editTeamRMS(request):
