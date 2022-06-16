@@ -66,7 +66,7 @@ list_of_monforms = [  # OutBound
     BridanAssociatesOutboundmonform, BetterEdOutboundmonform, Com98Outboundmonform,
     GretnaMedicalCentreOutboundmonform, AristaMDOutboundmonform,
     RobertDamonProductionOutboundmonform, VenwizOutboundmonform, CityHabitatOutboundmonform,
-    OptelOutboundmonform,
+    OptelOutboundmonform, SouthCountyOutboundMonForm,
 
     # Inbound
     MasterMonitoringFormTonnCoaInboundCalls, SomethingsBrewingInbound, PrinterPixMasterMonitoringFormInboundCalls,
@@ -1317,6 +1317,11 @@ def coachingViewAgents(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'South County Outbound':
+        coaching = SouthCountyOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2351,6 +2356,11 @@ def coachingViewQaDetailed(request, process, pk):
 
     elif process_name == 'Optel Outbound':
         coaching = OptelOutboundmonform.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'South County Outbound':
+        coaching = SouthCountyOutboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -4043,6 +4053,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Optel Outbound':
             response = exportAadyaseries(OptelOutboundmonform)
+            return response
+
+        elif campaign == 'South County Outbound':
+            response = exportAadyaseries(SouthCountyOutboundMonForm)
             return response
 
         ######## Inbound ###############################
@@ -6588,6 +6602,11 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(OptelOutboundmonform)
             return response
 
+
+        elif campaign == 'South County Outbound':
+            response = exportAadyaseries(SouthCountyOutboundMonForm)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -9087,6 +9106,11 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'Optel Outbound':
             newseriesAddCoaching(OptelOutboundmonform)
+            return redirect('/employees/qahome')
+
+
+        elif campaign_name == 'South County Outbound':
+            newseriesAddCoaching(SouthCountyOutboundMonForm)
             return redirect('/employees/qahome')
 
         else:
@@ -13042,4 +13066,7 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': SouthCountyInboundMonForm.objects.all(),
          'serializer_class': SouthCountyInboundMonFormSerializer},
+
+        {'queryset': SouthCountyOutboundMonForm.objects.all(),
+         'serializer_class': SouthCountyOutboundMonFormSerializer},
     ]

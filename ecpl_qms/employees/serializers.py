@@ -1283,3 +1283,8 @@ class SouthCountyInboundMonFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = SouthCountyInboundMonForm
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class SouthCountyOutboundMonFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SouthCountyOutboundMonForm
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
