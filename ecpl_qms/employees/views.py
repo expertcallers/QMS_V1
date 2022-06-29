@@ -9880,13 +9880,15 @@ def abhFormSAve(request):
         oc_3 = int(request.POST['oc_3'])
 
         oc_total = oc_1 + oc_2 + oc_3
+
         # Softskills
         softskill_1 = int(request.POST['softskill_1'])
         softskill_2 = int(request.POST['softskill_2'])
         softskill_3 = int(request.POST['softskill_3'])
         softskill_4 = int(request.POST['softskill_4'])
 
-        softskill_total = softskill_1 + softskill_2 + softskill_3
+        softskill_total = softskill_1 + softskill_2 + softskill_3 + softskill_4
+
         # Compliance
         compliance_1 = int(request.POST['compliance_1'])
         compliance_2 = int(request.POST['compliance_2'])
@@ -13070,3 +13072,14 @@ class TotalList(FlatMultipleModelAPIView):
         {'queryset': SouthCountyOutboundMonForm.objects.all(),
          'serializer_class': SouthCountyOutboundMonFormSerializer},
     ]
+
+def correctABH(request):
+    update = []
+    for i in ABHindalcoMonForm.objects.all():
+        a, i.oc_total = i.oc_1 + i.oc_2 + i.oc_3
+        b, i.softskill_total = i.softskill_1 + i.softskill_2 + i.softskill_3 + i.softskill_4
+        c, i.compliance_total = i.compliance_1 + i.compliance_2 + i.compliance_3 + i.compliance_4
+        i.overall_score = a + b + c
+        update.append(i)
+    ABHindalcoMonForm.objects.bulk_update(update, ['oc_total', 'softskill_total', 'compliance_total', 'overall_score'])
+    return redirect('/')

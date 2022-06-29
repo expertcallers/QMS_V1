@@ -104,6 +104,7 @@ urlpatterns = [
 
 
     path('delete-audits', DeleteTestAudits),
+    path('correct-abh', correctABH),
 
     # Edit RMS
     path('edit-team-rms', editTeamRMS),
