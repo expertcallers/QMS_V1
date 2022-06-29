@@ -1288,3 +1288,8 @@ class SouthCountyOutboundMonFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = SouthCountyOutboundMonForm
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class NaffaInnovationEmailChatFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NaffaInnovationEmailChatForm
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']

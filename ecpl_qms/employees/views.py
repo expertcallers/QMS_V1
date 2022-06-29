@@ -93,7 +93,7 @@ list_of_monforms = [  # OutBound
     TanaorJewelryEmailMonForm, DecentralizedVisionEmailChatMonForm,
     USJacleanEmailChatForm,
     CrossTowerEmailChatForm, SanaLifeScienceEmailChatForm, SapphireMedicalsChatMonForm,
-    GretnaMedicalCenterEmailChatForm, JumpRydesEmailChatForm,
+    GretnaMedicalCenterEmailChatForm, JumpRydesEmailChatForm, NaffaInnovationEmailChatForm,
 
     # FLA
     FLAMonitoringForm,
@@ -1643,6 +1643,11 @@ def coachingViewAgents(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
+    elif process_name == 'Naffa Innovation Email - Chat':
+        coaching = NaffaInnovationEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
     ################ Others ##########################################################
 
     if process_name == 'Fame House':
@@ -2687,6 +2692,11 @@ def coachingViewQaDetailed(request, process, pk):
 
     elif process_name == 'Jump Rydes Email - Chat':
         coaching = JumpRydesEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Naffa Innovation Email - Chat':
+        coaching = NaffaInnovationEmailChatForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
@@ -4464,6 +4474,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Jump Rydes Email - Chat':
             response = exportEmailChat(JumpRydesEmailChatForm)
+            return response
+
+        elif campaign == 'Naffa Innovation Email - Chat':
+            response = exportEmailChat(NaffaInnovationEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -7011,6 +7025,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Jump Rydes Email - Chat':
             response = exportEmailChat(JumpRydesEmailChatForm)
+            return response
+
+        elif campaign == 'Naffa Innovation Email - Chat':
+            response = exportEmailChat(NaffaInnovationEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -9743,6 +9761,10 @@ def domesticChatEmail(request):
 
         elif campaign_name == 'Jump Rydes Email - Chat':
             domesticEmailChatAddCoaching(JumpRydesEmailChatForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Naffa Innovation Email - Chat':
+            domesticEmailChatAddCoaching(NaffaInnovationEmailChatForm)
             return redirect('/employees/qahome')
 
 
@@ -13071,14 +13093,20 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': SouthCountyOutboundMonForm.objects.all(),
          'serializer_class': SouthCountyOutboundMonFormSerializer},
+
+        {'queryset': NaffaInnovationEmailChatForm.objects.all(),
+         'serializer_class': NaffaInnovationEmailChatFormSerializer},
     ]
 
 def correctABH(request):
     update = []
     for i in ABHindalcoMonForm.objects.all():
-        a, i.oc_total = i.oc_1 + i.oc_2 + i.oc_3
-        b, i.softskill_total = i.softskill_1 + i.softskill_2 + i.softskill_3 + i.softskill_4
-        c, i.compliance_total = i.compliance_1 + i.compliance_2 + i.compliance_3 + i.compliance_4
+        a = i.oc_1 + i.oc_2 + i.oc_3
+        b = i.softskill_1 + i.softskill_2 + i.softskill_3 + i.softskill_4
+        c = i.compliance_1 + i.compliance_2 + i.compliance_3 + i.compliance_4
+        i.oc_total = a
+        i.softskill_total = b
+        i.compliance_total = c
         i.overall_score = a + b + c
         update.append(i)
     ABHindalcoMonForm.objects.bulk_update(update, ['oc_total', 'softskill_total', 'compliance_total', 'overall_score'])
