@@ -9926,7 +9926,7 @@ def abhFormSAve(request):
                 fatal_list_count.append(i)
         no_of_fatals = len(fatal_list_count)
 
-        if oc_1 == 0 or compliance_2 == 0 or compliance_3 == 0 or compliance_4 == 0:
+        if oc_2 == 0 or compliance_2 == 0 or compliance_3 == 0 or compliance_4 == 0:
             overall_score = 0
             fatal = True
         else:
@@ -13107,7 +13107,10 @@ def correctABH(request):
         i.oc_total = a
         i.softskill_total = b
         i.compliance_total = c
-        i.overall_score = a + b + c
+        if i.oc_2 == 0 or i.compliance_2 == 0 or i.compliance_3 == 0 or i.compliance_4 == 0:
+            i.overall_score = 0
+        else:
+            i.overall_score = a + b + c
         update.append(i)
     ABHindalcoMonForm.objects.bulk_update(update, ['oc_total', 'softskill_total', 'compliance_total', 'overall_score'])
     return redirect('/')
