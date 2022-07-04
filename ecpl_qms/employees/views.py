@@ -66,7 +66,7 @@ list_of_monforms = [  # OutBound
     BridanAssociatesOutboundmonform, BetterEdOutboundmonform, Com98Outboundmonform,
     GretnaMedicalCentreOutboundmonform, AristaMDOutboundmonform,
     RobertDamonProductionOutboundmonform, VenwizOutboundmonform, CityHabitatOutboundmonform,
-    OptelOutboundmonform, SouthCountyOutboundMonForm,
+    OptelOutboundmonform, SouthCountyOutboundMonForm, InpressOutboundMonForm,
 
     # Inbound
     MasterMonitoringFormTonnCoaInboundCalls, SomethingsBrewingInbound, PrinterPixMasterMonitoringFormInboundCalls,
@@ -94,6 +94,8 @@ list_of_monforms = [  # OutBound
     USJacleanEmailChatForm,
     CrossTowerEmailChatForm, SanaLifeScienceEmailChatForm, SapphireMedicalsChatMonForm,
     GretnaMedicalCenterEmailChatForm, JumpRydesEmailChatForm, NaffaInnovationEmailChatForm,
+    InpressEmailChatForm,
+
 
     # FLA
     FLAMonitoringForm,
@@ -1322,6 +1324,11 @@ def coachingViewAgents(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Inpress Outbound':
+        coaching = InpressOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -1645,6 +1652,11 @@ def coachingViewAgents(request, process, pk):
 
     elif process_name == 'Naffa Innovation Email - Chat':
         coaching = NaffaInnovationEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Inpress Email - Chat':
+        coaching = InpressEmailChatForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-email-chat.html', data)
 
@@ -2369,6 +2381,11 @@ def coachingViewQaDetailed(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
+    elif process_name == 'Inpress Outbound':
+        coaching = InpressOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2697,6 +2714,11 @@ def coachingViewQaDetailed(request, process, pk):
 
     elif process_name == 'Naffa Innovation Email - Chat':
         coaching = NaffaInnovationEmailChatForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
+
+    elif process_name == 'Inpress Email - Chat':
+        coaching = InpressEmailChatForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-email-chat.html', data)
 
@@ -4069,6 +4091,10 @@ def exportAuditReport(request):
             response = exportAadyaseries(SouthCountyOutboundMonForm)
             return response
 
+        elif campaign == 'Inpress Outbound':
+            response = exportAadyaseries(InpressOutboundMonForm)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -4478,6 +4504,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Naffa Innovation Email - Chat':
             response = exportEmailChat(NaffaInnovationEmailChatForm)
+            return response
+
+        elif campaign == 'Inpress Email - Chat':
+            response = exportEmailChat(InpressEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -6621,6 +6651,10 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(SouthCountyOutboundMonForm)
             return response
 
+        elif campaign == 'Inpress Outbound':
+            response = exportAadyaseries(InpressOutboundMonForm)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -7029,6 +7063,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'Naffa Innovation Email - Chat':
             response = exportEmailChat(NaffaInnovationEmailChatForm)
+            return response
+
+        elif campaign == 'Inpress Email - Chat':
+            response = exportEmailChat(InpressEmailChatForm)
             return response
 
             ########## other campaigns ##############
@@ -9131,6 +9169,10 @@ def newSeriesMonForms(request):
             newseriesAddCoaching(SouthCountyOutboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'Inpress Outbound':
+            newseriesAddCoaching(InpressOutboundMonForm)
+            return redirect('/employees/qahome')
+
         else:
             pass
 
@@ -9765,6 +9807,10 @@ def domesticChatEmail(request):
 
         elif campaign_name == 'Naffa Innovation Email - Chat':
             domesticEmailChatAddCoaching(NaffaInnovationEmailChatForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Inpress Email - Chat':
+            domesticEmailChatAddCoaching(InpressEmailChatForm)
             return redirect('/employees/qahome')
 
 
@@ -13096,6 +13142,12 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': NaffaInnovationEmailChatForm.objects.all(),
          'serializer_class': NaffaInnovationEmailChatFormSerializer},
+
+        {'queryset': InpressOutboundMonForm.objects.all(),
+         'serializer_class': InpressOutboundMonFormSerializer},
+
+        {'queryset': InpressEmailChatForm.objects.all(),
+         'serializer_class': InpressEmailChatFormSerializer},
     ]
 
 def correctABH(request):

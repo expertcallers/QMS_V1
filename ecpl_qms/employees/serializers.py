@@ -1293,3 +1293,14 @@ class NaffaInnovationEmailChatFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = NaffaInnovationEmailChatForm
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+
+class InpressOutboundMonFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InpressOutboundMonForm
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class InpressEmailChatFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InpressEmailChatForm
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
