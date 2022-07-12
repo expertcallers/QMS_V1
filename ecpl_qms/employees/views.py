@@ -66,7 +66,7 @@ list_of_monforms = [  # OutBound
     BridanAssociatesOutboundmonform, BetterEdOutboundmonform, Com98Outboundmonform,
     GretnaMedicalCentreOutboundmonform, AristaMDOutboundmonform,
     RobertDamonProductionOutboundmonform, VenwizOutboundmonform, CityHabitatOutboundmonform,
-    OptelOutboundmonform, SouthCountyOutboundMonForm, InpressOutboundMonForm,
+    OptelOutboundmonform, SouthCountyOutboundMonForm, InpressOutboundMonForm, LMEnterprisesOutboundMonForm,
 
     # Inbound
     MasterMonitoringFormTonnCoaInboundCalls, SomethingsBrewingInbound, PrinterPixMasterMonitoringFormInboundCalls,
@@ -1329,6 +1329,11 @@ def coachingViewAgents(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'L & M Enterprises Outbound':
+        coaching = LMEnterprisesOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2383,6 +2388,11 @@ def coachingViewQaDetailed(request, process, pk):
 
     elif process_name == 'Inpress Outbound':
         coaching = InpressOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'L & M Enterprises Outbound':
+        coaching = LMEnterprisesOutboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -4093,6 +4103,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Inpress Outbound':
             response = exportAadyaseries(InpressOutboundMonForm)
+            return response
+
+        elif campaign == 'L & M Enterprises Outbound':
+            response = exportAadyaseries(LMEnterprisesOutboundMonForm)
             return response
 
         ######## Inbound ###############################
@@ -6655,6 +6669,10 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(InpressOutboundMonForm)
             return response
 
+        elif campaign == 'L & M Enterprises Outbound':
+            response = exportAadyaseries(LMEnterprisesOutboundMonForm)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -9171,6 +9189,10 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'Inpress Outbound':
             newseriesAddCoaching(InpressOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'L & M Enterprises Outbound':
+            newseriesAddCoaching(LMEnterprisesOutboundMonForm)
             return redirect('/employees/qahome')
 
         else:
@@ -13148,6 +13170,9 @@ class TotalList(FlatMultipleModelAPIView):
 
         {'queryset': InpressEmailChatForm.objects.all(),
          'serializer_class': InpressEmailChatFormSerializer},
+
+        {'queryset': LMEnterprisesOutboundMonForm.objects.all(),
+         'serializer_class': LMEnterprisesOutboundMonFormSerializer},
     ]
 
 def correctABH(request):

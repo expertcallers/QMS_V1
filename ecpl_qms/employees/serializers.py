@@ -1304,3 +1304,8 @@ class InpressEmailChatFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = InpressEmailChatForm
         fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
+
+class LMEnterprisesOutboundMonFormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LMEnterprisesOutboundMonForm
+        fields = ['associate_name', 'process', "overall_score", 'qa', 'team_lead', 'fatal', 'disput_status', 'status']
