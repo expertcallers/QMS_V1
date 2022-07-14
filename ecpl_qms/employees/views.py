@@ -67,6 +67,7 @@ list_of_monforms = [  # OutBound
     GretnaMedicalCentreOutboundmonform, AristaMDOutboundmonform,
     RobertDamonProductionOutboundmonform, VenwizOutboundmonform, CityHabitatOutboundmonform,
     OptelOutboundmonform, SouthCountyOutboundMonForm, InpressOutboundMonForm, LMEnterprisesOutboundMonForm,
+    TowersTradersGroupOutboundMonForm,
 
     # Inbound
     MasterMonitoringFormTonnCoaInboundCalls, SomethingsBrewingInbound, PrinterPixMasterMonitoringFormInboundCalls,
@@ -1334,6 +1335,11 @@ def coachingViewAgents(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Towers Traders Group Outbound':
+        coaching = TowersTradersGroupOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2393,6 +2399,11 @@ def coachingViewQaDetailed(request, process, pk):
 
     elif process_name == 'L & M Enterprises Outbound':
         coaching = LMEnterprisesOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Towers Traders Group Outbound':
+        coaching = TowersTradersGroupOutboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -4107,6 +4118,10 @@ def exportAuditReport(request):
 
         elif campaign == 'L & M Enterprises Outbound':
             response = exportAadyaseries(LMEnterprisesOutboundMonForm)
+            return response
+
+        elif campaign == 'Towers Traders Group Outbound':
+            response = exportAadyaseries(TowersTradersGroupOutboundMonForm)
             return response
 
         ######## Inbound ###############################
@@ -6673,6 +6688,10 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(LMEnterprisesOutboundMonForm)
             return response
 
+        elif campaign == 'Towers Traders Group Outbound':
+            response = exportAadyaseries(TowersTradersGroupOutboundMonForm)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -9193,6 +9212,10 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'L & M Enterprises Outbound':
             newseriesAddCoaching(LMEnterprisesOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Towers Traders Group Outbound':
+            newseriesAddCoaching(TowersTradersGroupOutboundMonForm)
             return redirect('/employees/qahome')
 
         else:
