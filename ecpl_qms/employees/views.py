@@ -599,6 +599,7 @@ def qualityDashboardMgt(request):
 
 def agenthome(request):
     agent_name = request.user.profile.emp_name
+    emp_id = request.user.profile.emp_id
     team = request.user.profile.process
     currentMonth = datetime.now().month
     currentYear = datetime.now().year
@@ -609,7 +610,7 @@ def agenthome(request):
 
     def avgScoreTotal(monform):
         avg_score_all = monform.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,
-                                               associate_name=agent_name).aggregate(davg=Avg('overall_score'))
+                                               emp_id=emp_id).aggregate(davg=Avg('overall_score'))
         if avg_score_all['davg'] != None:
             avgs.append(avg_score_all['davg'])
 
@@ -629,9 +630,9 @@ def agenthome(request):
     campaign_wise_count = []
     for i in list_of_monforms:
         emp_wise = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,
-                                    associate_name=agent_name).values('process').annotate(davg=Avg('overall_score'))
+                                    emp_id=emp_id).values('process').annotate(davg=Avg('overall_score'))
         camp_wise_count = i.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,
-                                           associate_name=agent_name, overall_score__lt=100).values('process').annotate(
+                                           emp_id=emp_id, overall_score__lt=100).values('process').annotate(
             dcount=Count('associate_name')).annotate(dfcount=Sum('fatal_count'))
         avg_campaignwise.append(emp_wise)
         campaign_wise_count.append(camp_wise_count)
@@ -644,10 +645,10 @@ def agenthome(request):
 
     def openCampaigns(monforms):
         all_obj = monforms.objects.filter(audit_date__year=currentYear, audit_date__month=currentMonth,
-                                          associate_name=agent_name).order_by('-audit_date')
-        open_obj = monforms.objects.filter(associate_name=agent_name, status=False, disput_status=False).order_by(
+                                          emp_id=emp_id).order_by('-audit_date')
+        open_obj = monforms.objects.filter(emp_id=emp_id, status=False, disput_status=False).order_by(
             '-audit_date')
-        disp_obj = monforms.objects.filter(associate_name=agent_name, disput_status=True).order_by('-audit_date')
+        disp_obj = monforms.objects.filter(emp_id=emp_id, disput_status=True).order_by('-audit_date')
 
         all_coaching_list.append(all_obj)
         open_coaching_list.append(open_obj)
@@ -660,9 +661,9 @@ def agenthome(request):
     list_of_open_count = []
     list_of_all_count = []
     for i in list_of_monforms:
-        count = i.objects.filter(associate_name=agent_name, audit_date__year=currentYear,
+        count = i.objects.filter(emp_id=emp_id, audit_date__year=currentYear,
                                  audit_date__month=currentMonth, status=False).count()
-        count_all = i.objects.filter(associate_name=agent_name, audit_date__year=currentYear,
+        count_all = i.objects.filter(emp_id=emp_id, audit_date__year=currentYear,
                                      audit_date__month=currentMonth).count()
         list_of_open_count.append(count)
         list_of_all_count.append(count_all)
