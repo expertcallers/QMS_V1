@@ -83,7 +83,7 @@ list_of_monforms = [  # OutBound
     SanaLifeScienceInbound, MonitoringFormMobile22InboundCalls, XportDigitalInboundMonForm, CalistaInboundMonForm,
     ThirdWaveInboundMonForm, HardHatTechnologiesInboundMonForm, GretnaMedicalCenterInboundMonForm,
     BetterEdInboundMonForm, Com98InboundMonForm, OpenWindsInboundMonForm,
-    EmbassyLuxuryInboundMonForm, SouthCountyInboundMonForm,
+    EmbassyLuxuryInboundMonForm, SouthCountyInboundMonForm, CityHabitatInboundMonForm,
 
     # Email/CHat
     SuperPlayMonForm, DanielWellinChatEmailMonForm, TerraceoChatEmailMonForm, TonnChatsEmailNewMonForm,
@@ -96,6 +96,9 @@ list_of_monforms = [  # OutBound
     CrossTowerEmailChatForm, SanaLifeScienceEmailChatForm, SapphireMedicalsChatMonForm,
     GretnaMedicalCenterEmailChatForm, JumpRydesEmailChatForm, NaffaInnovationEmailChatForm,
     InpressEmailChatForm,
+
+
+    MovementInsuranceMonForm,
 
 
     # FLA
@@ -128,6 +131,7 @@ list_of_monforms = [  # OutBound
 
     # Amerisave
     AmerisaveMonForm,
+
 
 ]
 
@@ -1534,6 +1538,11 @@ def coachingViewAgents(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'City Habitat Inbound':
+        coaching = CityHabitatInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -1753,6 +1762,12 @@ def coachingViewAgents(request, process, pk):
         coaching = AmerisaveMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-spoiled-child.html', data)
+
+    if process_name == 'Movement Insurance':
+        coaching = MovementInsuranceMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-movement_insurance.html', data)
+
     else:
         pass
 
@@ -2610,6 +2625,11 @@ def coachingViewQaDetailed(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
 
+    elif process_name == 'City Habitat Inbound':
+        coaching = CityHabitatInboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-inbound-common.html', data)
+
     ############# Email/Chat ##############################
 
     if process_name == 'AKDY - Email':
@@ -2830,6 +2850,11 @@ def coachingViewQaDetailed(request, process, pk):
         coaching = AmerisaveMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-amerisave.html', data)
+
+    if process_name == 'Movement Insurance':
+        coaching = MovementInsuranceMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-movement_insurance.html', data)
 
     else:
         pass
@@ -3524,6 +3549,10 @@ def selectCoachingForm(request):
         elif campaign_type == 'Amerisave':
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/amerisave.html', data)
+
+        elif campaign_type == 'Movement Insurance':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
+            return render(request, 'mon-forms/movement_insurance.html', data)
 
     else:
         return redirect('/employees/qahome')
@@ -4360,6 +4389,10 @@ def exportAuditReport(request):
 
         elif campaign == 'South County Inbound':
             response = exportinbound(SouthCountyInboundMonForm)
+            return response
+
+        elif campaign == 'City Habitat Inbound':
+            response = exportinbound(CityHabitatInboundMonForm)
             return response
 
         #########    Email/CHat ##########################
@@ -6103,6 +6136,48 @@ def exportAuditReport(request):
             return response
 
 
+        elif campaign == "Movement Insurance":
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = [
+                'process', 'type', 'emp_id', 'associate_name', 'qa', 'team_lead', 'am', 'week', 'audit_date', 'form_id',
+                'customer_name', 'case_id', 'transaction_date', 'zone', 'lob', 'concept', 'manager'
+                'category', 'q_1', 'areas_improvement', 'positives', 'comments', 'added_by', 'status', 'closed_date',
+                'emp_comments', 'overall_score', 'fatal', 'fatal_count', 'disput_status'
+            ]
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = MovementInsuranceMonForm.objects.filter(audit_date__range=[start_date, end_date],
+                                                   ).values_list(
+                'process', 'type', 'emp_id', 'associate_name', 'qa', 'team_lead', 'am', 'week', 'audit_date',
+                'form_id', 'customer_name', 'case_id', 'transaction_date', 'zone', 'lob', 'concept', 'manager',
+                'category', 'q_1', 'areas_improvement', 'positives', 'comments', 'added_by', 'status',
+                'closed_date', 'emp_comments', 'overall_score', 'fatal', 'fatal_count', 'disput_status')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
+
         else:
             return redirect(request, 'error-pages/export-error.html')
     else:
@@ -6931,6 +7006,10 @@ def exportAuditReportQA(request):
 
         elif campaign == 'South County Inbound':
             response = exportinbound(SouthCountyInboundMonForm)
+            return response
+
+        elif campaign == 'City Habitat Inbound':
+            response = exportinbound(CityHabitatInboundMonForm)
             return response
 
         #########    Email/CHat ##########################
@@ -8609,6 +8688,49 @@ def exportAuditReportQA(request):
 
             return response
 
+
+        elif campaign == "Movement Insurance":
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = [
+                'process', 'type', 'emp_id', 'associate_name', 'qa', 'team_lead', 'am', 'week', 'audit_date', 'form_id',
+                'customer_name', 'case_id', 'transaction_date', 'zone', 'lob', 'concept', 'manager'
+                'category', 'q_1', 'areas_improvement', 'positives', 'comments', 'added_by', 'status', 'closed_date',
+                'emp_comments', 'overall_score', 'fatal', 'fatal_count', 'disput_status'
+            ]
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = MovementInsuranceMonForm.objects.filter(audit_date__range=[start_date, end_date], qa=qa
+                                                   ).values_list(
+                'process', 'type', 'emp_id', 'associate_name', 'qa', 'team_lead', 'am', 'week', 'audit_date',
+                'form_id', 'customer_name', 'case_id', 'transaction_date', 'zone', 'lob', 'concept', 'manager',
+                'category', 'q_1', 'areas_improvement', 'positives', 'comments', 'added_by', 'status',
+                'closed_date', 'emp_comments', 'overall_score', 'fatal', 'fatal_count', 'disput_status')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
+
         else:
             return redirect(request, 'error-pages/export-error.html')
 
@@ -9639,6 +9761,10 @@ def newSeriesInboundForms(request):
             inboundAddCoaching(SouthCountyInboundMonForm)
             return redirect('/employees/qahome')
 
+        elif campaign_name == 'City Habitat Inbound':
+            inboundAddCoaching(CityHabitatInboundMonForm)
+            return redirect('/employees/qahome')
+
 
     else:
         pass
@@ -10168,6 +10294,52 @@ def ilmEMailChat(request):
     else:
         pass
 
+def movementInsurance(request):
+    if request.method == 'POST':
+        emp_id = request.POST['empid']
+        associate_name = request.POST['empname']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        zone = request.POST['zone']
+        concept = request.POST['concept']
+        case_no = request.POST['case_no']
+        customer_name = request.POST['customer_name']
+        lob = request.POST['lob']
+        id = request.POST['id']
+        trans_date = request.POST['trans_date']
+        auditdate = request.POST['auditdate']
+        manager = request.POST['manager']
+        am = request.POST['am']
+        week = request.POST['week']
+
+        # Questions
+        q_1 = request.POST['q_1']
+
+        areaimprovement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+
+        manager = Profile.objects.get(emp_id=emp_id).manager
+        try:
+            manager_id = Profile.objects.get(emp_name=manager).emp_id
+        except:
+            manager_id = 0
+
+        added_by = qa
+
+
+        category = 'Email - Chat'
+
+        MovementInsuranceMonForm.objects.create(
+            emp_id=emp_id, associate_name=associate_name, qa=qa, team_lead=team_lead, am=am, week=week,
+            audit_date=datetime.today(), form_id=id, customer_name=customer_name, case_id=case_no,
+            transaction_date=trans_date, zone =zone, lob=lob, concept =concept,
+            manager=manager, manager_id=manager_id, category=category,
+            q_1=q_1,
+            areas_improvement=areaimprovement, positives=positives, comments=comments,
+            added_by=added_by, overall_score=q_1,
+        )
+        return redirect('/employees/qahome')
 
 def Amerisave(request):
     if request.method == 'POST':

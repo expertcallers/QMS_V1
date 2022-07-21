@@ -25,6 +25,7 @@ urlpatterns = [
     path('ilm-email-chat', ilmEMailChat),
     path('amerisave', Amerisave),
     path('abh-form-update', abhFormSAve),
+    path('movement-insurance', movementInsurance),
     path('nerotel-inbound', nerotelInbound),
     path('spoiled-child-email', spoiledChildEmail),
 
