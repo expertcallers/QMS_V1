@@ -132,6 +132,8 @@ list_of_monforms = [  # OutBound
     # Amerisave
     AmerisaveMonForm,
 
+    BrightwayMonForm,
+
 
 ]
 
@@ -1768,6 +1770,11 @@ def coachingViewAgents(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-movement_insurance.html', data)
 
+    if process_name == 'Brightway':
+        coaching = BrightwayMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-brightway.html', data)
+
     else:
         pass
 
@@ -2856,6 +2863,11 @@ def coachingViewQaDetailed(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-movement_insurance.html', data)
 
+    if process_name == 'Brightway':
+        coaching = BrightwayMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-brightway.html', data)
+
     else:
         pass
 
@@ -3553,6 +3565,10 @@ def selectCoachingForm(request):
         elif campaign_type == 'Movement Insurance':
             data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
             return render(request, 'mon-forms/movement_insurance.html', data)
+
+        elif campaign_type == 'Brightway':
+            data = {'agent': agent, 'campaign': campaign, 'date': new_today_date}
+            return render(request, 'mon-forms/bright_way.html', data)
 
     else:
         return redirect('/employees/qahome')
@@ -6178,6 +6194,50 @@ def exportAuditReport(request):
             return response
 
 
+        elif campaign == "Brightway":
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = [
+                'process', 'type', 'emp_id', 'associate_name', 'fws_id', 'qa', 'team_lead', 'audit_date', 'policy_no',
+                'place', 'policy_type', 'case_status', 'case_date', 'manager', 'manager_id', 'category',
+                'q_1', 'q_2', 'q_3', 'q_4',
+                'areas_improvement', 'positives', 'comments', 'added_by', 'status', 'closed_date', 'emp_comments',
+                'overall_score', 'am', 'week', 'fatal', 'fatal_count', 'dispute_status'
+            ]
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = BrightwayMonForm.objects.filter(audit_date__range=[start_date, end_date],
+                                                   ).values_list(
+                'process', 'type', 'emp_id', 'associate_name', 'fws_id', 'qa', 'team_lead', 'audit_date', 'policy_no',
+                'place', 'policy_type', 'case_status', 'case_date', 'manager', 'manager_id', 'category',
+                'q_1', 'q_2', 'q_3', 'q_4',
+                'areas_improvement', 'positives', 'comments', 'added_by', 'status', 'closed_date', 'emp_comments',
+                'overall_score', 'am', 'week', 'fatal', 'fatal_count', 'disput_status')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
+
         else:
             return redirect(request, 'error-pages/export-error.html')
     else:
@@ -8731,6 +8791,49 @@ def exportAuditReportQA(request):
             return response
 
 
+        elif campaign == "Brightway":
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="audit-report.xls"'
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
+            # Sheet header, first row
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+            columns = [
+                'process', 'type', 'emp_id', 'associate_name', 'fws_id', 'qa', 'team_lead', 'audit_date', 'policy_no',
+                'place', 'policy_type', 'case_status', 'case_date', 'manager', 'manager_id', 'category',
+                'q_1', 'q_2', 'q_3', 'q_4',
+                'areas_improvement', 'positives', 'comments', 'added_by', 'status', 'closed_date', 'emp_comments',
+                'overall_score', 'am', 'week', 'fatal', 'fatal_count', 'dispute_status'
+            ]
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+            rows = BrightwayMonForm.objects.filter(audit_date__range=[start_date, end_date], qa=qa
+                                                   ).values_list(
+                'process', 'type', 'emp_id', 'associate_name', 'fws_id', 'qa', 'team_lead', 'audit_date', 'policy_no',
+                'place', 'policy_type', 'case_status', 'case_date', 'manager', 'manager_id', 'category',
+                'q_1', 'q_2', 'q_3', 'q_4',
+                'areas_improvement', 'positives', 'comments', 'added_by', 'status', 'closed_date', 'emp_comments',
+                'overall_score', 'am', 'week', 'fatal', 'fatal_count', 'disput_status')
+
+            import datetime
+            rows = [[x.strftime("%Y-%m-%d %H:%M") if isinstance(x, datetime.datetime) else x for x in row] for row in
+                    rows]
+
+            for row in rows:
+                row_num += 1
+                for col_num in range(len(row)):
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+            wb.save(response)
+
+            return response
+
         else:
             return redirect(request, 'error-pages/export-error.html')
 
@@ -10202,6 +10305,62 @@ def abhFormSAve(request):
             week=week, am=am, fatal_count=no_of_fatals, fatal=fatal, oc_total=oc_total,
         )
         leadsales.save()
+        return redirect('/employees/qahome')
+
+def brightwaySubmit(request):
+    if request.method == 'POST':
+        category = 'Email - Chat'
+        associate_name = request.POST['empname']
+        emp_id = request.POST['empid']
+        qa = request.POST['qa']
+        team_lead = request.POST['tl']
+        audit_date = request.POST['auditdate']
+        fws_id = request.POST['fws_id']
+        policy_no = request.POST['policy_no']
+        trans_date = request.POST['trans_date']
+        place = request.POST['place']
+        policy_type = request.POST['policy_type']
+        case_status = request.POST['case_status']
+        week = request.POST['week']
+        manager = request.POST['manager']
+
+        areas_improvement = request.POST['areaimprovement']
+        positives = request.POST['positives']
+        comments = request.POST['comments']
+        added_by = request.user.profile.emp_name
+        am = request.POST['am']
+        try:
+            manager_id = Profile.objects.get(emp_name=manager).emp_id
+        except:
+            manager_id = 0
+
+        q_1 = int(request.POST['q_1'])
+        q_2 = int(request.POST['q_2'])
+        q_3 = int(request.POST['q_3'])
+        q_4 = int(request.POST['q_4'])
+
+
+        fatal_list = [q_2, q_3, q_4]
+        fatal_list_count = []
+        for i in fatal_list:
+            if i == 0:
+                fatal_list_count.append(i)
+        no_of_fatals = len(fatal_list_count)
+
+        if q_2 == 0 or q_3 == 0 or q_4 == 0 :
+            overall_score = 0
+            fatal = True
+        else:
+            overall_score = q_1 + q_2 + q_3 + q_4
+            fatal = False
+
+        BrightwayMonForm.objects.create(
+            emp_id=emp_id, associate_name=associate_name, qa=qa, team_lead=team_lead, audit_date=audit_date,
+            fws_id=fws_id, policy_no=policy_no, place=place, policy_type=policy_type, case_status=case_status,
+            case_date=trans_date, manager=manager, manager_id=manager_id, category=category, q_1=q_1, q_2=q_2, q_3=q_3,
+            q_4=q_4, areas_improvement=areas_improvement, positives=positives, comments=comments, added_by=added_by,
+            overall_score=overall_score, am=am, week=week, fatal=fatal, fatal_count=no_of_fatals
+        )
         return redirect('/employees/qahome')
 
 

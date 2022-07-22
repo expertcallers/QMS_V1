@@ -28,6 +28,7 @@ urlpatterns = [
     path('movement-insurance', movementInsurance),
     path('nerotel-inbound', nerotelInbound),
     path('spoiled-child-email', spoiledChildEmail),
+    path('brightway-submit', brightwaySubmit),
 
     #### Credentials
     path('accounts/login/', login_view),

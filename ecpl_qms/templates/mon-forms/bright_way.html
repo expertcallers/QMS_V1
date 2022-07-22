@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% block main %}
+<style>
+    .fatal {
+			color: red;
+		}
+        #sec1_score {
+            border: none;
+            background: #ECECF3;
+            padding: 0 10px;
+        }
+        label {
+            margin-right: 30px;
+        }
+        .score {
+            font-size: 18px;
+            color: green;
+            font-weight: 600;
+        }
+        h4 {
+            color: #010162;
+            font-weight: 800;
+        }
+        .container-fluid.class, .container.class {
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(0,0,0,.1);
+        }
+        .less {
+            background: red !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        .perfect{
+            background: green !important;
+            font-weight: 900;
+            color: #fff;
+            font-size: 18px !important;
+        }
+        #myscore{
+            color: green;
+            font-weight: 800;
+        }
+        input[type="radio"] {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+            transform: scale(1.5);
+        }
+        input[type="text"].scoree {
+            font-size: 12px;
+        }
+        .btn-success {
+            color: white;
+            background-color: green !important;
+            border-color: green !important;
+            padding: 3px 30px;
+        }
+        @media (min-width:768px) {
+            body {
+                margin: 0 80px;
+            }
+        }
+        @media (max-width:768px) {
+            body {
+                margin: 0 20px;
+            }
+        }
+        .smallp {
+            font-size: 12px;
+        }
+</style>
+    <div class="container class pt-5 mt-5">
+        <div class="row">
+            <div class="col-md-12" align="center">
+                <h2 class="text-center">{{campaign.name}}</h2>
+            </div>
+        </div>
+    </div>
+    <form action="/employees/brightway-submit" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container-fluid class">
+            <div class="row">
+                <div class="col-md-2 form-group">
+                    <label for="empname">Associate Name</label>
+                    <input type="text" class="form-control" id="empname" readonly name="empname" value="{{agent.emp_name}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="empid">Employee ID</label>
+                    <input type="text" class="form-control" id="empid" name="empid" readonly value="{{agent.emp_id}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="fws_id">Rep FWS ID</label>
+                    <input type="text" class="form-control" id="fws_id" name="fws_id" required>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="policy_no">Policy Number</label>
+                    <input type="text" class="form-control" id="policy_no" name="policy_no" required>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="place">Florida or National?</label>
+                    <select class="form-control" name="place" id="place" required>
+                        <option value="" selected disabled>--Please Select--</option>
+                        <option value="Florida">Florida</option>
+                        <option value="National">National</option>
+                    </select>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="policy_type">Type of Policy</label>
+                    <select class="form-control" name="policy_type" id="policy_type" required>
+                        <option value="" selected disabled>--Please Select--</option>
+                        <option value="Home Owner">Home Owner</option>
+                        <option value="Dwelling Fire">Dwelling Fire</option>
+                        <option value="Flood">Flood</option>
+                    </select>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="case_status">Case Status</label>
+                    <input type="text" class="form-control" id="case_status" name="case_status" required>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="trans_date">Case Created Date</label>
+                    <input type="date" class="form-control" id="trans_date" name="trans_date" required="">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="auditdate">Audit Date</label>
+                    <input type="text" class="form-control" id="auditdate" name="auditdate" value="{{date}}" readonly>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="qa">Quality Analyst</label>
+                    <input type="text" class="form-control" id="qa" name="qa" value="{{request.user.profile.emp_name}}" readonly>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="tl">Team Lead</label>
+                    <input type="text" class="form-control" id="tl" name="tl" readonly value="{{agent.team_lead}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="manager">Manager</label>
+                    <input type="text" class="form-control" id="manager" name="manager" readonly value="{{agent.manager}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="am">AM</label>
+                    <input type="text" class="form-control" id="am" name="am" readonly value="{{agent.am}}">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label for="week">Week</label>
+                    <select class="form-control" name="week" id="week" required="">
+                        <option value="week1">Week1</option>
+                        <option value="week2">Week2</option>
+                        <option value="week3">Week3</option>
+                        <option value="week4">Week4</option>
+                        <option value="week5">Week5</option>
+                    </select>
+                </div>
+                <input type="hidden" name="campaign" value="{{campaign}}">
+            </div>
+        </div>
+
+        <div class="container class mt-3">
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <h4>CASE CORRECTNESS</h4>
+                    <strong>Documentation</strong>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Did the associate use the appropriate verbiage, tone, pace, and professionalism?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" onchange="full_score(this)" name="q_1" id="yes1" value="5" required="">
+                    <label for="yes1">Yes</label>
+                    <input type="radio" onchange="full_score(this)" name="q_1" id="no1" value="0" required="">
+                    <label for="no1">No</label>
+                    <input type="radio" onchange="full_score(this)" name="q_1" id="na1" value="5" required="">
+                    <label for="na1">NA</label>
+                </div>
+            </div>
+        </div>
+        <div class="container class mt-3">
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <h4>CASE DISCOVERY</h4>
+                    <strong>AUTOFAIL</strong>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Did the associate handle the request according to Brightway's standards?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" onchange="full_score(this)" name="q_2" id="yes2" value="35" required="">
+                    <label for="yes2">Yes</label>
+                    <input type="radio" onchange="full_score(this)" name="q_2" id="no2" value="0" required="">
+                    <label for="no2">No</label>
+                    <input type="radio" onchange="full_score(this)" name="q_2" id="na2" value="35" required="">
+                    <label for="na2">NA</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    Did the associate handle the request according to the carrier's standards?
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" onchange="full_score(this)" name="q_3" id="yes3" value="30" required="">
+                    <label for="yes3">Yes</label>
+                    <input type="radio" onchange="full_score(this)" name="q_3" id="no3" value="0" required="">
+                    <label for="no3">No</label>
+                    <input type="radio" onchange="full_score(this)" name="q_3" id="na3" value="30" required="">
+                    <label for="na3">NA</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    All verbal and written information provided by associate was clear, accurate and included all relevant information
+                </div>
+                <div class="col-md-4 form-group">
+                    <input type="radio" onchange="full_score(this)" name="q_4" id="yes4" value="30" required="">
+                    <label for="yes4">Yes</label>
+                    <input type="radio" onchange="full_score(this)" name="q_4" id="no4" value="0" required="">
+                    <label for="no4">No</label>
+                    <input type="radio" onchange="full_score(this)" name="q_4" id="na4" value="30" required="">
+                    <label for="na4">NA</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="container class">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Areas of improvement</h4>
+                    <textarea name="areaimprovement" id="areaimp" cols="30" rows="5" class="form-control" required=""></textarea>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <h4>Positives</h4>
+                    <textarea name="positives" id="positives" cols="30" rows="5" class="form-control" required=""></textarea>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <h4>Comments</h4>
+                    <textarea name="comments" id="cfeedback" cols="30" rows="5" class="form-control" required=""></textarea>
+                </div>
+                <div class="col-md-12 mt-5" align="center">
+                    <button type="button" class="btn btn-lg btn-info" onclick="full_score(this)" data-toggle="modal" data-target="#viewscore">View Score</button>
+                    <button class="btn btn-lg btn-success" onclick="confirm('Are you sure you want to continue?');" type="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="viewscore" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Full Score</h5><p class="mt-2"> (Please select all the options to see score)</p>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div align="center">
+                <h1 id="myscore">
+                    <small>Please Select All the options to see Score</small>
+                </h1>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script type="text/javascript">
+    function full_score(e) {
+        var q_1 = document.querySelector('input[name="q_1"]:checked').value;
+        var fullscore = document.getElementById('myscore');
+        fullscore.innerHTML = q_1;
+    }
+</script>
+{% endblock %}
