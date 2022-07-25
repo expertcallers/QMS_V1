@@ -67,7 +67,7 @@ list_of_monforms = [  # OutBound
     GretnaMedicalCentreOutboundmonform, AristaMDOutboundmonform,
     RobertDamonProductionOutboundmonform, VenwizOutboundmonform, CityHabitatOutboundmonform,
     OptelOutboundmonform, SouthCountyOutboundMonForm, InpressOutboundMonForm, LMEnterprisesOutboundMonForm,
-    TowersTradersGroupOutboundMonForm, JobERoofingOutboundMonForm,
+    TowersTradersGroupOutboundMonForm, JobERoofingOutboundMonForm, TravelWholesaleOutboundMonForm,
 
     # Inbound
     MasterMonitoringFormTonnCoaInboundCalls, SomethingsBrewingInbound, PrinterPixMasterMonitoringFormInboundCalls,
@@ -1352,6 +1352,11 @@ def coachingViewAgents(request, process, pk):
         data = {'coaching': coaching}
         return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
 
+    elif process_name == 'Travel Wholesale Outbound':
+        coaching = TravelWholesaleOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/emp-coaching-view-new-series.html', data)
+
     ########### Inbound ########################
 
     if process_name == 'AB Hindalco Inbound':
@@ -2437,6 +2442,11 @@ def coachingViewQaDetailed(request, process, pk):
 
     elif process_name == 'Job E Roofing Outbound':
         coaching = JobERoofingOutboundMonForm.objects.get(id=pk)
+        data = {'coaching': coaching}
+        return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
+
+    elif process_name == 'Travel Wholesale Outbound':
+        coaching = TravelWholesaleOutboundMonForm.objects.get(id=pk)
         data = {'coaching': coaching}
         return render(request, 'coaching-views/qa-coaching-view-new-series.html', data)
 
@@ -4182,6 +4192,10 @@ def exportAuditReport(request):
 
         elif campaign == 'Job E Roofing Outbound':
             response = exportAadyaseries(JobERoofingOutboundMonForm)
+            return response
+
+        elif campaign == 'Travel Wholesale Outbound':
+            response = exportAadyaseries(TravelWholesaleOutboundMonForm)
             return response
 
         ######## Inbound ###############################
@@ -6846,6 +6860,10 @@ def exportAuditReportQA(request):
             response = exportAadyaseries(JobERoofingOutboundMonForm)
             return response
 
+        elif campaign == 'TravelWholesale Outbound':
+            response = exportAadyaseries(TravelWholesaleOutboundMonForm)
+            return response
+
         ######## Inbound ###############################
 
         def exportinbound(monform):
@@ -9464,6 +9482,10 @@ def newSeriesMonForms(request):
 
         elif campaign_name == 'Job E Roofing Outbound':
             newseriesAddCoaching(JobERoofingOutboundMonForm)
+            return redirect('/employees/qahome')
+
+        elif campaign_name == 'Travel Wholesale Outbound':
+            newseriesAddCoaching(TravelWholesaleOutboundMonForm)
             return redirect('/employees/qahome')
 
         else:
