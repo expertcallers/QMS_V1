@@ -116,4 +116,6 @@ urlpatterns = [
     path('dispute-status-overall/<str:campaign>', disputeStatusAgents),
     path("total-list", TotalList.as_view(), name="to_show_the_total_list_of_tables"),
 
+    path('migrate-outbound', migrateOutbound)
+
 ]

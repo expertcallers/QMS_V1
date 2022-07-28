@@ -239,7 +239,7 @@
                     <textarea name="comments" id="cfeedback" cols="30" rows="5" class="form-control" required=""></textarea>
                 </div>
                 <div class="col-md-12 mt-5" align="center">
-                    <button type="button" class="btn btn-lg btn-info" onclick="full_score(this)" data-toggle="modal" data-target="#viewscore">View Score</button>
+<!--                    <button type="button" class="btn btn-lg btn-info" onclick="full_score(this)" data-toggle="modal" data-target="#viewscore">View Score</button>-->
                     <button class="btn btn-lg btn-success" onclick="confirm('Are you sure you want to continue?');" type="submit">Submit</button>
                 </div>
             </div>
@@ -270,11 +270,11 @@
       </div>
     </div>
 
-<script type="text/javascript">
-    function full_score(e) {
-        var q_1 = document.querySelector('input[name="q_1"]:checked').value;
-        var fullscore = document.getElementById('myscore');
-        fullscore.innerHTML = q_1;
-    }
-</script>
+<!--<script type="text/javascript">-->
+<!--    function full_score(e) {-->
+<!--        var q_1 = document.querySelector('input[name="q_1"]:checked').value;-->
+<!--        var fullscore = document.getElementById('myscore');-->
+<!--        fullscore.innerHTML = q_1;-->
+<!--    }-->
+<!--</script>-->
 {% endblock %}

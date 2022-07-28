@@ -1,6 +1,8 @@
 from django.contrib import admin
 
 from .models import *
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 
 
 class CampaignSearch(admin.ModelAdmin):
@@ -16,6 +18,39 @@ class profileSearch(admin.ModelAdmin):
 class Search(admin.ModelAdmin):
     search_fields = ('qa', 'emp_id', 'associate_name')
     list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
+
+
+class OutSearchResourse(resources.ModelResource):
+    class Meta:
+        model = OutboundExport
+
+
+class OutSearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'audit_date', 'id', 'status')
+    resource_class = OutSearchResourse
+
+
+class InSearchResourse(resources.ModelResource):
+    class Meta:
+        model = Inbound
+
+
+class InSearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'audit_date', 'id', 'status')
+    resource_class = InSearchResourse
+
+
+class EmailSearchResourse(resources.ModelResource):
+    class Meta:
+        model = EmailChat
+
+
+class EmailSearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'audit_date', 'id', 'status')
+    resource_class = EmailSearchResourse
 
 
 admin.site.register(Team)
@@ -172,3 +207,6 @@ admin.site.register(MovementInsuranceMonForm, Search)
 admin.site.register(CityHabitatInboundMonForm, Search)
 admin.site.register(BrightwayMonForm, Search)
 admin.site.register(TravelWholesaleOutboundMonForm, Search)
+admin.site.register(OutboundExport, OutSearch)
+admin.site.register(Inbound, InSearch)
+admin.site.register(EmailChat, EmailSearch)
