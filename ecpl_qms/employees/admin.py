@@ -52,6 +52,102 @@ class EmailSearch(ImportExportModelAdmin):
     list_display = ('associate_name', 'emp_id', 'audit_date', 'id', 'status')
     resource_class = EmailSearchResourse
 
+class FLAResourse(resources.ModelResource):
+    class Meta:
+        model = FLAMonitoringForm
+
+class FLASearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
+    resource_class = FLAResourse
+
+
+class ILMResourse(resources.ModelResource):
+    class Meta:
+        model = ILMakiageEmailChatForm
+
+class ILMSearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
+    resource_class = ILMResourse
+
+class BlazingResourse(resources.ModelResource):
+    class Meta:
+        model = BlazingHogEmailChatmonform
+
+class BlazingSearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
+    resource_class = BlazingResourse
+
+
+class ABHResourse(resources.ModelResource):
+    class Meta:
+        model = ABHindalcoMonForm
+
+class ABHSearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
+    resource_class = ABHResourse
+
+class PractoResourse(resources.ModelResource):
+    class Meta:
+        model = NewPractoWithSubCategory
+
+class PractoSearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
+    resource_class = PractoResourse
+
+
+class FameResourse(resources.ModelResource):
+    class Meta:
+        model = FameHouseNewMonForm
+
+class FameSearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
+    resource_class = FameResourse
+
+
+class WinopolyResourse(resources.ModelResource):
+    class Meta:
+        model = WinopolyOutbound
+
+class WinopolySearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
+    resource_class = WinopolyResourse
+
+class NerotelResourse(resources.ModelResource):
+    class Meta:
+        model = NerotelInboundmonform
+
+class NerotelSearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
+    resource_class = NerotelResourse
+
+
+class SpoiledResourse(resources.ModelResource):
+    class Meta:
+        model = SpoiledChildChatmonform
+
+class SpoiledSearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
+    resource_class = SpoiledResourse
+
+
+class AmerisaveResourse(resources.ModelResource):
+    class Meta:
+        model = AmerisaveMonForm
+
+class AmerisaveSearch(ImportExportModelAdmin):
+    search_fields = ('emp_id', 'associate_name')
+    list_display = ('associate_name', 'emp_id', 'qa', 'audit_date', 'id')
+    resource_class = AmerisaveResourse
+
 
 admin.site.register(Team)
 admin.site.register(Profile, profileSearch)
@@ -67,8 +163,8 @@ admin.site.register(ProfileNewtoAddUserandProfile)
 
 admin.site.register(ChatMonitoringFormEva, Search)  # view done
 admin.site.register(ChatMonitoringFormPodFather, Search)  # view done
-admin.site.register(FameHouseNewMonForm, Search)
-admin.site.register(FLAMonitoringForm, Search)  # view done
+admin.site.register(FameHouseNewMonForm, FameSearch)
+admin.site.register(FLAMonitoringForm, FLASearch)  # view done
 admin.site.register(MTCosmeticsMonForm, Search)  # view done
 admin.site.register(MasterMonitoringFormTonnCoaInboundCalls, Search)
 admin.site.register(MonitoringFormLeadsAadhyaSolution, Search)
@@ -132,14 +228,14 @@ admin.site.register(GubagooAuditForm, Search)
 admin.site.register(CleanLivingHealthWellnessOutboundMonForm, Search)
 admin.site.register(PractoOutboundMonForm, Search)
 admin.site.register(LJHubInboundMonForms, Search)
-admin.site.register(ILMakiageEmailChatForm, Search)
+admin.site.register(ILMakiageEmailChatForm, ILMSearch)
 admin.site.register(DigitalSwissGoldEmailChatMonForm, Search)
 admin.site.register(DawnFinancialOutbound, Search)
-admin.site.register(WinopolyOutbound, Search)
+admin.site.register(WinopolyOutbound, WinopolySearch)
 admin.site.register(MonitoringFormMobile22InboundCalls, Search)
 admin.site.register(XportDigitalOutbound, Search)
 admin.site.register(XportDigitalInboundMonForm, Search)
-admin.site.register(ABHindalcoMonForm, Search)
+admin.site.register(ABHindalcoMonForm, ABHSearch)
 admin.site.register(CalistaOutboundMonForm, Search)
 admin.site.register(GlobalArkOutboundMonform, Search)
 admin.site.register(DIDevelopOutbound, Search)
@@ -153,7 +249,7 @@ admin.site.register(AllCarePhysicalTherapyMonform, Search)
 admin.site.register(ExecutiveCapitalResourcesmonform, Search)
 admin.site.register(BrightWayOutboundmonform, Search)
 admin.site.register(BuildinglabLLCOutboundmonform, Search)
-admin.site.register(BlazingHogEmailChatmonform, Search)
+admin.site.register(BlazingHogEmailChatmonform, BlazingSearch)
 admin.site.register(HardHatTechnologiesInboundMonForm, Search)
 admin.site.register(ThirdWaveInboundMonForm, Search)
 admin.site.register(HardHatTechnologiesOutboundmonform, Search)
@@ -168,14 +264,14 @@ admin.site.register(EduClassOutboundmonform, Search)
 admin.site.register(CredAvenueOutboundmonform, Search)
 admin.site.register(TKAWDIWOutboundmonform, Search)
 admin.site.register(DreamPickOutboundmonform, Search)
-admin.site.register(NerotelInboundmonform, Search)
-admin.site.register(SpoiledChildChatmonform, Search)
+admin.site.register(NerotelInboundmonform, NerotelSearch)
+admin.site.register(SpoiledChildChatmonform, SpoiledSearch)
 admin.site.register(KheloyarOutboundmonform, Search)
 admin.site.register(MaxTradingOutboundmonform, Search)
 admin.site.register(ESRTechTalentOutboundmonform, Search)
 admin.site.register(GreenConnectOutboundmonform, Search)
 admin.site.register(JumpRydesEmailChatForm, Search)
-admin.site.register(NewPractoWithSubCategory, Search)
+admin.site.register(NewPractoWithSubCategory, PractoSearch)
 admin.site.register(LinenFinderOutboundmonform, Search)
 admin.site.register(BridanAssociatesOutboundmonform, Search)
 admin.site.register(RapidMortgageOutboundmonform, Search)
@@ -191,7 +287,7 @@ admin.site.register(RobertDamonProductionOutboundmonform, Search)
 admin.site.register(VenwizOutboundmonform, Search)
 admin.site.register(EmbassyLuxuryInboundMonForm, Search)
 admin.site.register(CityHabitatOutboundmonform, Search)
-admin.site.register(AmerisaveMonForm, Search)
+admin.site.register(AmerisaveMonForm, AmerisaveSearch)
 admin.site.register(OptelOutboundmonform, Search)
 admin.site.register(SouthCountyInboundMonForm, Search)
 admin.site.register(AmerisaveInboundMonForm, Search)
