@@ -13637,24 +13637,24 @@ def migrateOutbound(request):
                         fatal_count=j.fatal_count, dispute_status=j.disput_status
                     )
                     data_inbound.append(inbound)
-            # if cam[0].type == 'Email - Chat':
-            #     EmailChat.objects.all().delete()
-            #     for j in cam:
-            #         email = EmailChat(
-            #             campaign=j.process,emp_id=j.emp_id, associate_name= j.associate_name, zone= j.zone,
-            #             concept=j.concept, customer_name=j.customer_name, customer_contact=j.customer_contact,
-            #             audit_date=j.audit_date, quality_analyst=j.qa, team_lead=j.team_lead, manager=j.manager,
-            #             am=j.am, manager_id=j.manager_id, week=j.week, ce_1=j.ce_1, ce_2=j.ce_2, ce_3=j.ce_3,
-            #             ce_4=j.ce_4, ce_5=j.ce_5, ce_6=j.ce_6, ce_7=j.ce_7, ce_8=j.ce_8, ce_9=j.ce_9, ce_10=j.ce_10,
-            #             ce_11=j.ce_11, business_1=j.business_1, business_2=j.business_2, compliance_1=j.compliance_1,
-            #             compliance_2=j.compliance_2, compliance_3=j.compliance_3, compliance_4=j.compliance_4,
-            #             compliance_5=j.compliance_5, ce_total=j.ce_total, business_total=j.business_total,
-            #             compliance_total=j.compliance_total, overall_score=j.overall_score,
-            #             areas_improvement=j.areas_improvement, positives=j.positives, comments=j.comments,
-            #             added_by=j.added_by, status=j.status, closed_date=j.closed_date, emp_comments=j.emp_comments,
-            #             fatal=j.fatal, fatal_count=j.fatal_count, dispute_status=j.disput_status
-            #         )
-            #         data_email.append(email)
+            if cam[0].type == 'Email - Chat':
+                EmailChat.objects.all().delete()
+                for j in cam:
+                    email = EmailChat(
+                        campaign=j.process,emp_id=j.emp_id, associate_name= j.associate_name, zone= j.zone,
+                        concept=j.concept, customer_name=j.customer_name, customer_contact=j.customer_contact,
+                        audit_date=j.audit_date, quality_analyst=j.qa, team_lead=j.team_lead, manager=j.manager,
+                        am=j.am, manager_id=j.manager_id, week=j.week, ce_1=j.ce_1, ce_2=j.ce_2, ce_3=j.ce_3,
+                        ce_4=j.ce_4, ce_5=j.ce_5, ce_6=j.ce_6, ce_7=j.ce_7, ce_8=j.ce_8, ce_9=j.ce_9, ce_10=j.ce_10,
+                        ce_11=j.ce_11, business_1=j.business_1, business_2=j.business_2, compliance_1=j.compliance_1,
+                        compliance_2=j.compliance_2, compliance_3=j.compliance_3, compliance_4=j.compliance_4,
+                        compliance_5=j.compliance_5, ce_total=j.ce_total, business_total=j.business_total,
+                        compliance_total=j.compliance_total, overall_score=j.overall_score,
+                        areas_improvement=j.areas_improvement, positives=j.positives, comments=j.comments,
+                        added_by=j.added_by, status=j.status, closed_date=j.closed_date, emp_comments=j.emp_comments,
+                        fatal=j.fatal, fatal_count=j.fatal_count, dispute_status=j.disput_status
+                    )
+                    data_email.append(email)
     OutboundExport.objects.bulk_create(data_outbound)
     Inbound.objects.bulk_create(data_inbound)
-    # EmailChat.objects.bulk_create(data_email)
+    EmailChat.objects.bulk_create(data_email)
