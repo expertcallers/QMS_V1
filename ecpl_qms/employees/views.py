@@ -12732,10 +12732,8 @@ def addNewCampaign(request):
 
 
 def deleteData(request):
-    pass
-    '''for i in list_of_monforms:
-        i.objects.all().delete()'''
-
+    ILMakiageEmailChatForm.objects.filter(overall_score=1).delete()
+    return redirect('/')
 
 def campaignDetails(request):
     if request.method == 'POST':
